@@ -26,3 +26,4 @@
 - 当前 GitHub 账号套餐不支持私有仓库启用 GitHub Pages，会返回 HTTP 422。不要为绕过限制擅自公开仓库；私有静态站改用 Cloudflare Pages，并通过 GitHub Secrets 注入部署凭据。
 - `gsc_cli.py` 的 `--json` 是全局参数，必须写在子命令之前（如 `gsc_cli.py --json list`）；放在 `list` 等子命令之后会报 `unrecognized arguments`。
 - `mcp-gsc` 的 Analytics、Search Console 与 Site Verification OAuth token 按 scope 分文件缓存；其中一份 `invalid_grant` 不代表其他 token 失效，只轮换报错对应的 token 文件。
+- Windows 下通过 Ctrl+C 停止 `pnpm dev` 可能继续提示 `Terminate batch job (Y/N)`；发送 `Y` 后退出码 1 是预期的手动停服结果，不要误判为应用运行失败。
