@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Break-Even ROAS Calculator (Free) | ROAS Break</title>
+    <meta
+      name="description"
+      content="Calculate your break-even ROAS, maximum CPA, contribution margin, and profit per $1,000 of ad spend. Free for ecommerce and paid media teams."
+    />
+    <meta name="theme-color" content="#151714" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://roasbreak.com/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://roasbreak.com/" />
+    <meta property="og:title" content="Break-Even ROAS Calculator" />
+    <meta
+      property="og:description"
+      content="Find the ROAS floor your ads must clear before they create profit."
+    />
+    <meta property="og:image" content="https://roasbreak.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "ROAS Break - Break-Even ROAS Calculator",
+            "url": "https://roasbreak.com/",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Any",
+            "description": "A free break-even ROAS calculator for ecommerce and paid media teams.",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is break-even ROAS?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Break-even ROAS is the revenue-to-ad-spend ratio where contribution profit after variable costs exactly covers advertising cost."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do you calculate break-even ROAS?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Divide 1 by your contribution margin expressed as a decimal. A 40% contribution margin produces a 2.5x break-even ROAS."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Should returns and payment fees be included?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Include every variable cost that rises with an order, including product cost, fulfillment, payment fees, discounts, and an expected return allowance."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#calculator">Skip to calculator</a>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="ROAS Break home">
+        <span class="brand-mark">R</span>
+        <span>ROAS BREAK</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#formula">Formula</a>
+        <a href="#examples">Examples</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="tool-intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Profitability, before platform reporting</p>
+          <h1 id="page-title">Break-Even ROAS Calculator</h1>
+        </div>
+        <p class="intro-copy">
+          Find the return your ads must clear before they make money, with the costs your ad dashboard leaves out.
+        </p>
+      </section>
+
+      <section class="definition-band" id="formula" aria-labelledby="formula-title">
+        <div class="section-kicker">The formula</div>
+        <div class="definition-copy">
+          <h2 id="formula-title">What is break-even ROAS?</h2>
+          <p>
+            Break-even ROAS is the revenue-to-ad-spend ratio where your contribution profit exactly covers advertising cost. Above it, each order creates contribution profit. Below it, scaling ads scales the loss.
+          </p>
+        </div>
+        <div class="formula-block" aria-label="Break-even ROAS formula">
+          <span>Break-even ROAS</span>
+          <strong>=</strong>
+          <span class="fraction"><b>1</b><i>Contribution margin</i></span>
+        </div>
+      </section>
+
+      <section class="example-section" id="examples" aria-labelledby="examples-title">
+        <div class="section-heading">
+          <p class="section-kicker">Worked example</p>
+          <h2 id="examples-title">A 40% margin needs 2.5x ROAS just to stand still.</h2>
+        </div>
+        <div class="example-ledger">
+          <div class="ledger-row ledger-head">
+            <span>Per $100 order</span><span>Amount</span><span>Running margin</span>
+          </div>
+          <div class="ledger-row">
+            <span>Revenue</span><strong>$100</strong><span>100%</span>
+          </div>
+          <div class="ledger-row">
+            <span>Product cost</span><strong>-$42</strong><span>58%</span>
+          </div>
+          <div class="ledger-row">
+            <span>Fulfillment, fees, returns</span><strong>-$18</strong><span>40%</span>
+          </div>
+          <div class="ledger-row ledger-total">
+            <span>Maximum ad spend</span><strong>$40</strong><span>2.50x ROAS</span>
+          </div>
+        </div>
+        <p class="example-callout">
+          The ad platform may report 2.2x as a strong return. Your ledger says it loses $4.55 on every $100 order before overhead.
+        </p>
+      </section>
+
+      <section class="cost-section" aria-labelledby="costs-title">
+        <div class="section-heading">
+          <p class="section-kicker">Count what moves with an order</p>
+          <h2 id="costs-title">Your ROAS floor is only as honest as your cost inputs.</h2>
+        </div>
+        <ul class="cost-list">
+          <li><span>01</span><div><strong>Product cost</strong><p>COGS, packaging, and landed inventory cost.</p></div></li>
+          <li><span>02</span><div><strong>Fulfillment</strong><p>Pick, pack, shipping subsidy, and handling.</p></div></li>
+          <li><span>03</span><div><strong>Transaction fees</strong><p>Payment processor and marketplace percentages.</p></div></li>
+          <li><span>04</span><div><strong>Returns and discounts</strong><p>An expected allowance based on actual order history.</p></div></li>
+        </ul>
+      </section>
+
+      <section class="faq-section" id="faq" aria-labelledby="faq-title">
+        <div class="section-heading">
+          <p class="section-kicker">Clear answers</p>
+          <h2 id="faq-title">Break-even ROAS FAQ</h2>
+        </div>
+        <div class="faq-list">
+          <details open>
+            <summary>What is a good break-even ROAS?</summary>
+            <p>
+              Lower is generally more resilient because each revenue dollar leaves more room for ad spend. There is no universal target: a 1.5x floor may be healthy for a high-margin brand, while a 4x floor may be unavoidable in a thin-margin category.
+            </p>
+          </details>
+          <details>
+            <summary>What is the difference between break-even ROAS and target ROAS?</summary>
+            <p>
+              Break-even ROAS is the no-profit, no-loss floor. Target ROAS should sit above that floor to fund overhead, payroll, reinvestment, and the profit you expect the business to keep.
+            </p>
+          </details>
+          <details>
+            <summary>Does break-even ROAS include fixed overhead?</summary>
+            <p>
+              This calculator focuses on variable contribution economics. To build a target ROAS that covers fixed overhead, add your desired overhead allocation and profit per order to the contribution you need to retain.
+            </p>
+          </details>
+          <details>
+            <summary>Can I use this for lead generation?</summary>
+            <p>
+              Yes, if you translate expected customer value into revenue per acquired customer and include the variable costs of delivery. For a pure lead metric, maximum CPA is usually the more direct output.
+            </p>
+          </details>
+          <details>
+            <summary>Why does Meta or Google Ads ROAS differ from my profit?</summary>
+            <p>
+              Ad platforms compare attributed revenue with ad spend. They do not subtract product cost, fulfillment, payment fees, returns, or discounts, so reported ROAS can look healthy while contribution profit is negative.
+            </p>
+          </details>
+        </div>
+      </section>
+      <section class="calculator-shell" id="calculator" aria-label="Break-even ROAS calculator">
+        <form class="inputs-panel" id="calculator-form">
+          <div class="panel-heading">
+            <div>
+              <p class="step-label">01 / Inputs</p>
+              <h2>Your unit economics</h2>
+            </div>
+            <button class="icon-button" id="reset-button" type="button" title="Reset calculator" aria-label="Reset calculator">
+              <i data-lucide="rotate-ccw" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <fieldset class="mode-switcher">
+            <legend class="sr-only">Input method</legend>
+            <label>
+              <input type="radio" name="mode" value="margin" checked />
+              <span>Quick margin</span>
+            </label>
+            <label>
+              <input type="radio" name="mode" value="costs" />
+              <span>Cost breakdown</span>
+            </label>
+          </fieldset>
+
+          <div class="input-grid">
+            <label class="field">
+              <span>Average order value</span>
+              <span class="input-wrap prefix">
+                <span aria-hidden="true">$</span>
+                <input id="order-value" name="orderValue" type="number" min="0" step="1" value="80" inputmode="decimal" />
+              </span>
+            </label>
+
+            <label class="field margin-field">
+              <span>Gross margin</span>
+              <span class="input-wrap suffix">
+                <input id="gross-margin" name="grossMarginPct" type="number" min="0" max="100" step="1" value="65" inputmode="decimal" />
+                <span aria-hidden="true">%</span>
+              </span>
+            </label>
+
+            <label class="field cost-field" hidden>
+              <span>Product cost</span>
+              <span class="input-wrap prefix">
+                <span aria-hidden="true">$</span>
+                <input id="product-cost" name="productCost" type="number" min="0" step="1" value="28" inputmode="decimal" />
+              </span>
+            </label>
+
+            <label class="field cost-field" hidden>
+              <span>Fulfillment + shipping</span>
+              <span class="input-wrap prefix">
+                <span aria-hidden="true">$</span>
+                <input id="fulfillment-cost" name="fulfillmentCost" type="number" min="0" step="1" value="6" inputmode="decimal" />
+              </span>
+            </label>
+
+            <label class="field cost-field" hidden>
+              <span>Other variable cost</span>
+              <span class="input-wrap prefix">
+                <span aria-hidden="true">$</span>
+                <input id="other-cost" name="otherCost" type="number" min="0" step="1" value="3" inputmode="decimal" />
+              </span>
+            </label>
+
+            <label class="field">
+              <span>Payment + platform fees</span>
+              <span class="input-wrap suffix">
+                <input id="fee-pct" name="feePct" type="number" min="0" max="100" step="0.1" value="3" inputmode="decimal" />
+                <span aria-hidden="true">%</span>
+              </span>
+            </label>
+
+            <label class="field">
+              <span>Returns + discounts allowance</span>
+              <span class="input-wrap suffix">
+                <input id="return-pct" name="returnPct" type="number" min="0" max="100" step="0.5" value="5" inputmode="decimal" />
+                <span aria-hidden="true">%</span>
+              </span>
+            </label>
+
+            <label class="field field-current">
+              <span>Current ROAS</span>
+              <span class="input-wrap suffix">
+                <input id="current-roas" name="currentRoas" type="number" min="0.01" step="0.1" value="2.5" inputmode="decimal" />
+                <span aria-hidden="true">x</span>
+              </span>
+            </label>
+          </div>
+        </form>
+
+        <div class="results-panel" aria-live="polite">
+          <div class="panel-heading results-heading">
+            <div>
+              <p class="step-label">02 / Threshold</p>
+              <p class="status-pill" id="status-pill" data-status="above">
+                <span aria-hidden="true"></span>
+                <strong id="status-text">Above break-even</strong>
+              </p>
+            </div>
+            <button class="share-button" id="share-button" type="button">
+              <i data-lucide="link" aria-hidden="true"></i>
+              <span>Copy result</span>
+            </button>
+          </div>
+
+          <div class="primary-result">
+            <span>Break-even ROAS</span>
+            <strong id="break-even-roas" data-testid="break-even-roas">1.75x</strong>
+            <p id="result-summary">Every $1 in ad spend must generate at least $1.75 in revenue.</p>
+          </div>
+
+          <div class="roas-scale" aria-label="Current ROAS compared with break-even ROAS">
+            <div class="scale-track">
+              <span class="break-marker" id="break-marker"><i></i><b>Break-even</b></span>
+              <span class="current-marker" id="current-marker"><i></i><b>Current</b></span>
+            </div>
+            <div class="scale-labels"><span>0x</span><span id="scale-max">4x</span></div>
+          </div>
+
+          <dl class="metric-grid">
+            <div>
+              <dt>Maximum CPA</dt>
+              <dd id="max-cpa" data-testid="max-cpa">$45.60</dd>
+            </div>
+            <div>
+              <dt>Contribution margin</dt>
+              <dd id="contribution-margin">57.0%</dd>
+            </div>
+            <div>
+              <dt>Profit / order now</dt>
+              <dd id="profit-per-order">$13.60</dd>
+            </div>
+            <div>
+              <dt>Profit / $1k ad spend</dt>
+              <dd id="profit-per-thousand">$425</dd>
+            </div>
+          </dl>
+
+          <p class="result-note" id="result-note">
+            Your current ROAS is <strong>42.5% above</strong> the break-even line.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand footer-brand" href="/">
+        <span class="brand-mark">R</span>
+        <span>ROAS BREAK</span>
+      </a>
+      <p>Built for decisions, not vanity metrics.</p>
+      <p>&copy; <span id="year">2026</span> ROAS Break</p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">Result link copied</div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
