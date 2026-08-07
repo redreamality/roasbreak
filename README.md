@@ -27,4 +27,4 @@ pnpm check
 
 ## Deployment
 
-Pushes to `main` run unit tests, production build, and Chromium E2E tests before deploying `dist/` to GitHub Pages. The custom domain is declared in `public/CNAME` and DNS is managed through Cloudflare.
+Pushes to `main` run unit tests, production build, and Chromium E2E tests before deploying `dist/` to Cloudflare Pages. The private source repository stays on GitHub, and DNS is managed through Cloudflare.

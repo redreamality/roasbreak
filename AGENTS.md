@@ -23,3 +23,4 @@
 - 自动化连续启动多轮 Playwright 时，`reuseExistingServer: true` 可能复用上一轮正在退出的 Vite 进程，随后出现 `ERR_CONNECTION_REFUSED`。项目 E2E 默认让 Playwright 独占测试服务器，设置 `reuseExistingServer: false`。
 - 标签内部还包含前后缀节点时，Playwright 的精确可访问名称可能与可见主标签不同；已有稳定唯一 ID 的数值输入应直接使用 ID。原生 `<summary>` 不应假设为 `term` role，使用其可见文本或元素选择器定位。
 - PowerShell 中给 `rg` 传含括号、管道或引号的复杂正则时使用单引号包裹，避免双引号转义导致解析器提前终止；敏感信息扫描无匹配时应显式接受 `rg` 退出码 1。
+- 当前 GitHub 账号套餐不支持私有仓库启用 GitHub Pages，会返回 HTTP 422。不要为绕过限制擅自公开仓库；私有静态站改用 Cloudflare Pages，并通过 GitHub Secrets 注入部署凭据。
