@@ -28,3 +28,4 @@
 - `mcp-gsc` 的 Analytics、Search Console 与 Site Verification OAuth token 按 scope 分文件缓存；其中一份 `invalid_grant` 不代表其他 token 失效，只轮换报错对应的 token 文件。
 - Windows 下通过 Ctrl+C 停止 `pnpm dev` 可能继续提示 `Terminate batch job (Y/N)`；发送 `Y` 后退出码 1 是预期的手动停服结果，不要误判为应用运行失败。
 - 需要结束无用户回调的 Google OAuth 本地服务器时，先用 `Get-NetTCPConnection -LocalPort <port>` 精确取得监听 PID，再停止该进程；原等待命令随后退出码 1 是预期终止结果。
+- Windows PowerShell 5.1 的 `Invoke-WebRequest` 解析现代 HTML 时可能因兼容性问题抛出 `NullReferenceException` 并返回空响应；线上探测应加 `-UseBasicParsing`，或改用 `curl.exe`。
