@@ -73,3 +73,6 @@
 - GitHub `GET /git/ref/heads/<branch>` 在分支不存在时可能返回 404 且 PowerShell 5.1 读不到响应正文，不能只靠错误正文匹配 `Not Found` 判断不存在。检查临时分支占用应使用 `GET /git/matching-refs/heads/<prefix>`，无匹配时按 HTTP 200 空数组处理，再决定是否创建 ref。
 - PowerShell 5.1 的 `Invoke-RestMethod` 解析 GitHub matching-refs 空数组后，再用 `@(...)` 包装可能得到一个无 `.ref` 的空值项，直接看 `.Count` 会误判临时分支存在。必须过滤 `Where-Object { -not [string]::IsNullOrWhiteSpace($_.ref) }` 后再计数，并给每轮 fallback 使用唯一临时分支名。
 - GitHub Git Commit API 的 `message` 会逐字节进入 commit 对象；本地 `git commit` 消息通常以 LF 结尾，若 API 侧对 `%B` 调用 `TrimEnd()`，即使 tree/parent/author/committer/正文相同也会生成不同 SHA。需要与本地 commit 完全一致时保留 `%B` 的单个末尾 LF，并用原始 commit bytes 验证带/不带 LF 的对象 SHA 后再更新 ref。
+- GitHub Actions job 若 `steps` 为空、`runner_id` 为 0，且 check-run annotation 提示 `recent account payments have failed or your spending limit needs to be increased`，表示 runner 在任何步骤前因 Billing & plans 被拒绝，不是 workflow step 或 Cloudflare 凭据失败。先合并重复 checkout/install/build 的串行 jobs 以减少 runner 分配；若首个 job 仍无法启动，则必须由账户侧修复付款/Actions spending limit，不能靠重跑解决。
+- 用正则静态统计 GitHub Actions job 数量时，不要直接在整份 YAML 匹配 `^  <key>:`，这会把 `on:` 下同样两空格缩进的 `push:`/`workflow_dispatch:` 误算为 jobs。先截取 `jobs:` 之后的文档段，或使用 YAML parser，再统计其一级键。
+- `git push` 可能由 GitHub 远端明确返回 `Internal Server Error` 和 Request ID，此时不是本地对象/权限错误。先确认远端 ref 未更新；小型纯文本提交可复用经过 blob/tree/commit SHA 强校验的 Contents API 临时分支流程，不能因为 500 重复并发 push 或改写已发布历史。
