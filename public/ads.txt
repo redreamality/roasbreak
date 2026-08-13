@@ -1,0 +1,2 @@
+# Add the authorized Google seller line here after the AdSense publisher ID is assigned.
+# Format: google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

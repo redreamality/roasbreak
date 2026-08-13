@@ -1,5 +1,6 @@
 import { createIcons, Link, RotateCcw } from "lucide";
 import { defaultInputs, type CalculatorInputs, type CalculatorMode } from "../lib/calculator";
+import { initializePrivacyControls, trackAnalytics } from "../lib/privacy";
 
 export const currency = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -204,7 +205,7 @@ export function setYearAndIcons(): void {
   document.querySelectorAll<HTMLElement>("[data-year]").forEach((node) => { node.textContent = String(new Date().getFullYear()); });
   initializePageSemantics();
   createIcons({ icons: { Link, RotateCcw } });
-  initializeAnalytics();
+  initializePrivacyControls();
 }
 
 function initializePageSemantics(): void {
@@ -233,23 +234,6 @@ function initializePageSemantics(): void {
   if (toast) toast.setAttribute("role", "status");
 }
 
-function initializeAnalytics(): void {
-  const analyticsWindow = window as Window & {
-    dataLayer?: unknown[];
-    gtag?: (...args: unknown[]) => void;
-  };
-  if (analyticsWindow.gtag) return;
-  analyticsWindow.dataLayer = analyticsWindow.dataLayer ?? [];
-  analyticsWindow.gtag = (...args: unknown[]) => analyticsWindow.dataLayer?.push(args);
-  analyticsWindow.gtag("js", new Date());
-  analyticsWindow.gtag("config", "G-QZ5QQK45LV");
-  const script = document.createElement("script");
-  script.async = true;
-  script.src = "https://www.googletagmanager.com/gtag/js?id=G-QZ5QQK45LV";
-  document.head.append(script);
-}
-
 export function track(eventName: string, parameters: Record<string, string> = {}): void {
-  const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
-  gtag?.("event", eventName, parameters);
+  trackAnalytics(eventName, parameters);
 }

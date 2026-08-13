@@ -54,3 +54,22 @@
 - 生产页经 Vite 打包和 Cloudflare 注入后可能同时存在多个 `script[type="module"]`；Playwright 读取资产时不要用宽泛 locator 直接取单个属性，应按 `src` 片段筛选或使用 `.all()`，避免 strict mode 多匹配。
 - 经本地系统代理连续导航生产站时，Chromium 偶发 `ERR_NETWORK_IO_SUSPENDED`，即使同 URL 的 HTTP GET 正常。生产 smoke 应为每个 URL 新建 page/context，并仅对这类瞬时导航错误做有限重试；不要把一次代理 I/O 暂停判成线上页面故障。
 - Playwright `fill()` 触发页面用 `history.replaceState` 同步 URL 时，不要在 `fill()` 返回后立即读取 `page.url()`；应使用 `waitForURL` 等待目标参数出现，再断言 URL 与重算结果，避免事件处理与测试读取之间的竞态。
+- Windows 下 `rg` 不会展开 `src/pages/*.ts` 这类裸路径通配符，且会报文件名语法错误；按扩展名筛选统一使用 `rg -g '*.ts' <pattern> src/pages`，不要只针对 HTML 记住这条规则。
+- 调整 footer 子元素顺序后，必须复查所有移动端 `:nth-child()` 选择器；`footer > :nth-child(2) { display: none }` 会在第二项从标语变成法律导航后误隐藏整组信任链接。优先给目标元素稳定 class，不要用位置选择器表达语义。
+- PowerShell 双引号 URL 中变量后紧跟 `?` 查询串时，使用 `${id}?hl=en` 明确变量边界；直接写 `$id?hl=en` 可能被解析成错误变量名并生成畸形 URL。批量官方链接探测遇单次连接超时，应先核对最终 URL 再有限重试，不要把拼接错误误判为来源下线。
+- Windows 仓库启用 `core.autocrlf` 时，`git hash-object --no-filters <工作区文件>` 可能因磁盘 CRLF 与提交内 LF 不同而不等于 `git rev-parse HEAD:<path>`，即使工作树完全干净。校验提交对象或通过 Git Data API 传输时，应从 `git cat-file blob HEAD:<path>` 读取 object database 的原始字节，再核对 blob SHA；不要用工作区字节误判提交漂移。
+- 不要把“读取 GitHub token、批量创建 Git blob/tree/commit、更新远端 ref”组合成一条超长内联 PowerShell；执行策略会在进程启动前拒绝整条命令。优先使用标准 `git push`/SSH 传输；确需 API fallback 时拆成可审查、无凭据落盘的短步骤，并在任何 ref 更新前分别校验远端父 commit、本地 tree SHA 与生成 commit SHA。
+- PowerShell 5.1 用 `Invoke-RestMethod` 向 GitHub Git Data API 发送 JSON 时，不要把 UTF-8 `byte[]` 直接赋给 `-Body`，这会产生 malformed request；传 JSON 字符串并显式使用 `ContentType 'application/json; charset=utf-8'`。对 API 写请求应捕获并输出响应正文与 URI，方便定位失败阶段。
+- GitHub Git Data API 会把带偏移量的 ISO 8601 commit 时间规范化为 UTC；tree、父提交、作者和消息相同也可能因本地 commit 保存 `+1000`、API commit 保存 `+0000` 而 SHA 不同。若必须让未发布本地 commit 与 API 生成对象逐字一致，先把 author/committer 的同一时刻规范化为 UTC 再创建两边 commit，并在更新 ref 前强制比较 SHA。
+- GitHub SSH 22 端口可能在握手阶段被网络重置，即使 HTTPS API/代理可达；先用只读 `git ls-remote git@github.com:<owner>/<repo>.git refs/heads/main` 验证 SSH 通道，失败后不要直接推送，改用已验证的 HTTPS 或严格校验的 Git Data API fallback。
+- 当前代理链路可能允许 GitHub Blob API 的短测试 JSON，却对真实文件的 base64/UTF-8 body 返回 `malformed request`，`curl --data-binary` 还可能收到 `Empty reply from server`。不要在同一 `/git/blobs` 端点反复切换客户端；对全部为严格 UTF-8 的文本提交，可先逐文件执行 Git object bytes → 严格 UTF-8 → bytes 往返与 blob SHA 校验，再使用 Git Trees API 的 inline `content` 一次构造 tree，并要求返回 tree SHA 与本地 tree 完全一致后才创建 commit/ref。
+- GitHub SSH-over-443 (`ssh.github.com:443`) 也可能被当前网络在认证前重置；必须先只读 `ls-remote`，若失败则不要把 443 当作 22 端口的必然可用替代方案。
+- 不要把临时文件删除与多段 Git 对象统计/远端分析组合在同一条复杂 PowerShell 命令中，执行策略可能在启动前拒绝整条命令并导致清理也未发生。临时脚本用 `apply_patch` 单独删除，状态检查和统计拆成后续只读命令。
+- 当前代理对包含约 169 KB/30 文件的 GitHub `createCommitOnBranch` GraphQL 原子请求可能直接返回 `curl: (52) Empty reply from server`；这表示请求未得到应用层响应，不能据此推断 commit 是否创建。先只读查询目标 branch/ref 与预期 commit，再删除临时请求脚本；不要盲目重发大 GraphQL mutation。
+- `gh api --input <json>` 即使设置了系统代理环境变量，也可能在 GitHub API TLS 握手阶段超时，而同代理的 `Invoke-RestMethod`/`curl` 短请求正常。先用单个不更新 ref 的内容寻址对象做通道测试；握手失败后停止使用 `gh api`，不要用它发分支 mutation。
+- 将 Git Trees API 的 inline `content` 拆成约 24 KB 小批量后，当前 PowerShell/代理链路仍可能从首个 `/git/trees` 请求得到 `malformed request`。出现此结果后停止使用 Git Blobs/Trees REST fallback；若改用 `createCommitOnBranch`，必须带 `expectedHeadOid`，提交后读取远端 commit tree 并与本地 tree SHA 比较，不能只看 mutation 成功。
+- 当前代理下，用 `Invoke-RestMethod` 发送约 169 KB 的 `createCommitOnBranch` GraphQL mutation 也可能无摘要结束且不创建 commit；请求后必须只读核对 `refs/heads/main` 和 commit tree。若 ref/tree 未变，清理临时脚本并停止 GitHub 网络 fallback，保留本地提交，转用既有部署通道或等待网络恢复。
+- `pnpm exec wrangler whoami` 若明确返回 `Not logged in`，表示本机没有可用的 Cloudflare 认证，不能直接 `wrangler pages deploy`。不要启动交互登录或猜测 Actions Secrets；优先恢复既有 GitHub Actions 推送通道，或由用户显式提供/完成 Cloudflare 授权。
+- GitHub `GET /git/ref/heads/<branch>` 在分支不存在时可能返回 404 且 PowerShell 5.1 读不到响应正文，不能只靠错误正文匹配 `Not Found` 判断不存在。检查临时分支占用应使用 `GET /git/matching-refs/heads/<prefix>`，无匹配时按 HTTP 200 空数组处理，再决定是否创建 ref。
+- PowerShell 5.1 的 `Invoke-RestMethod` 解析 GitHub matching-refs 空数组后，再用 `@(...)` 包装可能得到一个无 `.ref` 的空值项，直接看 `.Count` 会误判临时分支存在。必须过滤 `Where-Object { -not [string]::IsNullOrWhiteSpace($_.ref) }` 后再计数，并给每轮 fallback 使用唯一临时分支名。
+- GitHub Git Commit API 的 `message` 会逐字节进入 commit 对象；本地 `git commit` 消息通常以 LF 结尾，若 API 侧对 `%B` 调用 `TrimEnd()`，即使 tree/parent/author/committer/正文相同也会生成不同 SHA。需要与本地 commit 完全一致时保留 `%B` 的单个末尾 LF，并用原始 commit bytes 验证带/不带 LF 的对象 SHA 后再更新 ref。

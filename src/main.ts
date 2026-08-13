@@ -7,6 +7,7 @@ import {
   type CalculatorMode,
   type PerformanceStatus,
 } from "./lib/calculator";
+import { initializePrivacyControls } from "./lib/privacy";
 
 const getElement = <T extends HTMLElement>(selector: string): T => {
   const element = document.querySelector<T>(selector);
@@ -231,5 +232,6 @@ document.querySelectorAll<HTMLDetailsElement>(".faq-list details").forEach((deta
 });
 
 getElement<HTMLElement>("#year").textContent = String(new Date().getFullYear());
+initializePrivacyControls();
 applyUrlValues();
 updateResults();
