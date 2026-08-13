@@ -35,3 +35,13 @@
 - `git push` 偶发出现 `Recv failure: Connection was reset` 时，本地 commit 通常已经成功，只是 HTTPS 传输被重置。先用 `git status` 和 `git log` 确认提交仍在，再重试 push；不要重复 commit 或重写历史。
 - TypeScript 严格模式下，即使顶层 DOM 查询随后做了空值检查，闭包函数里也可能不保留该收窄并报 TS18047。将查询结果检查后赋给显式非空的 `HTMLElement` 常量，再供各函数闭包使用；同时保持 `noUnusedLocals` 下无遗留类型或函数导入。
 - `apply_patch` 的一个跨文件补丁只要任一文件上下文不匹配，就会整体失败且不产生部分修改。涉及多个已频繁编辑文件时先用 `rg -n`/局部读取确认精确位置，再拆成逐文件小补丁。
+- 需要给 Playwright 传文件或 `--project` 等参数时，优先用 `pnpm exec playwright test <file> --project=<name>`。`pnpm test:e2e -- --project=...` 可能把额外的 `--` 作为 Playwright 参数并导致筛选未生效，意外运行全套项目。
+- Playwright 独占的 4173 测试服务器若因异常运行残留，下一轮会报 URL 已占用。先用 `Get-NetTCPConnection -LocalPort 4173 -State Listen` 精确取得 PID 并停止该进程，再重跑；不要开启 `reuseExistingServer` 掩盖残留进程。
+- `Get-NetTCPConnection -LocalPort <port> -State Listen` 在端口无人监听时会抛出 `ObjectNotFound` 并返回退出码 1，这表示端口已空闲。自动检查时使用 `-ErrorAction SilentlyContinue`，再判断结果是否为空，避免把正常空状态当成命令失败。
+- Windows 下 `rg` 不接受裸 `*.html` 作为 Unix 风格路径通配参数，会报文件名语法错误。按类型筛选应使用 `-g '*.html'`，搜索根目录另传 `.` 或明确目录。
+- E2E 验证无效参数回退时，不要凭旧页面记忆硬编码默认数值；先核对 `src/lib/calculator.ts` 的 `defaultInputs`，否则会把正确回退误报为功能失败。
+- `rg` 用于“可能无匹配”的静态审计时，退出码 1 只表示没有匹配项。PowerShell 命令应在 `$LASTEXITCODE -eq 1` 时显式转为成功，避免把合法空结果记为执行故障。
+- Playwright 的 `toContainText` 按可见文本语义断言，不能用于读取 `script[type="application/ld+json"]` 的原始 JSON；结构化数据测试应读取 locator 的 `textContent()` 后用普通字符串断言。
+- Codex in-app Browser 可能在 `browser.tabs.new()` 后出现 webview attach 超时，并且标签列表为空、`visibility.set(true)` 后仍返回不可见。先按 Browser troubleshooting 复用现有绑定并重试新标签；若连续失败，记录为浏览器通道限制，改用项目自带 Playwright Chromium 生成桌面/移动截图验收，不要反复重建浏览器绑定。
+- 手动启动 4173 Vite 做视觉截图后，必须先用 Ctrl+C 和 `Y` 正常停服，再运行由 Playwright `webServer` 管理的 E2E；否则因 `reuseExistingServer: false` 会正确报端口已占用。
+- 长时间等待 Playwright 清理时，目标 Vite PID 可能在检查与 `Stop-Process` 之间自行退出。停止前先用 `Get-Process -Id <pid> -ErrorAction SilentlyContinue` 确认仍存在；已退出则跳过，避免把正常清理竞态记成停止失败。
