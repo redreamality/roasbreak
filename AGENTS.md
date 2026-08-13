@@ -45,3 +45,4 @@
 - Codex in-app Browser 可能在 `browser.tabs.new()` 后出现 webview attach 超时，并且标签列表为空、`visibility.set(true)` 后仍返回不可见。先按 Browser troubleshooting 复用现有绑定并重试新标签；若连续失败，记录为浏览器通道限制，改用项目自带 Playwright Chromium 生成桌面/移动截图验收，不要反复重建浏览器绑定。
 - 手动启动 4173 Vite 做视觉截图后，必须先用 Ctrl+C 和 `Y` 正常停服，再运行由 Playwright `webServer` 管理的 E2E；否则因 `reuseExistingServer: false` 会正确报端口已占用。
 - 长时间等待 Playwright 清理时，目标 Vite PID 可能在检查与 `Stop-Process` 之间自行退出。停止前先用 `Get-Process -Id <pid> -ErrorAction SilentlyContinue` 确认仍存在；已退出则跳过，避免把正常清理竞态记成停止失败。
+- `git push` 若报 `Failed to connect to github.com port 443`，表示网络在建立 HTTPS 连接前超时，本地 commit 未丢失。先用 `git status`/`git log` 确认领先提交，再稍后原样重试 push；不要重复提交或改写历史。
