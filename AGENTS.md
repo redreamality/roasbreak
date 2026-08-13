@@ -32,3 +32,5 @@
 - PowerShell 中不能把 `foreach (...) { ... }` 语句块直接接到管道；会在解析阶段报 `An empty pipe element is not allowed`。需要汇总输出时，先将循环结果赋给变量，再单独执行 `$results | Format-Table`。
 - Shopify Help Center 可能对 HTTP `HEAD` 请求返回 403，即使同一 URL 用普通 `GET` 可以正常访问。核验 Shopify 官方资料链接时使用 `GET`（可配合 `-UseBasicParsing`），不要仅凭 `HEAD` 结果判定链接失效。
 - Windows 下不要让 `Get-Content`、`rg` 等命令并行读取同一份刚写完的大文件；可能出现瞬时文件锁并报 `os error 32`。同文件的完整读取与结构扫描应串行执行，锁释放后再重试。
+- `git push` 偶发出现 `Recv failure: Connection was reset` 时，本地 commit 通常已经成功，只是 HTTPS 传输被重置。先用 `git status` 和 `git log` 确认提交仍在，再重试 push；不要重复 commit 或重写历史。
+- TypeScript 严格模式下，即使顶层 DOM 查询随后做了空值检查，闭包函数里也可能不保留该收窄并报 TS18047。将查询结果检查后赋给显式非空的 `HTMLElement` 常量，再供各函数闭包使用；同时保持 `noUnusedLocals` 下无遗留类型或函数导入。
