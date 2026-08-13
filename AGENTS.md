@@ -29,3 +29,6 @@
 - Windows 下通过 Ctrl+C 停止 `pnpm dev` 可能继续提示 `Terminate batch job (Y/N)`；发送 `Y` 后退出码 1 是预期的手动停服结果，不要误判为应用运行失败。
 - 需要结束无用户回调的 Google OAuth 本地服务器时，先用 `Get-NetTCPConnection -LocalPort <port>` 精确取得监听 PID，再停止该进程；原等待命令随后退出码 1 是预期终止结果。
 - Windows PowerShell 5.1 的 `Invoke-WebRequest` 解析现代 HTML 时可能因兼容性问题抛出 `NullReferenceException` 并返回空响应；线上探测应加 `-UseBasicParsing`，或改用 `curl.exe`。
+- PowerShell 中不能把 `foreach (...) { ... }` 语句块直接接到管道；会在解析阶段报 `An empty pipe element is not allowed`。需要汇总输出时，先将循环结果赋给变量，再单独执行 `$results | Format-Table`。
+- Shopify Help Center 可能对 HTTP `HEAD` 请求返回 403，即使同一 URL 用普通 `GET` 可以正常访问。核验 Shopify 官方资料链接时使用 `GET`（可配合 `-UseBasicParsing`），不要仅凭 `HEAD` 结果判定链接失效。
+- Windows 下不要让 `Get-Content`、`rg` 等命令并行读取同一份刚写完的大文件；可能出现瞬时文件锁并报 `os error 32`。同文件的完整读取与结构扫描应串行执行，锁释放后再重试。
