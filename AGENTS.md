@@ -46,3 +46,4 @@
 - 手动启动 4173 Vite 做视觉截图后，必须先用 Ctrl+C 和 `Y` 正常停服，再运行由 Playwright `webServer` 管理的 E2E；否则因 `reuseExistingServer: false` 会正确报端口已占用。
 - 长时间等待 Playwright 清理时，目标 Vite PID 可能在检查与 `Stop-Process` 之间自行退出。停止前先用 `Get-Process -Id <pid> -ErrorAction SilentlyContinue` 确认仍存在；已退出则跳过，避免把正常清理竞态记成停止失败。
 - `git push` 若报 `Failed to connect to github.com port 443`，表示网络在建立 HTTPS 连接前超时，本地 commit 未丢失。先用 `git status`/`git log` 确认领先提交，再稍后原样重试 push；不要重复提交或改写历史。
+- 若 Windows 系统代理已启用、代理端点可达且代理访问 GitHub 成功，但 Git 未配置代理，直连 push 会持续超时。只读解析当前用户 Internet Settings 的 HTTPS 代理后，对单次命令使用 `git -c http.proxy=<proxy-uri> push ...`；不要把动态本地代理端口写入持久 Git 配置，也不要在日志中输出完整代理配置。
