@@ -62,14 +62,32 @@ test("removes optional analytics after consent is revoked", async ({ page }) => 
   await expect(page.locator('script[data-roasbreak-analytics="true"]')).toHaveCount(1);
 
   await page.goto("/privacy/");
+  await page.evaluate(() => {
+    (window as Window & { privacyTestMarker?: string }).privacyTestMarker = "same-page";
+    document.cookie = "_ga=GA1.1.123.456; path=/";
+    document.cookie = "_ga_TEST=GS1.1.123.1.0.123.0.0.0; path=/";
+    document.cookie = "roasbreak-test-cookie=keep; path=/";
+  });
   await page.getByRole("button", { name: "Privacy settings" }).click();
-  await Promise.all([
-    page.waitForEvent("load"),
-    page.getByRole("button", { name: "Reject optional analytics" }).click(),
-  ]);
+  await page.getByRole("button", { name: "Reject optional analytics" }).click();
 
   await expect(page.locator('script[data-roasbreak-analytics="true"]')).toHaveCount(0);
   expect(await page.evaluate(() => window.localStorage.getItem("roasbreak-privacy-choice"))).toBe("rejected");
+  expect(
+    await page.evaluate(() => ({
+      marker: (window as Window & { privacyTestMarker?: string }).privacyTestMarker,
+      disabled: (window as unknown as Record<string, unknown>)["ga-disable-G-QZ5QQK45LV"],
+      dataLayer: (window as Window & { dataLayer?: unknown[] }).dataLayer,
+      gtagType: typeof (window as Window & { gtag?: unknown }).gtag,
+      cookies: document.cookie,
+    })),
+  ).toEqual({
+    marker: "same-page",
+    disabled: true,
+    dataLayer: [],
+    gtagType: "undefined",
+    cookies: "roasbreak-test-cookie=keep",
+  });
 });
 
 test("publishes crawler and advertising readiness files", async ({ page, request }) => {

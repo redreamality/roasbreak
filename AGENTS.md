@@ -80,3 +80,12 @@
 - GitHub Contents API 的 `PUT /contents/<path>` 会忽略请求中的 author/committer date，并可能移除提交消息末尾 LF，因此不能用其返回的 commit SHA 直接复刻本地提交。需要精确同步时，只把 Contents API 用于生成并校验 tree，再用 Git Commit API 传入精确 tree、parent、author、committer 和含末尾 LF 的 message 创建提交。
 - 带临时远端分支的 API fallback 必须先在 `finally` 中完成分支删除，再清空进程内 token/Authorization；若提前清空认证头，清理请求会失败并遗留临时分支。清理失败后应立即用仍有效的进程内认证显式删除，并确认 ref 不存在。
 - Contents API 生成 tree 的临时 commit 与 Git Commit API 生成的精确 commit 可能共享同一父节点、互为兄弟，临时分支从前者切换到后者不是 fast-forward。仅可在唯一、可删除的 `codex/...` 临时分支上用 `force: true` 指向已核验 SHA；正式 `main` 更新必须继续使用 `force: false`。
+- 不要为定位本机工具而递归 `rg` 整个 `~/.codex`；其中 `sessions/*.jsonl` 体积很大，会产生巨量截断输出并可能以退出码 1 结束。优先检查已知项目路径、`Get-Command`、`uv tool list`，确需搜索时用 `-g '!sessions/**' -g '!archived_sessions/**'` 排除会话归档。
+- `gsc_cli.py` 的多个只读命令若同时无输出等待约 30 秒后均报 `WinError 10060`，表示 Python Google API 客户端直连超时，并非 OAuth token 或站点权限错误。读取当前 Windows 系统代理后，只在单次进程内设置 `HTTPS_PROXY`/`HTTP_PROXY` 并串行重试；不要并发刷新或写入同一份 OAuth token，也不要持久化动态代理端口。
+- 用 `importlib.util.find_spec('google.analytics.data_v1beta')` 探测未安装的嵌套模块时，若父包 `google.analytics` 不存在会直接抛 `ModuleNotFoundError`，不会返回 `False`。逐级探测父包或捕获异常；已有 `google-api-python-client` 时可优先用 discovery API，避免为一次只读审计新增专用 Analytics 包。
+- GA4 OAuth token 只有 `analytics.edit` 时，Analytics Admin API 可读取属性和数据流，但 Analytics Data `runReport` 会返回 403 `ACCESS_TOKEN_SCOPE_INSUFFICIENT`。这不是 token 失效；不要轮换或删除现有 token，也不要擅自启动扩权授权。流量报告需用户明确授权包含 `analytics.readonly` 的新 scope 后再查询。
+- `support.google.com:443` 在当前网络可能直连超时；刷新 Google 官方政策时先读取 Windows 系统 HTTPS 代理，仅对单次 `curl.exe -x <proxy>` 或进程环境注入代理，不要把动态代理持久化或输出完整代理配置。
+- `multi_tool_use` 内的 `exec_command` 若返回 JSON 字段 `session_id`，后续应调用 `write_stdin`；只有顶层 `functions.exec` 明确返回 `Script running with cell ID ...` 时才用 `functions.wait`。混用会报 `exec cell <id> not found`，且不能据此判断原终端进程状态。
+- `wrangler pages deploy` 返回 deployment URL 成功不等于自定义域已经能读取新构建。部署后必须在自定义域轮询新资产/文案；超时后先读 Pages API 的 `production_branch`、canonical deployment 和最新 deployment `environment`。若 canonical 已是新 production deployment，再比较预览域、自定义域及带 cache-buster 请求的响应头/资产 hash，排查边缘或代理缓存；只有 environment 为 preview 时才按真实生产分支重部署。
+- 任何会进入 Vite `dist` 的源码/HTML 修改都必须发生在最后一次 `pnpm build` 之前；即使 TypeScript bundle 是新的，build 后再改 `privacy/index.html` 仍会让部署包混入旧 HTML。部署前应从 `dist` 直接断言本轮新增的关键文案/资产，再调用 Wrangler。
+- PowerShell 捕获 `curl.exe` 的多行响应时变量可能是 `string[]`；对它直接用 `$html -notmatch '<text>'` 会逐行返回布尔数组，放进 `if` 后即使某一行匹配也可能整体按真值处理并误报失败。先用 `$body = ($html -join "`n")` 合并为单个字符串，再做最终正/负匹配断言。

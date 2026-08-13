@@ -1,5 +1,6 @@
 const ANALYTICS_ID = "G-QZ5QQK45LV";
 const PRIVACY_CHOICE_KEY = "roasbreak-privacy-choice";
+const ANALYTICS_DISABLE_KEY = `ga-disable-${ANALYTICS_ID}`;
 
 type PrivacyChoice = "accepted" | "rejected";
 
@@ -8,16 +9,22 @@ type AnalyticsWindow = Window & {
   gtag?: (...args: unknown[]) => void;
 };
 
+let sessionChoice: PrivacyChoice | null = null;
+
 function readChoice(): PrivacyChoice | null {
+  if (sessionChoice !== null) return sessionChoice;
+
   try {
     const value = window.localStorage.getItem(PRIVACY_CHOICE_KEY);
-    return value === "accepted" || value === "rejected" ? value : null;
+    sessionChoice = value === "accepted" || value === "rejected" ? value : null;
+    return sessionChoice;
   } catch {
     return null;
   }
 }
 
 function saveChoice(choice: PrivacyChoice): void {
+  sessionChoice = choice;
   try {
     window.localStorage.setItem(PRIVACY_CHOICE_KEY, choice);
   } catch {
@@ -25,10 +32,37 @@ function saveChoice(choice: PrivacyChoice): void {
   }
 }
 
+function removeAnalyticsCookies(): void {
+  const cookieNames = document.cookie
+    .split(";")
+    .map((cookie) => cookie.trim().split("=")[0])
+    .filter((name) => name === "_ga" || name.startsWith("_ga_"));
+  const domains = window.location.hostname === "roasbreak.com" || window.location.hostname.endsWith(".roasbreak.com")
+    ? ["", "roasbreak.com", ".roasbreak.com"]
+    : [""];
+
+  cookieNames.forEach((name) => {
+    domains.forEach((domain) => {
+      const domainAttribute = domain ? `; domain=${domain}` : "";
+      document.cookie = `${name}=; Max-Age=0; path=/${domainAttribute}; SameSite=Lax`;
+    });
+  });
+}
+
+function disableAnalytics(): void {
+  const analyticsWindow = window as AnalyticsWindow;
+  (analyticsWindow as unknown as Record<string, unknown>)[ANALYTICS_DISABLE_KEY] = true;
+  document.querySelectorAll('script[data-roasbreak-analytics="true"]').forEach((script) => script.remove());
+  analyticsWindow.dataLayer = [];
+  analyticsWindow.gtag = undefined;
+  removeAnalyticsCookies();
+}
+
 function loadAnalytics(): void {
   if (document.querySelector<HTMLScriptElement>('script[data-roasbreak-analytics="true"]')) return;
 
   const analyticsWindow = window as AnalyticsWindow;
+  (analyticsWindow as unknown as Record<string, unknown>)[ANALYTICS_DISABLE_KEY] = false;
   analyticsWindow.dataLayer = analyticsWindow.dataLayer ?? [];
   analyticsWindow.gtag = (...args: unknown[]) => analyticsWindow.dataLayer?.push(args);
   analyticsWindow.gtag("js", new Date());
@@ -77,10 +111,7 @@ function showPrivacyBanner(): void {
       const choice = button.dataset.privacyChoice as PrivacyChoice;
       saveChoice(choice);
       if (choice === "accepted") loadAnalytics();
-      else if (document.querySelector('script[data-roasbreak-analytics="true"]')) {
-        window.location.reload();
-        return;
-      }
+      else disableAnalytics();
       banner.remove();
     });
   });
@@ -88,8 +119,12 @@ function showPrivacyBanner(): void {
 }
 
 export function initializePrivacyControls(): void {
-  if (readChoice() === "accepted") loadAnalytics();
-  else if (readChoice() === null) showPrivacyBanner();
+  const choice = readChoice();
+  if (choice === "accepted") loadAnalytics();
+  else {
+    disableAnalytics();
+    if (choice === null) showPrivacyBanner();
+  }
 
   document.querySelectorAll<HTMLButtonElement>("[data-privacy-settings]").forEach((button) => {
     button.addEventListener("click", showPrivacyBanner);
@@ -97,5 +132,6 @@ export function initializePrivacyControls(): void {
 }
 
 export function trackAnalytics(eventName: string, parameters: Record<string, string> = {}): void {
+  if (readChoice() !== "accepted") return;
   (window as AnalyticsWindow).gtag?.("event", eventName, parameters);
 }
