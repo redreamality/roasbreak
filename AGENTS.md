@@ -76,3 +76,7 @@
 - GitHub Actions job 若 `steps` 为空、`runner_id` 为 0，且 check-run annotation 提示 `recent account payments have failed or your spending limit needs to be increased`，表示 runner 在任何步骤前因 Billing & plans 被拒绝，不是 workflow step 或 Cloudflare 凭据失败。先合并重复 checkout/install/build 的串行 jobs 以减少 runner 分配；若首个 job 仍无法启动，则必须由账户侧修复付款/Actions spending limit，不能靠重跑解决。
 - 用正则静态统计 GitHub Actions job 数量时，不要直接在整份 YAML 匹配 `^  <key>:`，这会把 `on:` 下同样两空格缩进的 `push:`/`workflow_dispatch:` 误算为 jobs。先截取 `jobs:` 之后的文档段，或使用 YAML parser，再统计其一级键。
 - `git push` 可能由 GitHub 远端明确返回 `Internal Server Error` 和 Request ID，此时不是本地对象/权限错误。先确认远端 ref 未更新；小型纯文本提交可复用经过 blob/tree/commit SHA 强校验的 Contents API 临时分支流程，不能因为 500 重复并发 push 或改写已发布历史。
+- PowerShell 会解释 Git revision 中未加引号的花括号；直接执行 `git rev-parse HEAD^{tree}` 可能把 `{tree}` 拆成脚本块并传入畸形参数。此类 revision 必须用单引号包裹，例如 `git rev-parse 'HEAD^{tree}'`。
+- GitHub Contents API 的 `PUT /contents/<path>` 会忽略请求中的 author/committer date，并可能移除提交消息末尾 LF，因此不能用其返回的 commit SHA 直接复刻本地提交。需要精确同步时，只把 Contents API 用于生成并校验 tree，再用 Git Commit API 传入精确 tree、parent、author、committer 和含末尾 LF 的 message 创建提交。
+- 带临时远端分支的 API fallback 必须先在 `finally` 中完成分支删除，再清空进程内 token/Authorization；若提前清空认证头，清理请求会失败并遗留临时分支。清理失败后应立即用仍有效的进程内认证显式删除，并确认 ref 不存在。
+- Contents API 生成 tree 的临时 commit 与 Git Commit API 生成的精确 commit 可能共享同一父节点、互为兄弟，临时分支从前者切换到后者不是 fast-forward。仅可在唯一、可删除的 `codex/...` 临时分支上用 `force: true` 指向已核验 SHA；正式 `main` 更新必须继续使用 `force: false`。
