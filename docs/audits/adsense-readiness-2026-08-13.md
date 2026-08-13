@@ -10,7 +10,7 @@ Stage: pre-application readiness
 
 ## Decision
 
-**Not ready to apply yet.** The repository is ready to deploy after the fixes in this audit, but the live site still serves the old homepage for `/about/`, `/contact/`, `/privacy/`, and `/ads.txt`. Application should wait until the fixes are deployed, the real AdSense publisher ID is added to `ads.txt`, and the owner/account unknowns below are confirmed.
+**Ready after account-side fixes.** The repository fixes were deployed to `https://roasbreak.com/` on 2026-08-14. Production smoke tests now confirm real About, Contact, Privacy, Terms, `ads.txt`, sitemap, robots, 404, and privacy-consent behavior. Application should wait until the real AdSense publisher ID is added to `ads.txt` and the owner/account unknowns below are confirmed.
 
 This audit cannot guarantee AdSense approval. Google reviews the deployed site and publisher account.
 
@@ -18,18 +18,16 @@ This audit cannot guarantee AdSense approval. Google reviews the deployed site a
 
 - `ADS-ELIG-01`, `ADS-ELIG-02`: applicant age/guardian eligibility and duplicate-account status require owner confirmation.
 - `ADS-OWN-02`, `ADS-SITE-01`: repository access is proven, but domain ownership and the AdSense site-list/review state require owner and AdSense account evidence.
-- `ADS-PRIV-01`: fixed in the repository with a substantive privacy page and optional analytics control, but it is not live yet.
 
 ## High Risks
 
-- `ADS-TXT-01`: `public/ads.txt` now deploys a real text file, but it intentionally contains no seller line because the publisher ID is unknown. Replace the example with the account's exact `pub-...` value before review/ad serving.
+- `ADS-TXT-01`: production now serves a real `text/plain` file at `/ads.txt`, but it intentionally contains no seller line because the publisher ID is unknown. Replace the example with the account's exact `pub-...` value before review/ad serving.
 - `ADS-PRIV-04`: the repository has explicit accept/reject controls for optional Analytics. If AdSense will serve personalized ads to EEA/UK/Swiss users, configure a Google-certified CMP and verify regional behavior before enabling ads.
 - `ADS-PROG-01`, `ADS-PROG-04`: invalid-traffic practices and traffic acquisition sources cannot be proven from the public site or repository.
 
 ## Medium Risks
 
-- `ADS-TXT-02`, `ADS-UX-05`, `ADS-CRAWL-07`: fixes exist locally (`ads.txt`, trust pages, footer links, sitemap entries) but need production deployment and live verification.
-- The hosting platform currently returns the homepage with HTTP 200 for unknown paths. A dedicated `404.html` is now built, but Cloudflare Pages must be verified after deployment to ensure unknown URLs return the 404 document and preferably an HTTP 404 status.
+- No unresolved repository or production issues remain at this severity. Recheck routing, consent, and crawler behavior after hosting or analytics changes.
 
 ## Implemented Fixes
 
@@ -39,6 +37,8 @@ This audit cannot guarantee AdSense approval. Google reviews the deployed site a
 - Added a real `ads.txt` deployment file without fabricating a Publisher ID.
 - Added trust pages to the sitemap and added a noindex 404 document.
 - Added desktop/mobile E2E coverage for trust navigation, consent persistence, Analytics loading, clean analytics URLs, crawler files, and mobile overflow.
+- Deployed the verified build to Cloudflare Pages and passed a two-test production smoke suite against `https://roasbreak.com/`.
+- Verified an arbitrary missing production path returns HTTP 404 with the dedicated noindex error document.
 
 ## Exhaustive Checklist
 
@@ -54,7 +54,7 @@ This audit cannot guarantee AdSense approval. Google reviews the deployed site a
 | ADS-SITE-01 | Unknown | AdSense dashboard/site-list status is unavailable. | Add the deployed domain, verify it, request review, and wait for Ready status. |
 | ADS-SITE-02 | Pass | The repository can deploy a head tag, AdSense code, and `ads.txt`. | Use the exact verification method offered by the account. |
 | ADS-TXT-01 | Fail | `public/ads.txt` is a real text file but has no authorized seller because no Publisher ID is known. | Replace the example with `google.com, pub-<real-id>, DIRECT, f08c47fec0942fa0`. |
-| ADS-TXT-02 | Fail | Production `/ads.txt` currently returns the HTML homepage; the local fix is not deployed. | Deploy and verify `text/plain` at the live root. |
+| ADS-TXT-02 | Pass | Production `/ads.txt` returns HTTP 200 with `text/plain; charset=utf-8`. | Keep the root file deployed. |
 | ADS-CONTENT-01 | Pass | Six functional decision tools and five detailed guides provide original calculations, examples, and operating explanations. | Continue editorial review and source maintenance. |
 | ADS-CONTENT-02 | Pass | Pages add original formulas, scenario logic, examples, and commentary; they are not embedded/syndicated feeds. | Preserve primary-source citations without copying source bodies. |
 | ADS-CONTENT-03 | Pass | Homepage, directories, tool detail pages, and guide detail pages contain substantive main content. | Avoid publishing empty tag/list pages. |
@@ -67,7 +67,7 @@ This audit cannot guarantee AdSense approval. Google reviews the deployed site a
 | ADS-UX-02 | Pass | Home, tools directory, guides directory, breadcrumbs, related actions, and trust footer provide clear site flows. | None. |
 | ADS-UX-03 | Pass | No fake download/play buttons, nonexistent CTAs, ad-like navigation, or irrelevant redirects were found. | Preserve semantic CTA labels. |
 | ADS-UX-04 | Pass | Browser inspection and E2E found no downloads, surprise redirects, malware, popunders, or obstructive popups. | Keep optional privacy control non-blocking. |
-| ADS-UX-05 | Fail | About/Contact/Privacy/Terms now exist locally, but the production paths still return the homepage shell. | Deploy, then verify unique live headings/titles and footer links. |
+| ADS-UX-05 | Pass | Production About/Contact/Privacy/Terms pages have unique headings, titles, canonicals, and footer links. | Keep publisher/contact details current. |
 | ADS-UX-06 | Pass | No ad placeholders or ad-like blocks exist before approval; visual hierarchy separates tools and editorial content. | Label future ads neutrally and distinctly. |
 | ADS-CRAWL-01 | Pass | Homepage and representative tool/guide URLs return 200 publicly; DNS/TLS resolve correctly. | Verify all new trust pages after deployment. |
 | ADS-CRAWL-02 | Pass | `robots.txt` allows all; homepage, robots, and sitemap return 200 to `Mediapartners-Google`/Googlebot user agents; no login wall exists. | Recheck after WAF/rule changes. |
@@ -75,7 +75,7 @@ This audit cannot guarantee AdSense approval. Google reviews the deployed site a
 | ADS-CRAWL-04 | Pass | HTTPS homepage has no redirect; HTTP performs one expected redirect to HTTPS. | Keep canonical host redirects to one hop. |
 | ADS-CRAWL-05 | Pass | Stable directory URLs and canonical tags are used; calculator state uses optional query parameters, not session IDs. | Keep canonical tags query-free. |
 | ADS-CRAWL-06 | Pass | Cloudflare DNS A/AAAA records resolve, TLS verifies, and sampled requests return successfully. | Monitor uptime after deployment. |
-| ADS-CRAWL-07 | Fail | Existing sitemap is valid, but production has not yet published the four new trust URLs. | Deploy updated sitemap and submit/recheck in Search Console. |
+| ADS-CRAWL-07 | Pass | Production sitemap includes all four trust URLs and stable tool/guide URLs. | Submit/recheck the sitemap in Search Console. |
 | ADS-PROG-01 | Unknown | No traffic/invalid-click logs or owner practice confirmation is available. | Confirm no self-clicking, automated impressions, or invalid traffic tools. |
 | ADS-PROG-02 | Pass | Site copy scan found no request/reward to click or view ads and no attention arrows for ads. | Never add incentivized ad copy. |
 | ADS-PROG-03 | N/A | No ads or ad slots are currently present. | Use neutral labels such as “Advertisement” when ads are added. |
@@ -87,7 +87,7 @@ This audit cannot guarantee AdSense approval. Google reviews the deployed site a
 | ADS-PUB-02 | Pass | Original UI/text and attributed source links are present; no counterfeit sales or copied media catalog was found. | Maintain source attribution and image rights. |
 | ADS-PUB-03 | Pass | No hate, harassment, threats, self-harm, violence praise, terrorism, or extortion content was found. | Re-audit new content. |
 | ADS-PUB-04 | N/A | No animal/product content or marketplace exists. | Re-audit if niche changes. |
-| ADS-PUB-05 | Pass | New About/Contact pages identify Redreamality, explain purpose, and disclose lack of platform affiliation. | Deploy the trust pages. |
+| ADS-PUB-05 | Pass | Production About/Contact pages identify Redreamality, explain purpose, and disclose lack of platform affiliation. | Keep identity and affiliation disclosures current. |
 | ADS-PUB-06 | Pass | No phishing, identity collection, get-rich guarantee, deceptive offer, or misleading lead flow was found. | Keep calculators assumption-driven and avoid guaranteed outcome claims. |
 | ADS-PUB-07 | N/A | No hacking, cheating, fake-document, evasion, tracking, or spyware tools/content exist. | Re-audit if product scope changes. |
 | ADS-PUB-08 | N/A | No sexual services, marriage brokerage, adult/family crossover, or exploitation content exists. | Re-audit if content/UGC changes. |
@@ -107,7 +107,7 @@ This audit cannot guarantee AdSense approval. Google reviews the deployed site a
 | ADS-REST-06 | N/A | No gambling or paid games of chance exist. | None. |
 | ADS-REST-07 | N/A | No pharmacy, prescription drug, supplement, or app catalog exists. | None. |
 | ADS-REST-08 | N/A | No ads or video ads exist to obstruct content/controls. | Add placement-specific responsive tests before ads launch. |
-| ADS-PRIV-01 | Fail | A complete local policy discloses hosting, Analytics, identifiers, cookies/web beacons, and future ads, but production `/privacy/` still returns the homepage. | Deploy and verify the live policy/footer link. |
+| ADS-PRIV-01 | Pass | Production Privacy Policy discloses hosting, Analytics, identifiers, cookies/web beacons, and future ads; the footer links to it site-wide. | Keep the policy synchronized with enabled vendors. |
 | ADS-PRIV-02 | Pass | Local policy explicitly discloses third-party cookies, web beacons, IP addresses, and identifiers for future ad serving. | Keep wording synchronized with enabled vendors. |
 | ADS-PRIV-03 | Pass | Code does not send calculator inputs as event parameters and strips URL query strings from Analytics page locations/referrers. | Never add PII fields or PII-bearing data-layer events. |
 | ADS-PRIV-04 | Unknown | Optional Analytics has explicit consent; no Google-certified CMP for regional AdSense consent is configured. | Before ads, configure/test a certified CMP for applicable EEA/UK/Swiss traffic. |
