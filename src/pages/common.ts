@@ -148,6 +148,23 @@ export async function copyText(text: string, message = "Result copied"): Promise
 export function setYearAndIcons(): void {
   document.querySelectorAll<HTMLElement>("[data-year]").forEach((node) => { node.textContent = String(new Date().getFullYear()); });
   createIcons({ icons: { Link, RotateCcw } });
+  initializeAnalytics();
+}
+
+function initializeAnalytics(): void {
+  const analyticsWindow = window as Window & {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  };
+  if (analyticsWindow.gtag) return;
+  analyticsWindow.dataLayer = analyticsWindow.dataLayer ?? [];
+  analyticsWindow.gtag = (...args: unknown[]) => analyticsWindow.dataLayer?.push(args);
+  analyticsWindow.gtag("js", new Date());
+  analyticsWindow.gtag("config", "G-QZ5QQK45LV");
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = "https://www.googletagmanager.com/gtag/js?id=G-QZ5QQK45LV";
+  document.head.append(script);
 }
 
 export function track(eventName: string, parameters: Record<string, string> = {}): void {

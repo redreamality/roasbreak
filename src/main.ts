@@ -131,11 +131,11 @@ function updateResults(): void {
   }
 
   updateScale(result.breakEvenRoas, values.currentRoas);
+  getElement<HTMLAnchorElement>("#target-roas-link").href = `/target-roas-calculator/?${valuesToParams(values)}`;
 }
 
-function valuesToUrl(): string {
-  const values = readInputs();
-  const params = new URLSearchParams({
+function valuesToParams(values: CalculatorInputs): URLSearchParams {
+  return new URLSearchParams({
     mode: values.mode,
     aov: String(values.orderValue),
     margin: String(values.grossMarginPct),
@@ -146,6 +146,11 @@ function valuesToUrl(): string {
     returns: String(values.returnPct),
     roas: String(values.currentRoas),
   });
+}
+
+function valuesToUrl(): string {
+  const values = readInputs();
+  const params = valuesToParams(values);
   return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
 }
 

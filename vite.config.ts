@@ -18,6 +18,8 @@ export default defineConfig({
         attributedMer: resolve(import.meta.dirname, "guides/attributed-roas-vs-mer/index.html"),
         revenueBasis: resolve(import.meta.dirname, "guides/ecommerce-revenue-basis/index.html"),
         returnsDiscounts: resolve(import.meta.dirname, "guides/returns-and-discounts/index.html"),
+        tools: resolve(import.meta.dirname, "tools/index.html"),
+        guides: resolve(import.meta.dirname, "guides/index.html"),
       },
     },
   },

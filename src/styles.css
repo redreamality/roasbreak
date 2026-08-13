@@ -567,6 +567,19 @@ h1 {
   color: #fff;
 }
 
+.home-next-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top: 1px solid #3c413b;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
 .calculator-shell[data-status="below"] .primary-result > strong,
 .calculator-shell[data-status="unviable"] .primary-result > strong {
   color: #ff8a72;
@@ -916,6 +929,10 @@ footer > :last-child {
 
   nav a {
     font-size: 0.7rem;
+  }
+
+  .site-header nav a:nth-child(3) {
+    display: none;
   }
 
   .tool-intro,
