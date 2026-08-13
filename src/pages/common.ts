@@ -14,6 +14,8 @@ export const wholeCurrency = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
+const invalidLinkParameters = new Set<string>();
+
 export const formatRoas = (value: number): string =>
   Number.isFinite(value) ? `${value.toFixed(2)}x` : "Not feasible";
 
@@ -24,6 +26,51 @@ export const numberValue = (root: ParentNode, id: string): number => {
   const element = root.querySelector<HTMLInputElement>(`#${id}`);
   return Number(element?.value ?? 0);
 };
+
+export function readNumberParam(
+  parameter: string,
+  fallback: number,
+  minimum = 0,
+  maximum = Number.POSITIVE_INFINITY,
+): number {
+  const raw = new URLSearchParams(window.location.search).get(parameter);
+  if (raw === null) return fallback;
+  const value = Number(raw);
+  if (raw.trim() === "" || !Number.isFinite(value) || value < minimum || value > maximum) {
+    invalidLinkParameters.add(parameter);
+    return fallback;
+  }
+  return value;
+}
+
+export function readTextParam(parameter: string, fallback: string): string {
+  const raw = new URLSearchParams(window.location.search).get(parameter);
+  if (raw === null) return fallback;
+  const value = raw.trim();
+  if (!value) {
+    invalidLinkParameters.add(parameter);
+    return fallback;
+  }
+  return value.slice(0, 80);
+}
+
+export function replaceUrlState(params: URLSearchParams): void {
+  window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}${window.location.hash}`);
+}
+
+export function stateUrl(params: URLSearchParams): string {
+  return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+}
+
+export function escapeHtml(value: string): string {
+  return value.replace(/[&<>'"]/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "'": "&#39;",
+    '"': "&quot;",
+  })[character] ?? character);
+}
 
 export function inputsFrom(root: ParentNode): CalculatorInputs {
   const mode = root.querySelector<HTMLInputElement>('input[name="mode"]:checked')?.value as CalculatorMode | undefined;
@@ -45,21 +92,20 @@ export function readSharedParams(): Partial<CalculatorInputs> {
   const mode = params.get("mode");
   const output: Partial<CalculatorInputs> = {};
   if (mode === "margin" || mode === "costs") output.mode = mode;
-  const mappings: Array<[string, keyof CalculatorInputs]> = [
-    ["aov", "orderValue"],
-    ["margin", "grossMarginPct"],
-    ["cogs", "productCost"],
-    ["ship", "fulfillmentCost"],
-    ["other", "otherCost"],
-    ["fees", "feePct"],
-    ["returns", "returnPct"],
-    ["roas", "currentRoas"],
+  else if (mode !== null) invalidLinkParameters.add("mode");
+  const mappings: Array<[string, keyof CalculatorInputs, number]> = [
+    ["aov", "orderValue", Number.POSITIVE_INFINITY],
+    ["margin", "grossMarginPct", 100],
+    ["cogs", "productCost", Number.POSITIVE_INFINITY],
+    ["ship", "fulfillmentCost", Number.POSITIVE_INFINITY],
+    ["other", "otherCost", Number.POSITIVE_INFINITY],
+    ["fees", "feePct", 100],
+    ["returns", "returnPct", 100],
+    ["roas", "currentRoas", Number.POSITIVE_INFINITY],
   ];
-  mappings.forEach(([parameter, key]) => {
+  mappings.forEach(([parameter, key, maximum]) => {
     const raw = params.get(parameter);
-    if (raw !== null && raw.trim() !== "" && Number.isFinite(Number(raw))) {
-      Object.assign(output, { [key]: Number(raw) });
-    }
+    if (raw !== null) Object.assign(output, { [key]: readNumberParam(parameter, defaultInputs[key] as number, 0, maximum) });
   });
   return output;
 }
@@ -145,10 +191,46 @@ export async function copyText(text: string, message = "Result copied"): Promise
   window.setTimeout(() => toast.classList.remove("is-visible"), 1800);
 }
 
+export function showInvalidParamNotice(root: HTMLElement): void {
+  if (invalidLinkParameters.size === 0) return;
+  const notice = document.createElement("p");
+  notice.className = "param-warning";
+  notice.role = "status";
+  notice.textContent = "Some values in this shared link were invalid and reset to defaults.";
+  root.prepend(notice);
+}
+
 export function setYearAndIcons(): void {
   document.querySelectorAll<HTMLElement>("[data-year]").forEach((node) => { node.textContent = String(new Date().getFullYear()); });
+  initializePageSemantics();
   createIcons({ icons: { Link, RotateCcw } });
   initializeAnalytics();
+}
+
+function initializePageSemantics(): void {
+  const breadcrumb = document.querySelector<HTMLElement>(".breadcrumb");
+  if (breadcrumb) {
+    breadcrumb.setAttribute("aria-label", "Breadcrumb");
+    const items = Array.from(breadcrumb.children).map((node, index, nodes) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: node.textContent?.trim() || `Level ${index + 1}`,
+      item: node instanceof HTMLAnchorElement
+        ? new URL(node.getAttribute("href") ?? "/", window.location.origin).href
+        : index === nodes.length - 1 ? `${window.location.origin}${window.location.pathname}` : undefined,
+    }));
+    const schema = document.createElement("script");
+    schema.type = "application/ld+json";
+    schema.dataset.schema = "breadcrumb";
+    schema.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: items,
+    });
+    document.head.append(schema);
+  }
+  const toast = document.querySelector<HTMLElement>("#toast");
+  if (toast) toast.setAttribute("role", "status");
 }
 
 function initializeAnalytics(): void {
