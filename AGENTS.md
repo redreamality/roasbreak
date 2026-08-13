@@ -47,3 +47,10 @@
 - 长时间等待 Playwright 清理时，目标 Vite PID 可能在检查与 `Stop-Process` 之间自行退出。停止前先用 `Get-Process -Id <pid> -ErrorAction SilentlyContinue` 确认仍存在；已退出则跳过，避免把正常清理竞态记成停止失败。
 - `git push` 若报 `Failed to connect to github.com port 443`，表示网络在建立 HTTPS 连接前超时，本地 commit 未丢失。先用 `git status`/`git log` 确认领先提交，再稍后原样重试 push；不要重复提交或改写历史。
 - 若 Windows 系统代理已启用、代理端点可达且代理访问 GitHub 成功，但 Git 未配置代理，直连 push 会持续超时。只读解析当前用户 Internet Settings 的 HTTPS 代理后，对单次命令使用 `git -c http.proxy=<proxy-uri> push ...`；不要把动态本地代理端口写入持久 Git 配置，也不要在日志中输出完整代理配置。
+- 运行指定 Playwright spec 前先用 `Test-Path` 或 `rg --files tests/e2e` 确认文件存在；不存在的路径会报 `No tests found`，不能作为生产 smoke 验证命令。
+- PowerShell 把长 JavaScript 直接作为原生 `node -e` 参数时，内部引号可能在 Windows 参数解析中被剥离并导致 Node 语法错误。复杂内联 smoke 脚本应先转 Base64 放入环境变量，`node -e` 只保留无引号的解码/执行入口，或使用受版本控制的现有 spec。
+- 即使 Base64 解码入口先存入 PowerShell 字符串变量，Windows 原生参数层仍可能剥掉入口内部的字符串引号。将 `base64` 编码名也放入环境变量，让入口完全不含字符串字面量，再用 `& node '--input-type=module' '-e' $entry` 作为单一参数传入。
+- 通过 `eval()` 执行解码后的 JavaScript 时，脚本主体不能使用静态 `import`，即使外层 `node` 启用了 module input；应包装为异步 IIFE，内部使用 `await import()`，外层入口使用 `await eval(...)` 等待 smoke 完成。
+- 生产页经 Vite 打包和 Cloudflare 注入后可能同时存在多个 `script[type="module"]`；Playwright 读取资产时不要用宽泛 locator 直接取单个属性，应按 `src` 片段筛选或使用 `.all()`，避免 strict mode 多匹配。
+- 经本地系统代理连续导航生产站时，Chromium 偶发 `ERR_NETWORK_IO_SUSPENDED`，即使同 URL 的 HTTP GET 正常。生产 smoke 应为每个 URL 新建 page/context，并仅对这类瞬时导航错误做有限重试；不要把一次代理 I/O 暂停判成线上页面故障。
+- Playwright `fill()` 触发页面用 `history.replaceState` 同步 URL 时，不要在 `fill()` 返回后立即读取 `page.url()`；应使用 `waitForURL` 等待目标参数出现，再断言 URL 与重算结果，避免事件处理与测试读取之间的竞态。
