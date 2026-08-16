@@ -22,6 +22,20 @@ test("publishes real trust pages from the homepage and existing inner pages", as
   }
 });
 
+test("identifies floatboat.ai as publisher and provides its email contact", async ({ page }) => {
+  await page.goto("/about/");
+  await expect(page.getByText("It is published and maintained by floatboat.ai.")).toBeVisible();
+
+  for (const path of ["/contact/", "/privacy/"]) {
+    await page.goto(path);
+    await expect(page.getByText("ROAS Break is published by floatboat.ai.")).toBeVisible();
+    await expect(page.getByRole("link", { name: "contact@floatboat.ai" })).toHaveAttribute(
+      "href",
+      "mailto:contact@floatboat.ai",
+    );
+  }
+});
+
 test("loads optional analytics only after explicit acceptance", async ({ page }) => {
   await page.goto("/?customer=private-value");
 

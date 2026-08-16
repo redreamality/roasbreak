@@ -172,6 +172,9 @@ test("publishes matching canonical, schema, breadcrumb, and sitemap URLs", async
 });
 
 test("keeps every published inner page free of runtime errors", async ({ page }) => {
+  await page.route("https://fonts.googleapis.com/**", async (route) => {
+    await route.fulfill({ status: 200, contentType: "text/css", body: "" });
+  });
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {

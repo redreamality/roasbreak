@@ -89,3 +89,5 @@
 - `wrangler pages deploy` 返回 deployment URL 成功不等于自定义域已经能读取新构建。部署后必须在自定义域轮询新资产/文案；超时后先读 Pages API 的 `production_branch`、canonical deployment 和最新 deployment `environment`。若 canonical 已是新 production deployment，再比较预览域、自定义域及带 cache-buster 请求的响应头/资产 hash，排查边缘或代理缓存；只有 environment 为 preview 时才按真实生产分支重部署。
 - 任何会进入 Vite `dist` 的源码/HTML 修改都必须发生在最后一次 `pnpm build` 之前；即使 TypeScript bundle 是新的，build 后再改 `privacy/index.html` 仍会让部署包混入旧 HTML。部署前应从 `dist` 直接断言本轮新增的关键文案/资产，再调用 Wrangler。
 - PowerShell 捕获 `curl.exe` 的多行响应时变量可能是 `string[]`；对它直接用 `$html -notmatch '<text>'` 会逐行返回布尔数组，放进 `if` 后即使某一行匹配也可能整体按真值处理并误报失败。先用 `$body = ($html -join "`n")` 合并为单个字符串，再做最终正/负匹配断言。
+- PowerShell 不会用反斜杠转义双引号；在双引号参数中写含 `\"` 的复杂 `rg` 正则会提前结束字符串并导致模式被错误解析。正则包含双引号或字符类时统一用 PowerShell 单引号包裹，并拆开多个搜索主题，避免无输出时误判为无匹配。
+- 本地 Playwright 的“无运行时错误”用例遍历多页时，Google Fonts 的 `fonts.gstatic.com` 字体请求可能被网络重置并以控制台 error 造成假失败。此类只验证本地运行时的用例应先 route `fonts.googleapis.com` 并返回空 CSS，隔离第三方字体网络；生产字体可用性应另做线上检查，不要放宽本地页面错误断言。

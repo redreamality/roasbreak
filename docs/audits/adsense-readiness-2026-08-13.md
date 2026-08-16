@@ -90,7 +90,7 @@ This audit cannot guarantee AdSense approval. Google reviews the deployed site a
 | ADS-PUB-02 | Pass | Original UI/text and attributed source links are present; no counterfeit sales or copied media catalog was found. | Maintain source attribution and image rights. |
 | ADS-PUB-03 | Pass | No hate, harassment, threats, self-harm, violence praise, terrorism, or extortion content was found. | Re-audit new content. |
 | ADS-PUB-04 | N/A | No animal/product content or marketplace exists. | Re-audit if niche changes. |
-| ADS-PUB-05 | Pass | Production About/Contact pages identify Redreamality, explain purpose, and disclose lack of platform affiliation. | Keep identity and affiliation disclosures current. |
+| ADS-PUB-05 | Pass | Production About/Contact pages identify floatboat.ai, explain purpose, and disclose lack of platform affiliation. | Keep identity and affiliation disclosures current. |
 | ADS-PUB-06 | Pass | No phishing, identity collection, get-rich guarantee, deceptive offer, or misleading lead flow was found. | Keep calculators assumption-driven and avoid guaranteed outcome claims. |
 | ADS-PUB-07 | N/A | No hacking, cheating, fake-document, evasion, tracking, or spyware tools/content exist. | Re-audit if product scope changes. |
 | ADS-PUB-08 | N/A | No sexual services, marriage brokerage, adult/family crossover, or exploitation content exists. | Re-audit if content/UGC changes. |
