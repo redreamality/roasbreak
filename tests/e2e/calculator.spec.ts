@@ -10,6 +10,17 @@ test("renders the default profitability threshold", async ({ page }) => {
   await expect(page.locator("#calculator").evaluate((node) => node.previousElementSibling?.className)).resolves.toBe("tool-intro");
 });
 
+test("keeps the calculator ahead of editorial discovery", async ({ page }) => {
+  await page.goto("/");
+  const positions = await page.evaluate(() => ({
+    introBottom: document.querySelector(".tool-intro")?.getBoundingClientRect().bottom ?? 0,
+    calculatorTop: document.querySelector("#calculator")?.getBoundingClientRect().top ?? 0,
+    libraryTop: document.querySelector(".library-section")?.getBoundingClientRect().top ?? 0,
+  }));
+  expect(positions.calculatorTop).toBeGreaterThanOrEqual(positions.introBottom - 1);
+  expect(positions.calculatorTop).toBeLessThan(positions.libraryTop);
+});
+
 test("switches to cost breakdown and recalculates live", async ({ page }) => {
   await page.goto("/");
   await page.getByLabel("Cost breakdown").check();

@@ -91,3 +91,7 @@
 - PowerShell 捕获 `curl.exe` 的多行响应时变量可能是 `string[]`；对它直接用 `$html -notmatch '<text>'` 会逐行返回布尔数组，放进 `if` 后即使某一行匹配也可能整体按真值处理并误报失败。先用 `$body = ($html -join "`n")` 合并为单个字符串，再做最终正/负匹配断言。
 - PowerShell 不会用反斜杠转义双引号；在双引号参数中写含 `\"` 的复杂 `rg` 正则会提前结束字符串并导致模式被错误解析。正则包含双引号或字符类时统一用 PowerShell 单引号包裹，并拆开多个搜索主题，避免无输出时误判为无匹配。
 - 本地 Playwright 的“无运行时错误”用例遍历多页时，Google Fonts 的 `fonts.gstatic.com` 字体请求可能被网络重置并以控制台 error 造成假失败。此类只验证本地运行时的用例应先 route `fonts.googleapis.com` 并返回空 CSS，隔离第三方字体网络；生产字体可用性应另做线上检查，不要放宽本地页面错误断言。
+- PowerShell 对根目录相对文件（如 `README.md`）执行 `Split-Path -Parent` 会返回空字符串，直接传给 `Join-Path` 会报 `Cannot bind argument to parameter 'Path'` 并把有效相对链接误判为缺失。路径校验脚本应在 parent 为空时显式回退到 `(Get-Location).Path`，再解析目标路径。
+- 新克隆或新工作树可能只有 `package.json`/`pnpm-lock.yaml` 而没有 `node_modules`；直接运行 `pnpm test` 会报本地 `vitest` 找不到。执行测试或构建前先用 `Test-Path node_modules` 检查，缺失时运行 `pnpm install --frozen-lockfile`，不要把依赖未安装误判为测试代码失败。
+- `pnpm install --frozen-lockfile` 只安装 `@playwright/test` 包，不会自动安装匹配版本的浏览器产物；新工作树首次跑 E2E 前应执行 `pnpm exec playwright install --only-shell chromium`。否则全部用例会在 `browserType.launch` 阶段因缺少 `chromium_headless_shell-<version>` 同因失败，不能当成 40 个独立产品缺陷。
+- 指南模板把 `.guide-action` 作为唯一主工具 CTA、Analytics 事件和发布测试契约；同页的辅助动作应使用 `.text-action` 或 `.related-links`。不要给两个链接都套 `.guide-action`，否则 E2E 会正确报主动作不唯一。

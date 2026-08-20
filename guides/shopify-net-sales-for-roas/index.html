@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopify Net Sales for Break-even ROAS | ROAS Break</title>
+    <meta name="description" content="Map Shopify gross sales, discounts, returns, net sales, product cost, tax, shipping, and fees into a break-even ROAS calculation." />
+    <link rel="canonical" href="https://roasbreak.com/guides/shopify-net-sales-for-roas/" /><link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Shopify Net Sales for Break-even ROAS","datePublished":"2026-08-20","dateModified":"2026-08-20","author":{"@type":"Organization","name":"floatboat.ai"},"publisher":{"@type":"Organization","name":"ROAS Break"},"mainEntityOfPage":"https://roasbreak.com/guides/shopify-net-sales-for-roas/"}</script>
+  </head>
+  <body class="inner-page" data-guide="shopify-net-sales">
+    <header class="inner-header"><a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a><nav class="inner-nav" aria-label="Primary"><a href="/tools/">Tools</a><a href="/guides/" aria-current="page">Guides</a><a href="/methodology/">Methodology</a><a href="/about/">About</a></nav></header>
+    <main>
+      <nav class="breadcrumb"><a href="/">Home</a><a href="/guides/">Guides</a><span>Shopify Net Sales for ROAS</span></nav>
+      <article>
+        <section class="inner-intro"><div><p class="eyebrow">Shopify workflow</p><h1>Calculate Break-even ROAS from Shopify Reports</h1></div><p>Start with a consistent sales basis, then add the order costs Shopify cannot know or may not include in the same report.</p></section>
+        <aside class="editorial-note" data-editorial-meta><strong>Reviewed August 20, 2026</strong><span>Published by floatboat.ai</span><span>Shopify fields reviewed every 90 days</span><a href="/contact/">Suggest a correction</a></aside>
+        <section class="page-content">
+          <div><p class="section-kicker">60-second answer</p><h2>Use net sales per order as the starting point.</h2></div>
+          <div class="content-copy"><p>For the ROAS Break model, start with Shopify net sales for a mature period, divide by the corresponding order count, and exclude tax. Reconcile shipping revenue separately. Then add landed product cost, fulfillment, payment or marketplace fees, return handling, and any other variable order cost not already reflected in net sales.</p><p class="formula-line">Model AOV = mature net product sales / corresponding orders</p><p class="scope-note"><strong>Do not double-count:</strong> If returns have already reduced net sales, do not enter the same refunded revenue again as a returns allowance. Add only economic losses that remain outside the sales figure.</p></div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Shopify field map</p><h2>Translate report fields into model inputs.</h2></div>
+          <div class="content-copy"><table class="definition-table"><thead><tr><th>Shopify or ledger field</th><th>ROAS Break input</th><th>Check</th></tr></thead><tbody><tr><td>Net sales</td><td>Average order value numerator</td><td>Confirm discounts and mature returns are reflected.</td></tr><tr><td>Orders</td><td>Average order value denominator</td><td>Use the order population matching net sales.</td></tr><tr><td>Cost of goods sold</td><td>Product cost</td><td>Confirm landed costs and missing product costs.</td></tr><tr><td>Shipping charges</td><td>Revenue reconciliation</td><td>Do not hide merchant shipping cost inside it.</td></tr><tr><td>Taxes</td><td>Exclude</td><td>Do not treat tax collected as acquisition budget.</td></tr><tr><td>Payment or marketplace fees</td><td>Fee percentage or variable cost</td><td>Use processor or marketplace statements.</td></tr><tr><td>Fulfillment and return handling</td><td>Fulfillment / other variable cost</td><td>Use 3PL, carrier, warehouse, and return records.</td></tr></tbody></table></div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Worked report</p><h2>A reconciled $85 order breaks even at 2.05x.</h2></div>
+          <div class="content-copy"><p>Suppose a mature report shows $100 average gross product sales, $10 discounts, and $5 returns. Net product sales are $85 per order. The order has $30 landed product cost, $8 fulfillment, $3 return handling or other variable cost, and fees equal to 3% of net revenue.</p><table class="definition-table"><thead><tr><th>Step</th><th>Amount</th></tr></thead><tbody><tr><td>Net product revenue</td><td>$85.00</td></tr><tr><td>Product cost</td><td>-$30.00</td></tr><tr><td>Fulfillment</td><td>-$8.00</td></tr><tr><td>Other variable cost</td><td>-$3.00</td></tr><tr><td>Fees, 3%</td><td>-$2.55</td></tr><tr><td>Contribution before ads</td><td>$41.45</td></tr></tbody></table><p>Break-even ROAS is $85 / $41.45 = 2.05x. At 2.40x attributed ROAS, acquisition cost is $35.42 per order and the model retains about $6.03 contribution after ads.</p><a class="guide-action" href="/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4">Open the Shopify report example</a></div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Before using the result</p><h2>Check maturity and missing costs.</h2></div>
+          <div class="content-copy"><ul><li>Use a period old enough for normal refunds and returns to appear.</li><li>Check whether product cost is populated for every product and variant.</li><li>Separate customer-paid shipping from the carrier and fulfillment cost paid by the merchant.</li><li>Add payment, marketplace, currency, chargeback, and return-handling costs when material.</li><li>Match the ad platform's conversion-value basis as closely as possible before comparing reported ROAS with the floor.</li></ul><ul class="source-list"><li data-source="01"><span><a href="https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report">Shopify sales reports</a><small>Gross sales, discounts, returns, net sales, and total sales. Checked August 20, 2026.</small></span></li><li data-source="02"><span><a href="https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports">Shopify profit reports</a><small>Product cost and profit reporting. Checked August 20, 2026.</small></span></li></ul></div>
+        </section>
+        <section class="related-reading" aria-labelledby="shopify-next"><div><p class="section-kicker">Continue the decision</p><h2 id="shopify-next">Turn the floor into a target.</h2></div><div class="related-links"><a href="/target-roas-calculator/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4&profit=8"><span>Reserve $8 profit in this Shopify order</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/ecommerce-revenue-basis/"><span>Review the revenue basis</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/contribution-margin-vs-gross-margin/"><span>Audit the full cost boundary</span><span aria-hidden="true">&rarr;</span></a></div></section>
+      </article>
+    </main>
+    <footer class="inner-footer"><a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a><nav class="footer-links" aria-label="Company and legal"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><p class="footer-copyright">&copy; <span data-year></span> ROAS Break</p></footer>
+    <script type="module" src="/src/pages/guide.ts"></script>
+  </body>
+</html>

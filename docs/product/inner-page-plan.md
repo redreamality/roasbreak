@@ -1,8 +1,12 @@
 # ROAS Break 内页规划
 
-> 日期：2026-08-13  
-> 状态：产品规划，尚未进入实现  
+> 日期：2026-08-13<br>
+> 状态：历史规划；截至 2026-08-19，本文规划的 6 个工具和 5 篇知识页均已实现<br>
 > 前置研究：[`docs/research/ecommerce-roas-product-opportunities.md`](../research/ecommerce-roas-product-opportunities.md)
+
+> 本文保留为产品决策记录，不再作为当前排期依据。后续内容建设以
+> [`content-enhancement-strategy.md`](./content-enhancement-strategy.md) 和
+> [`content-enhancement-backlog.md`](./content-enhancement-backlog.md) 为准。
 
 ## 1. 规划目标
 

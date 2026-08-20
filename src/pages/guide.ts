@@ -22,5 +22,15 @@ if (roasInput && acosInput) {
   });
 }
 
+document.querySelectorAll<HTMLAnchorElement>(".guide-action").forEach((link) => {
+  link.addEventListener("click", () => {
+    const target = new URL(link.href, window.location.origin);
+    track("guide_to_tool_clicked", {
+      guide: document.body.dataset.guide ?? "unknown",
+      target: target.pathname,
+    });
+  });
+});
+
 setYearAndIcons();
 track("guide_view", { guide: document.body.dataset.guide ?? "unknown" });

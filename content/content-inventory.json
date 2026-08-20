@@ -1,0 +1,194 @@
+{
+  "reviewPolicy": {
+    "platformWorkflowDays": 90,
+    "stableConceptDays": 180
+  },
+  "assets": [
+    {
+      "id": "methodology",
+      "type": "methodology",
+      "url": "/methodology/",
+      "file": "methodology/index.html",
+      "cluster": "Planning & Measurement",
+      "primaryIntent": "Understand the revenue, cost, attribution, and review rules used across ROAS Break",
+      "primaryTool": "/tools/",
+      "publishedOn": "2026-08-20",
+      "reviewedOn": "2026-08-20",
+      "reviewDue": "2027-02-16",
+      "status": "published",
+      "sources": [
+        "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+        "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce"
+      ]
+    },
+    {
+      "id": "contribution-margin",
+      "type": "guide",
+      "url": "/guides/contribution-margin-vs-gross-margin/",
+      "file": "guides/contribution-margin-vs-gross-margin/index.html",
+      "cluster": "Unit Economics",
+      "primaryIntent": "Choose the margin that sets an ecommerce acquisition ceiling",
+      "primaryTool": "/?mode=costs&aov=120&cogs=48&ship=9&other=0&fees=3&returns=8&roas=2.5",
+      "publishedOn": "2026-08-13",
+      "reviewedOn": "2026-08-20",
+      "reviewDue": "2027-02-16",
+      "status": "published",
+      "sources": [
+        "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+        "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report"
+      ]
+    },
+    {
+      "id": "revenue-basis",
+      "type": "guide",
+      "url": "/guides/ecommerce-revenue-basis/",
+      "file": "guides/ecommerce-revenue-basis/index.html",
+      "cluster": "Unit Economics",
+      "primaryIntent": "Choose a consistent ecommerce revenue basis for ROAS",
+      "primaryTool": "/target-roas-calculator/",
+      "publishedOn": "2026-08-13",
+      "reviewedOn": "2026-08-20",
+      "reviewDue": "2027-02-16",
+      "status": "published",
+      "sources": [
+        "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+        "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce"
+      ]
+    },
+    {
+      "id": "shopify-net-sales",
+      "type": "guide",
+      "url": "/guides/shopify-net-sales-for-roas/",
+      "file": "guides/shopify-net-sales-for-roas/index.html",
+      "cluster": "Unit Economics",
+      "primaryIntent": "Map Shopify sales and profit reports into break-even ROAS inputs",
+      "primaryTool": "/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4",
+      "publishedOn": "2026-08-20",
+      "reviewedOn": "2026-08-20",
+      "reviewDue": "2026-11-18",
+      "status": "published",
+      "sources": [
+        "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+        "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports"
+      ]
+    },
+    {
+      "id": "roas-acos",
+      "type": "guide",
+      "url": "/guides/roas-vs-acos/",
+      "file": "guides/roas-vs-acos/index.html",
+      "cluster": "Paid Media Metrics",
+      "primaryIntent": "Convert ROAS and ACoS and connect both to contribution margin",
+      "primaryTool": "/target-roas-calculator/",
+      "publishedOn": "2026-08-13",
+      "reviewedOn": "2026-08-20",
+      "reviewDue": "2026-11-18",
+      "status": "published",
+      "sources": [
+        "https://advertising.amazon.com/library/guides/acos-advertising-cost-of-sales",
+        "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas"
+      ]
+    },
+    {
+      "id": "good-roas",
+      "type": "guide",
+      "url": "/guides/good-roas-for-profit-margin/",
+      "file": "guides/good-roas-for-profit-margin/index.html",
+      "cluster": "Paid Media Metrics",
+      "primaryIntent": "Calculate a good ROAS from a store's own cost structure",
+      "primaryTool": "/target-roas-calculator/?mode=margin&aov=100&margin=55&fees=3&returns=5&roas=3.5&profit=15",
+      "publishedOn": "2026-08-20",
+      "reviewedOn": "2026-08-20",
+      "reviewDue": "2027-02-16",
+      "status": "published",
+      "sources": [
+        "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas",
+        "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports"
+      ]
+    },
+    {
+      "id": "google-target-roas",
+      "type": "guide",
+      "url": "/guides/google-ads-target-roas-profit/",
+      "file": "guides/google-ads-target-roas-profit/index.html",
+      "cluster": "Paid Media Metrics",
+      "primaryIntent": "Translate a profit target into Google Ads target ROAS",
+      "primaryTool": "/target-roas-calculator/?mode=margin&aov=100&margin=58&fees=3&returns=5&roas=3&profit=15",
+      "publishedOn": "2026-08-20",
+      "reviewedOn": "2026-08-20",
+      "reviewDue": "2026-11-18",
+      "status": "published",
+      "sources": [
+        "https://support.google.com/google-ads/answer/6268637?hl=en",
+        "https://support.google.com/google-ads/answer/7686447?hl=en"
+      ]
+    },
+    {
+      "id": "amazon-break-even-acos",
+      "type": "guide",
+      "url": "/guides/amazon-break-even-acos/",
+      "file": "guides/amazon-break-even-acos/index.html",
+      "cluster": "Paid Media Metrics",
+      "primaryIntent": "Calculate Amazon break-even and target ACoS from contribution profit",
+      "primaryTool": "/target-roas-calculator/?mode=costs&aov=60&cogs=18&ship=8&other=4&fees=15&returns=0&roas=4&profit=6",
+      "publishedOn": "2026-08-20",
+      "reviewedOn": "2026-08-20",
+      "reviewDue": "2026-11-18",
+      "status": "published",
+      "sources": [
+        "https://advertising.amazon.com/library/guides/acos-advertising-cost-of-sales",
+        "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas"
+      ]
+    },
+    {
+      "id": "returns-discounts",
+      "type": "guide",
+      "url": "/guides/returns-and-discounts/",
+      "file": "guides/returns-and-discounts/index.html",
+      "cluster": "Promotions & Merchandising",
+      "primaryIntent": "Separate the profit effects of discounts, refunds, and returns",
+      "primaryTool": "/promotion-profit-calculator/",
+      "publishedOn": "2026-08-13",
+      "reviewedOn": "2026-08-20",
+      "reviewDue": "2027-02-16",
+      "status": "published",
+      "sources": [
+        "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+        "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce"
+      ]
+    },
+    {
+      "id": "cac-payback-cohort",
+      "type": "guide",
+      "url": "/guides/cac-payback-cohort-data/",
+      "file": "guides/cac-payback-cohort-data/index.html",
+      "cluster": "Customer Economics",
+      "primaryIntent": "Prepare mature cohort contribution data for CAC payback",
+      "primaryTool": "/cac-payback-calculator/",
+      "publishedOn": "2026-08-20",
+      "reviewedOn": "2026-08-20",
+      "reviewDue": "2027-02-16",
+      "status": "published",
+      "sources": [
+        "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+        "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customer-reports"
+      ]
+    },
+    {
+      "id": "attributed-mer",
+      "type": "guide",
+      "url": "/guides/attributed-roas-vs-mer/",
+      "file": "guides/attributed-roas-vs-mer/index.html",
+      "cluster": "Planning & Measurement",
+      "primaryIntent": "Reconcile channel attribution with store-wide marketing efficiency",
+      "primaryTool": "/scenario-planner/",
+      "publishedOn": "2026-08-13",
+      "reviewedOn": "2026-08-20",
+      "reviewDue": "2027-02-16",
+      "status": "published",
+      "sources": [
+        "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/marketing-reports"
+      ]
+    }
+  ]
+}

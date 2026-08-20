@@ -25,6 +25,13 @@ Run the complete local verification suite:
 pnpm check
 ```
 
+## Product research and planning
+
+- [Cross-border ecommerce content research](docs/research/cross-border-commerce-content-research.md)
+- [Content enhancement strategy](docs/product/content-enhancement-strategy.md)
+- [Content enhancement backlog](docs/product/content-enhancement-backlog.md)
+- [Published content inventory](content/content-inventory.json)
+
 ## Deployment
 
 Pushes to `main` run unit tests, production build, and Chromium E2E tests before deploying `dist/` to Cloudflare Pages. The private source repository stays on GitHub, and DNS is managed through Cloudflare.

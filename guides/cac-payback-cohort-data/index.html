@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CAC Payback by 30/60/90/180/365-day Cohort</title>
+    <meta name="description" content="Prepare mature ecommerce cohort contribution data, calculate CAC payback checkpoints, and avoid using revenue LTV as allowable acquisition cost." />
+    <link rel="canonical" href="https://roasbreak.com/guides/cac-payback-cohort-data/" /><link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"CAC Payback by 30/60/90/180/365-day Cohort","datePublished":"2026-08-20","dateModified":"2026-08-20","author":{"@type":"Organization","name":"floatboat.ai"},"publisher":{"@type":"Organization","name":"ROAS Break"},"mainEntityOfPage":"https://roasbreak.com/guides/cac-payback-cohort-data/"}</script>
+  </head>
+  <body class="inner-page" data-guide="cac-payback-cohort">
+    <header class="inner-header"><a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a><nav class="inner-nav" aria-label="Primary"><a href="/tools/">Tools</a><a href="/guides/" aria-current="page">Guides</a><a href="/methodology/">Methodology</a><a href="/about/">About</a></nav></header>
+    <main>
+      <nav class="breadcrumb"><a href="/">Home</a><a href="/guides/">Guides</a><span>CAC Payback Cohort Data</span></nav>
+      <article>
+        <section class="inner-intro"><div><p class="eyebrow">Customer economics</p><h1>CAC Payback by Cohort</h1></div><p>Measure when a new-customer cohort's cumulative contribution covers acquisition cost at 30, 60, 90, 180, and 365 days.</p></section>
+        <aside class="editorial-note" data-editorial-meta><strong>Reviewed August 20, 2026</strong><span>Published by floatboat.ai</span><span>Stable cohort method</span><a href="/contact/">Suggest a correction</a></aside>
+        <section class="page-content">
+          <div><p class="section-kicker">60-second answer</p><h2>Use cumulative contribution, not revenue LTV.</h2></div>
+          <div class="content-copy"><p>Group customers by first-order period, calculate the cumulative net revenue earned by each checkpoint, subtract product, fulfillment, payment, refund, return, and incremental service costs, then compare the resulting contribution with new-customer CAC.</p><p class="formula-line">Cumulative contribution by day N = cumulative net revenue - cumulative variable costs</p><p class="formula-line">Payback = first mature checkpoint where cumulative contribution is at least CAC</p><p>Do not call a 365-day observation “lifetime value.” State the exact window and retain a profit buffer before turning contribution into allowable CAC.</p></div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Cohort preparation</p><h2>Keep acquisition date, value window, and costs aligned.</h2></div>
+          <div class="content-copy"><ol><li>Define a new customer consistently and assign each customer to the period of the first order.</li><li>Include only orders from those customers in the 30/60/90/180/365-day windows after acquisition.</li><li>Use net revenue after discounts, cancellations, and mature refunds.</li><li>Subtract variable costs from every included order, not just the first order.</li><li>Allocate acquisition spend to the same new-customer cohort and date basis.</li><li>Wait until each checkpoint is observable; a cohort acquired 45 days ago has no mature 90-day value.</li></ol><p class="scope-note"><strong>Input shape:</strong> Checkpoints are cumulative totals, not contribution earned during each interval. They should normally be nondecreasing. A decline can be real when later refunds or costs outweigh new contribution, but it should be investigated before using a first-payback label.</p></div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Worked cohort</p><h2>A $70 CAC first pays back at day 90.</h2></div>
+          <div class="content-copy"><table class="definition-table"><thead><tr><th>Checkpoint</th><th>Cumulative contribution</th><th>CAC status</th></tr></thead><tbody><tr><td>Day 30</td><td>$45</td><td>$25 unrecovered</td></tr><tr><td>Day 60</td><td>$62</td><td>$8 unrecovered</td></tr><tr><td>Day 90</td><td>$76</td><td>$6 recovered beyond CAC</td></tr><tr><td>Day 180</td><td>$92</td><td>$22 recovered beyond CAC</td></tr><tr><td>Day 365</td><td>$118</td><td>$48 recovered beyond CAC</td></tr></tbody></table><p>With a $15 retained-profit requirement by day 365, allowable CAC is $118 - $15 = $103. Actual $70 CAC pays back at the first measured checkpoint above $70: day 90.</p><a class="guide-action" href="/cac-payback-calculator/?cac=70&profit=15&d30=45&d60=62&d90=76&d180=92&d365=118">Open the day-90 payback cohort</a></div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Data limits</p><h2>An unrecovered cohort is a result, not an error.</h2></div>
+          <div class="content-copy"><ul><li>Show “Beyond 365 days” when the selected window never covers CAC.</li><li>Do not extrapolate missing checkpoints with a generic repeat-purchase rate.</li><li>Segment channels, products, regions, or customer types only when sample size and cost allocation remain credible.</li><li>Re-run older cohorts when late refunds, chargebacks, or data corrections arrive.</li><li>Separate contribution payback from cash collection timing when payment terms or inventory financing matter.</li></ul><ul class="source-list"><li data-source="01"><span><a href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce">Google Analytics ecommerce</a><small>Purchase, item, and refund event fields. Checked August 20, 2026.</small></span></li><li data-source="02"><span><a href="https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customer-reports">Shopify customer reports</a><small>Customer reporting context and cohort inputs. Checked August 20, 2026.</small></span></li></ul></div>
+        </section>
+        <section class="related-reading" aria-labelledby="cac-next"><div><p class="section-kicker">Continue the decision</p><h2 id="cac-next">Reconcile value before raising CAC.</h2></div><div class="related-links"><a href="/guides/ecommerce-revenue-basis/"><span>Choose the cohort revenue basis</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/returns-and-discounts/"><span>Include mature refund and return loss</span><span aria-hidden="true">&rarr;</span></a><a href="/scenario-planner/"><span>Compare acquisition scenarios on total contribution</span><span aria-hidden="true">&rarr;</span></a></div></section>
+      </article>
+    </main>
+    <footer class="inner-footer"><a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a><nav class="footer-links" aria-label="Company and legal"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><p class="footer-copyright">&copy; <span data-year></span> ROAS Break</p></footer>
+    <script type="module" src="/src/pages/guide.ts"></script>
+  </body>
+</html>

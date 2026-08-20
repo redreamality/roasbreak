@@ -1,5 +1,18 @@
 import { expect, test } from "@playwright/test";
 
+const guidePaths = [
+  "/guides/contribution-margin-vs-gross-margin/",
+  "/guides/ecommerce-revenue-basis/",
+  "/guides/shopify-net-sales-for-roas/",
+  "/guides/roas-vs-acos/",
+  "/guides/good-roas-for-profit-margin/",
+  "/guides/google-ads-target-roas-profit/",
+  "/guides/amazon-break-even-acos/",
+  "/guides/returns-and-discounts/",
+  "/guides/cac-payback-cohort-data/",
+  "/guides/attributed-roas-vs-mer/",
+];
+
 test("carries the homepage economics into target ROAS", async ({ page }) => {
   await page.goto("/");
   await page.locator("#order-value").fill("100");
@@ -123,7 +136,59 @@ test("lists every published tool and guide", async ({ page }) => {
   await page.goto("/tools/");
   await expect(page.locator(".directory-item")).toHaveCount(6);
   await page.goto("/guides/");
-  await expect(page.locator(".directory-item")).toHaveCount(5);
+  await expect(page.locator(".topic-group")).toHaveCount(5);
+  await expect(page.locator(".topic-guide")).toHaveCount(11);
+});
+
+test("navigates the guide library by operating topic", async ({ page }) => {
+  await page.goto("/guides/");
+  await page.getByRole("link", { name: "Paid media" }).click();
+  await expect(page).toHaveURL(/\/guides\/#paid-media$/);
+  await expect(page.getByRole("heading", { name: "Translate platform ratios into profit targets." })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Google Ads Target ROAS vs Profit/ })).toBeVisible();
+});
+
+test("publishes visible review details, primary sources, and Article schema for every guide", async ({ page }) => {
+  for (const path of guidePaths) {
+    await page.goto(path);
+    await expect(page.locator("[data-editorial-meta]")).toContainText("Reviewed August 20, 2026");
+    await expect(page.locator(".source-list a").first()).toHaveAttribute("href", /^https:\/\//);
+    await expect(page.locator(".guide-action")).toHaveCount(1);
+    const articleSchema = await page.locator('script[type="application/ld+json"]').first().textContent();
+    expect(articleSchema, path).toContain('"@type":"Article"');
+    expect(articleSchema, path).toContain('"dateModified":"2026-08-20"');
+  }
+});
+
+test("restores worked guide examples in the matching calculator", async ({ page }) => {
+  await page.goto("/guides/shopify-net-sales-for-roas/");
+  await page.locator(".guide-action").click();
+  await expect(page).toHaveURL(/aov=85.*cogs=30.*ship=8/);
+  await expect(page.locator("#order-value")).toHaveValue("85");
+  await expect(page.locator("#break-even-roas")).toHaveText("2.05x");
+
+  await page.goto("/guides/google-ads-target-roas-profit/");
+  await page.locator(".guide-action").click();
+  await expect(page.locator("#target-roas")).toHaveText("2.86x");
+  await expect(page.locator("#target-cpa")).toHaveText("$35.00");
+});
+
+test("tracks guide-to-tool actions without calculation values or URL queries", async ({ page }) => {
+  await page.route("https://www.googletagmanager.com/**", async (route) => {
+    await route.fulfill({ status: 200, contentType: "application/javascript", body: "" });
+  });
+  await page.addInitScript(() => window.localStorage.setItem("roasbreak-privacy-choice", "accepted"));
+  await page.goto("/guides/shopify-net-sales-for-roas/");
+  await page.locator(".guide-action").evaluate((element) => {
+    element.addEventListener("click", (event) => event.preventDefault());
+  });
+  await page.locator(".guide-action").click();
+
+  const event = await page.evaluate(() => {
+    const dataLayer = (window as Window & { dataLayer?: unknown[][] }).dataLayer ?? [];
+    return dataLayer.find((entry) => entry[0] === "event" && entry[1] === "guide_to_tool_clicked");
+  });
+  expect(event).toEqual(["event", "guide_to_tool_clicked", { guide: "shopify-net-sales", target: "/" }]);
 });
 
 test("copies an assumption-aware restore link from every decision tool", async ({ context, page }) => {
@@ -154,11 +219,8 @@ test("publishes matching canonical, schema, breadcrumb, and sitemap URLs", async
     "/promotion-profit-calculator/",
     "/cac-payback-calculator/",
     "/scenario-planner/",
-    "/guides/contribution-margin-vs-gross-margin/",
-    "/guides/roas-vs-acos/",
-    "/guides/attributed-roas-vs-mer/",
-    "/guides/ecommerce-revenue-basis/",
-    "/guides/returns-and-discounts/",
+    ...guidePaths,
+    "/methodology/",
   ];
   const sitemap = await (await request.get("/sitemap.xml")).text();
   for (const path of paths) {
@@ -183,9 +245,7 @@ test("keeps every published inner page free of runtime errors", async ({ page })
   const paths = [
     "/tools/", "/guides/", "/target-roas-calculator/", "/profit-lever-calculator/",
     "/promotion-profit-calculator/", "/cac-payback-calculator/", "/scenario-planner/",
-    "/guides/contribution-margin-vs-gross-margin/", "/guides/roas-vs-acos/",
-    "/guides/attributed-roas-vs-mer/", "/guides/ecommerce-revenue-basis/",
-    "/guides/returns-and-discounts/",
+    ...guidePaths, "/methodology/",
   ];
   for (const path of paths) await page.goto(path);
   expect(errors).toEqual([]);
@@ -218,4 +278,14 @@ test("keeps all inner tools within a mobile viewport", async ({ page }, testInfo
   }
   await page.goto("/promotion-profit-calculator/");
   await expect(page.getByRole("button", { name: "Copy scenario" })).toBeVisible();
+});
+
+test("keeps the guide library and long-form content within a mobile viewport", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile", "Mobile-only content layout assertion");
+  for (const path of ["/guides/", ...guidePaths, "/methodology/"]) {
+    await page.goto(path);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow, path).toBeLessThanOrEqual(1);
+    await expect(page.locator("h1")).toBeVisible();
+  }
 });

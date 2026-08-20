@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ROAS Break Methodology: Revenue, Costs, and Sources</title>
+    <meta name="description" content="See how ROAS Break defines ecommerce revenue, contribution costs, attribution limits, examples, formulas, sources, and review dates." />
+    <link rel="canonical" href="https://roasbreak.com/methodology/" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="inner-page" data-guide="methodology">
+    <header class="inner-header">
+      <a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a>
+      <nav class="inner-nav" aria-label="Primary">
+        <a href="/tools/">Tools</a><a href="/guides/">Guides</a><a href="/methodology/" aria-current="page">Methodology</a><a href="/about/">About</a>
+      </nav>
+    </header>
+    <main>
+      <nav class="breadcrumb"><a href="/">Home</a><span>Methodology</span></nav>
+      <article>
+        <section class="inner-intro">
+          <div><p class="eyebrow">One model across every tool</p><h1>ROAS Break Methodology</h1></div>
+          <p>How we turn ecommerce revenue, variable costs, platform metrics, and user assumptions into decision thresholds without presenting attribution as profit.</p>
+        </section>
+        <aside class="editorial-note" data-editorial-meta>
+          <strong>Reviewed August 20, 2026</strong><span>Published by floatboat.ai</span><span>Stable concepts reviewed every 180 days</span><a href="/contact/">Suggest a correction</a>
+        </aside>
+        <section class="page-content">
+          <div><p class="section-kicker">Model boundary</p><h2>Start with contribution, not platform revenue.</h2></div>
+          <div class="content-copy">
+            <p>ROAS Break models the money left by an order before fixed overhead and after the variable costs needed to earn and fulfill that order. That amount is the acquisition budget available at break-even. A profit target reserves part of it before calculating allowable ad spend.</p>
+            <p class="formula-line">Contribution before ads = net order revenue - product cost - fulfillment - variable fees - expected return loss</p>
+            <p class="formula-line">Break-even ROAS = net order revenue / contribution before ads</p>
+            <p class="formula-line">Target ROAS = net order revenue / (contribution before ads - retained profit)</p>
+            <p class="scope-note"><strong>Scope:</strong> The calculators are decision models, not accounting statements. Fixed overhead, payroll, financing, tax advice, and cash timing are excluded unless the user deliberately includes an allocation in a retained-profit target or variable-cost field.</p>
+          </div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Revenue basis</p><h2>Name what is in the numerator.</h2></div>
+          <div class="content-copy">
+            <p>The default recommendation is net product revenue after discounts and mature sales reversals, excluding tax. Customer-paid shipping and shipping cost should be shown explicitly when material. A platform conversion-value field can be useful for channel optimization, but it is not silently treated as store revenue.</p>
+            <table class="definition-table">
+              <thead><tr><th>Input</th><th>Default treatment</th><th>Reason</th></tr></thead>
+              <tbody>
+                <tr><td>Product discounts</td><td>Deduct from revenue</td><td>The customer did not pay list price.</td></tr>
+                <tr><td>Refunds and reversals</td><td>Deduct once the cohort is mature</td><td>Recent reported revenue can still change.</td></tr>
+                <tr><td>Sales tax</td><td>Exclude</td><td>Collected tax is not operating revenue.</td></tr>
+                <tr><td>Customer-paid shipping</td><td>Show explicitly</td><td>It may offset fulfillment without being product revenue.</td></tr>
+                <tr><td>Platform-attributed value</td><td>Label separately</td><td>Attribution credit can overlap across platforms.</td></tr>
+              </tbody>
+            </table>
+            <a class="guide-action" href="/guides/ecommerce-revenue-basis/">Choose a consistent revenue basis</a>
+          </div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Cost boundary</p><h2>Include costs that move with an order.</h2></div>
+          <div class="content-copy">
+            <p>The detailed mode asks for product cost, fulfillment and shipping, other variable costs, payment and platform fees, and an expected returns or discounts allowance. The quick mode starts with gross margin, then subtracts fees and the allowance. Both modes are simplifications; the detailed mode is preferable when the missing costs are material.</p>
+            <ul>
+              <li>Use landed product cost when inbound freight and duties are part of acquiring inventory.</li>
+              <li>Include pick, pack, outbound shipping subsidy, and per-order handling in fulfillment.</li>
+              <li>Model percentage fees against the same revenue basis used by the calculator.</li>
+              <li>Estimate return loss from mature cohorts, including reverse logistics and recoverable inventory.</li>
+              <li>Do not insert customer-level, order-level, or confidential data into shareable URLs.</li>
+            </ul>
+          </div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Attribution boundary</p><h2>Reported ROAS is evidence, not incremental profit.</h2></div>
+          <div class="content-copy">
+            <p>Each ad platform applies its own attribution model, window, and conversion-value rules. Two platforms can credit the same order. ROAS Break therefore keeps platform-attributed ROAS, store-wide MER, and contribution profit as separate views.</p>
+            <ol>
+              <li>Use one platform's reported ROAS to compare performance inside that reporting system.</li>
+              <li>Use total store revenue divided by total marketing spend to observe blended efficiency over a consistent period.</li>
+              <li>Use contribution profit to test whether a scenario covers variable costs and the profit you intend to retain.</li>
+              <li>Wait for conversions and refunds to mature before treating a recent period as settled.</li>
+            </ol>
+            <p>None of these views alone proves incrementality. The calculators do not claim that changing a bid target will produce the same actual ROAS, volume, or profit.</p>
+          </div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Examples and rounding</p><h2>Transparent assumptions, reproducible arithmetic.</h2></div>
+          <div class="content-copy">
+            <p>Worked examples are illustrative and are never presented as customer results or industry benchmarks. Inputs appear in the page, intermediate steps are described, and the primary action restores the example in the relevant calculator.</p>
+            <p>Calculations use unrounded values internally. Money is normally displayed to two decimal places, ratios to two decimals, and percentages to one decimal. Display rounding can make a visible table differ by a cent from a recomputed total; the underlying result is not rounded between steps.</p>
+            <p>A result marked “Not feasible” means the requested retained profit consumes all contribution before advertising. It is not converted to infinity or hidden behind a default value.</p>
+          </div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Sources and review</p><h2>Platform facts expire faster than formulas.</h2></div>
+          <div class="content-copy">
+            <p>Platform workflows and field definitions are checked at least every 90 days. Stable concept pages are reviewed at least every 180 days. A review date changes only after the linked source and the page's decision logic have been checked.</p>
+            <p>Source priority is platform help or developer documentation, then official reporting definitions, then ROAS Break's reproducible formulas. Aggregators and forums can identify a question but do not support a key platform claim or benchmark.</p>
+            <ul class="source-list">
+              <li data-source="01"><span><a href="https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report">Shopify sales reports</a><small>Sales fields, discounts, returns, and report definitions. Checked August 20, 2026.</small></span></li>
+              <li data-source="02"><span><a href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce">Google Analytics ecommerce</a><small>Purchase, refund, tax, shipping, and item fields. Checked August 20, 2026.</small></span></li>
+            </ul>
+          </div>
+        </section>
+        <section class="related-reading" aria-labelledby="method-next">
+          <div><p class="section-kicker">Apply the method</p><h2 id="method-next">Choose the next decision.</h2></div>
+          <div class="related-links">
+            <a href="/tools/"><span>Compare all six profitability tools</span><span aria-hidden="true">&rarr;</span></a>
+            <a href="/guides/"><span>Browse guides by operating question</span><span aria-hidden="true">&rarr;</span></a>
+            <a href="/guides/contribution-margin-vs-gross-margin/"><span>Build the acquisition cost ceiling</span><span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </section>
+      </article>
+    </main>
+    <footer class="inner-footer">
+      <a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a>
+      <nav class="footer-links" aria-label="Company and legal"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav>
+      <p class="footer-copyright">&copy; <span data-year></span> ROAS Break</p>
+    </footer>
+    <script type="module" src="/src/pages/guide.ts"></script>
+  </body>
+</html>
