@@ -23,6 +23,63 @@ const isIsoDate = (value) => {
   return !Number.isNaN(date.valueOf()) && date.toISOString().slice(0, 10) === value;
 };
 
+const addUtcDays = (date, days) => {
+  const result = new Date(`${date}T00:00:00.000Z`);
+  result.setUTCDate(result.getUTCDate() + days);
+  return result.toISOString().slice(0, 10);
+};
+
+export function validateContentReviewCadence(contentInventory) {
+  const cadenceFailures = [];
+  const reviewPolicy = contentInventory?.reviewPolicy;
+  const platformWorkflowDays = reviewPolicy?.platformWorkflowDays;
+  const stableConceptDays = reviewPolicy?.stableConceptDays;
+  const validPlatformWorkflowDays = Number.isInteger(platformWorkflowDays) && platformWorkflowDays > 0;
+  const validStableConceptDays = Number.isInteger(stableConceptDays) && stableConceptDays > 0;
+  if (!validPlatformWorkflowDays) {
+    cadenceFailures.push("reviewPolicy.platformWorkflowDays must be a positive integer");
+  }
+  if (!validStableConceptDays) {
+    cadenceFailures.push("reviewPolicy.stableConceptDays must be a positive integer");
+  }
+  if (validPlatformWorkflowDays && validStableConceptDays && platformWorkflowDays === stableConceptDays) {
+    cadenceFailures.push("reviewPolicy platformWorkflowDays and stableConceptDays must be different");
+  }
+
+  const assets = Array.isArray(contentInventory?.assets) ? contentInventory.assets : [];
+  for (const asset of assets) {
+    if (asset?.status !== "published") continue;
+    const label = isNonEmptyString(asset.id) ? asset.id : "published asset";
+    for (const field of ["publishedOn", "reviewedOn", "reviewDue"]) {
+      if (!isIsoDate(asset[field])) {
+        cadenceFailures.push(`${label}: ${field} must be a real UTC date in YYYY-MM-DD format`);
+      }
+    }
+    if (isIsoDate(asset.publishedOn) && isIsoDate(asset.reviewedOn) && isIsoDate(asset.reviewDue)) {
+      const datesAreChronological = asset.publishedOn <= asset.reviewedOn && asset.reviewedOn < asset.reviewDue;
+      if (asset.publishedOn > asset.reviewedOn) {
+        cadenceFailures.push(`${label}: publishedOn must be on or before reviewedOn`);
+      }
+      if (asset.reviewedOn >= asset.reviewDue) {
+        cadenceFailures.push(`${label}: reviewedOn must be before reviewDue`);
+      }
+      if (datesAreChronological && validPlatformWorkflowDays && validStableConceptDays
+        && platformWorkflowDays !== stableConceptDays) {
+        const allowedDueDates = [
+          addUtcDays(asset.reviewedOn, platformWorkflowDays),
+          addUtcDays(asset.reviewedOn, stableConceptDays),
+        ];
+        if (!allowedDueDates.includes(asset.reviewDue)) {
+          cadenceFailures.push(
+            `${label}: reviewDue must be ${allowedDueDates[0]} or ${allowedDueDates[1]} according to reviewPolicy`,
+          );
+        }
+      }
+    }
+  }
+  return cadenceFailures;
+}
+
 const isHttpsUrl = (value) => {
   if (!isNonEmptyString(value)) return false;
   try {
@@ -63,6 +120,7 @@ const visibleBreadcrumbItems = (html, canonical) => {
 const ids = new Set();
 const urls = new Set();
 const primaryIntents = new Set();
+failures.push(...validateContentReviewCadence(inventory));
 
 async function htmlFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
