@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "scope": {
     "startedAtCommit": "1031047e9eb75ef58b59c8e57cffbc7e52a5d2b5",
-    "reviewedThroughCommit": "a1c566dc9ca3ced6cddd33cb25a7250defc6351c",
+    "reviewedThroughCommit": "1b48a4099d56e29897532ab26a602867a323af7c",
     "reviewedAt": "2026-08-21",
     "reviewer": "Codex independent release review",
-    "assetCount": 19,
+    "assetCount": 20,
     "excludedAfterStart": []
   },
   "assets": [
@@ -642,6 +642,40 @@
           "evidence": [
             "Store MER recomputed as 100000/25000=4.00; Google ratio=55000/12000=4.58 and Meta ratio=65000/13000=5.00.",
             "Platform credit sums to 120000 while spend sums to 25000, leaving 20000 more credited revenue than the 100000 store total; the page correctly refuses to treat that overlap as sales."
+          ]
+        }
+      }
+    },
+    {
+      "id": "conversion-delay-data-maturity",
+      "reviewedOn": "2026-08-21",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page answers when recent attributed ROAS is mature enough for budget decisions by separating observed T+1 and T+7 results from an explicitly hypothetical conversion-maturity sensitivity curve.",
+            "Its decision gate uses the maturity estimate only to judge data readiness, while the linked target-ROAS guidance supplies the separate economic threshold; this division matches the declared primary intent."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Google's official conversion-lag page returned HTTP 200 and explains that conversions can be reported after the ad interaction; Google's official Target ROAS page also returned HTTP 200 and defines Target ROAS bidding.",
+            "The guide labels the 70%, 90%, and T+7 maturity curve as fictional sensitivity inputs rather than a Google benchmark, forecast, or booked revenue, and labels the cost model and decision gates as ROAS Break judgments."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "T+1 recomputed: reported ROAS=20000/10000=2.00x; at 70% sensitivity, estimated mature revenue=20000/0.70=28571.43, mature ROAS=2.86x, and remaining sensitivity=8571.43.",
+            "T+7 recomputed: reported ROAS=27000/10000=2.70x. Unit economics give contribution=100-40-8-4-3-5=40, break-even ROAS=100/40=2.50x, retained profit=10, target CPA=30, and target ROAS=100/30=3.33x.",
+            "At 2.70x, ad cost per credited order=100/2.70=37.04 and modeled after-ad contribution=40-37.04=2.96, correctly above break-even but below the retained-profit target."
           ]
         }
       }
