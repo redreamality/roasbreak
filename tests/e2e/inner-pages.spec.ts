@@ -9,6 +9,7 @@ const guidePaths = [
   "/guides/roas-vs-acos/",
   "/guides/good-roas-for-profit-margin/",
   "/guides/google-ads-target-roas-profit/",
+  "/guides/meta-ads-roas-and-attribution/",
   "/guides/amazon-break-even-acos/",
   "/guides/discount-vs-bundle-profit/",
   "/guides/free-shipping-profit-threshold/",
@@ -143,9 +144,10 @@ test("lists every published tool and guide", async ({ page }) => {
   await expect(page.locator(".directory-item")).toHaveCount(6);
   await page.goto("/guides/");
   await expect(page.locator(".topic-group")).toHaveCount(5);
-  await expect(page.locator(".topic-guide")).toHaveCount(17);
+  await expect(page.locator(".topic-guide")).toHaveCount(18);
   await expect(page.getByRole("link", { name: /Ecommerce Profit Formulas/ })).toHaveAttribute("href", "/guides/ecommerce-profit-formulas/");
   await expect(page.getByRole("link", { name: /POAS vs ROAS/ })).toHaveAttribute("href", "/guides/poas-vs-roas/");
+  await expect(page.getByRole("link", { name: /Meta Ads ROAS and Attribution/ })).toHaveAttribute("href", "/guides/meta-ads-roas-and-attribution/");
   await expect(page.getByRole("link", { name: /New Customer ROAS vs Blended ROAS/ })).toHaveAttribute("href", "/guides/new-customer-roas-vs-blended-roas/");
   await expect(page.getByRole("link", { name: /Free Shipping Profit Threshold/ })).toHaveAttribute("href", "/guides/free-shipping-profit-threshold/");
   await expect(page.getByRole("link", { name: /Discount vs Bundle Profit/ })).toHaveAttribute("href", "/guides/discount-vs-bundle-profit/");
@@ -162,7 +164,7 @@ test("navigates the guide library by operating topic", async ({ page }) => {
 
 test("publishes visible review details, primary sources, and Article schema for every guide", async ({ page }) => {
   for (const path of guidePaths) {
-    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/"].includes(path);
+    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/", "/guides/meta-ads-roas-and-attribution/"].includes(path);
     await page.goto(path);
     await expect(page.locator("[data-editorial-meta]")).toContainText(isNewGuide ? "Reviewed August 21, 2026" : "Reviewed August 20, 2026");
     await expect(page.locator("[data-content-scope]")).toContainText("Scope: ");
@@ -202,6 +204,13 @@ test("publishes visible review details, primary sources, and Article schema for 
       await expect(page.locator("[data-content-scope]")).toContainText("Global ecommerce");
       await expect(page.getByText("Revenue LTV cannot be spent as allowable CAC.", { exact: true })).toBeVisible();
     }
+    if (path === "/guides/meta-ads-roas-and-attribution/") {
+      await expect(page).toHaveTitle("Meta Ads ROAS and Attribution Settings for Profit | ROAS Break");
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /selected attribution settings into an ecommerce break-even and target ROAS threshold/);
+      await expect(page.locator("[data-content-scope]")).toContainText("availability varies by account and campaign");
+      await expect(page.getByText("Meta ROAS is only interpretable with its attribution settings attached.", { exact: true })).toBeVisible();
+      await expect(page.locator(".source-list a")).toHaveCount(2);
+    }
     await expect(page.locator(".source-list a").first()).toHaveAttribute("href", /^https:\/\//);
     await expect(page.locator(".guide-action")).toHaveCount(1);
     await expect(page.locator('script[data-schema="breadcrumb"]')).toHaveCount(1);
@@ -222,6 +231,14 @@ test("restores worked guide examples in the matching calculator", async ({ page 
   await page.locator(".guide-action").click();
   await expect(page.locator("#target-roas")).toHaveText("2.86x");
   await expect(page.locator("#target-cpa")).toHaveText("$35.00");
+
+  await page.goto("/guides/meta-ads-roas-and-attribution/");
+  await page.locator(".guide-action").click();
+  await expect(page).toHaveURL(/mode=costs.*aov=100.*cogs=42.*ship=8.*other=4.*fees=3.*returns=5.*roas=3.2.*profit=10/);
+  await expect(page.locator("#current-roas")).toHaveValue("3.2");
+  await expect(page.locator("#target-break-even")).toHaveText("2.63x");
+  await expect(page.locator("#target-cpa")).toHaveText("$28.00");
+  await expect(page.locator("#target-roas")).toHaveText("3.57x");
 
   await page.goto("/guides/ecommerce-profit-formulas/");
   await page.locator(".guide-action").click();

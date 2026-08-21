@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meta Ads ROAS and Attribution Settings for Profit | ROAS Break</title>
+    <meta name="description" content="Map Meta Ads attributed purchase value and the ad set's selected attribution settings into an ecommerce break-even and target ROAS threshold." />
+    <link rel="canonical" href="https://roasbreak.com/guides/meta-ads-roas-and-attribution/" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Meta Ads ROAS and Attribution Settings for Profit","datePublished":"2026-08-21","dateModified":"2026-08-21","author":{"@type":"Organization","name":"floatboat.ai"},"publisher":{"@type":"Organization","name":"ROAS Break"},"mainEntityOfPage":"https://roasbreak.com/guides/meta-ads-roas-and-attribution/"}</script>
+    <script type="application/ld+json" data-schema="breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://roasbreak.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://roasbreak.com/guides/"},{"@type":"ListItem","position":3,"name":"Meta Ads ROAS and Attribution","item":"https://roasbreak.com/guides/meta-ads-roas-and-attribution/"}]}</script>
+  </head>
+  <body class="inner-page" data-guide="meta-ads-roas-attribution">
+    <header class="inner-header">
+      <a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a>
+      <nav class="inner-nav" aria-label="Primary"><a href="/tools/">Tools</a><a href="/guides/" aria-current="page">Guides</a><a href="/methodology/">Methodology</a><a href="/about/">About</a></nav>
+    </header>
+    <main>
+      <nav class="breadcrumb"><a href="/">Home</a><a href="/guides/">Guides</a><span>Meta Ads ROAS and Attribution</span></nav>
+      <article>
+        <section class="inner-intro">
+          <div><p class="eyebrow">Meta Ads workflow</p><h1>Meta Ads ROAS and Attribution</h1></div>
+          <p>Read purchase value through the attribution model and settings actually selected for the ad set, then compare that attributed ratio with a profit threshold built from your own order economics.</p>
+        </section>
+        <aside class="editorial-note" data-editorial-meta><strong>Reviewed August 21, 2026</strong><span>Published by floatboat.ai</span><span data-content-scope>Scope: Global Meta Ads; availability varies by account and campaign; USD example</span><span>Meta workflow reviewed every 90 days</span><a href="/contact/">Suggest a correction</a></aside>
+
+        <section class="page-content">
+          <div><p class="section-kicker">60-second answer</p><h2>Meta ROAS is only interpretable with its attribution settings attached.</h2></div>
+          <div class="content-copy">
+            <p>Meta attributed ROAS divides purchase conversion value credited under the selected attribution model and settings by ad spend. It is useful for reading performance inside that configured reporting system. It is not automatically store revenue, incremental revenue, or contribution profit.</p>
+            <p class="formula-line">Meta attributed ROAS = attributed purchase conversion value / Meta ad spend</p>
+            <p class="formula-line">Break-even ROAS = net order revenue / contribution before advertising</p>
+            <p class="formula-line">Profit target ROAS = net order revenue / (contribution before advertising - retained profit)</p>
+            <p>The page and export need a settings label: the ad set, purchase event, attribution model, attribution setting or window, report dates, timezone, currency, and value basis. Without that contract, a ratio can change meaning while keeping the same name.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Reporting contract</p><h2>Record what the ad set actually used; do not assume a global default window.</h2></div>
+          <div class="content-copy">
+            <ol><li><strong>Identify the ad set:</strong> Save the account, campaign, ad set, objective, and optimization event represented by the export.</li><li><strong>Capture the selected settings:</strong> Record the attribution model and settings shown for that ad set at the time of analysis.</li><li><strong>Name the purchase value:</strong> Confirm the purchase event and whether its value includes discounts, refunds, tax, shipping, or currency conversion.</li><li><strong>Freeze the report frame:</strong> Save dates, timezone, currency, breakdowns, and reporting timestamp alongside spend and purchase value.</li><li><strong>Preserve changes:</strong> If settings change, treat the before and after periods as different reporting contracts rather than silently joining them.</li></ol>
+            <p>Meta's public Business Help Center pages can require JavaScript to expose their full body, and product availability can vary by account and campaign. This guide therefore does not infer a universal current default attribution window from an inaccessible snippet. The settings visible in the relevant account and ad set are the operational source of truth for the analysis.</p>
+            <p class="scope-note"><strong>Boundary:</strong> This workflow maps one Meta ad set's attributed purchase value into a profit threshold. It does not add channel claims, calculate store-wide MER, or reconcile Meta credit with total store revenue.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Worked example</p><h2>3.20x clears the $38 contribution floor, but misses a $10 profit target.</h2></div>
+          <div class="content-copy">
+            <p>A Meta report shows $32,000 of attributed purchase value and $10,000 of spend under the recorded ad set settings. Reported attributed ROAS is $32,000 / $10,000 = 3.20x. Before treating that as a profit result, translate one $100 net order into contribution.</p>
+            <table class="definition-table"><thead><tr><th>Per credited order</th><th>Calculation</th><th>Amount</th></tr></thead><tbody><tr><td>Net order revenue</td><td>Purchase-value basis aligned to the calculator</td><td>$100.00</td></tr><tr><td>Product cost</td><td>Exact item cost</td><td>-$42.00</td></tr><tr><td>Fulfillment and shipping</td><td>Variable pick, pack, and delivery cost</td><td>-$8.00</td></tr><tr><td>Other variable cost</td><td>Variable support, packaging, or incentives</td><td>-$4.00</td></tr><tr><td>Payment and platform fees</td><td>3% x $100</td><td>-$3.00</td></tr><tr><td>Returns and discounts allowance</td><td>5% x $100</td><td>-$5.00</td></tr><tr><td>Contribution before ads</td><td>$100 - $42 - $8 - $4 - $3 - $5</td><td>$38.00</td></tr></tbody></table>
+            <p>The contribution margin is 38%, so break-even ROAS is $100 / $38 = 2.63x. To retain $10 after advertising, allowable acquisition cost falls to $38 - $10 = $28, producing a target ROAS of $100 / $28 = 3.57x.</p>
+            <table class="definition-table"><thead><tr><th>Check</th><th>Calculation</th><th>Result</th></tr></thead><tbody><tr><td>Reported Meta ROAS</td><td>$32,000 / $10,000</td><td>3.20x</td></tr><tr><td>Break-even floor</td><td>$100 / $38 contribution</td><td>2.63x</td></tr><tr><td>Ad cost per credited order</td><td>$100 / 3.20</td><td>$31.25</td></tr><tr><td>Actual profit per credited order</td><td>$38 - $31.25</td><td>$6.75</td></tr><tr><td>Profit target</td><td>$10 retained after ads</td><td>$28.00 target CPA</td></tr><tr><td>Target ROAS</td><td>$100 / $28</td><td>3.57x</td></tr></tbody></table>
+            <p>The reported 3.20x is above the 2.63x zero-profit floor, so the modeled order remains contribution-positive after ad spend. It is below the 3.57x target and retains only $6.75, not the planned $10. That is a precise operating gap, not evidence that Meta caused every credited purchase.</p>
+            <a class="guide-action" href="/target-roas-calculator/?mode=costs&amp;aov=100&amp;cogs=42&amp;ship=8&amp;other=4&amp;fees=3&amp;returns=5&amp;roas=3.2&amp;profit=10">Open the Meta 3.20x profit-threshold scenario</a>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Decision check</p><h2>Diagnose the numerator and settings before changing delivery.</h2></div>
+          <div class="content-copy">
+            <table class="definition-table"><thead><tr><th>Observed condition</th><th>First check</th><th>Decision boundary</th></tr></thead><tbody><tr><td>ROAS below 2.63x</td><td>Value basis, settings, spend, and order economics</td><td>Below the modeled contribution break-even floor</td></tr><tr><td>ROAS from 2.63x to 3.56x</td><td>Profit gap, volume, and data maturity</td><td>Positive contribution after ads, below the retained-profit goal</td></tr><tr><td>ROAS at or above 3.57x</td><td>Order volume, marginal results, and setting consistency</td><td>Meets the per-order model, not proof of incrementality</td></tr><tr><td>ROAS moves after a settings change</td><td>Before/after attribution contracts</td><td>Do not attribute the whole movement to customer demand or creative</td></tr></tbody></table>
+            <p>When the ratio misses its threshold, verify that Meta's purchase value and the calculator's $100 net-order basis describe the same dollars. A value that includes tax or shipping while the profit model excludes them inflates the numerator. Missing refund adjustments can do the same. Conversely, an event or currency mismatch can understate the comparison.</p>
+            <p>Next inspect ad set settings and reporting maturity. A model or attribution-setting change can redistribute reported credit without changing store cash receipts. Late conversions, modeled reporting, and value corrections can also move recent results. Preserve the configuration and rerun the same contract before concluding that bids, audiences, or creative caused the difference.</p>
+            <p>Finally check volume and marginal economics. A higher ROAS target can coincide with fewer purchases, and an aggregate 3.57x can hide segments below the profit floor. Use the threshold as a financial requirement for the selected reporting view, then validate realized order contribution and total profit outside the platform report.</p>
+          </div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Platform facts and model limits</p><h2>Meta defines attributed reporting; your costs define the threshold.</h2></div>
+          <div class="content-copy">
+            <p>Meta's Business Help Center documents attribution-related controls and reporting concepts. ROAS Break supplies the separate contribution calculation, break-even floor, retained-profit rule, and fictional USD example. The 2.63x and 3.57x thresholds are not Meta recommendations.</p>
+            <p>The linked public pages may render their full text only after JavaScript runs. They are retained as official references, but this guide deliberately avoids claiming a current universal default attribution window. Confirm the actual options and selected settings inside the account and campaign being evaluated, because availability varies.</p>
+            <ul class="source-list"><li data-source="01"><span><a href="https://www.facebook.com/business/help/460276478298895?locale=en_US">Meta Business Help Center: attribution settings</a><small>Official attribution-settings reference; full public body can depend on JavaScript. Checked August 21, 2026.</small></span></li><li data-source="02"><span><a href="https://www.facebook.com/business/help/458681590974355?locale=en_US">Meta Business Help Center: attributed reporting</a><small>Official attribution and reporting reference; availability can vary by account and campaign. Checked August 21, 2026.</small></span></li></ul>
+          </div>
+        </section>
+
+        <section class="related-reading" aria-labelledby="meta-next"><div><p class="section-kicker">Continue the decision</p><h2 id="meta-next">Keep platform credit and business profit separate.</h2></div><div class="related-links"><a href="/guides/attributed-roas-vs-mer/"><span>Reconcile attribution with store-wide MER</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/poas-vs-roas/"><span>Compare revenue ROAS with profit after ad spend</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/ecommerce-revenue-basis/"><span>Align purchase value with net order revenue</span><span aria-hidden="true">&rarr;</span></a></div></section>
+      </article>
+    </main>
+    <footer class="inner-footer"><a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a><nav class="footer-links" aria-label="Company and legal"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><p class="footer-copyright">&copy; <span data-year></span> ROAS Break</p></footer>
+    <script type="module" src="/src/pages/guide.ts"></script>
+  </body>
+</html>

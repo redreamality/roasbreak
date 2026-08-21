@@ -95,6 +95,17 @@ const guideJourneys: GuideJourney[] = [
     inputValue: "58",
   },
   {
+    name: "Meta Ads ROAS and attribution",
+    guidePath: "/guides/meta-ads-roas-and-attribution/",
+    toolPath: "/target-roas-calculator/",
+    resultSelector: "#target-roas",
+    resultText: "3.57x",
+    inputSelector: "#target-profit",
+    inputValue: "10",
+    restoreInputValue: "12",
+    restoredResultText: "3.85x",
+  },
+  {
     name: "Amazon break-even ACoS",
     guidePath: "/guides/amazon-break-even-acos/",
     toolPath: "/target-roas-calculator/",

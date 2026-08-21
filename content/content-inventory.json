@@ -294,6 +294,35 @@
       ]
     },
     {
+      "id": "meta-ads-roas-attribution",
+      "type": "guide",
+      "url": "/guides/meta-ads-roas-and-attribution/",
+      "file": "guides/meta-ads-roas-and-attribution/index.html",
+      "cluster": "Paid Media Metrics",
+      "primaryIntent": "Map Meta Ads attributed purchase value and selected attribution settings into an ecommerce profit threshold",
+      "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=42&ship=8&other=4&fees=3&returns=5&roas=3.2&profit=10",
+      "publishedOn": "2026-08-21",
+      "reviewedOn": "2026-08-21",
+      "reviewDue": "2026-11-19",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://www.facebook.com/business/help/460276478298895?locale=en_US",
+          "owner": "Meta",
+          "region": "Global; availability varies by account and campaign",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://www.facebook.com/business/help/458681590974355?locale=en_US",
+          "owner": "Meta",
+          "region": "Global; availability varies by account and campaign",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "amazon-break-even-acos",
       "type": "guide",
       "url": "/guides/amazon-break-even-acos/",

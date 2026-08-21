@@ -25,6 +25,7 @@ export default defineConfig({
         shopifyNetSales: resolve(import.meta.dirname, "guides/shopify-net-sales-for-roas/index.html"),
         goodRoas: resolve(import.meta.dirname, "guides/good-roas-for-profit-margin/index.html"),
         googleTargetRoas: resolve(import.meta.dirname, "guides/google-ads-target-roas-profit/index.html"),
+        metaAdsRoasAttribution: resolve(import.meta.dirname, "guides/meta-ads-roas-and-attribution/index.html"),
         amazonBreakEvenAcos: resolve(import.meta.dirname, "guides/amazon-break-even-acos/index.html"),
         contributionLtv: resolve(import.meta.dirname, "guides/contribution-ltv-vs-revenue-ltv/index.html"),
         newCustomerRoas: resolve(import.meta.dirname, "guides/new-customer-roas-vs-blended-roas/index.html"),
