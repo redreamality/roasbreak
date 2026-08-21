@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "scope": {
     "startedAtCommit": "1031047e9eb75ef58b59c8e57cffbc7e52a5d2b5",
-    "reviewedThroughCommit": "3ce024c7fdcb9006a231c62f5987d12d71e4f0a7",
+    "reviewedThroughCommit": "4cfca1a48a8e2a2bddf320b63ecb5099037c6440",
     "reviewedAt": "2026-08-21",
     "reviewer": "Codex independent release review",
-    "assetCount": 22,
+    "assetCount": 23,
     "excludedAfterStart": []
   },
   "assets": [
@@ -746,6 +746,42 @@
             "At 10000 spend, the 50 AOV, 20% margin, 5.00x scenario gives revenue=50000, normalized orders=50000/50=1000, and contribution after ads=50000*20%-10000=0.",
             "The 80 AOV, 40% margin, 4.00x scenario gives revenue=40000, orders=500, and contribution=6000; the 100 AOV, 55% margin, 3.00x scenario gives revenue=30000, orders=300, and contribution=6500, correctly winning by 500 over Balanced and 6500 over High ROAS.",
             "When the high-margin scenario falls to 2.80x, revenue=28000, normalized orders=28000/100=280, and contribution=28000*55%-10000=5400, so Balanced remains at 6000 and becomes the winner; all displayed order counts are correctly labeled revenue/AOV normalization rather than observed transactions."
+          ]
+        }
+      }
+    },
+    {
+      "id": "ecommerce-variable-cost-checklist",
+      "reviewedOn": "2026-08-21",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page fulfills its unique input-audit intent by requiring source, period, currency, owner, amount, destination, and status for every pre-ad variable cost, then enforcing one destination, fixed-versus-variable, and missing-versus-zero checks before opening the calculator.",
+            "All six groups map explicitly to the calculator: revenue deductions to aov, product and inbound to cogs, fulfillment to ship, percentage payment/platform costs to fees and fixed components to other, refunded revenue to returns with reverse-logistics or unrecovered loss in other, and remaining variable service costs to other.",
+            "Its boundary is distinct from related assets: contribution-margin explains why contribution sets the acquisition ceiling, ecommerce-profit-formulas connects approved inputs to CPA/POAS/MER/payback, and methodology states the site's broader revenue, cost, attribution, and review rules."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "All five official sources returned HTTP 200: GA4 documents ecommerce value, currency, discount, item, purchase, and refund fields; its Data API documents revenue and refund metrics; Shopify documents InventoryItem unitCost and Refund line items, transactions, order adjustments, and totals; Stripe documents balance-transaction amount, fee, net, currency, and reporting_category.",
+            "The guide treats platform fields as source evidence rather than a completed cost model and explicitly labels the six-group mapping, one-destination rule, contribution boundary, and fictional calculations as ROAS Break choices rather than platform accounting guidance.",
+            "The refund rule prevents deducting mature refunded revenue in both aov and returns/other, while the fixed-cost and missing-zero controls keep baseline overhead separate and require evidence for genuine zero values; tax, accounting classification, cash timing, attribution, demand, inventory, and forecasting remain outside scope."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Revenue and cost ledger recomputed: 135-15=120 aov; fees=120*3%=3.60; expected refunded revenue=120*8%=9.60; total pre-ad variable cost=48+9+7+3.60+9.60=77.20.",
+            "Contribution=120-77.20=42.80, contribution margin=42.80/120=35.6667% displayed as 35.7%, and break-even ROAS=120/42.80=2.8037x displayed as 2.80x.",
+            "The incomplete COGS-only view gives 120-48=72, 72/120=60%, and 120/72=1.67x while omitting 9+7+3.60+9.60=29.20; at 3.00x, ad cost is 120/3=40 and after-ad contribution is 2.80 per order, so 1000/40=25 orders produce 25*2.80=70."
           ]
         }
       }
