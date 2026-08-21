@@ -747,6 +747,7 @@ test("attributes one completed calculation and successful copy to the originatin
   await page.goto("/guides/ecommerce-variable-cost-checklist/");
   await page.locator(".guide-action").click();
   await expect(page).toHaveURL(/\/\?mode=costs/);
+  await expect(page.locator("#calculator")).toHaveAttribute("data-status", /^(above|at|below|unviable)$/, { timeout: 15_000 });
 
   await page.locator('[name="currentRoas"]').fill("3.1");
   await page.locator('[name="currentRoas"]').press("Tab");
@@ -762,7 +763,10 @@ test("attributes one completed calculation and successful copy to the originatin
     ["event", "break_even_copied", { tool: "break_even", source_guide: "ecommerce-variable-cost-checklist" }],
   ]);
 
-  const serializedEvents = await page.evaluate(() => JSON.stringify((window as Window & { dataLayer?: unknown[][] }).dataLayer ?? []));
+  const serializedEvents = await page.evaluate(() => {
+    const dataLayer = (window as Window & { dataLayer?: unknown[][] }).dataLayer ?? [];
+    return JSON.stringify(dataLayer.filter((entry) => entry[0] !== "js"));
+  });
   expect(serializedEvents).not.toContain("3.1");
   expect(serializedEvents).not.toContain("mode=costs");
   expect(serializedEvents).not.toContain("?");
