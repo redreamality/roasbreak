@@ -32,6 +32,15 @@ const guideJourneys: GuideJourney[] = [
     inputValue: "100",
   },
   {
+    name: "POAS versus ROAS",
+    guidePath: "/guides/poas-vs-roas/",
+    toolPath: "/target-roas-calculator/",
+    resultSelector: "#target-roas",
+    resultText: "3.85x",
+    inputSelector: "#order-value",
+    inputValue: "100",
+  },
+  {
     name: "contribution margin",
     guidePath: "/guides/contribution-margin-vs-gross-margin/",
     toolPath: "/",

@@ -84,6 +84,42 @@
       ]
     },
     {
+      "id": "poas-vs-roas",
+      "type": "guide",
+      "url": "/guides/poas-vs-roas/",
+      "file": "guides/poas-vs-roas/index.html",
+      "cluster": "Paid Media Metrics",
+      "primaryIntent": "Decide when contribution profit after ads is more useful than revenue ROAS",
+      "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=45&ship=8&other=3&fees=3&returns=5&roas=4&profit=10",
+      "publishedOn": "2026-08-21",
+      "reviewedOn": "2026-08-21",
+      "reviewDue": "2026-11-19",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas",
+          "owner": "Amazon Ads",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/marketing-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "contribution-margin",
       "type": "guide",
       "url": "/guides/contribution-margin-vs-gross-margin/",

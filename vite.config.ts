@@ -15,6 +15,7 @@ export default defineConfig({
         scenarioPlanner: resolve(import.meta.dirname, "scenario-planner/index.html"),
         ecommerceProfitFormulas: resolve(import.meta.dirname, "guides/ecommerce-profit-formulas/index.html"),
         contributionMargin: resolve(import.meta.dirname, "guides/contribution-margin-vs-gross-margin/index.html"),
+        poasRoas: resolve(import.meta.dirname, "guides/poas-vs-roas/index.html"),
         roasAcos: resolve(import.meta.dirname, "guides/roas-vs-acos/index.html"),
         attributedMer: resolve(import.meta.dirname, "guides/attributed-roas-vs-mer/index.html"),
         revenueBasis: resolve(import.meta.dirname, "guides/ecommerce-revenue-basis/index.html"),
