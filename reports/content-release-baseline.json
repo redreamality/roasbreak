@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-21T04:46:28.486Z",
+  "generatedAt": "2026-08-21T06:45:03.678Z",
   "repository": {
-    "commit": "bdfcb20c68c773e047ed736abaae73a1195533bd",
+    "commit": "1ff2e6579aa3a286dfb988c2233859a31f4a8657",
     "branch": "main",
-    "workingTreeClean": false
+    "workingTreeClean": true
   },
   "assets": [
     {
@@ -32,6 +32,15 @@
       "file": "guides/poas-vs-roas/index.html",
       "primaryIntent": "Decide when contribution profit after ads is more useful than revenue ROAS",
       "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=45&ship=8&other=3&fees=3&returns=5&roas=4&profit=10",
+      "reviewedOn": "2026-08-21"
+    },
+    {
+      "id": "ecommerce-variable-cost-checklist",
+      "type": "guide",
+      "url": "/guides/ecommerce-variable-cost-checklist/",
+      "file": "guides/ecommerce-variable-cost-checklist/index.html",
+      "primaryIntent": "Audit every pre-ad variable cost into one and only one Break-even ROAS input before setting an acquisition ceiling",
+      "primaryTool": "/?mode=costs&aov=120&cogs=48&ship=9&other=7&fees=3&returns=8&roas=3",
       "reviewedOn": "2026-08-21"
     },
     {
@@ -89,6 +98,15 @@
       "reviewedOn": "2026-08-20"
     },
     {
+      "id": "meta-ads-roas-attribution",
+      "type": "guide",
+      "url": "/guides/meta-ads-roas-and-attribution/",
+      "file": "guides/meta-ads-roas-and-attribution/index.html",
+      "primaryIntent": "Map Meta Ads attributed purchase value and selected attribution settings into an ecommerce profit threshold",
+      "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=42&ship=8&other=4&fees=3&returns=5&roas=3.2&profit=10",
+      "reviewedOn": "2026-08-21"
+    },
+    {
       "id": "amazon-break-even-acos",
       "type": "guide",
       "url": "/guides/amazon-break-even-acos/",
@@ -98,13 +116,40 @@
       "reviewedOn": "2026-08-20"
     },
     {
+      "id": "discount-vs-bundle-profit",
+      "type": "guide",
+      "url": "/guides/discount-vs-bundle-profit/",
+      "file": "guides/discount-vs-bundle-profit/index.html",
+      "primaryIntent": "Compare direct-discount and bundle contribution profit against the same order and traffic target",
+      "primaryTool": "/promotion-profit-calculator/?mode=costs&aov=80&cogs=28&ship=6&other=3&fees=3&returns=5&roas=2.5&promo=64&cvr=2.5",
+      "reviewedOn": "2026-08-21"
+    },
+    {
+      "id": "free-shipping-profit-threshold",
+      "type": "guide",
+      "url": "/guides/free-shipping-profit-threshold/",
+      "file": "guides/free-shipping-profit-threshold/index.html",
+      "primaryIntent": "Calculate the AOV, order, or conversion lift required for free shipping to preserve contribution profit",
+      "primaryTool": "/promotion-profit-calculator/?mode=costs&aov=86&cogs=32&ship=8&other=4&fees=3&returns=5&roas=2.5&promo=80&cvr=2.5",
+      "reviewedOn": "2026-08-21"
+    },
+    {
       "id": "returns-discounts",
       "type": "guide",
       "url": "/guides/returns-and-discounts/",
       "file": "guides/returns-and-discounts/index.html",
       "primaryIntent": "Separate the profit effects of discounts, refunds, and returns",
       "primaryTool": "/promotion-profit-calculator/",
-      "reviewedOn": "2026-08-20"
+      "reviewedOn": "2026-08-21"
+    },
+    {
+      "id": "contribution-ltv-vs-revenue-ltv",
+      "type": "guide",
+      "url": "/guides/contribution-ltv-vs-revenue-ltv/",
+      "file": "guides/contribution-ltv-vs-revenue-ltv/index.html",
+      "primaryIntent": "Prevent cumulative revenue LTV from being used directly as allowable CAC by calculating fixed-window cohort contribution",
+      "primaryTool": "/cac-payback-calculator/?cac=70&profit=15&d30=40&d60=52&d90=60&d180=74&d365=92",
+      "reviewedOn": "2026-08-21"
     },
     {
       "id": "new-customer-roas-vs-blended-roas",
@@ -125,6 +170,42 @@
       "reviewedOn": "2026-08-20"
     },
     {
+      "id": "product-channel-profitability-scenario",
+      "type": "guide",
+      "url": "/guides/product-vs-channel-profitability-scenario/",
+      "file": "guides/product-vs-channel-profitability-scenario/index.html",
+      "primaryIntent": "Compare product-channel combinations on total contribution profit at equal ad spend instead of ranking them by ROAS alone",
+      "primaryTool": "/scenario-planner/?s1n=High+ROAS+low+margin&s1a=50&s1m=20&s1r=5&s1s=10000&s2n=Balanced+mix&s2a=80&s2m=40&s2r=4&s2s=10000&s3n=Lower+ROAS+high+margin&s3a=100&s3m=55&s3r=3&s3s=10000",
+      "reviewedOn": "2026-08-21"
+    },
+    {
+      "id": "refunds-conversion-adjustments",
+      "type": "guide",
+      "url": "/guides/refunds-and-conversion-adjustments/",
+      "file": "guides/refunds-and-conversion-adjustments/index.html",
+      "primaryIntent": "Correct canceled and partially refunded ecommerce transactions in Google Ads and GA4 before recalculating ROAS",
+      "primaryTool": "/scenario-planner/?s1n=Stale+initial&s1a=100&s1m=40&s1r=4&s1s=10000&s2n=Ads+adjusted&s2a=100&s2m=40&s2r=3.4&s2s=10000&s3n=Store+control&s3a=100&s3m=40&s3r=3.3&s3s=10000",
+      "reviewedOn": "2026-08-21"
+    },
+    {
+      "id": "conversion-delay-data-maturity",
+      "type": "guide",
+      "url": "/guides/conversion-delay-and-data-maturity/",
+      "file": "guides/conversion-delay-and-data-maturity/index.html",
+      "primaryIntent": "Determine when recent attributed ROAS is mature enough for a budget decision",
+      "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=5&roas=2.7&profit=10",
+      "reviewedOn": "2026-08-21"
+    },
+    {
+      "id": "tiktok-shop-roas-attribution",
+      "type": "guide",
+      "url": "/guides/tiktok-shop-roas-and-attribution/",
+      "file": "guides/tiktok-shop-roas-and-attribution/index.html",
+      "primaryIntent": "Normalize TikTok Shop click-through, view-through, and gross revenue reporting into comparable contribution-profit scenarios",
+      "primaryTool": "/scenario-planner/?s1n=CTA+only&s1a=50&s1m=40&s1r=2.5&s1s=10000&s2n=CTA+%2B+VTA&s2a=50&s2m=40&s2r=3.2&s2s=10000&s3n=Store+net&s3a=50&s3m=40&s3r=2.7&s3s=10000",
+      "reviewedOn": "2026-08-21"
+    },
+    {
       "id": "attributed-mer",
       "type": "guide",
       "url": "/guides/attributed-roas-vs-mer/",
@@ -141,7 +222,7 @@
       "status": "passed",
       "evidence": {
         "command": "node scripts/check-content.mjs",
-        "output": "Content checks passed for 14 published assets."
+        "output": "Content checks passed for 23 published assets."
       },
       "failures": []
     },
@@ -150,7 +231,7 @@
       "label": "Every published inventory asset has a readable source file",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 14
+        "inspectedAssets": 23
       },
       "failures": []
     },
@@ -159,8 +240,8 @@
       "label": "Published assets have one non-empty, unique primary intent",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 14,
-        "uniqueIntents": 14
+        "inspectedAssets": 23,
+        "uniqueIntents": 23
       },
       "failures": []
     },
@@ -169,8 +250,8 @@
       "label": "Sources have URL, owner, region, verification date, and verified status",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 14,
-        "inspectedSources": 31
+        "inspectedAssets": 23,
+        "inspectedSources": 61
       },
       "failures": []
     },
@@ -179,7 +260,7 @@
       "label": "Every governed source is linked from the visible page body",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 14
+        "inspectedAssets": 23
       },
       "failures": []
     },
@@ -188,7 +269,7 @@
       "label": "Canonical URLs and sitemap entries match the inventory exactly",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 14,
+        "inspectedAssets": 23,
         "sitemap": "public/sitemap.xml"
       },
       "failures": []
@@ -198,7 +279,7 @@
       "label": "Every asset exposes one visible content scope in editorial metadata",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 14
+        "inspectedAssets": 23
       },
       "failures": []
     },
@@ -207,7 +288,7 @@
       "label": "Every guide has exactly one primary CTA matching primaryTool",
       "status": "passed",
       "evidence": {
-        "inspectedGuides": 13
+        "inspectedGuides": 22
       },
       "failures": []
     },
@@ -216,8 +297,8 @@
       "label": "Guides have Article JSON-LD and every asset has BreadcrumbList plus visible breadcrumb",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 14,
-        "inspectedGuides": 13,
+        "inspectedAssets": 23,
+        "inspectedGuides": 22,
         "evidenceType": "static-source"
       },
       "failures": []
@@ -227,22 +308,31 @@
       "label": "Published assets exceed the minimum body depth and contain no placeholder language",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 14,
+        "inspectedAssets": 23,
         "minimumArticleWords": 350,
         "articleWordCounts": {
           "methodology": 785,
           "ecommerce-profit-formulas": 1055,
           "poas-vs-roas": 871,
+          "ecommerce-variable-cost-checklist": 1065,
           "contribution-margin": 470,
           "revenue-basis": 488,
           "shopify-net-sales": 493,
           "roas-acos": 370,
           "good-roas": 411,
           "google-target-roas": 399,
+          "meta-ads-roas-attribution": 1059,
           "amazon-break-even-acos": 428,
-          "returns-discounts": 476,
+          "discount-vs-bundle-profit": 1066,
+          "free-shipping-profit-threshold": 979,
+          "returns-discounts": 498,
+          "contribution-ltv-vs-revenue-ltv": 1093,
           "new-customer-roas-vs-blended-roas": 1083,
           "cac-payback-cohort": 464,
+          "product-channel-profitability-scenario": 923,
+          "refunds-conversion-adjustments": 1146,
+          "conversion-delay-data-maturity": 1087,
+          "tiktok-shop-roas-attribution": 1008,
           "attributed-mer": 444
         }
       },
@@ -255,7 +345,7 @@
       "evidence": {
         "command": "pnpm exec playwright test tests/e2e/inner-pages.spec.ts --project=chromium --grep <canonical/schema/breadcrumb/sitemap test>",
         "evidenceType": "runtime-e2e",
-        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:262:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (4.8s)\n\n  1 passed (6.5s)"
+        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:553:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (6.1s)\n\n  1 passed (7.9s)"
       },
       "failures": []
     }
@@ -264,77 +354,122 @@
     {
       "id": "semantic-intent-alignment",
       "label": "Page content satisfies its declared primary intent",
-      "status": "manual-review-required",
+      "status": "passed",
       "assetIds": [
         "methodology",
         "ecommerce-profit-formulas",
         "poas-vs-roas",
+        "ecommerce-variable-cost-checklist",
         "contribution-margin",
         "revenue-basis",
         "shopify-net-sales",
         "roas-acos",
         "good-roas",
         "google-target-roas",
+        "meta-ads-roas-attribution",
         "amazon-break-even-acos",
+        "discount-vs-bundle-profit",
+        "free-shipping-profit-threshold",
         "returns-discounts",
+        "contribution-ltv-vs-revenue-ltv",
         "new-customer-roas-vs-blended-roas",
         "cac-payback-cohort",
+        "product-channel-profitability-scenario",
+        "refunds-conversion-adjustments",
+        "conversion-delay-data-maturity",
+        "tiktok-shop-roas-attribution",
         "attributed-mer"
       ],
-      "reviewInstruction": "Compare the primaryIntent with the title, direct answer, sections, and conclusion; record evidence for every asset."
+      "reviewInstruction": "Compare the primaryIntent with the title, direct answer, sections, and conclusion; record evidence for every asset.",
+      "evidence": {
+        "source": "content/content-manual-review.json",
+        "reviewedAssets": 23
+      },
+      "failures": []
     },
     {
       "id": "facts-vs-recommendations",
       "label": "External facts are separated from ROAS Break recommendations",
-      "status": "manual-review-required",
+      "status": "passed",
       "assetIds": [
         "methodology",
         "ecommerce-profit-formulas",
         "poas-vs-roas",
+        "ecommerce-variable-cost-checklist",
         "contribution-margin",
         "revenue-basis",
         "shopify-net-sales",
         "roas-acos",
         "good-roas",
         "google-target-roas",
+        "meta-ads-roas-attribution",
         "amazon-break-even-acos",
+        "discount-vs-bundle-profit",
+        "free-shipping-profit-threshold",
         "returns-discounts",
+        "contribution-ltv-vs-revenue-ltv",
         "new-customer-roas-vs-blended-roas",
         "cac-payback-cohort",
+        "product-channel-profitability-scenario",
+        "refunds-conversion-adjustments",
+        "conversion-delay-data-maturity",
+        "tiktok-shop-roas-attribution",
         "attributed-mer"
       ],
-      "reviewInstruction": "Identify externally sourced claims and editorial recommendations; confirm each is labeled and sourced appropriately."
+      "reviewInstruction": "Identify externally sourced claims and editorial recommendations; confirm each is labeled and sourced appropriately.",
+      "evidence": {
+        "source": "content/content-manual-review.json",
+        "reviewedAssets": 23
+      },
+      "failures": []
     },
     {
       "id": "worked-example-recalculation",
       "label": "Worked examples have been independently recalculated",
-      "status": "manual-review-required",
+      "status": "passed",
       "assetIds": [
         "methodology",
         "ecommerce-profit-formulas",
         "poas-vs-roas",
+        "ecommerce-variable-cost-checklist",
         "contribution-margin",
         "revenue-basis",
         "shopify-net-sales",
         "roas-acos",
         "good-roas",
         "google-target-roas",
+        "meta-ads-roas-attribution",
         "amazon-break-even-acos",
+        "discount-vs-bundle-profit",
+        "free-shipping-profit-threshold",
         "returns-discounts",
+        "contribution-ltv-vs-revenue-ltv",
         "new-customer-roas-vs-blended-roas",
         "cac-payback-cohort",
+        "product-channel-profitability-scenario",
+        "refunds-conversion-adjustments",
+        "conversion-delay-data-maturity",
+        "tiktok-shop-roas-attribution",
         "attributed-mer"
       ],
-      "reviewInstruction": "Recalculate every example from displayed inputs and formulas, including units and rounding; record the reviewer and result per asset."
+      "reviewInstruction": "Recalculate every example from displayed inputs and formulas, including units and rounding; record the reviewer and result per asset.",
+      "evidence": {
+        "source": "content/content-manual-review.json",
+        "reviewedAssets": 23
+      },
+      "failures": []
     }
   ],
   "summary": {
-    "assetCount": 14,
-    "guideCount": 13,
+    "assetCount": 23,
+    "guideCount": 22,
     "automatedPassed": 11,
     "automatedFailed": 0,
-    "manualReviewRequired": 3,
+    "manualPassed": 3,
+    "manualFailed": 0,
+    "manualReviewRequired": 0,
     "automatedGate": "passed",
-    "releaseDecision": "manual-review-required"
+    "manualGate": "passed",
+    "releaseDecision": "passed"
   }
 }
