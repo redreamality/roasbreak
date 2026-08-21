@@ -95,3 +95,7 @@
 - 新克隆或新工作树可能只有 `package.json`/`pnpm-lock.yaml` 而没有 `node_modules`；直接运行 `pnpm test` 会报本地 `vitest` 找不到。执行测试或构建前先用 `Test-Path node_modules` 检查，缺失时运行 `pnpm install --frozen-lockfile`，不要把依赖未安装误判为测试代码失败。
 - `pnpm install --frozen-lockfile` 只安装 `@playwright/test` 包，不会自动安装匹配版本的浏览器产物；新工作树首次跑 E2E 前应执行 `pnpm exec playwright install --only-shell chromium`。否则全部用例会在 `browserType.launch` 阶段因缺少 `chromium_headless_shell-<version>` 同因失败，不能当成 40 个独立产品缺陷。
 - 指南模板把 `.guide-action` 作为唯一主工具 CTA、Analytics 事件和发布测试契约；同页的辅助动作应使用 `.text-action` 或 `.related-links`。不要给两个链接都套 `.guide-action`，否则 E2E 会正确报主动作不唯一。
+- GitHub Actions job 若在 runner 分配前失败，`gh run view <run-id> --log-failed` 会因根本没有 step 日志而返回退出码 1 和 `log not found`；不要把它误判为日志权限或 CLI 故障。改查 job 的 `steps`/`runner_id`，并读取 check-run annotations 获取 Billing、spending limit 等平台级拒绝原因。
+- 完整 Playwright 套件以多 worker 并发运行时，单个 `page.goto()` 可能因本机资源争用超过 30 秒，而同一用例在另一个项目或定向单 worker 复跑通过。遇到仅导航超时且其余同路径用例正常时，先用 `pnpm exec playwright test <spec> --project=<project> --grep '<test>'` 定向复核；复跑稳定通过后按并发瞬时超时记录，不要直接判定产品回归。
+- PowerShell 的 `Get-ChildItem -Recurse -File src scripts tests` 会把多个目录当成无效位置参数并报错；扫描多个目录时应显式使用 `Get-ChildItem -Path src,scripts,tests -Recurse -File`，或分别调用后汇总。
+- 用 `rg` 显式列出不存在的文件会返回路径错误；扫描 `sitemap.xml`、`robots.txt` 等静态资产前先用 `rg --files` 定位真实目录（本项目在 `public/`），不要假定文件位于仓库根目录。
