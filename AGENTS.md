@@ -118,3 +118,4 @@
 - 本任务的 Codex 会话目录可能是 `...\2026-08-21\yan`，但项目仓库位于 `C:\Users\unknown\Documents\Codex\2026-08-19\ben\roasbreak`。所有 `git`、`pnpm` 和项目文件命令都要显式设置该 workdir；不要依赖会话默认目录，否则会分别报非 Git 仓库或找不到 `package.json`。
 - 并行代理可能先创建测试、随后才创建被测模块；TypeScript 会立即纳入未提交的 `tests/**/*.ts`，使其他任务的 `pnpm build` 暂时出现模块缺失或 unused `@ts-expect-error`。先用 `git status` 确认文件所有者并等待其完成最小可编译状态，不要跨任务修改、删除或暂存在途文件。
 - `@ts-expect-error` 只抑制紧邻的下一行；为无声明 `.mjs` 模块写多行 `import` 时，TS7016 可能定位在 import 的末行，使首行上方的指令既未生效又被判 unused。应把该 import 写成单行，或提供对应 `.d.ts`，不要假设指令覆盖整个多行语句。
+- PowerShell 不会替 `rg` 展开 `docs/research/*.md` 这类裸路径通配符，会报 os error 123；扫描研究文档时直接传目录并用 `-g '*.md'` 限定，例如 `rg -g '*.md' '<pattern>' docs/research`。
