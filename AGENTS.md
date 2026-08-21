@@ -139,3 +139,5 @@
 - 修改已发布指南 HTML 后，完整 `pnpm test` 会因 `content/content-manual-review.json` 仍绑定旧 SHA-256 而按设计失败。先跑与哈希无关的内容校验、构建和定向 E2E，完成独立审查并更新账本哈希后，再跑完整单测和发布门禁；不要把预期的 stale-review 失败误判成业务回归。
 - 给指南新增复制按钮时，页面还必须提供唯一的 `.toast#toast[aria-live="polite"]` 状态节点；只接 `copyText()` 而没有该节点会静默复制、没有可访问反馈。E2E 应同时断言剪贴板内容、toast 文案和可见状态。
 - 给 `content-inventory.json` 等含大量重复 source 对象的 JSON 打补丁时，不能只用常见 URL 或 `sources` 作为上下文；必须让同一 hunk 包含目标资产的唯一 `id`，补丁后立即检查该文件的 `git diff`，再运行内容校验，避免把来源插入其他资产。
+- 扫描“应不存在的陈旧文本”时，`rg` 的无匹配退出码 1 是期望结果；必须在同一条 PowerShell 命令中把 1 显式转为 0，再放入并行汇总，不能等命令失败后才凭输出解释。
+- PowerShell 从旧版 JSON 量化可选字段前，必须先检查字段存在且非空，并设置 `$ErrorActionPreference = 'Stop'`（或对相关命令使用 `-ErrorAction Stop`）；否则对 `$null` 调方法只产生 non-terminating error，进程仍可能以 0 退出并输出假成功统计。
