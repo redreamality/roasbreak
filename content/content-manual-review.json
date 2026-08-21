@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "scope": {
     "startedAtCommit": "1031047e9eb75ef58b59c8e57cffbc7e52a5d2b5",
-    "reviewedThroughCommit": "16cbaaca69f0a9f77f51b3c198952429af21e27e",
+    "reviewedThroughCommit": "3ce024c7fdcb9006a231c62f5987d12d71e4f0a7",
     "reviewedAt": "2026-08-21",
     "reviewer": "Codex independent release review",
-    "assetCount": 21,
+    "assetCount": 22,
     "excludedAfterStart": []
   },
   "assets": [
@@ -711,6 +711,41 @@
             "Initial attributed ROAS recomputes as 40000/10000=4.00x; subtracting 5000 of retracted value and 1000 of aggregate restatement reductions leaves 34000 and 34000/10000=3.40x.",
             "The 33000 store control is 1000 below adjusted Ads value and gives 3.30x. At 40% contribution margin, after-ad contribution is 40000*40%-10000=6000, 34000*40%-10000=3600, and 33000*40%-10000=3200.",
             "The displayed 400, 340, and 330 orders equal each scenario's revenue divided by the planner's 100 AOV and are correctly labeled normalization only, not Google Ads conversion counts."
+          ]
+        }
+      }
+    },
+    {
+      "id": "product-channel-profitability-scenario",
+      "reviewedOn": "2026-08-21",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page directly fulfills its declared intent by holding ad spend equal, deriving revenue and normalized orders from each scenario's ROAS and AOV, and ranking product-channel combinations by total contribution after advertising rather than ROAS alone.",
+            "Its role remains distinct from related assets: poas-vs-roas defines the profit ratio, attributed-roas-vs-mer reconciles channel credit with store totals, shopify-net-sales-for-roas maps commerce report inputs, and ecommerce-profit-formulas connects the general metric relationships; this guide applies already-defined inputs to scenario ranking."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "All four official sources returned HTTP 200: GA4 documents ecommerce transaction, item, purchase, refund, metric, and dimension fields; Shopify defines InventoryItem unitCost as the unit cost associated with the inventory item; Amazon defines ROAS as campaign revenue divided by campaign spend.",
+            "The guide explicitly limits Shopify unitCost to merchandise-cost mapping and requires fulfillment, payment, marketplace, return, duty, packaging, incentive, and other variable costs before calling the result contribution margin.",
+            "The fictional AOV, margins, ROAS values, equal-spend control, and ranking are labeled ROAS Break assumptions; attribution is separated from causality and overlapping channel credit, while the scale warning rejects linear extrapolation when auctions, mix, inventory, or costs change."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "At 10000 spend, the 50 AOV, 20% margin, 5.00x scenario gives revenue=50000, normalized orders=50000/50=1000, and contribution after ads=50000*20%-10000=0.",
+            "The 80 AOV, 40% margin, 4.00x scenario gives revenue=40000, orders=500, and contribution=6000; the 100 AOV, 55% margin, 3.00x scenario gives revenue=30000, orders=300, and contribution=6500, correctly winning by 500 over Balanced and 6500 over High ROAS.",
+            "When the high-margin scenario falls to 2.80x, revenue=28000, normalized orders=28000/100=280, and contribution=28000*55%-10000=5400, so Balanced remains at 6000 and becomes the winner; all displayed order counts are correctly labeled revenue/AOV normalization rather than observed transactions."
           ]
         }
       }
