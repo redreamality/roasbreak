@@ -141,3 +141,6 @@
 - 给 `content-inventory.json` 等含大量重复 source 对象的 JSON 打补丁时，不能只用常见 URL 或 `sources` 作为上下文；必须让同一 hunk 包含目标资产的唯一 `id`，补丁后立即检查该文件的 `git diff`，再运行内容校验，避免把来源插入其他资产。
 - 扫描“应不存在的陈旧文本”时，`rg` 的无匹配退出码 1 是期望结果；必须在同一条 PowerShell 命令中把 1 显式转为 0，再放入并行汇总，不能等命令失败后才凭输出解释。
 - PowerShell 从旧版 JSON 量化可选字段前，必须先检查字段存在且非空，并设置 `$ErrorActionPreference = 'Stop'`（或对相关命令使用 `-ErrorAction Stop`）；否则对 `$null` 调方法只产生 non-terminating error，进程仍可能以 0 退出并输出假成功统计。
+- 新增或升级发布基线 schema/contract 后，旧 `reports/content-release-baseline.json` 会让 `pnpm release:check:verify` 按设计失败。应先用定向单测证明门禁，再提交门禁代码；随后在干净 HEAD 运行 `pnpm release:check` 刷新两份报告并单独提交，最后才跑 verify/完整 check，不要把预期 stale-baseline 红灯当成产品回归。
+- 首页计算器的静态表单会早于模块 hydration 可见；Analytics E2E 从指南跳转后必须先等待 `#calculator[data-status]`，再做 trusted input/change，避免在事件监听器和隐私初始化前完成交互。扫描 dataLayer 是否泄露输入时应排除 `js` Date 初始化行，或结构化检查 config/event payload；不能对含随机 ISO 时间戳的整层 JSON 做短数值子串断言。
+- 给子代理分派本仓库任务时，消息中必须写出绝对仓库路径，并要求每条 `git`/`pnpm`/文件命令显式使用该 workdir；子代理继承会话上下文不等于继承正确当前目录，不能只依赖项目级路径说明。
