@@ -37,7 +37,7 @@
             <p class="formula-line">Required orders = baseline total contribution / offer contribution per order</p>
             <p class="formula-line">Required CVR = required orders / baseline sessions x 100</p>
             <p>Do not assume a bundle raises conversion. Its higher checkout price can increase AOV while lowering CVR. Treat the required CVR as a threshold to test, not a forecast.</p>
-            <a class="guide-action" href="/promotion-profit-calculator/?mode=costs&amp;aov=80&amp;cogs=28&amp;ship=6&amp;other=3&amp;fees=3&amp;returns=5&amp;roas=2.5&amp;promo=64&amp;cvr=2.5">Open the one-unit discount threshold</a>
+            <a class="guide-action" href="/promotion-profit-calculator/?mode=costs&amp;aov=80&amp;cogs=28&amp;ship=6&amp;other=3&amp;fees=3&amp;returns=5&amp;roas=2.5&amp;promo=64&amp;cvr=2.5">Open the fictional 20% seasonal discount threshold</a>
           </div>
         </section>
 
@@ -72,6 +72,17 @@
         </section>
 
         <section class="page-content">
+          <div><p class="section-kicker">Seasonal planning worksheet</p><h2>Use the threshold for BFCM planning, not as a BFCM benchmark.</h2></div>
+          <div class="content-copy">
+            <p>Black Friday and Cyber Monday are one use case for this contribution threshold, not a separate formula. Start from your own mature control period and record the assumptions below before testing a seasonal offer. The fictional 20% example is not evidence of typical BFCM discount depth, conversion lift, order volume, or customer demand.</p>
+            <table class="definition-table"><thead><tr><th>Worksheet field</th><th>Fictional example</th><th>What to replace</th></tr></thead><tbody><tr><td>Season / decision owner / review date</td><td>BFCM planning / Merchandising / before launch</td><td>Your event, accountable owner, and dated approval</td></tr><tr><td>Mature control window</td><td>4,000 eligible sessions / 2.50% CVR / 100 orders</td><td>A same-channel, same-audience baseline old enough for refunds</td></tr><tr><td>Regular and promotional AOV</td><td>$80 / $64</td><td>Net product revenue on the same tax, shipping, and refund basis</td></tr><tr><td>Whole-order variable costs</td><td>$28 COGS / $6 fulfillment / $3 other</td><td>Current product mix, pick-pack, delivery, and order-driven costs</td></tr><tr><td>Percentage costs</td><td>3% fees / 5% expected return loss</td><td>Current settlement rate and mature net-loss allowance</td></tr><tr><td>Required threshold</td><td>167.3 orders / 4.18% CVR</td><td>Calculator output needed to restore control contribution</td></tr><tr><td>Capacity evidence</td><td>Not supplied</td><td>Saleable inventory units, orders/day, carrier cutoff, support capacity</td></tr><tr><td>Costs outside calculator</td><td>Not supplied</td><td>Creative, placement, overtime, apps, and other fixed campaign costs</td></tr><tr><td>Decision and post-event readout</td><td>Not supplied</td><td>Approved threshold, actual CVR/orders/returns, and next action</td></tr></tbody></table>
+            <p class="scope-note"><strong>Review cadence:</strong> Recheck the page and worksheet before every BFCM cycle, at least annually, and again whenever price, product mix, costs, return behavior, inventory, fulfillment, or traffic quality changes.</p>
+            <p class="scope-note"><strong>Evergreen boundary:</strong> Outside BFCM, use the same worksheet for any dated promotion. Replace the inputs and label; do not import an industry conversion benchmark or assume the required lift will occur.</p>
+            <button type="button" class="secondary-button" id="copy-seasonal-promotion-worksheet">Copy seasonal worksheet</button>
+          </div>
+        </section>
+
+        <section class="page-content">
           <div><p class="section-kicker">Decision boundary</p><h2>Choose the denominator before declaring a winner.</h2></div>
           <div class="content-copy">
             <ol><li><strong>Same traffic:</strong> Compare contribution per visitor after measuring each offer's actual CVR.</li><li><strong>Same orders:</strong> Compare whole-order contribution, but disclose different unit consumption.</li><li><strong>Same units:</strong> Normalize total contribution to inventory units when supply or working capital is constrained.</li><li><strong>Same customers:</strong> Track whether the bundle pulls future purchases forward instead of creating incremental demand.</li><li><strong>Same return window:</strong> Mature returns and partial bundle refunds before finalizing the result.</li><li><strong>Same acquisition basis:</strong> Add advertising cost only once and use comparable traffic quality across test cells.</li></ol>
@@ -92,6 +103,7 @@
       </article>
     </main>
     <footer class="inner-footer"><a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a><nav class="footer-links" aria-label="Company and legal"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><p class="footer-copyright">&copy; <span data-year></span> ROAS Break</p></footer>
+    <div class="toast" id="toast" aria-live="polite">Worksheet copied</div>
     <script type="module" src="/src/pages/guide.ts"></script>
   </body>
 </html>

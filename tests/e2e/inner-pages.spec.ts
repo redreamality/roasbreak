@@ -208,6 +208,37 @@ test("compares and restores fixed, percentage, and tiered fee inputs", async ({ 
   await expect(page.locator("#break-even-roas")).toHaveText("2.84x");
 });
 
+test("copies and applies the seasonal promotion worksheet", async ({ context, page }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"], {
+    origin: "http://127.0.0.1:4173",
+  });
+  await page.goto("/guides/discount-vs-bundle-profit/");
+  await expect(page.getByRole("heading", { name: "Use the threshold for BFCM planning, not as a BFCM benchmark." })).toBeVisible();
+  await expect(page.getByText(/before every BFCM cycle, at least annually/)).toBeVisible();
+  await expect(page.getByText(/use the same worksheet for any dated promotion/)).toBeVisible();
+
+  await page.getByRole("button", { name: "Copy seasonal worksheet" }).click();
+  await expect(page.locator("#toast")).toHaveText("Worksheet copied");
+  await expect(page.locator("#toast")).toHaveClass(/is-visible/);
+  const copied = await page.evaluate(() => navigator.clipboard.readText());
+  for (const field of ["Mature control window", "Required orders and CVR", "Saleable inventory and orders/day capacity", "Fixed campaign costs outside calculator", "Post-event actuals and next action"]) {
+    expect(copied, field).toContain(field);
+  }
+  expect(copied).toContain("not a BFCM benchmark or a forecast");
+  expect(copied).toContain("at least annually");
+
+  await page.locator(".guide-action").click();
+  await expect(page.locator("#promotion-price")).toHaveValue("64");
+  await expect(page.locator("#required-lift")).toHaveText("+67.3%");
+  await expect(page.locator("#required-cvr")).toHaveText("4.18%");
+  await page.locator("#promotion-price").fill("72");
+  await expect(page.locator("#required-lift")).toHaveText("+25.2%");
+  await expect(page).toHaveURL(/promo=72/);
+  await page.reload();
+  await expect(page.locator("#promotion-price")).toHaveValue("72");
+  await expect(page.locator("#required-lift")).toHaveText("+25.2%");
+});
+
 test("lists every published tool and guide", async ({ page }) => {
   await page.goto("/tools/");
   await expect(page.locator(".directory-item")).toHaveCount(6);

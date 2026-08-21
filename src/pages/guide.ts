@@ -6,6 +6,7 @@ import { copyText, rememberGuideHandoff, setYearAndIcons, track } from "./common
 const roasInput = document.querySelector<HTMLInputElement>("#guide-roas");
 const acosInput = document.querySelector<HTMLInputElement>("#guide-acos");
 const checklistButton = document.querySelector<HTMLButtonElement>("#copy-variable-cost-checklist");
+const seasonalWorksheetButton = document.querySelector<HTMLButtonElement>("#copy-seasonal-promotion-worksheet");
 
 const variableCostChecklist = `Ecommerce variable-cost audit
 Fields: Group | Source | Period | Currency | Owner | Amount | Tool input | Status
@@ -23,6 +24,31 @@ Fee schedule: Provider / marketplace | Contract or settlement source | Region / 
 Fee-schedule check: Record every fee component, scope, effective date, and review date before modeling it.
 Fixed-component check: Divide actual fixed charges from captures, retries, and refunds by matched orders; do not assume one charge per order.
 Effective-rate check: Divide actual total fees by same-basis model revenue for the matched period, currency, and order population.`;
+
+const seasonalPromotionWorksheet = `Seasonal promotion planning worksheet
+Season / event: [name and year]
+Decision owner: [owner]
+Reviewed on: [date]
+Mature control window: [start / end / maturity date]
+Eligible sessions: [same-channel sessions]
+Baseline CVR: [percent]
+Baseline orders: [orders]
+Regular AOV: [net product revenue]
+Promotional AOV: [net product revenue]
+Whole-order COGS: [amount]
+Fulfillment: [amount]
+Other variable cost: [amount]
+Payment and platform fees: [percent]
+Expected return-loss allowance: [percent]
+Required orders and CVR: [calculator output]
+Saleable inventory and orders/day capacity: [evidence]
+Carrier cutoff and support capacity: [evidence]
+Fixed campaign costs outside calculator: [amount and owner]
+Approved threshold and decision: [decision]
+Post-event actuals and next action: [result]
+
+Boundary: Use your own mature control; this is not a BFCM benchmark or a forecast of conversion lift.
+Review: Before every seasonal event, at least annually, and after material price, cost, return, inventory, fulfillment, or traffic changes.`;
 
 if (roasInput && acosInput) {
   let updating = false;
@@ -55,6 +81,12 @@ document.querySelectorAll<HTMLAnchorElement>(".guide-action").forEach((link) => 
 checklistButton?.addEventListener("click", async () => {
   if (await copyText(variableCostChecklist, "Checklist copied")) {
     track("guide_checklist_copied", { guide: document.body.dataset.guide ?? "unknown" });
+  }
+});
+
+seasonalWorksheetButton?.addEventListener("click", async () => {
+  if (await copyText(seasonalPromotionWorksheet, "Worksheet copied")) {
+    track("guide_seasonal_worksheet_copied", { guide: document.body.dataset.guide ?? "unknown" });
   }
 });
 

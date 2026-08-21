@@ -195,10 +195,10 @@
   - 验收：来源与适用时间明确；不维护容易过期的全平台费率大全。
   - 完成证据：在 Variable-cost Checklist 内用同一 `$120` 成本边界并列每单固定组件、3% 比例费和 2%/5% 分层费，展示 `$44.40/$42.80/$42.20` allowable CPA 与 `2.70x/2.80x/2.84x` break-even ROAS；复制模板记录来源、scope、生效期、tier、退款处理和复核日期，E2E 覆盖计算与恢复。未维护平台费率大全，也未声称独立 URL 的需求已验证。
 
-- [ ] `P1-007` BFCM Promotion Planning。
+- [x] `P1-007` BFCM Promotion Planning。
   - 产出：季节性促销场景模板和 Promotion 预填案例。
   - 验收：每年复查；不发布没有样本方法的 BFCM benchmark；过季仍保留长期可用的公式价值。
-  - 状态：缺少季节性查询、用户问题或可复核样本，保留候选。
+  - 完成证据：在 Discount vs Bundle canonical 内加入可复制的季节/BFCM worksheet，记录自有成熟基线、完整成本、所需订单/CVR、库存与履约容量、外部固定成本、owner、复查日期和事后读数；复用 20% fictional Promotion 预填场景，E2E 覆盖复制、`+67.3%/4.18%` 结果及 `promo=72` 恢复。页面明确非 BFCM benchmark、公式全年可用，并要求每个周期前且至少每年复查。
 
 - [ ] `P1-008` Monthly Ad Budget and Contribution-profit Scenarios。
   - 先以内容/模板验证，再决定是否开发新工具。

@@ -389,15 +389,16 @@
     {
       "id": "discount-vs-bundle-profit",
       "reviewedOn": "2026-08-21",
-      "contentSha256": "73ff1a613544a6274be5852009d349d97b863a307c9975cefe4e92bac587457f",
+      "contentSha256": "62f94dfb6cccbc9be08fef36a30cd610947812c4424dd68eb65a20941d04a7a4",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "The direct answer rebuilds regular, one-unit discount, and two-unit bundle orders from full revenue, COGS, fulfillment, fee, return, and other-cost ledgers before comparing them at the same traffic and order reference.",
-            "Same-traffic, same-order, same-unit, same-customer, return-window, and acquisition-basis sections expose the denominator and resource tradeoffs, directly satisfying the declared comparison intent."
+            "The page still satisfies its declared direct-discount-versus-bundle intent: it rebuilds regular, one-unit discount, and two-unit bundle contribution on the same traffic and order reference, then exposes order, unit, inventory, return-window, and acquisition-basis tradeoffs before any decision.",
+            "The new seasonal worksheet treats BFCM as one application of the existing contribution threshold rather than a separate formula; it records ownership and review date, a mature control window, sessions/CVR/orders, regular and promotional AOV, whole-order and percentage costs, the required threshold, inventory and operating capacity, outside campaign costs, approval, and the post-event readout.",
+            "The page keeps the workflow evergreen for any dated promotion and requires review before every BFCM cycle, at least annually, plus another review after material changes to price, mix, costs, returns, inventory, fulfillment, or traffic quality."
           ]
         },
         "facts-vs-recommendations": {
@@ -405,8 +406,9 @@
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "Shopify discount types, bundle mechanics, and profit-report context are linked as platform facts; the order-cost ledger, fictional calculations, normalization rules, and thresholds are explicitly labeled ROAS Break modeling judgments.",
-            "The page labels the example fictional and states that neither bundle conversion nor incremental demand, customer value, or net income is forecast or guaranteed."
+            "Shopify discount types, bundle mechanics, and profit-report context remain the only attributed platform facts; the page explicitly labels the order-cost ledger, fictional calculations, normalization rules, and thresholds as ROAS Break modeling judgments rather than Shopify guarantees.",
+            "The seasonal section states that Black Friday and Cyber Monday are only a use case, labels the 20% example fictional, and says it is not evidence of typical BFCM discount depth, conversion lift, order volume, or customer demand.",
+            "The worksheet and copied template require the merchant's own mature control, prohibit importing an industry conversion benchmark, and describe required lift as a threshold rather than a forecast; the annual/event review cadence is an editorial review instruction, not an external fact."
           ]
         },
         "worked-example-recalculation": {
@@ -414,9 +416,10 @@
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "Order contributions recomputed: regular=80-28-6-2.40-4-3=36.60; direct=64-28-6-1.92-3.20-3=21.88; bundle=128-56-7-3.84-6.40-3=51.76, or 25.88 per unit.",
-            "At 100 orders totals are 3660, 2188, and 5176; changes versus regular are -1472 and +1516, the bundle exceeds the direct discount by 2988, and 50 bundle orders on 100 units produce 2588, which is 400 above direct and 1072 below regular.",
-            "Thresholds recomputed: 3660/21.88=167.3 orders and 4.18% CVR (+67.3%); 3660/51.76=70.7 bundle orders and 1.77% CVR (-29.3%), consuming 141.4 units at the unrounded threshold."
+            "Order contributions recomputed: regular=80-28-6-3-2.40-4=36.60; direct discount=64-28-6-3-1.92-3.20=21.88; bundle=128-56-7-3-3.84-6.40=51.76, or 25.88 per unit.",
+            "At 100 orders, contribution totals are 3660, 2188, and 5176; changes versus regular are -1472 and +1516, the bundle exceeds the direct discount by 2988, and 50 bundle orders on 100 units produce 2588, which is 400 above direct discount and 1072 below regular.",
+            "Thresholds recomputed: 3660/21.88=167.276 orders, so the direct discount requires +67.276% orders and 4.1819% CVR; 3660/51.76=70.711 bundle orders and 1.7678% CVR, a -29.289% change, consuming 141.4 units.",
+            "The unique CTA produces +67.3% and 4.18% from the declared inputs. Changing promo to 72 gives contribution 72-28-6-3-2.16-3.60=29.24 and 36.60/29.24-1=25.171%, displayed and restored as +25.2%."
           ]
         }
       }
