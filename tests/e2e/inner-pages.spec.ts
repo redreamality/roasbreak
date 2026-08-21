@@ -446,6 +446,28 @@ test("navigates the guide library by operating topic", async ({ page }) => {
   await expect(page.getByRole("link", { name: /Google Ads Target ROAS vs Profit/ })).toBeVisible();
 });
 
+test("publishes a transparent and independently reproducible methodology example", async ({ page }, testInfo) => {
+  await page.goto("/methodology/");
+  const example = page.locator("[data-methodology-example]");
+
+  await expect(example.getByRole("heading", { name: "A $100-per-order contribution example" })).toBeVisible();
+  await expect(example.getByText(/fictional USD per order/)).toBeVisible();
+  await expect(example.getByText(/after discounts and mature sales reversals, excluding sales tax and customer-paid shipping/)).toBeVisible();
+  await expect(example.getByRole("row", { name: /Net product revenue \$100\.00 USD per order/ })).toBeVisible();
+  await expect(example.getByRole("row", { name: /Variable fees \$3\.00 3% of \$100\.00 net product revenue/ })).toBeVisible();
+  await expect(example.getByRole("row", { name: /Expected return loss \$5\.00 5% of \$100\.00 net product revenue/ })).toBeVisible();
+  await expect(example.getByText("Contribution before ads = $100.00 - $40.00 - $8.00 - $4.00 - $3.00 - $5.00 = $40.00 per order", { exact: true })).toBeVisible();
+  await expect(example.getByText("Break-even ROAS = $100.00 / $40.00 = 2.50x", { exact: true })).toBeVisible();
+  await expect(example.getByText("Allowable ad spend at target = $40.00 - $10.00 = $30.00 per order", { exact: true })).toBeVisible();
+  await expect(example.getByText("Target ROAS = $100.00 / $30.00 = 3.33x", { exact: true })).toBeVisible();
+  await expect(example.getByText(/not a customer result, industry benchmark, forecast/)).toBeVisible();
+
+  if (testInfo.project.name === "mobile") {
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+  }
+});
+
 test("publishes visible review details, primary sources, and Article schema for every guide", async ({ page }) => {
   for (const path of guidePaths) {
     const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/ecommerce-variable-cost-checklist/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/", "/guides/meta-ads-roas-and-attribution/", "/guides/tiktok-shop-roas-and-attribution/", "/guides/conversion-delay-and-data-maturity/", "/guides/refunds-and-conversion-adjustments/", "/guides/product-vs-channel-profitability-scenario/"].includes(path);

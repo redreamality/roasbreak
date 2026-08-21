@@ -86,6 +86,27 @@
           <div><p class="section-kicker">Examples and rounding</p><h2>Transparent assumptions, reproducible arithmetic.</h2></div>
           <div class="content-copy">
             <p>Worked examples are illustrative and are never presented as customer results or industry benchmarks. Inputs appear in the page, intermediate steps are described, and the primary action restores the example in the relevant calculator.</p>
+            <div data-methodology-example>
+              <h3>A $100-per-order contribution example</h3>
+              <p>All amounts below are fictional USD per order. Revenue is net product revenue after discounts and mature sales reversals, excluding sales tax and customer-paid shipping.</p>
+              <table class="definition-table">
+                <thead><tr><th>Input</th><th>Amount</th><th>Unit and basis</th></tr></thead>
+                <tbody>
+                  <tr><td>Net product revenue</td><td>$100.00</td><td>USD per order; tax and customer-paid shipping excluded</td></tr>
+                  <tr><td>Product cost</td><td>$40.00</td><td>USD per order; landed merchandise cost</td></tr>
+                  <tr><td>Fulfillment</td><td>$8.00</td><td>USD per order</td></tr>
+                  <tr><td>Other variable cost</td><td>$4.00</td><td>USD per order</td></tr>
+                  <tr><td>Variable fees</td><td>$3.00</td><td>3% of $100.00 net product revenue</td></tr>
+                  <tr><td>Expected return loss</td><td>$5.00</td><td>5% of $100.00 net product revenue</td></tr>
+                  <tr><td>Retained profit target</td><td>$10.00</td><td>USD per order after advertising</td></tr>
+                </tbody>
+              </table>
+              <p class="formula-line">Contribution before ads = $100.00 - $40.00 - $8.00 - $4.00 - $3.00 - $5.00 = $40.00 per order</p>
+              <p class="formula-line">Break-even ROAS = $100.00 / $40.00 = 2.50x</p>
+              <p class="formula-line">Allowable ad spend at target = $40.00 - $10.00 = $30.00 per order</p>
+              <p class="formula-line">Target ROAS = $100.00 / $30.00 = 3.33x</p>
+              <p class="scope-note"><strong>Example limit:</strong> This is a fictional method check, not a customer result, industry benchmark, forecast, or claim that advertising will deliver the modeled volume or efficiency.</p>
+            </div>
             <p>Calculations use unrounded values internally. Money is normally displayed to two decimal places, ratios to two decimals, and percentages to one decimal. Display rounding can make a visible table differ by a cent from a recomputed total; the underlying result is not rounded between steps.</p>
             <p>A result marked “Not feasible” means the requested retained profit consumes all contribution before advertising. It is not converted to infinity or hidden behind a default value.</p>
           </div>

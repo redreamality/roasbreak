@@ -12,7 +12,7 @@
     {
       "id": "methodology",
       "reviewedOn": "2026-08-20",
-      "contentSha256": "719b68f5113047d017c84a8e98acd23fb6dce022876d1c5c131ff65e42d5740e",
+      "contentSha256": "a905e126403b19a17626bc3ce3894711117a3e5168574a2c2080ad1b5485680f",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -37,7 +37,8 @@
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "The page contains no numeric worked scenario to recalculate; its three displayed identities were checked dimensionally: C=R-V, break-even ROAS=R/C, and target ROAS=R/(C-P).",
+            "The fictional USD-per-order example recomputes: variable costs are 40+8+4+3+5=60; contribution before ads is 100-60=40; break-even ROAS is 100/40=2.50; a retained-profit target of 10 leaves 30 of allowable ad spend; target ROAS is 100/30=3.33.",
+            "The $3 variable fee and $5 expected return loss independently recompute as 3% and 5% of $100 net product revenue. The example states that revenue excludes sales tax and customer-paid shipping and labels the result fictional, not a customer result, industry benchmark, forecast, or delivery claim.",
             "The rounding section is internally consistent with the stated two-decimal money/ratio and one-decimal percentage display policy."
           ]
         }
