@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-21T04:33:12.348Z",
+  "generatedAt": "2026-08-21T04:46:28.486Z",
   "repository": {
-    "commit": "a136fe32fd1c5913e8abb1f16c073a3162ac2c94",
+    "commit": "bdfcb20c68c773e047ed736abaae73a1195533bd",
     "branch": "main",
     "workingTreeClean": false
   },
@@ -107,6 +107,15 @@
       "reviewedOn": "2026-08-20"
     },
     {
+      "id": "new-customer-roas-vs-blended-roas",
+      "type": "guide",
+      "url": "/guides/new-customer-roas-vs-blended-roas/",
+      "file": "guides/new-customer-roas-vs-blended-roas/index.html",
+      "primaryIntent": "Set distinct profitability thresholds for new-customer acquisition and blended store ROAS",
+      "primaryTool": "/cac-payback-calculator/?cac=80&profit=12&d30=40&d60=55&d90=68&d180=90&d365=112",
+      "reviewedOn": "2026-08-21"
+    },
+    {
       "id": "cac-payback-cohort",
       "type": "guide",
       "url": "/guides/cac-payback-cohort-data/",
@@ -132,7 +141,7 @@
       "status": "passed",
       "evidence": {
         "command": "node scripts/check-content.mjs",
-        "output": "Content checks passed for 13 published assets."
+        "output": "Content checks passed for 14 published assets."
       },
       "failures": []
     },
@@ -141,7 +150,7 @@
       "label": "Every published inventory asset has a readable source file",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 13
+        "inspectedAssets": 14
       },
       "failures": []
     },
@@ -150,8 +159,8 @@
       "label": "Published assets have one non-empty, unique primary intent",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 13,
-        "uniqueIntents": 13
+        "inspectedAssets": 14,
+        "uniqueIntents": 14
       },
       "failures": []
     },
@@ -160,8 +169,8 @@
       "label": "Sources have URL, owner, region, verification date, and verified status",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 13,
-        "inspectedSources": 29
+        "inspectedAssets": 14,
+        "inspectedSources": 31
       },
       "failures": []
     },
@@ -170,7 +179,7 @@
       "label": "Every governed source is linked from the visible page body",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 13
+        "inspectedAssets": 14
       },
       "failures": []
     },
@@ -179,7 +188,7 @@
       "label": "Canonical URLs and sitemap entries match the inventory exactly",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 13,
+        "inspectedAssets": 14,
         "sitemap": "public/sitemap.xml"
       },
       "failures": []
@@ -189,7 +198,7 @@
       "label": "Every asset exposes one visible content scope in editorial metadata",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 13
+        "inspectedAssets": 14
       },
       "failures": []
     },
@@ -198,7 +207,7 @@
       "label": "Every guide has exactly one primary CTA matching primaryTool",
       "status": "passed",
       "evidence": {
-        "inspectedGuides": 12
+        "inspectedGuides": 13
       },
       "failures": []
     },
@@ -207,8 +216,8 @@
       "label": "Guides have Article JSON-LD and every asset has BreadcrumbList plus visible breadcrumb",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 13,
-        "inspectedGuides": 12,
+        "inspectedAssets": 14,
+        "inspectedGuides": 13,
         "evidenceType": "static-source"
       },
       "failures": []
@@ -218,7 +227,7 @@
       "label": "Published assets exceed the minimum body depth and contain no placeholder language",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 13,
+        "inspectedAssets": 14,
         "minimumArticleWords": 350,
         "articleWordCounts": {
           "methodology": 785,
@@ -232,6 +241,7 @@
           "google-target-roas": 399,
           "amazon-break-even-acos": 428,
           "returns-discounts": 476,
+          "new-customer-roas-vs-blended-roas": 1083,
           "cac-payback-cohort": 464,
           "attributed-mer": 444
         }
@@ -245,7 +255,7 @@
       "evidence": {
         "command": "pnpm exec playwright test tests/e2e/inner-pages.spec.ts --project=chromium --grep <canonical/schema/breadcrumb/sitemap test>",
         "evidenceType": "runtime-e2e",
-        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:247:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (4.8s)\n\n  1 passed (6.5s)"
+        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:262:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (4.8s)\n\n  1 passed (6.5s)"
       },
       "failures": []
     }
@@ -267,6 +277,7 @@
         "google-target-roas",
         "amazon-break-even-acos",
         "returns-discounts",
+        "new-customer-roas-vs-blended-roas",
         "cac-payback-cohort",
         "attributed-mer"
       ],
@@ -288,6 +299,7 @@
         "google-target-roas",
         "amazon-break-even-acos",
         "returns-discounts",
+        "new-customer-roas-vs-blended-roas",
         "cac-payback-cohort",
         "attributed-mer"
       ],
@@ -309,6 +321,7 @@
         "google-target-roas",
         "amazon-break-even-acos",
         "returns-discounts",
+        "new-customer-roas-vs-blended-roas",
         "cac-payback-cohort",
         "attributed-mer"
       ],
@@ -316,8 +329,8 @@
     }
   ],
   "summary": {
-    "assetCount": 13,
-    "guideCount": 12,
+    "assetCount": 14,
+    "guideCount": 13,
     "automatedPassed": 11,
     "automatedFailed": 0,
     "manualReviewRequired": 3,
