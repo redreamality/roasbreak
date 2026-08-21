@@ -111,3 +111,5 @@
 - 在 PowerShell 中不要把可执行文件和每个参数都写成相邻的独立双引号字符串（如 `"git" "status"`）；PowerShell 会把首项当作字符串表达式，并在后续参数处报 `Unexpected token`。直接使用 `git status`，仅对确实含空格的单个参数加引号；若可执行文件路径本身含空格，则用调用运算符 `&`。
 - Shopify Help 的普通 HTTP GET 也可能返回 Cloudflare/JavaScript connection verification 页面。不要把验证页当作链接失效或正文核验成功；优先复用已治理且仍在复核期内的官方来源，确需重新核验时使用可执行 JavaScript 的浏览器或可访问的官方镜像，并记录核验方式。
 - `seo-google` skill 的 `google_auth.py` 未携带项目级依赖声明，直接运行 `uv run python ...\google_auth.py --check --json` 可能因缺少 `requests` 报 `ModuleNotFoundError`。使用隔离命令 `uv run --with requests python ...\google_auth.py --check --json`，不要为一次只读认证检查改动本项目依赖。
+- 人工发布审查账本按资产 `reviewedOn` 和三类语义检查严格覆盖；新增或重新审校资产尚未补独立记录时，`pnpm release:check:verify` 会以 missing/stale manual review record 退出 1。这是预期门禁，不要降级检查或复用旧结论；应在内容提交后独立复核该资产并追加新日期证据。
+- TypeScript 测试 fixture 若以必选 `Record` 类型声明，对其键使用 `delete` 会在构建时报 TS2790。需要构造“缺键”坏数据时，用对象解构排除目标键并创建新对象，或先把 fixture 类型显式建模为可选字段；不要靠 `delete` 绕过类型契约。
