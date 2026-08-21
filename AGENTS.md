@@ -123,3 +123,6 @@
 - 多个代理共享同一个 Git index；即使某代理刚用 `git diff --cached --name-only` 核对过，另一代理也可能在它真正 commit 前把文件 stage 进来，造成跨任务混提。并行提交必须使用 `git commit --only -- <owned paths>` 限定归属文件，并在提交后立即用 `git show --name-only --stat HEAD` 复核；发现混提时先协调其他代理暂停 Git 写操作，再修正边界并确认他人的工作区内容仍完整。
 - `git commit` 中裸 `--` 会结束选项解析；`-m` 若写在它后面会被当作 pathspec 并报 `pathspec '-m' did not match`。限定归属文件提交时应使用 `git commit --only -m "<message>" -- <owned paths>`，所有选项必须位于 `--` 之前。
 - 指南目录名不一定是标题的缩写（例如 Returns、Revenue Basis、Google Target 都使用完整 slug）。跨页审查前应从 `content/content-inventory.json` 的 `file` 字段解析真实路径，或先运行 `rg --files guides`；不要手写猜测 `guides/<short-name>/index.html`。
+- 分块追加较长的 Vitest `describe`/`it` 文件时，每次 patch 后先查看文件尾并确认花括号与 `});` 成对；不要在后续 patch 中重复补已经存在的 suite 闭合符，否则 Vitest 与 `tsc` 会因同一处 `Unexpected token` / TS1128 同时失败。
+- 测试 fixture 工厂若最初只返回 discriminated union 的一个分支，TypeScript 会把字段推断成该窄分支，后续把 fixture 改成另一分支会报缺少原分支字段。需要在同一测试中切换 `available`/`unavailable` 等分支时，应给工厂返回值声明覆盖完整 union 的测试类型（或明确的宽类型），不要依赖首个对象字面量的窄推断。
+- 不要按功能名猜测测试文件（例如假定存在 `tests/content-validation.test.ts`）后直接 `Get-Content`；先用 `rg --files tests` 获取实际测试清单，再读取与目标脚本或行为对应的文件。
