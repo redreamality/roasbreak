@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 // @ts-expect-error The executable release script intentionally remains plain JavaScript.
-import { contentSha256, validateManualReviews } from "../scripts/release-check.mjs";
+import { contentSha256, createReleaseContract, validateManualReviews, validateReleaseBaseline } from "../scripts/release-check.mjs";
 
 const checkIds = [
   "semantic-intent-alignment",
@@ -33,6 +33,105 @@ const assets = [
   { id: "alpha", reviewedOn: "2026-08-20", contentSha256: contentSha256("<article>alpha</article>") },
   { id: "beta", reviewedOn: "2026-08-21", contentSha256: contentSha256("<article>beta</article>") },
 ];
+
+const releaseAssets = [
+  {
+    id: "alpha",
+    type: "guide",
+    url: "/guides/alpha/",
+    file: "guides/alpha/index.html",
+    primaryIntent: "Calculate an alpha decision",
+    reviewedOn: "2026-08-20",
+    primaryTool: "/target-roas-calculator/?aov=100",
+    contentSha256: contentSha256("<article>alpha</article>"),
+  },
+  {
+    id: "beta",
+    type: "guide",
+    url: "/guides/beta/",
+    file: "guides/beta/index.html",
+    primaryIntent: "Compare beta scenarios",
+    reviewedOn: "2026-08-21",
+    primaryTool: "/scenario-planner/?s1n=Baseline",
+    contentSha256: contentSha256("<article>beta</article>"),
+  },
+];
+const releaseSources = {
+  inventory: '{"assets":["alpha","beta"]}\n',
+  manualReview: '{"reviews":["alpha","beta"]}\n',
+  sitemap: "<urlset><url>alpha</url><url>beta</url></urlset>\n",
+};
+const releaseContract = createReleaseContract(releaseAssets, releaseSources);
+
+function releaseBaseline(baselineAssets = releaseAssets) {
+  return {
+    schemaVersion: 2,
+    contract: releaseContract,
+    assets: baselineAssets,
+    summary: { releaseDecision: "passed" },
+  };
+}
+
+describe("committed content release baseline", () => {
+  it("passes a structurally identical baseline regardless of asset order", () => {
+    expect(validateReleaseBaseline(releaseAssets, releaseContract, releaseBaseline([...releaseAssets].reverse()))).toEqual([]);
+  });
+
+  it.each([
+    ["type", "methodology"],
+    ["url", "/guides/old-alpha/"],
+    ["file", "guides/old-alpha/index.html"],
+    ["primaryIntent", "Read an old alpha definition"],
+    ["reviewedOn", "2026-08-19"],
+    ["primaryTool", "/tools/"],
+    ["contentSha256", contentSha256("<article>old alpha</article>")],
+  ] as const)("blocks a stale %s field", (field, staleValue) => {
+    const baselineAssets = releaseAssets.map((asset) => asset.id === "alpha" ? { ...asset, [field]: staleValue } : asset);
+    const failures = validateReleaseBaseline(releaseAssets, releaseContract, releaseBaseline(baselineAssets));
+
+    expect(failures).toContain(`alpha: committed baseline ${field} ${staleValue} does not match current ${releaseAssets[0][field]}`);
+  });
+
+  it("blocks missing evidence, missing assets, unexpected assets, and duplicate records", () => {
+    const baselineAssets = [
+      { ...releaseAssets[0], contentSha256: undefined },
+      { ...releaseAssets[0] },
+      { ...releaseAssets[1], id: "retired" },
+    ];
+    const failures = validateReleaseBaseline(releaseAssets, releaseContract, releaseBaseline(baselineAssets));
+
+    expect(failures).toContain("alpha: duplicate committed baseline record");
+    expect(failures).toContain("alpha: committed baseline contentSha256 is missing");
+    expect(failures).toContain("beta: missing from committed release baseline");
+    expect(failures).toContain("retired: committed baseline record is not a current published asset");
+  });
+
+  it("blocks a missing or malformed asset collection", () => {
+    expect(validateReleaseBaseline(releaseAssets, releaseContract, { ...releaseBaseline(), assets: undefined })).toContain(
+      "committed baseline assets must be an array",
+    );
+  });
+
+  it("blocks an old schema, a failed report, and a stale contract", () => {
+    const failures = validateReleaseBaseline(releaseAssets, releaseContract, {
+      ...releaseBaseline(),
+      schemaVersion: 1,
+      contract: { version: 0, sha256: "stale-contract" },
+      summary: { releaseDecision: "blocked" },
+    });
+
+    expect(failures).toContain("committed baseline schemaVersion must be 2");
+    expect(failures).toContain("committed baseline releaseDecision must be passed");
+    expect(failures).toContain("committed baseline contract version must be 1");
+    expect(failures).toContain(`committed baseline contract stale-contract does not match current ${releaseContract.sha256}`);
+  });
+
+  it.each(["inventory", "manualReview", "sitemap"] as const)("changes the contract when %s evidence changes", (field) => {
+    const changedContract = createReleaseContract(releaseAssets, { ...releaseSources, [field]: `${releaseSources[field]}changed` });
+
+    expect(changedContract).not.toEqual(releaseContract);
+  });
+});
 
 describe("manual content review release gate", () => {
   it("validates the committed start-of-task review scope", () => {
