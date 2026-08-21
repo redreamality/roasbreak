@@ -3,6 +3,7 @@ dist/
 playwright-report/
 test-results/
 .vite/
+.seo-cache/
 *.log
 .env
 .env.*
