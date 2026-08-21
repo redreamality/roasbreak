@@ -247,14 +247,24 @@ export function inspectFetchOutcome(resource, expectedUrl) {
 
 export function inspectExternalSourceOutcome(resource) {
   const failures = [];
-  if (resource.error) failures.push(`GET request failed: ${resource.error}`);
-  if (!Number.isInteger(resource.status) || resource.status < 200 || resource.status >= 400) {
-    failures.push(`expected HTTP 2xx or 3xx from GET, received ${resource.status ?? "no response"}`);
+  const restrictedStatuses = new Set([401, 403, 429]);
+  const status = resource.status;
+  let access = "unavailable";
+  if (resource.error) {
+    failures.push(`GET request failed after ${resource.attempts ?? 1} attempt(s): ${resource.error}`);
+  } else if (Number.isInteger(status) && status >= 200 && status < 400) {
+    access = "reachable";
+  } else if (restrictedStatuses.has(status)) {
+    access = "restricted";
+  } else {
+    failures.push(`expected HTTP 2xx/3xx or an explicit access restriction, received ${status ?? "no response"}`);
   }
   return {
     failures,
     evidence: {
       method: "GET",
+      access,
+      attempts: resource.attempts ?? 1,
       requestedUrl: resource.requestedUrl,
       finalUrl: resource.finalUrl ?? null,
       status: resource.status ?? null,
@@ -339,32 +349,39 @@ function makeCheck(id, label, target, failures, evidence) {
 }
 
 async function fetchResource(url) {
-  try {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        accept: "text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.1",
-        "user-agent": "ROASBreak-Production-Smoke/1.0 (+https://roasbreak.com/)",
-      },
-      redirect: "follow",
-      signal: AbortSignal.timeout(requestTimeoutMs),
-    });
-    return {
-      requestedUrl: url,
-      finalUrl: response.url,
-      status: response.status,
-      contentType: response.headers.get("content-type"),
-      body: await response.text(),
-    };
-  } catch (error) {
-    return {
-      requestedUrl: url,
-      finalUrl: null,
-      status: null,
-      contentType: null,
-      body: "",
-      error: error instanceof Error ? error.message : String(error),
-    };
+  const maxAttempts = 2;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          accept: "text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.1",
+          "user-agent": "ROASBreak-Production-Smoke/1.0 (+https://roasbreak.com/)",
+        },
+        redirect: "follow",
+        signal: AbortSignal.timeout(requestTimeoutMs),
+      });
+      return {
+        requestedUrl: url,
+        finalUrl: response.url,
+        status: response.status,
+        contentType: response.headers.get("content-type"),
+        body: await response.text(),
+        attempts: attempt,
+      };
+    } catch (error) {
+      if (attempt === maxAttempts) {
+        return {
+          requestedUrl: url,
+          finalUrl: null,
+          status: null,
+          contentType: null,
+          body: "",
+          attempts: attempt,
+          error: error instanceof Error ? error.message : String(error),
+        };
+      }
+    }
   }
 }
 
@@ -533,7 +550,7 @@ async function runHttpChecks(assets, origin) {
     result.failures.map((failure) => `${result.url} (source for ${result.owners.join(", ")}): ${failure}`));
   checks.push(makeCheck(
     "external-sources",
-    "Unique external HTTPS sources declared by the inventory are reachable with GET",
+    "Unique external HTTPS sources declared by the inventory are reachable or explicitly access-restricted with GET",
     origin,
     [...sourceInventoryFailures, ...externalSourceFailures],
     { inspectedSources: externalSourceResults.length, sources: externalSourceResults },

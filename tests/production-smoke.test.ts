@@ -202,13 +202,14 @@ describe("production smoke discovery contracts", () => {
     expect(success.failures).toEqual([]);
     expect(success.evidence).toMatchObject({
       method: "GET",
+      access: "reachable",
       finalUrl: "https://docs.example.com/source",
       status: 200,
     });
     expect(redirect.failures).toEqual([]);
   });
 
-  it("blocks failed or non-reachable external source GET responses", () => {
+  it("records explicit access restrictions without treating them as dead links", () => {
     const forbidden = inspectExternalSourceOutcome({
       requestedUrl: "https://example.com/source",
       finalUrl: "https://example.com/source",
@@ -216,20 +217,34 @@ describe("production smoke discovery contracts", () => {
       contentType: "text/html",
       body: "Forbidden",
     });
+
+    expect(forbidden.failures).toEqual([]);
+    expect(forbidden.evidence).toMatchObject({ access: "restricted", status: 403 });
+  });
+
+  it("blocks failed or missing external source GET responses", () => {
+    const missing = inspectExternalSourceOutcome({
+      requestedUrl: "https://example.com/missing",
+      finalUrl: "https://example.com/missing",
+      status: 404,
+      contentType: "text/html",
+      body: "Not found",
+    });
     const failed = inspectExternalSourceOutcome({
       requestedUrl: "https://example.com/source",
       finalUrl: null,
       status: null,
       contentType: null,
       body: "",
+      attempts: 2,
       error: "timeout",
     });
 
-    expect(forbidden.failures).toEqual(["expected HTTP 2xx or 3xx from GET, received 403"]);
-    expect(failed.failures).toEqual([
-      "GET request failed: timeout",
-      "expected HTTP 2xx or 3xx from GET, received no response",
+    expect(missing.failures).toEqual([
+      "expected HTTP 2xx/3xx or an explicit access restriction, received 404",
     ]);
+    expect(failed.failures).toEqual(["GET request failed after 2 attempt(s): timeout"]);
+    expect(failed.evidence).toMatchObject({ access: "unavailable", attempts: 2 });
   });
 });
 
