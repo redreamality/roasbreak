@@ -177,6 +177,97 @@ test("loads and restores a monthly budget contribution template", async ({ page 
   }
 });
 
+test("evaluates and restores scale-spend evidence without recommending a budget", async ({ context, page }, testInfo) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"], {
+    origin: "http://127.0.0.1:4173",
+  });
+  await page.route("https://www.googletagmanager.com/**", async (route) => {
+    await route.fulfill({ status: 200, contentType: "application/javascript", body: "" });
+  });
+  await page.addInitScript(() => window.localStorage.setItem("roasbreak-privacy-choice", "accepted"));
+  await page.goto("/scenario-planner/");
+
+  await expect(page.locator(".guardrail-row")).toHaveCount(5);
+  await expect(page.locator(".guardrail-row > span")).toHaveText(["Needs evidence", "Needs evidence", "Needs evidence", "Needs evidence", "Needs evidence"]);
+  await expect(page.locator("#guardrail-overall")).toHaveText("Needs evidence");
+  await expect(page.getByText(/Scale now|Recommended budget|Optimal spend/i)).toHaveCount(0);
+
+  await page.getByRole("button", { name: "Load monthly example" }).click();
+  await expect(page.locator("#guard-minimum-roas")).toHaveValue("3");
+  await expect(page.locator("#guard-maturity")).toHaveValue("mature");
+  await expect(page.locator("#guard-order-capacity")).toHaveValue("450");
+  await expect(page.locator("#guard-payback-days")).toHaveValue("60");
+  await expect(page.locator("#guard-payback-limit")).toHaveValue("90");
+  await expect(page.locator("#guard-minimum-profit")).toHaveValue("0");
+  await expect.poll(() => Object.fromEntries(new URL(page.url()).searchParams.entries())).toMatchObject({
+    gt: "3", gm: "mature", gc: "450", gpd: "60", gpl: "90", gmp: "0",
+  });
+
+  const target = page.locator(".guardrail-row").filter({ hasText: "Target gap" });
+  const maturity = page.locator(".guardrail-row").filter({ hasText: "Data maturity" });
+  const capacity = page.locator(".guardrail-row").filter({ hasText: "Order capacity" });
+  const payback = page.locator(".guardrail-row").filter({ hasText: "Payback" });
+  const marginal = page.locator(".guardrail-row").filter({ hasText: "Marginal economics" });
+  await page.locator("#guard-minimum-profit").fill("");
+  await expect(marginal.locator("span")).toHaveText("Needs evidence");
+  await expect(marginal).toContainText("Enter an approved minimum incremental contribution profit after ads");
+  await expect(marginal).not.toContainText("$0.00 minimum");
+  await page.locator("#guard-minimum-profit").fill("0");
+  await expect(target.locator("span")).toHaveText("Blocked");
+  await expect(target).toContainText("0.33x below");
+  await expect(maturity.locator("span")).toHaveText("Pass");
+  await expect(capacity).toContainText("49.5 orders of headroom");
+  await expect(payback).toContainText("30 days inside");
+  await expect(marginal.locator("span")).toHaveText("Blocked");
+  await expect(marginal).toContainText("2.01x marginal ROAS");
+  await expect(marginal).toContainText("-$980.00 incremental contribution profit after ads");
+  await expect(page.locator("#guardrail-overall")).toHaveText("Blocked by entered evidence");
+  await expect(page.locator("#guardrail-summary")).toContainText("2 blockers");
+
+  await page.locator("#scenario-2-roas").fill("2.9");
+  await page.locator("#guard-minimum-roas").fill("2.8");
+  await expect(target.locator("span")).toHaveText("Pass");
+  await expect(marginal.locator("span")).toHaveText("Pass");
+  await expect(marginal).toContainText("2.70x marginal ROAS");
+  await expect(marginal).toContainText("+$400.00 incremental contribution profit after ads");
+  await expect(page.locator("#guardrail-overall")).toHaveText("Ready for decision review");
+  await page.getByRole("button", { name: "Copy scenarios" }).click();
+  const copied = await page.evaluate(() => navigator.clipboard.readText());
+  expect(copied).toContain("Scale-spend guardrails:");
+  expect(copied).toContain("Ready for decision review");
+  expect(copied).toContain("not an instruction to scale");
+  const restoreUrl = copied.match(/Restore scenarios: (\S+)/)?.[1];
+  expect(restoreUrl).toBeTruthy();
+  expect(new URL(restoreUrl!).searchParams.get("gmp")).toBe("0");
+  await expect.poll(async () => page.evaluate(() => {
+    const dataLayer = (window as Window & { dataLayer?: unknown[][] }).dataLayer ?? [];
+    return dataLayer.find((entry) => entry[0] === "event" && entry[1] === "scenarios_copied");
+  })).toEqual(["event", "scenarios_copied", { page: "scenarios" }]);
+
+  await page.reload();
+  await expect(page.locator("#guard-minimum-roas")).toHaveValue("2.8");
+  await expect(page.locator("#guard-minimum-profit")).toHaveValue("0");
+  await expect(page.locator("#scenario-2-roas")).toHaveValue("2.9");
+  await expect(page.locator("#guardrail-overall")).toHaveText("Ready for decision review");
+  await page.locator("#scenario-2-spend").fill("10000");
+  await expect(marginal.locator("span")).toHaveText("Needs evidence");
+  await expect(marginal).toContainText("must use more ad spend");
+  await expect(page.locator("#guardrail-overall")).toHaveText("Needs evidence");
+
+  await page.goto("/scenario-planner/?gt=-1&gm=bogus&gc=oops&gpd=-2&gpl=NaN&gmp=Infinity");
+  await expect(page.locator(".param-warning")).toContainText("reset to defaults");
+  await expect(page.locator("#guard-minimum-roas")).toHaveValue("");
+  await expect(page.locator("#guard-maturity")).toHaveValue("not-checked");
+  await expect(page.locator("#guard-minimum-profit")).toHaveValue("");
+  await expect(page.locator("#guardrail-overall")).toHaveText("Needs evidence");
+
+  if (testInfo.project.name === "mobile") {
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    await expect(page.locator(".guardrail-row")).toHaveCount(5);
+  }
+});
+
 test("falls back from invalid shared values with a visible notice", async ({ page }) => {
   await page.goto("/target-roas-calculator/?aov=oops&fees=200&profit=-1");
   await expect(page.locator(".param-warning")).toContainText("reset to defaults");

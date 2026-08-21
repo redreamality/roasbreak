@@ -46,6 +46,33 @@ export function readNumberParam(
   return value;
 }
 
+export function readOptionalNumberParam(
+  parameter: string,
+  minimum = 0,
+  maximum = Number.POSITIVE_INFINITY,
+): number | null {
+  const raw = new URLSearchParams(window.location.search).get(parameter);
+  if (raw === null) return null;
+  const value = Number(raw);
+  if (raw.trim() === "" || !Number.isFinite(value) || value < minimum || value > maximum) {
+    invalidLinkParameters.add(parameter);
+    return null;
+  }
+  return value;
+}
+
+export function readChoiceParam<const T extends string>(
+  parameter: string,
+  fallback: T,
+  allowed: readonly T[],
+): T {
+  const raw = new URLSearchParams(window.location.search).get(parameter);
+  if (raw === null) return fallback;
+  if ((allowed as readonly string[]).includes(raw)) return raw as T;
+  invalidLinkParameters.add(parameter);
+  return fallback;
+}
+
 export function readTextParam(parameter: string, fallback: string): string {
   const raw = new URLSearchParams(window.location.search).get(parameter);
   if (raw === null) return fallback;

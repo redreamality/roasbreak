@@ -46,6 +46,43 @@ export interface ScenarioResult {
   profit: number;
 }
 
+export type ScaleEvidenceStatus = "passed" | "blocked" | "needs-evidence";
+export type ScaleReviewStatus = "blocked" | "needs-evidence" | "ready-for-review";
+export type ScaleMaturity = "not-checked" | "mature" | "immature";
+
+export interface ScaleScenarioEvidence extends ScenarioResult {
+  roas: number;
+  spend: number;
+}
+
+export interface ScaleGuardrailInputs {
+  minimumRoas: number | null;
+  maturity: ScaleMaturity;
+  orderCapacity: number | null;
+  observedPaybackDays: number | null;
+  maximumPaybackDays: number | null;
+  minimumIncrementalProfit: number | null;
+}
+
+export interface ScaleGuardrailResult {
+  checks: {
+    target: ScaleEvidenceStatus;
+    maturity: ScaleEvidenceStatus;
+    capacity: ScaleEvidenceStatus;
+    payback: ScaleEvidenceStatus;
+    marginal: ScaleEvidenceStatus;
+  };
+  overall: ScaleReviewStatus;
+  blockerCount: number;
+  targetGap: number | null;
+  capacityHeadroom: number | null;
+  paybackHeadroom: number | null;
+  incrementalSpend: number;
+  incrementalRevenue: number;
+  marginalRoas: number | null;
+  incrementalProfit: number;
+}
+
 const finiteNonNegative = (value: number): number =>
   Number.isFinite(value) ? Math.max(0, value) : 0;
 
@@ -67,6 +104,62 @@ export function calculateScenario(
     orders,
     impliedCpa: orders > 0 ? safeSpend / orders : Number.POSITIVE_INFINITY,
     profit: revenue * safeMargin - safeSpend,
+  };
+}
+
+export function calculateScaleGuardrails(
+  baseline: ScaleScenarioEvidence,
+  proposal: ScaleScenarioEvidence,
+  inputs: ScaleGuardrailInputs,
+): ScaleGuardrailResult {
+  const optionalInput = (value: number | null): number | null =>
+    value !== null && Number.isFinite(value) && value >= 0 ? value : null;
+  const minimumRoas = optionalInput(inputs.minimumRoas);
+  const orderCapacity = optionalInput(inputs.orderCapacity);
+  const observedPaybackDays = optionalInput(inputs.observedPaybackDays);
+  const maximumPaybackDays = optionalInput(inputs.maximumPaybackDays);
+  const minimumIncrementalProfit = optionalInput(inputs.minimumIncrementalProfit);
+  const incrementalSpend = proposal.spend - baseline.spend;
+  const incrementalRevenue = proposal.revenue - baseline.revenue;
+  const incrementalProfit = proposal.profit - baseline.profit;
+  const marginalRoas = incrementalSpend > 0 ? incrementalRevenue / incrementalSpend : null;
+
+  const checks = {
+    target: minimumRoas === null
+      ? "needs-evidence"
+      : proposal.roas >= minimumRoas ? "passed" : "blocked",
+    maturity: inputs.maturity === "mature"
+      ? "passed"
+      : inputs.maturity === "immature" ? "blocked" : "needs-evidence",
+    capacity: orderCapacity === null
+      ? "needs-evidence"
+      : proposal.orders <= orderCapacity ? "passed" : "blocked",
+    payback: observedPaybackDays === null || maximumPaybackDays === null
+      ? "needs-evidence"
+      : observedPaybackDays <= maximumPaybackDays ? "passed" : "blocked",
+    marginal: minimumIncrementalProfit === null || incrementalSpend <= 0
+      ? "needs-evidence"
+      : incrementalProfit >= minimumIncrementalProfit ? "passed" : "blocked",
+  } satisfies ScaleGuardrailResult["checks"];
+  const statuses = Object.values(checks);
+  const blockerCount = statuses.filter((status) => status === "blocked").length;
+  const overall = blockerCount > 0
+    ? "blocked"
+    : statuses.includes("needs-evidence") ? "needs-evidence" : "ready-for-review";
+
+  return {
+    checks,
+    overall,
+    blockerCount,
+    targetGap: minimumRoas === null ? null : proposal.roas - minimumRoas,
+    capacityHeadroom: orderCapacity === null ? null : orderCapacity - proposal.orders,
+    paybackHeadroom: observedPaybackDays === null || maximumPaybackDays === null
+      ? null
+      : maximumPaybackDays - observedPaybackDays,
+    incrementalSpend,
+    incrementalRevenue,
+    marginalRoas,
+    incrementalProfit,
   };
 }
 
