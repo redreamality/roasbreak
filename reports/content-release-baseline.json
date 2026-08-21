@@ -1,14 +1,14 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-21T08:55:23.420Z",
+  "generatedAt": "2026-08-21T09:31:50.221Z",
   "repository": {
-    "commit": "ec6b1af8f3f1ed579a8fa7d5acdaafd3e43da18a",
+    "commit": "0894c751d7059907141e38d1b36b3da9134d52b1",
     "branch": "main",
     "workingTreeClean": true
   },
   "contract": {
     "version": 1,
-    "sha256": "aa28649b20e12fa999248001de7a0c9bcacc534a51bd17f8a69b5d4a9389c10b"
+    "sha256": "b3d1ba13d88068aa60a89df39c3b8e5275af31c57e7a0e6f29297695042dcffc"
   },
   "assets": [
     {
@@ -19,7 +19,7 @@
       "primaryIntent": "Understand the revenue, cost, attribution, and review rules used across ROAS Break",
       "primaryTool": "/tools/",
       "reviewedOn": "2026-08-20",
-      "contentSha256": "719b68f5113047d017c84a8e98acd23fb6dce022876d1c5c131ff65e42d5740e"
+      "contentSha256": "a905e126403b19a17626bc3ce3894711117a3e5168574a2c2080ad1b5485680f"
     },
     {
       "id": "ecommerce-profit-formulas",
@@ -338,7 +338,7 @@
         "inspectedAssets": 23,
         "minimumArticleWords": 350,
         "articleWordCounts": {
-          "methodology": 785,
+          "methodology": 938,
           "ecommerce-profit-formulas": 1055,
           "poas-vs-roas": 871,
           "ecommerce-variable-cost-checklist": 1378,
@@ -372,7 +372,7 @@
       "evidence": {
         "command": "pnpm exec playwright test tests/e2e/inner-pages.spec.ts --project=chromium --grep <canonical/schema/breadcrumb/sitemap test>",
         "evidenceType": "runtime-e2e",
-        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:807:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (12.3s)\n\n  1 passed (14.3s)"
+        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:833:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (9.8s)\n\n  1 passed (11.9s)"
       },
       "failures": []
     }
