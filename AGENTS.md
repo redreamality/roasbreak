@@ -101,3 +101,4 @@
 - 用 `rg` 显式列出不存在的文件会返回路径错误；扫描 `sitemap.xml`、`robots.txt` 等静态资产前先用 `rg --files` 定位真实目录（本项目在 `public/`），不要假定文件位于仓库根目录。
 - 为指南到 Target ROAS 的 E2E 推导期望结果时，`profit` 查询参数表示保留利润占收入的百分比，不是金额。正文若写保留 `$6` 且 AOV 为 `$60`，CTA 应传 `profit=10`；先核对参数单位再断言结果，避免把内容参数错误固化为测试期望。
 - 不要假定指南页面样式位于 `src/styles/inner.css`；本项目指南通过 `src/pages/guide.ts` 引入根级 `src/styles.css` 与 `src/tool-pages.css`。读取样式前先用 `rg --files src` 定位真实文件，避免 `Get-Content` 因路径不存在失败。
+- 不要把端口检查、`Start-Process` 后台启动、日志重定向和 HTTP 探测组合成一条复杂 PowerShell 命令；执行策略可能在创建进程前整体拒绝。需要保留本地预览时，直接用受管命令会话运行 `pnpm dev --host <host> --port <port>`，再用独立只读命令验证 URL。
