@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "scope": {
     "startedAtCommit": "1031047e9eb75ef58b59c8e57cffbc7e52a5d2b5",
-    "reviewedThroughCommit": "1b48a4099d56e29897532ab26a602867a323af7c",
+    "reviewedThroughCommit": "16cbaaca69f0a9f77f51b3c198952429af21e27e",
     "reviewedAt": "2026-08-21",
     "reviewer": "Codex independent release review",
-    "assetCount": 20,
+    "assetCount": 21,
     "excludedAfterStart": []
   },
   "assets": [
@@ -676,6 +676,41 @@
             "T+1 recomputed: reported ROAS=20000/10000=2.00x; at 70% sensitivity, estimated mature revenue=20000/0.70=28571.43, mature ROAS=2.86x, and remaining sensitivity=8571.43.",
             "T+7 recomputed: reported ROAS=27000/10000=2.70x. Unit economics give contribution=100-40-8-4-3-5=40, break-even ROAS=100/40=2.50x, retained profit=10, target CPA=30, and target ROAS=100/30=3.33x.",
             "At 2.70x, ad cost per credited order=100/2.70=37.04 and modeled after-ad contribution=40-37.04=2.96, correctly above break-even but below the retained-profit target."
+          ]
+        }
+      }
+    },
+    {
+      "id": "refunds-conversion-adjustments",
+      "reviewedOn": "2026-08-21",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page carries its declared intent from transaction correction through matched-spend ROAS recalculation: Google Ads retractions/restatements and GA4 refunds feed an idempotent adjustment ledger, processing wait, and store-control reconciliation.",
+            "Its scope is distinct from the linked guides: returns-and-discounts models economic loss, ecommerce-revenue-basis chooses the numerator, and google-ads-target-roas-profit supplies the business threshold after values mature."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Google Ads Help confirms that RESTATEMENT changes conversion value without changing conversion count, while RETRACTION changes value to zero, removes the conversion from the count, and prevents further adjustment; the API reference uses adjusted_value for RESTATEMENT.",
+            "The GA4 refund reference requires transaction_id, recommends item information for item-level refund metrics, and defines item quantity; the Data API defines purchaseRevenue as purchase revenue minus refunded transaction revenue, supporting the guide's no-double-subtraction warning.",
+            "The platform write-back rules are attributed to official Google sources, while the fictional cohort, 40% contribution assumption, idempotent control ledger, unresolved-gap queue, and decision sequence are explicitly presented as ROAS Break modeling and operating judgments."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Initial attributed ROAS recomputes as 40000/10000=4.00x; subtracting 5000 of retracted value and 1000 of aggregate restatement reductions leaves 34000 and 34000/10000=3.40x.",
+            "The 33000 store control is 1000 below adjusted Ads value and gives 3.30x. At 40% contribution margin, after-ad contribution is 40000*40%-10000=6000, 34000*40%-10000=3600, and 33000*40%-10000=3200.",
+            "The displayed 400, 340, and 330 orders equal each scenario's revenue divided by the planner's 100 AOV and are correctly labeled normalization only, not Google Ads conversion counts."
           ]
         }
       }
