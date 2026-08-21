@@ -119,3 +119,4 @@
 - 并行代理可能先创建测试、随后才创建被测模块；TypeScript 会立即纳入未提交的 `tests/**/*.ts`，使其他任务的 `pnpm build` 暂时出现模块缺失或 unused `@ts-expect-error`。先用 `git status` 确认文件所有者并等待其完成最小可编译状态，不要跨任务修改、删除或暂存在途文件。
 - `@ts-expect-error` 只抑制紧邻的下一行；为无声明 `.mjs` 模块写多行 `import` 时，TS7016 可能定位在 import 的末行，使首行上方的指令既未生效又被判 unused。应把该 import 写成单行，或提供对应 `.d.ts`，不要假设指令覆盖整个多行语句。
 - PowerShell 不会替 `rg` 展开 `docs/research/*.md` 这类裸路径通配符，会报 os error 123；扫描研究文档时直接传目录并用 `-g '*.md'` 限定，例如 `rg -g '*.md' '<pattern>' docs/research`。
+- 通过 JSON 工具参数调用 PowerShell 时，含括号、管道或 JSON-LD 引号的 `rg` 正则会经历 JSON 与 PowerShell 两层解析；双引号很容易被截断并报 `regex parse error: unclosed group`。复杂模式优先在 PowerShell 命令中用单引号包裹，仍需大量引号时改用 `Select-String -SimpleMatch` 或拆成多个简单模式。
