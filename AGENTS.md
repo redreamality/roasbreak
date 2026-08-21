@@ -149,3 +149,4 @@
 - 用 `Promise.all` 等方式批量执行多个 shell 读取时，编排层成功只表示调用已返回，不代表每个子命令退出码都是 0；长输出还可能掩盖单个 `Get-Content` 的路径错误。汇总前逐项检查 `exit_code`，并先用 `rg --files` 确认文件名；本项目没有独立的 `tests/check-content.test.ts`。
 - 扩充测试中由 `@ts-expect-error` 覆盖的无声明 `.mjs` import 时，必须保持 import 为紧邻注释的单行；格式化成多行会让 TS7016 落到末行，同时触发首行注释 unused。修改这类 import 列表后立即运行 `pnpm exec tsc --noEmit`，不要只跑 Vitest。
 - `pnpm production:smoke` 是阻断式发布门禁：生产版本落后时会先写 timestamped JSON 证据，再按设计以退出码 1 结束。应从报告区分真实版本漂移（404、sitemap/schema/CTA 不一致）与外站限制；官方来源对自动化 GET 返回 401/403/429 表示链接存在但访问受限，应记录为 `restricted`，不能等同死链，网络异常只做一次有限重试后再阻断。
+- 本机 `seo-google/SKILL.md` 所在目录可能只有说明、资源和 references，实际 Google API 脚本位于同级 `seo/scripts`，直接假定存在 `seo-google/scripts` 会触发路径错误。运行技能脚本前先用 `rg --files <skills-root>` 定位 `google_auth.py`、`gsc_query.py` 等真实路径，再按项目规则用 `uv run python` 执行。
