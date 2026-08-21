@@ -120,3 +120,5 @@
 - `@ts-expect-error` 只抑制紧邻的下一行；为无声明 `.mjs` 模块写多行 `import` 时，TS7016 可能定位在 import 的末行，使首行上方的指令既未生效又被判 unused。应把该 import 写成单行，或提供对应 `.d.ts`，不要假设指令覆盖整个多行语句。
 - PowerShell 不会替 `rg` 展开 `docs/research/*.md` 这类裸路径通配符，会报 os error 123；扫描研究文档时直接传目录并用 `-g '*.md'` 限定，例如 `rg -g '*.md' '<pattern>' docs/research`。
 - 通过 JSON 工具参数调用 PowerShell 时，含括号、管道或 JSON-LD 引号的 `rg` 正则会经历 JSON 与 PowerShell 两层解析；双引号很容易被截断并报 `regex parse error: unclosed group`。复杂模式优先在 PowerShell 命令中用单引号包裹，仍需大量引号时改用 `Select-String -SimpleMatch` 或拆成多个简单模式。
+- 多个代理共享同一个 Git index；即使某代理刚用 `git diff --cached --name-only` 核对过，另一代理也可能在它真正 commit 前把文件 stage 进来，造成跨任务混提。并行提交必须使用 `git commit --only -- <owned paths>` 限定归属文件，并在提交后立即用 `git show --name-only --stat HEAD` 复核；发现混提时先协调其他代理暂停 Git 写操作，再修正边界并确认他人的工作区内容仍完整。
+- `git commit` 中裸 `--` 会结束选项解析；`-m` 若写在它后面会被当作 pathspec 并报 `pathspec '-m' did not match`。限定归属文件提交时应使用 `git commit --only -m "<message>" -- <owned paths>`，所有选项必须位于 `--` 之前。
