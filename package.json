@@ -11,9 +11,11 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:content": "node scripts/check-content.mjs",
+    "release:check": "node scripts/release-check.mjs",
+    "release:check:verify": "node scripts/release-check.mjs --no-write",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "check": "pnpm test && pnpm test:content && pnpm build && pnpm test:e2e"
+    "check": "pnpm test && pnpm release:check:verify && pnpm build && pnpm test:e2e"
   },
   "dependencies": {
     "lucide": "^1.30.0"

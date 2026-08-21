@@ -1,0 +1,327 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-21T04:33:12.348Z",
+  "repository": {
+    "commit": "a136fe32fd1c5913e8abb1f16c073a3162ac2c94",
+    "branch": "main",
+    "workingTreeClean": false
+  },
+  "assets": [
+    {
+      "id": "methodology",
+      "type": "methodology",
+      "url": "/methodology/",
+      "file": "methodology/index.html",
+      "primaryIntent": "Understand the revenue, cost, attribution, and review rules used across ROAS Break",
+      "primaryTool": "/tools/",
+      "reviewedOn": "2026-08-20"
+    },
+    {
+      "id": "ecommerce-profit-formulas",
+      "type": "guide",
+      "url": "/guides/ecommerce-profit-formulas/",
+      "file": "guides/ecommerce-profit-formulas/index.html",
+      "primaryIntent": "Connect ecommerce contribution margin, acquisition targets, realized profit, store efficiency, and customer payback",
+      "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=5&roas=4&profit=10",
+      "reviewedOn": "2026-08-21"
+    },
+    {
+      "id": "poas-vs-roas",
+      "type": "guide",
+      "url": "/guides/poas-vs-roas/",
+      "file": "guides/poas-vs-roas/index.html",
+      "primaryIntent": "Decide when contribution profit after ads is more useful than revenue ROAS",
+      "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=45&ship=8&other=3&fees=3&returns=5&roas=4&profit=10",
+      "reviewedOn": "2026-08-21"
+    },
+    {
+      "id": "contribution-margin",
+      "type": "guide",
+      "url": "/guides/contribution-margin-vs-gross-margin/",
+      "file": "guides/contribution-margin-vs-gross-margin/index.html",
+      "primaryIntent": "Choose the margin that sets an ecommerce acquisition ceiling",
+      "primaryTool": "/?mode=costs&aov=120&cogs=48&ship=9&other=0&fees=3&returns=8&roas=2.5",
+      "reviewedOn": "2026-08-20"
+    },
+    {
+      "id": "revenue-basis",
+      "type": "guide",
+      "url": "/guides/ecommerce-revenue-basis/",
+      "file": "guides/ecommerce-revenue-basis/index.html",
+      "primaryIntent": "Choose a consistent ecommerce revenue basis for ROAS",
+      "primaryTool": "/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4",
+      "reviewedOn": "2026-08-20"
+    },
+    {
+      "id": "shopify-net-sales",
+      "type": "guide",
+      "url": "/guides/shopify-net-sales-for-roas/",
+      "file": "guides/shopify-net-sales-for-roas/index.html",
+      "primaryIntent": "Map Shopify sales and profit reports into break-even ROAS inputs",
+      "primaryTool": "/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4",
+      "reviewedOn": "2026-08-20"
+    },
+    {
+      "id": "roas-acos",
+      "type": "guide",
+      "url": "/guides/roas-vs-acos/",
+      "file": "guides/roas-vs-acos/index.html",
+      "primaryIntent": "Convert ROAS and ACoS and connect both to contribution margin",
+      "primaryTool": "/target-roas-calculator/?mode=margin&aov=100&margin=48&fees=3&returns=5&roas=3&profit=10",
+      "reviewedOn": "2026-08-20"
+    },
+    {
+      "id": "good-roas",
+      "type": "guide",
+      "url": "/guides/good-roas-for-profit-margin/",
+      "file": "guides/good-roas-for-profit-margin/index.html",
+      "primaryIntent": "Calculate a good ROAS from a store's own cost structure",
+      "primaryTool": "/target-roas-calculator/?mode=margin&aov=100&margin=55&fees=3&returns=5&roas=3.5&profit=15",
+      "reviewedOn": "2026-08-20"
+    },
+    {
+      "id": "google-target-roas",
+      "type": "guide",
+      "url": "/guides/google-ads-target-roas-profit/",
+      "file": "guides/google-ads-target-roas-profit/index.html",
+      "primaryIntent": "Translate a profit target into Google Ads target ROAS",
+      "primaryTool": "/target-roas-calculator/?mode=margin&aov=100&margin=58&fees=3&returns=5&roas=3&profit=15",
+      "reviewedOn": "2026-08-20"
+    },
+    {
+      "id": "amazon-break-even-acos",
+      "type": "guide",
+      "url": "/guides/amazon-break-even-acos/",
+      "file": "guides/amazon-break-even-acos/index.html",
+      "primaryIntent": "Calculate Amazon break-even and target ACoS from contribution profit",
+      "primaryTool": "/target-roas-calculator/?mode=costs&aov=60&cogs=18&ship=8&other=4&fees=15&returns=0&roas=4&profit=10",
+      "reviewedOn": "2026-08-20"
+    },
+    {
+      "id": "returns-discounts",
+      "type": "guide",
+      "url": "/guides/returns-and-discounts/",
+      "file": "guides/returns-and-discounts/index.html",
+      "primaryIntent": "Separate the profit effects of discounts, refunds, and returns",
+      "primaryTool": "/promotion-profit-calculator/",
+      "reviewedOn": "2026-08-20"
+    },
+    {
+      "id": "cac-payback-cohort",
+      "type": "guide",
+      "url": "/guides/cac-payback-cohort-data/",
+      "file": "guides/cac-payback-cohort-data/index.html",
+      "primaryIntent": "Prepare mature cohort contribution data for CAC payback",
+      "primaryTool": "/cac-payback-calculator/?cac=70&profit=15&d30=45&d60=62&d90=76&d180=92&d365=118",
+      "reviewedOn": "2026-08-20"
+    },
+    {
+      "id": "attributed-mer",
+      "type": "guide",
+      "url": "/guides/attributed-roas-vs-mer/",
+      "file": "guides/attributed-roas-vs-mer/index.html",
+      "primaryIntent": "Reconcile channel attribution with store-wide marketing efficiency",
+      "primaryTool": "/scenario-planner/",
+      "reviewedOn": "2026-08-20"
+    }
+  ],
+  "automatedChecks": [
+    {
+      "id": "existing-content-contract",
+      "label": "Existing content contract passes unchanged",
+      "status": "passed",
+      "evidence": {
+        "command": "node scripts/check-content.mjs",
+        "output": "Content checks passed for 13 published assets."
+      },
+      "failures": []
+    },
+    {
+      "id": "published-files",
+      "label": "Every published inventory asset has a readable source file",
+      "status": "passed",
+      "evidence": {
+        "inspectedAssets": 13
+      },
+      "failures": []
+    },
+    {
+      "id": "primary-intent-unique",
+      "label": "Published assets have one non-empty, unique primary intent",
+      "status": "passed",
+      "evidence": {
+        "inspectedAssets": 13,
+        "uniqueIntents": 13
+      },
+      "failures": []
+    },
+    {
+      "id": "source-governance",
+      "label": "Sources have URL, owner, region, verification date, and verified status",
+      "status": "passed",
+      "evidence": {
+        "inspectedAssets": 13,
+        "inspectedSources": 29
+      },
+      "failures": []
+    },
+    {
+      "id": "body-sources",
+      "label": "Every governed source is linked from the visible page body",
+      "status": "passed",
+      "evidence": {
+        "inspectedAssets": 13
+      },
+      "failures": []
+    },
+    {
+      "id": "canonical-sitemap",
+      "label": "Canonical URLs and sitemap entries match the inventory exactly",
+      "status": "passed",
+      "evidence": {
+        "inspectedAssets": 13,
+        "sitemap": "public/sitemap.xml"
+      },
+      "failures": []
+    },
+    {
+      "id": "visible-scope",
+      "label": "Every asset exposes one visible content scope in editorial metadata",
+      "status": "passed",
+      "evidence": {
+        "inspectedAssets": 13
+      },
+      "failures": []
+    },
+    {
+      "id": "primary-tool-cta",
+      "label": "Every guide has exactly one primary CTA matching primaryTool",
+      "status": "passed",
+      "evidence": {
+        "inspectedGuides": 12
+      },
+      "failures": []
+    },
+    {
+      "id": "article-breadcrumb-schema",
+      "label": "Guides have Article JSON-LD and every asset has BreadcrumbList plus visible breadcrumb",
+      "status": "passed",
+      "evidence": {
+        "inspectedAssets": 13,
+        "inspectedGuides": 12,
+        "evidenceType": "static-source"
+      },
+      "failures": []
+    },
+    {
+      "id": "no-thin-placeholders",
+      "label": "Published assets exceed the minimum body depth and contain no placeholder language",
+      "status": "passed",
+      "evidence": {
+        "inspectedAssets": 13,
+        "minimumArticleWords": 350,
+        "articleWordCounts": {
+          "methodology": 785,
+          "ecommerce-profit-formulas": 1055,
+          "poas-vs-roas": 871,
+          "contribution-margin": 470,
+          "revenue-basis": 488,
+          "shopify-net-sales": 493,
+          "roas-acos": 370,
+          "good-roas": 411,
+          "google-target-roas": 399,
+          "amazon-break-even-acos": 428,
+          "returns-discounts": 476,
+          "cac-payback-cohort": 464,
+          "attributed-mer": 444
+        }
+      },
+      "failures": []
+    },
+    {
+      "id": "runtime-breadcrumb-e2e",
+      "label": "Chromium proves runtime breadcrumb semantics and schema URLs",
+      "status": "passed",
+      "evidence": {
+        "command": "pnpm exec playwright test tests/e2e/inner-pages.spec.ts --project=chromium --grep <canonical/schema/breadcrumb/sitemap test>",
+        "evidenceType": "runtime-e2e",
+        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:247:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (4.8s)\n\n  1 passed (6.5s)"
+      },
+      "failures": []
+    }
+  ],
+  "manualChecks": [
+    {
+      "id": "semantic-intent-alignment",
+      "label": "Page content satisfies its declared primary intent",
+      "status": "manual-review-required",
+      "assetIds": [
+        "methodology",
+        "ecommerce-profit-formulas",
+        "poas-vs-roas",
+        "contribution-margin",
+        "revenue-basis",
+        "shopify-net-sales",
+        "roas-acos",
+        "good-roas",
+        "google-target-roas",
+        "amazon-break-even-acos",
+        "returns-discounts",
+        "cac-payback-cohort",
+        "attributed-mer"
+      ],
+      "reviewInstruction": "Compare the primaryIntent with the title, direct answer, sections, and conclusion; record evidence for every asset."
+    },
+    {
+      "id": "facts-vs-recommendations",
+      "label": "External facts are separated from ROAS Break recommendations",
+      "status": "manual-review-required",
+      "assetIds": [
+        "methodology",
+        "ecommerce-profit-formulas",
+        "poas-vs-roas",
+        "contribution-margin",
+        "revenue-basis",
+        "shopify-net-sales",
+        "roas-acos",
+        "good-roas",
+        "google-target-roas",
+        "amazon-break-even-acos",
+        "returns-discounts",
+        "cac-payback-cohort",
+        "attributed-mer"
+      ],
+      "reviewInstruction": "Identify externally sourced claims and editorial recommendations; confirm each is labeled and sourced appropriately."
+    },
+    {
+      "id": "worked-example-recalculation",
+      "label": "Worked examples have been independently recalculated",
+      "status": "manual-review-required",
+      "assetIds": [
+        "methodology",
+        "ecommerce-profit-formulas",
+        "poas-vs-roas",
+        "contribution-margin",
+        "revenue-basis",
+        "shopify-net-sales",
+        "roas-acos",
+        "good-roas",
+        "google-target-roas",
+        "amazon-break-even-acos",
+        "returns-discounts",
+        "cac-payback-cohort",
+        "attributed-mer"
+      ],
+      "reviewInstruction": "Recalculate every example from displayed inputs and formulas, including units and rounding; record the reviewer and result per asset."
+    }
+  ],
+  "summary": {
+    "assetCount": 13,
+    "guideCount": 12,
+    "automatedPassed": 11,
+    "automatedFailed": 0,
+    "manualReviewRequired": 3,
+    "automatedGate": "passed",
+    "releaseDecision": "manual-review-required"
+  }
+}

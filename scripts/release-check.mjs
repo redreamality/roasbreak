@@ -1,0 +1,473 @@
+import { spawnSync } from "node:child_process";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
+
+const root = resolve(import.meta.dirname, "..");
+const reportJsonPath = resolve(root, "reports/content-release-baseline.json");
+const reportMarkdownPath = resolve(root, "docs/release/content-release-checklist.md");
+const siteOrigin = "https://roasbreak.com";
+const sourceReviewStatuses = new Set(["verified", "needs-review", "unavailable"]);
+const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+const writeReports = !process.argv.includes("--no-write");
+
+function run(command, args, options = {}) {
+  const result = spawnSync(command, args, {
+    cwd: root,
+    encoding: "utf8",
+    shell: options.shell ?? false,
+    stdio: options.stdio ?? "pipe",
+  });
+  return {
+    command: [command, ...args].join(" "),
+    status: result.status ?? 1,
+    stdout: result.stdout?.trim() ?? "",
+    stderr: result.stderr?.trim() ?? "",
+    error: result.error?.message,
+  };
+}
+
+function runPnpm(args) {
+  if (process.env.npm_execpath) return run(process.execPath, [process.env.npm_execpath, ...args]);
+  return run(process.platform === "win32" ? "pnpm.cmd" : "pnpm", args, { shell: process.platform === "win32" });
+}
+
+function isNonEmptyString(value) {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+function isIsoDate(value) {
+  if (!isNonEmptyString(value) || !isoDatePattern.test(value)) return false;
+  const date = new Date(`${value}T00:00:00.000Z`);
+  return !Number.isNaN(date.valueOf()) && date.toISOString().slice(0, 10) === value;
+}
+
+function isHttpsUrl(value) {
+  if (!isNonEmptyString(value)) return false;
+  try {
+    return new URL(value).protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+function stripHtml(html) {
+  const article = html.match(/<article\b[^>]*>([\s\S]*?)<\/article>/i)?.[1] ?? html;
+  return article
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&(?:[a-z]+|#\d+|#x[\da-f]+);/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function wordCount(html) {
+  return stripHtml(html).match(/[A-Za-z0-9]+(?:[.'-][A-Za-z0-9]+)*/g)?.length ?? 0;
+}
+
+function jsonLdNodes(html) {
+  const nodes = [];
+  for (const match of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      const value = JSON.parse(match[1]);
+      if (Array.isArray(value)) nodes.push(...value);
+      else if (Array.isArray(value?.["@graph"])) nodes.push(...value["@graph"]);
+      else nodes.push(value);
+    } catch {
+      nodes.push({ "@type": "InvalidJsonLd" });
+    }
+  }
+  return nodes;
+}
+
+function hasType(nodes, expectedType) {
+  return nodes.some((node) => {
+    const type = node?.["@type"];
+    return type === expectedType || (Array.isArray(type) && type.includes(expectedType));
+  });
+}
+
+function result(id, label, failures, evidence) {
+  return {
+    id,
+    label,
+    status: failures.length === 0 ? "passed" : "failed",
+    evidence,
+    failures,
+  };
+}
+
+function normalizeHref(value) {
+  return value?.replaceAll("&amp;", "&");
+}
+
+async function inspectAssets(inventory, sitemap) {
+  const assets = inventory.assets.filter((asset) => asset.status === "published");
+  const htmlById = new Map();
+  const fileFailures = [];
+  for (const asset of assets) {
+    try {
+      htmlById.set(asset.id, await readFile(resolve(root, asset.file), "utf8"));
+    } catch (error) {
+      fileFailures.push(`${asset.id}: cannot read ${asset.file} (${error.message})`);
+    }
+  }
+
+  const checks = [];
+  checks.push(result(
+    "published-files",
+    "Every published inventory asset has a readable source file",
+    fileFailures,
+    { inspectedAssets: assets.length },
+  ));
+
+  const intentFailures = [];
+  const intents = new Map();
+  for (const asset of assets) {
+    if (!isNonEmptyString(asset.primaryIntent)) {
+      intentFailures.push(`${asset.id}: primaryIntent is empty`);
+      continue;
+    }
+    const normalized = asset.primaryIntent.trim().toLowerCase();
+    if (intents.has(normalized)) intentFailures.push(`${asset.id}: primaryIntent duplicates ${intents.get(normalized)}`);
+    else intents.set(normalized, asset.id);
+  }
+  checks.push(result(
+    "primary-intent-unique",
+    "Published assets have one non-empty, unique primary intent",
+    intentFailures,
+    { inspectedAssets: assets.length, uniqueIntents: intents.size },
+  ));
+
+  const governanceFailures = [];
+  for (const asset of assets) {
+    if (!Array.isArray(asset.sources) || asset.sources.length === 0) {
+      governanceFailures.push(`${asset.id}: sources must be a non-empty array`);
+      continue;
+    }
+    const urls = new Set();
+    asset.sources.forEach((source, index) => {
+      const label = `${asset.id}: source ${index + 1}`;
+      if (!source || typeof source !== "object" || Array.isArray(source)) {
+        governanceFailures.push(`${label} is not a governance object`);
+        return;
+      }
+      if (!isHttpsUrl(source.url)) governanceFailures.push(`${label} has no valid HTTPS URL`);
+      if (!isNonEmptyString(source.owner)) governanceFailures.push(`${label} has no owner`);
+      if (!isNonEmptyString(source.region)) governanceFailures.push(`${label} has no region`);
+      if (!isIsoDate(source.verifiedOn)) governanceFailures.push(`${label} has an invalid verifiedOn date`);
+      if (!sourceReviewStatuses.has(source.reviewStatus)) governanceFailures.push(`${label} has an invalid reviewStatus`);
+      if (source.reviewStatus !== "verified") governanceFailures.push(`${label} is not verified for release`);
+      if (isIsoDate(source.verifiedOn) && isIsoDate(asset.reviewedOn) && source.verifiedOn > asset.reviewedOn) {
+        governanceFailures.push(`${label} was verified after the asset review date`);
+      }
+      if (urls.has(source.url)) governanceFailures.push(`${label} duplicates another source on the asset`);
+      urls.add(source.url);
+    });
+  }
+  checks.push(result(
+    "source-governance",
+    "Sources have URL, owner, region, verification date, and verified status",
+    governanceFailures,
+    { inspectedAssets: assets.length, inspectedSources: assets.reduce((sum, asset) => sum + (asset.sources?.length ?? 0), 0) },
+  ));
+
+  const bodySourceFailures = [];
+  for (const asset of assets) {
+    const html = htmlById.get(asset.id);
+    if (!html) continue;
+    if (!/<ul\b[^>]*class=["'][^"']*\bsource-list\b/i.test(html)) bodySourceFailures.push(`${asset.id}: no visible source list`);
+    for (const [index, source] of (Array.isArray(asset.sources) ? asset.sources : []).entries()) {
+      if (source && typeof source === "object" && isNonEmptyString(source.url) && !html.includes(`href="${source.url}"`) && !html.includes(`href='${source.url}'`)) {
+        bodySourceFailures.push(`${asset.id}: source ${index + 1} is absent from the page body`);
+      }
+    }
+  }
+  checks.push(result(
+    "body-sources",
+    "Every governed source is linked from the visible page body",
+    bodySourceFailures,
+    { inspectedAssets: assets.length },
+  ));
+
+  return { assets, htmlById, checks };
+}
+
+function inspectPageContracts(assets, htmlById, sitemap) {
+  const checks = [];
+
+  const canonicalFailures = [];
+  for (const asset of assets) {
+    const html = htmlById.get(asset.id);
+    if (!html) continue;
+    const canonical = `${siteOrigin}${asset.url}`;
+    const canonicalLinks = [...html.matchAll(/<link\b[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["'][^>]*>/gi)];
+    if (canonicalLinks.length !== 1 || canonicalLinks[0][1] !== canonical) {
+      canonicalFailures.push(`${asset.id}: canonical must be exactly ${canonical}`);
+    }
+    const sitemapEntries = [...sitemap.matchAll(new RegExp(`<loc>${canonical.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}<\\/loc>`, "g"))];
+    if (sitemapEntries.length !== 1) canonicalFailures.push(`${asset.id}: sitemap must contain its canonical exactly once`);
+  }
+  checks.push(result(
+    "canonical-sitemap",
+    "Canonical URLs and sitemap entries match the inventory exactly",
+    canonicalFailures,
+    { inspectedAssets: assets.length, sitemap: "public/sitemap.xml" },
+  ));
+
+  const scopeFailures = [];
+  for (const asset of assets) {
+    const html = htmlById.get(asset.id);
+    if (!html) continue;
+    const editorialBlocks = [...html.matchAll(/<aside\b[^>]*\bdata-editorial-meta\b[^>]*>([\s\S]*?)<\/aside>/gi)];
+    if (editorialBlocks.length !== 1) {
+      scopeFailures.push(`${asset.id}: expected one visible editorial metadata block, found ${editorialBlocks.length}`);
+      continue;
+    }
+    const scopes = [...editorialBlocks[0][1].matchAll(/<span\b[^>]*\bdata-content-scope\b[^>]*>([^<]*)<\/span>/gi)];
+    if (scopes.length !== 1 || !scopes[0][1].trim().startsWith("Scope: ")) {
+      scopeFailures.push(`${asset.id}: expected one non-empty visible Scope field`);
+    }
+  }
+  checks.push(result(
+    "visible-scope",
+    "Every asset exposes one visible content scope in editorial metadata",
+    scopeFailures,
+    { inspectedAssets: assets.length },
+  ));
+
+  const guides = assets.filter((asset) => asset.type === "guide");
+  const ctaFailures = [];
+  for (const asset of guides) {
+    const html = htmlById.get(asset.id);
+    if (!html) continue;
+    const actions = [...html.matchAll(/<a\b[^>]*class=["'][^"']*\bguide-action\b[^"']*["'][^>]*>/gi)];
+    if (actions.length !== 1) {
+      ctaFailures.push(`${asset.id}: expected one primary guide-action, found ${actions.length}`);
+      continue;
+    }
+    const href = normalizeHref(actions[0][0].match(/\bhref=["']([^"']+)["']/i)?.[1]);
+    if (href !== asset.primaryTool) ctaFailures.push(`${asset.id}: CTA ${href ?? "(missing)"} does not match primaryTool ${asset.primaryTool}`);
+  }
+  checks.push(result(
+    "primary-tool-cta",
+    "Every guide has exactly one primary CTA matching primaryTool",
+    ctaFailures,
+    { inspectedGuides: guides.length },
+  ));
+
+  const schemaFailures = [];
+  for (const asset of assets) {
+    const html = htmlById.get(asset.id);
+    if (!html) continue;
+    const nodes = jsonLdNodes(html);
+    if (nodes.some((node) => node?.["@type"] === "InvalidJsonLd")) schemaFailures.push(`${asset.id}: contains invalid JSON-LD`);
+    if (asset.type === "guide") {
+      const article = nodes.find((node) => node?.["@type"] === "Article" || node?.["@type"]?.includes?.("Article"));
+      if (!article) schemaFailures.push(`${asset.id}: missing Article JSON-LD`);
+      else {
+        if (article.dateModified !== asset.reviewedOn) schemaFailures.push(`${asset.id}: Article dateModified does not match reviewedOn`);
+        if (article.mainEntityOfPage !== `${siteOrigin}${asset.url}`) schemaFailures.push(`${asset.id}: Article mainEntityOfPage does not match canonical`);
+      }
+    }
+    if (!hasType(nodes, "BreadcrumbList")) schemaFailures.push(`${asset.id}: missing static BreadcrumbList JSON-LD`);
+    const visibleBreadcrumbs = html.match(/<nav\b[^>]*class=["'][^"']*\bbreadcrumb\b[^"']*["'][^>]*>/gi) ?? [];
+    if (visibleBreadcrumbs.length !== 1) schemaFailures.push(`${asset.id}: expected one visible breadcrumb, found ${visibleBreadcrumbs.length}`);
+  }
+  checks.push(result(
+    "article-breadcrumb-schema",
+    "Guides have Article JSON-LD and every asset has BreadcrumbList plus visible breadcrumb",
+    schemaFailures,
+    { inspectedAssets: assets.length, inspectedGuides: guides.length, evidenceType: "static-source" },
+  ));
+
+  const placeholderPattern = /\b(?:lorem ipsum|coming soon|under construction|placeholder|todo|tbd)\b/i;
+  const thinFailures = [];
+  const counts = {};
+  for (const asset of assets) {
+    const html = htmlById.get(asset.id);
+    if (!html) continue;
+    const count = wordCount(html);
+    counts[asset.id] = count;
+    if (count < 350) thinFailures.push(`${asset.id}: only ${count} article words (minimum 350)`);
+    if (placeholderPattern.test(stripHtml(html))) thinFailures.push(`${asset.id}: contains placeholder language`);
+    if (!/<h1\b[^>]*>[\s\S]*?<\/h1>/i.test(html)) thinFailures.push(`${asset.id}: missing H1`);
+    if (!/<h2\b[^>]*>[\s\S]*?<\/h2>/i.test(html)) thinFailures.push(`${asset.id}: missing substantive H2 structure`);
+  }
+  checks.push(result(
+    "no-thin-placeholders",
+    "Published assets exceed the minimum body depth and contain no placeholder language",
+    thinFailures,
+    { inspectedAssets: assets.length, minimumArticleWords: 350, articleWordCounts: counts },
+  ));
+
+  return checks;
+}
+
+function markdownCell(value) {
+  return value.replaceAll("|", "\\|").replace(/\s+/g, " ").trim();
+}
+
+function markdownReport(report) {
+  const automaticRows = report.automatedChecks.map((check) =>
+    `| ${check.id} | ${check.status} | ${check.failures.length === 0 ? "No failures" : markdownCell(check.failures.join("; "))} |`,
+  ).join("\n");
+  const manualRows = report.manualChecks.map((check) =>
+    `| ${check.id} | ${check.status} | ${markdownCell(check.reviewInstruction)} |`,
+  ).join("\n");
+  const assets = report.assets.map((asset) => `- \`${asset.id}\`: \`${asset.url}\``).join("\n");
+
+  return `# Content release checklist
+
+Generated by \`pnpm release:check\`. The JSON record at \`reports/content-release-baseline.json\` is the machine-readable source of truth for this run. CI uses \`pnpm release:check:verify\` to apply the same gate without rewriting timestamped reports.
+
+## Run metadata
+
+- Generated: ${report.generatedAt}
+- Commit: \`${report.repository.commit}\`
+- Branch: \`${report.repository.branch}\`
+- Working tree clean before report generation: ${report.repository.workingTreeClean ? "yes" : "no"}
+- Published assets: ${report.summary.assetCount} (${report.summary.guideCount} guides)
+- Automated gate: **${report.summary.automatedGate}**
+- Release decision: **${report.summary.releaseDecision}**
+
+## Automated checks
+
+| Check | Status | Result |
+| --- | --- | --- |
+${automaticRows}
+
+Automated failures block the command. The BreadcrumbList check reads static JSON-LD; the targeted Chromium check also executes the existing runtime canonical/schema/breadcrumb/sitemap test.
+
+## Manual checks
+
+These semantic checks are deliberately not marked passed by automation. A human reviewer must record page-by-page evidence in the PR or release review before publishing.
+
+| Check | Status | Reviewer action |
+| --- | --- | --- |
+${manualRows}
+
+## Assets in scope
+
+${assets}
+`;
+}
+
+async function main() {
+  const generatedAt = new Date().toISOString();
+  const inventory = JSON.parse(await readFile(resolve(root, "content/content-inventory.json"), "utf8"));
+  const sitemap = await readFile(resolve(root, "public/sitemap.xml"), "utf8");
+  const { assets, htmlById, checks } = await inspectAssets(inventory, sitemap);
+  checks.push(...inspectPageContracts(assets, htmlById, sitemap));
+
+  const contentContract = run(process.execPath, [resolve(root, "scripts/check-content.mjs")]);
+  checks.unshift(result(
+    "existing-content-contract",
+    "Existing content contract passes unchanged",
+    contentContract.status === 0 ? [] : [contentContract.stderr || contentContract.stdout || contentContract.error || "check-content failed"],
+    { command: "node scripts/check-content.mjs", output: contentContract.stdout || contentContract.stderr },
+  ));
+
+  const runtimeSchema = runPnpm([
+    "exec",
+    "playwright",
+    "test",
+    "tests/e2e/inner-pages.spec.ts",
+    "--project=chromium",
+    "--grep",
+    "publishes matching canonical, schema, breadcrumb, and sitemap URLs",
+  ]);
+  checks.push(result(
+    "runtime-breadcrumb-e2e",
+    "Chromium proves runtime breadcrumb semantics and schema URLs",
+    runtimeSchema.status === 0 ? [] : [runtimeSchema.stderr || runtimeSchema.stdout || runtimeSchema.error || "targeted Playwright check failed"],
+    {
+      command: "pnpm exec playwright test tests/e2e/inner-pages.spec.ts --project=chromium --grep <canonical/schema/breadcrumb/sitemap test>",
+      evidenceType: "runtime-e2e",
+      output: runtimeSchema.stdout || runtimeSchema.stderr,
+    },
+  ));
+
+  const gitCommit = run("git", ["rev-parse", "HEAD"]);
+  const gitBranch = run("git", ["branch", "--show-current"]);
+  const gitStatus = run("git", ["status", "--short"]);
+  const automaticFailures = checks.flatMap((check) => check.failures.map((failure) => `${check.id}: ${failure}`));
+  const assetIds = assets.map((asset) => asset.id);
+  const manualChecks = [
+    {
+      id: "semantic-intent-alignment",
+      label: "Page content satisfies its declared primary intent",
+      status: "manual-review-required",
+      assetIds,
+      reviewInstruction: "Compare the primaryIntent with the title, direct answer, sections, and conclusion; record evidence for every asset.",
+    },
+    {
+      id: "facts-vs-recommendations",
+      label: "External facts are separated from ROAS Break recommendations",
+      status: "manual-review-required",
+      assetIds,
+      reviewInstruction: "Identify externally sourced claims and editorial recommendations; confirm each is labeled and sourced appropriately.",
+    },
+    {
+      id: "worked-example-recalculation",
+      label: "Worked examples have been independently recalculated",
+      status: "manual-review-required",
+      assetIds,
+      reviewInstruction: "Recalculate every example from displayed inputs and formulas, including units and rounding; record the reviewer and result per asset.",
+    },
+  ];
+  const report = {
+    schemaVersion: 1,
+    generatedAt,
+    repository: {
+      commit: gitCommit.status === 0 ? gitCommit.stdout : "unknown",
+      branch: gitBranch.status === 0 ? gitBranch.stdout : "unknown",
+      workingTreeClean: gitStatus.status === 0 && gitStatus.stdout.length === 0,
+    },
+    assets: assets.map(({ id, type, url, file, primaryIntent, primaryTool, reviewedOn }) => ({
+      id,
+      type,
+      url,
+      file,
+      primaryIntent,
+      primaryTool,
+      reviewedOn,
+    })),
+    automatedChecks: checks,
+    manualChecks,
+    summary: {
+      assetCount: assets.length,
+      guideCount: assets.filter((asset) => asset.type === "guide").length,
+      automatedPassed: checks.filter((check) => check.status === "passed").length,
+      automatedFailed: checks.filter((check) => check.status === "failed").length,
+      manualReviewRequired: manualChecks.length,
+      automatedGate: automaticFailures.length === 0 ? "passed" : "failed",
+      releaseDecision: automaticFailures.length === 0 ? "manual-review-required" : "blocked",
+    },
+  };
+
+  if (writeReports) {
+    await mkdir(resolve(root, "reports"), { recursive: true });
+    await mkdir(resolve(root, "docs/release"), { recursive: true });
+    await writeFile(reportJsonPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+    await writeFile(reportMarkdownPath, markdownReport(report), "utf8");
+  }
+
+  if (automaticFailures.length > 0) {
+    console.error(`Release checks failed (${automaticFailures.length}).${writeReports ? " Reports were written for review:" : ""}`);
+    automaticFailures.forEach((failure) => console.error(`- ${failure}`));
+    if (writeReports) {
+      console.error(`- ${reportJsonPath}`);
+      console.error(`- ${reportMarkdownPath}`);
+    }
+    process.exitCode = 1;
+    return;
+  }
+
+  console.log(`Release checks passed for ${assets.length} published assets.`);
+  console.log(`Manual review remains required for ${manualChecks.length} semantic checks.`);
+  if (writeReports) console.log(`Reports: ${reportJsonPath} and ${reportMarkdownPath}`);
+  else console.log("Verification mode: no report files were changed.");
+}
+
+await main();
