@@ -147,3 +147,4 @@
 - `guide-tool-results.spec.ts` 的每条参数化路径包含指南打开、工具跳转、返回指南和恢复 URL 共 4 次导航；在 8-worker 全套负载下可能超过 Playwright 默认 30 秒，即使同项定向只需约 5 秒。该 describe 应保留 60 秒 per-test 预算且不加重试；遇超时时先定向复跑整组确认逻辑，再判断是否为真实 URL/结果回归。
 - 用 `rg` 跨多个候选目录扫描时，只要其中一个目录不存在，命令就会报 `os error 2` 并以退出码 1 结束，即使其他目录已有有效匹配。先用 `rg --files` 或 `Test-Path` 确认实际目录（本项目 E2E 位于 `tests/e2e`，没有顶层 `e2e`），再把存在的路径传给 `rg`。
 - 用 `Promise.all` 等方式批量执行多个 shell 读取时，编排层成功只表示调用已返回，不代表每个子命令退出码都是 0；长输出还可能掩盖单个 `Get-Content` 的路径错误。汇总前逐项检查 `exit_code`，并先用 `rg --files` 确认文件名；本项目没有独立的 `tests/check-content.test.ts`。
+- 扩充测试中由 `@ts-expect-error` 覆盖的无声明 `.mjs` import 时，必须保持 import 为紧邻注释的单行；格式化成多行会让 TS7016 落到末行，同时触发首行注释 unused。修改这类 import 列表后立即运行 `pnpm exec tsc --noEmit`，不要只跑 Vitest。
