@@ -108,3 +108,4 @@
 - Scenario Planner 与其他决策工具共用 `src/pages/tools.ts`，仓库没有 `src/pages/scenario-planner.ts`。读取页面逻辑前先用 `rg -n 'scenarioState|data-page="scenarios"' src` 定位实现，不要按 URL 名猜测独立脚本路径。
 - 新页加入静态 `data-schema="breadcrumb"` 后，必须确认 `src/pages/common.ts` 会在节点已存在时跳过动态注入；并行迁移中应等共享逻辑提交后再跑 E2E，否则页面会短暂出现两个 BreadcrumbList 并触发 strict-mode 失败。
 - 运行定向 Playwright 桌面用例前先读取 `playwright.config.ts` 的实际 project 名；本项目桌面项目是 `chromium`，不是设备类别的泛称 `desktop`。使用 `--project=chromium`，不要凭视口类型猜项目名。
+- 在 PowerShell 中不要把可执行文件和每个参数都写成相邻的独立双引号字符串（如 `"git" "status"`）；PowerShell 会把首项当作字符串表达式，并在后续参数处报 `Unexpected token`。直接使用 `git status`，仅对确实含空格的单个参数加引号；若可执行文件路径本身含空格，则用调用运算符 `&`。
