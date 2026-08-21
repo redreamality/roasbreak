@@ -1,7 +1,8 @@
 # ROAS Break 内容增强 Backlog
 
-> 日期：2026-08-19<br>
-> 状态：待排期<br>
+> 创建日期：2026-08-19<br>
+> 状态：执行中<br>
+> 最近同步：2026-08-21（`main` 分支 `8fd3679`）<br>
 > 内容策略：[`content-enhancement-strategy.md`](./content-enhancement-strategy.md)<br>
 > 来源研究：[`cross-border-commerce-content-research.md`](../research/cross-border-commerce-content-research.md)
 
