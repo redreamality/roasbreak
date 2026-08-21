@@ -14,6 +14,7 @@ export default defineConfig({
         cacPayback: resolve(import.meta.dirname, "cac-payback-calculator/index.html"),
         scenarioPlanner: resolve(import.meta.dirname, "scenario-planner/index.html"),
         ecommerceProfitFormulas: resolve(import.meta.dirname, "guides/ecommerce-profit-formulas/index.html"),
+        ecommerceVariableCostChecklist: resolve(import.meta.dirname, "guides/ecommerce-variable-cost-checklist/index.html"),
         contributionMargin: resolve(import.meta.dirname, "guides/contribution-margin-vs-gross-margin/index.html"),
         poasRoas: resolve(import.meta.dirname, "guides/poas-vs-roas/index.html"),
         roasAcos: resolve(import.meta.dirname, "guides/roas-vs-acos/index.html"),

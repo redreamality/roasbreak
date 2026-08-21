@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ecommerce Variable-cost Checklist for Break-even ROAS | ROAS Break</title>
+    <meta name="description" content="Audit ecommerce revenue deductions, product, fulfillment, payment, return, and service costs into one Break-even ROAS input each." />
+    <link rel="canonical" href="https://roasbreak.com/guides/ecommerce-variable-cost-checklist/" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Ecommerce Variable-cost Checklist for Break-even ROAS","datePublished":"2026-08-21","dateModified":"2026-08-21","author":{"@type":"Organization","name":"floatboat.ai"},"publisher":{"@type":"Organization","name":"ROAS Break"},"mainEntityOfPage":"https://roasbreak.com/guides/ecommerce-variable-cost-checklist/"}</script>
+    <script type="application/ld+json" data-schema="breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://roasbreak.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://roasbreak.com/guides/"},{"@type":"ListItem","position":3,"name":"Ecommerce Variable-cost Checklist","item":"https://roasbreak.com/guides/ecommerce-variable-cost-checklist/"}]}</script>
+  </head>
+  <body class="inner-page" data-guide="ecommerce-variable-cost-checklist">
+    <header class="inner-header">
+      <a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a>
+      <nav class="inner-nav" aria-label="Primary"><a href="/tools/">Tools</a><a href="/guides/" aria-current="page">Guides</a><a href="/methodology/">Methodology</a><a href="/about/">About</a></nav>
+    </header>
+    <main>
+      <nav class="breadcrumb"><a href="/">Home</a><a href="/guides/">Guides</a><span>Ecommerce Variable-cost Checklist</span></nav>
+      <article>
+        <section class="inner-intro">
+          <div><p class="eyebrow">Unit economics</p><h1>Ecommerce Variable-cost Checklist</h1></div>
+          <p>Audit every pre-ad variable cost into one and only one Break-even ROAS input before setting an acquisition ceiling.</p>
+        </section>
+        <aside class="editorial-note" data-editorial-meta><strong>Reviewed August 21, 2026</strong><span>Published by floatboat.ai</span><span data-content-scope>Scope: Global, platform-agnostic audit; GA4, Shopify GraphQL, and Stripe field examples; fictional USD scenario; not tax or accounting advice</span><a href="/contact/">Suggest a correction</a></aside>
+
+        <section class="page-content">
+          <div><p class="section-kicker">60-second answer</p><h2>One cost, one input, one period.</h2></div>
+          <div class="content-copy">
+            <p>Start with net product revenue before the separately modeled return loss. Then map each cost that changes with an order into exactly one calculator input. Use the same period, currency, order population, and revenue boundary throughout the audit.</p>
+            <p class="formula-line">Contribution before ads = aov - cogs - ship - other - (aov x fees %) - (aov x returns %)</p>
+            <p class="formula-line">Break-even ROAS = aov / contribution before ads</p>
+            <p class="scope-note"><strong>Boundary:</strong> Fixed overhead, tax treatment, cash timing, and accounting classification require separate judgment. This checklist is a planning control, not tax or accounting advice.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Audit template</p><h2>Record evidence before entering a number.</h2></div>
+          <div class="content-copy">
+            <p>Create one row per source and cost behavior. Every row needs a source, period, currency, owner, amount or rate, destination tool input, and review status. Keep the raw amount traceable even when several rows roll into <code>other</code>.</p>
+            <table class="definition-table">
+              <thead><tr><th>Group</th><th>Source / period / currency</th><th>Owner / amount</th><th>Tool input / status</th></tr></thead>
+              <tbody>
+                <tr><td>Revenue deductions</td><td>Order report / month / USD</td><td>Analytics / discount per order</td><td><code>aov</code> / needs review</td></tr>
+                <tr><td>Product and inbound</td><td>Inventory ledger / month / USD</td><td>Operations / landed unit cost</td><td><code>cogs</code> / needs review</td></tr>
+                <tr><td>Fulfillment</td><td>Carrier and 3PL invoice / month / USD</td><td>Operations / cost per order</td><td><code>ship</code> / needs review</td></tr>
+                <tr><td>Payment and platform</td><td>Settlement report / month / USD</td><td>Finance / rate and per-order fee</td><td><code>fees</code> + <code>other</code> / needs review</td></tr>
+                <tr><td>Refunds and returns</td><td>Mature refund cohort / month / USD</td><td>Finance / loss rate and handling</td><td><code>returns</code> + <code>other</code> / needs review</td></tr>
+                <tr><td>Service and other</td><td>Support or vendor log / month / USD</td><td>Service owner / cost per order</td><td><code>other</code> / needs review</td></tr>
+              </tbody>
+            </table>
+            <ol><li><strong>Duplicate check:</strong> Trace every component to one destination and search totals for a second copy.</li><li><strong>Fixed-variable check:</strong> Include costs caused by the modeled order; keep rent, salaries, and baseline subscriptions outside unless deliberately allocated.</li><li><strong>Missing-zero check:</strong> A zero needs an owner and evidence. Blank, unavailable, and genuinely zero are different statuses.</li></ol>
+            <button type="button" class="secondary-button" id="copy-variable-cost-checklist">Copy checklist</button>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Source examples</p><h2>Platform fields are evidence, not the completed model.</h2></div>
+          <div class="content-copy">
+            <p>GA4 ecommerce events can carry transaction <code>value</code>, <code>currency</code>, discounts, items, and refunds; its reporting schema exposes revenue and refund metrics. Reconcile those fields to the commerce ledger before treating them as net revenue.</p>
+            <p>Shopify GraphQL's <code>InventoryItem.unitCost</code> can support the product-cost row, but it does not prove landed COGS or include fulfillment, payment, return, and service costs. Shopify Refund records can expose refund line items, transactions, order adjustments, and refunded totals; use a mature, same-basis cohort.</p>
+            <p>Stripe balance transactions expose fields such as <code>amount</code>, <code>fee</code>, <code>net</code>, <code>currency</code>, and <code>reporting_category</code>. Reconcile the settlement population to orders and separate percentage fees from fixed per-transaction amounts before mapping them.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Worked audit</p><h2>The complete view moves break-even from 1.67x to 2.80x.</h2></div>
+          <div class="content-copy">
+            <p>This fictional USD order starts with $135 gross item revenue and a $15 discount, so the chosen <code>aov</code> is $120 before the separately modeled return loss. Product and inbound cost is $48, fulfillment is $9, other variable cost is $7, payment fees are 3% or $3.60, and expected refunded revenue is 8% or $9.60.</p>
+            <table class="definition-table">
+              <thead><tr><th>Step</th><th>Calculation</th><th>Result</th></tr></thead>
+              <tbody>
+                <tr><td>Net product revenue before return loss</td><td>$135 - $15</td><td>$120.00</td></tr>
+                <tr><td>Total pre-ad variable cost</td><td>$48 + $9 + $7 + $3.60 + $9.60</td><td>$77.20</td></tr>
+                <tr><td>Contribution before ads</td><td>$120 - $77.20</td><td>$42.80</td></tr>
+                <tr><td>Contribution margin</td><td>$42.80 / $120</td><td>35.7%</td></tr>
+                <tr><td>Break-even ROAS</td><td>$120 / $42.80</td><td>2.80x</td></tr>
+              </tbody>
+            </table>
+            <p>A COGS-only view leaves $72, reports a 60% margin, and suggests 1.67x break-even ROAS. It overstates the acquisition budget by ignoring $29.20 of other pre-ad variable cost.</p>
+            <p>At 3.00x ROAS, ad spend is $40 per order. Contribution after ads is $42.80 - $40 = <strong>+$2.80 per order</strong>. Each $1,000 of spend buys 25 same-basis orders and produces <strong>+$70 contribution profit</strong> under these inputs.</p>
+            <a class="guide-action" href="/?mode=costs&amp;aov=120&amp;cogs=48&amp;ship=9&amp;other=7&amp;fees=3&amp;returns=8&amp;roas=3">Open the audited $120 order</a>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Six-group map</p><h2>Give each cost one destination.</h2></div>
+          <div class="content-copy">
+            <table class="definition-table">
+              <thead><tr><th>Audit group</th><th>What belongs here</th><th>Calculator input</th></tr></thead>
+              <tbody>
+                <tr><td>1. Revenue deductions</td><td>Discounts, promotions, cancellations, and other deductions used to reach the declared revenue basis.</td><td><code>aov</code></td></tr>
+                <tr><td>2. Product and inbound</td><td>Unit purchase or manufacturing cost, inbound freight, duty, and saleable-unit preparation.</td><td><code>cogs</code></td></tr>
+                <tr><td>3. Fulfillment</td><td>Per-order pick, pack, postage, packaging, and merchant-funded delivery.</td><td><code>ship</code></td></tr>
+                <tr><td>4. Payment and platform</td><td>Percentage processing or marketplace charges go to <code>fees</code>; per-order or mixed charges go to <code>other</code>.</td><td><code>fees</code> + <code>other</code></td></tr>
+                <tr><td>5. Refunds and returns</td><td>Expected refunded revenue goes to <code>returns</code>; reverse logistics and unrecovered product loss go to <code>other</code>.</td><td><code>returns</code> + <code>other</code></td></tr>
+                <tr><td>6. Service and other</td><td>Variable support, fraud, warranty, handling, or per-order software costs not already assigned.</td><td><code>other</code></td></tr>
+              </tbody>
+            </table>
+            <p class="scope-note"><strong>Refund rule:</strong> If <code>aov</code> already includes mature refunds, set <code>returns</code> to zero for that loss. If <code>returns</code> carries expected refunded revenue, do not deduct it again from <code>aov</code> or <code>other</code>.</p>
+            <p class="scope-note"><strong>Page boundary:</strong> This checklist audits input coverage. The <a href="/guides/contribution-margin-vs-gross-margin/">contribution margin guide</a> explains why the margin sets an acquisition ceiling; the <a href="/guides/ecommerce-profit-formulas/">profit formulas guide</a> connects approved inputs to CPA, POAS, MER, and payback.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Operating review</p><h2>Reconcile the model whenever the cost path changes.</h2></div>
+          <div class="content-copy">
+            <ol><li>Choose a period old enough for refunds and return handling to mature.</li><li>Normalize currencies before calculating per-order amounts or rates.</li><li>Reconcile order counts across analytics, commerce, fulfillment, and settlement sources.</li><li>Assign an owner to each row and record whether it is verified, estimated, missing, or genuinely zero.</li><li>Re-run the audit after price, product mix, supplier, carrier, payment route, marketplace, or return policy changes.</li></ol>
+            <p class="scope-note"><strong>Decision limit:</strong> A complete historical cost model does not prove future ROAS, demand, attribution incrementality, inventory availability, or cash-flow capacity. It only makes the acquisition ceiling internally consistent with the declared inputs.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Definitions and sources</p><h2>Use official fields, then document the modeling choice.</h2></div>
+          <div class="content-copy">
+            <p>The sources below describe platform fields and records. The six-group mapping, one-destination rule, contribution boundary, and fictional calculations are ROAS Break modeling choices rather than GA4, Shopify, or Stripe accounting guidance.</p>
+            <ul class="source-list">
+              <li data-source="01"><span><a href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce">Google Analytics ecommerce</a><small>Purchase, item, currency, discount, and refund event examples. Checked August 21, 2026.</small></span></li>
+              <li data-source="02"><span><a href="https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema">Google Analytics Data API schema</a><small>Ecommerce revenue, purchase, and refund reporting fields. Checked August 21, 2026.</small></span></li>
+              <li data-source="03"><span><a href="https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem">Shopify GraphQL InventoryItem</a><small>Inventory item unit-cost field and its product-cost boundary. Checked August 21, 2026.</small></span></li>
+              <li data-source="04"><span><a href="https://docs.stripe.com/api/balance_transactions/object">Stripe Balance Transaction object</a><small>Settlement amount, fee, net, currency, and reporting category fields. Checked August 21, 2026.</small></span></li>
+              <li data-source="05"><span><a href="https://shopify.dev/docs/api/admin-graphql/latest/objects/Refund">Shopify GraphQL Refund</a><small>Refund line items, transactions, order adjustments, and totals. Checked August 21, 2026.</small></span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="related-reading" aria-labelledby="variable-cost-next">
+          <div><p class="section-kicker">Continue the decision</p><h2 id="variable-cost-next">Use each page for a different job.</h2></div>
+          <div class="related-links"><a href="/guides/contribution-margin-vs-gross-margin/"><span>Understand why contribution margin sets the acquisition ceiling</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/ecommerce-profit-formulas/"><span>Connect the audited inputs to CPA, POAS, MER, and payback formulas</span><span aria-hidden="true">&rarr;</span></a><a href="/methodology/"><span>Review the site's revenue and cost boundaries</span><span aria-hidden="true">&rarr;</span></a></div>
+        </section>
+      </article>
+    </main>
+    <footer class="inner-footer"><a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a><nav class="footer-links" aria-label="Company and legal"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><p class="footer-copyright">&copy; <span data-year></span> ROAS Break</p></footer>
+    <div class="toast" id="toast" aria-live="polite">Checklist copied</div>
+    <script type="module" src="/src/pages/guide.ts"></script>
+  </body>
+</html>

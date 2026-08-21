@@ -120,6 +120,56 @@
       ]
     },
     {
+      "id": "ecommerce-variable-cost-checklist",
+      "type": "guide",
+      "url": "/guides/ecommerce-variable-cost-checklist/",
+      "file": "guides/ecommerce-variable-cost-checklist/index.html",
+      "cluster": "Unit Economics",
+      "primaryIntent": "Audit every pre-ad variable cost into one and only one Break-even ROAS input before setting an acquisition ceiling",
+      "primaryTool": "/?mode=costs&aov=120&cogs=48&ship=9&other=7&fees=3&returns=8&roas=3",
+      "publishedOn": "2026-08-21",
+      "reviewedOn": "2026-08-21",
+      "reviewDue": "2026-11-19",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+          "owner": "Google Analytics",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema",
+          "owner": "Google Analytics",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://docs.stripe.com/api/balance_transactions/object",
+          "owner": "Stripe",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://shopify.dev/docs/api/admin-graphql/latest/objects/Refund",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "contribution-margin",
       "type": "guide",
       "url": "/guides/contribution-margin-vs-gross-margin/",

@@ -32,6 +32,15 @@ const guideJourneys: GuideJourney[] = [
     inputValue: "100",
   },
   {
+    name: "ecommerce variable-cost checklist",
+    guidePath: "/guides/ecommerce-variable-cost-checklist/",
+    toolPath: "/",
+    resultSelector: "#break-even-roas",
+    resultText: "2.80x",
+    inputSelector: "#order-value",
+    inputValue: "120",
+  },
+  {
     name: "POAS versus ROAS",
     guidePath: "/guides/poas-vs-roas/",
     toolPath: "/target-roas-calculator/",

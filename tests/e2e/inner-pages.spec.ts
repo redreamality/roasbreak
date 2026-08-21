@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const guidePaths = [
   "/guides/ecommerce-profit-formulas/",
+  "/guides/ecommerce-variable-cost-checklist/",
   "/guides/contribution-margin-vs-gross-margin/",
   "/guides/ecommerce-revenue-basis/",
   "/guides/shopify-net-sales-for-roas/",
@@ -143,13 +144,36 @@ test("converts ROAS and ACoS in both directions", async ({ page }) => {
   await expect(page.locator("#guide-roas")).toHaveValue("5.00");
 });
 
+test("copies the ecommerce variable-cost audit checklist", async ({ context, page }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"], {
+    origin: "http://127.0.0.1:4173",
+  });
+  await page.goto("/guides/ecommerce-variable-cost-checklist/");
+  const copyButton = page.getByRole("button", { name: "Copy checklist" });
+  await expect(copyButton).not.toHaveClass(/guide-action/);
+  await copyButton.click();
+  await expect(page.locator("#toast")).toHaveAttribute("role", "status");
+  await expect(page.locator("#toast")).toHaveText("Checklist copied");
+  await expect(page.locator("#toast")).toHaveClass(/is-visible/);
+
+  const copied = await page.evaluate(() => navigator.clipboard.readText());
+  expect(copied).toContain("Fields: Group | Source | Period | Currency | Owner | Amount | Tool input | Status");
+  for (const group of ["Revenue deductions", "Product and inbound", "Fulfillment", "Payment and platform", "Refunds and returns", "Service and other"]) {
+    expect(copied, group).toContain(group);
+  }
+  expect(copied).toContain("Duplicate check:");
+  expect(copied).toContain("Fixed-variable check:");
+  expect(copied).toContain("Missing-zero check:");
+});
+
 test("lists every published tool and guide", async ({ page }) => {
   await page.goto("/tools/");
   await expect(page.locator(".directory-item")).toHaveCount(6);
   await page.goto("/guides/");
   await expect(page.locator(".topic-group")).toHaveCount(5);
-  await expect(page.locator(".topic-guide")).toHaveCount(22);
+  await expect(page.locator(".topic-guide")).toHaveCount(23);
   await expect(page.getByRole("link", { name: /Ecommerce Profit Formulas/ })).toHaveAttribute("href", "/guides/ecommerce-profit-formulas/");
+  await expect(page.getByRole("link", { name: /Ecommerce Variable-cost Checklist/ })).toHaveAttribute("href", "/guides/ecommerce-variable-cost-checklist/");
   await expect(page.getByRole("link", { name: /POAS vs ROAS/ })).toHaveAttribute("href", "/guides/poas-vs-roas/");
   await expect(page.getByRole("link", { name: /Meta Ads ROAS and Attribution/ })).toHaveAttribute("href", "/guides/meta-ads-roas-and-attribution/");
   await expect(page.getByRole("link", { name: /TikTok Shop ROAS and Attribution/ })).toHaveAttribute("href", "/guides/tiktok-shop-roas-and-attribution/");
@@ -172,7 +196,7 @@ test("navigates the guide library by operating topic", async ({ page }) => {
 
 test("publishes visible review details, primary sources, and Article schema for every guide", async ({ page }) => {
   for (const path of guidePaths) {
-    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/", "/guides/meta-ads-roas-and-attribution/", "/guides/tiktok-shop-roas-and-attribution/", "/guides/conversion-delay-and-data-maturity/", "/guides/refunds-and-conversion-adjustments/", "/guides/product-vs-channel-profitability-scenario/"].includes(path);
+    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/ecommerce-variable-cost-checklist/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/", "/guides/meta-ads-roas-and-attribution/", "/guides/tiktok-shop-roas-and-attribution/", "/guides/conversion-delay-and-data-maturity/", "/guides/refunds-and-conversion-adjustments/", "/guides/product-vs-channel-profitability-scenario/"].includes(path);
     await page.goto(path);
     await expect(page.locator("[data-editorial-meta]")).toContainText(isNewGuide ? "Reviewed August 21, 2026" : "Reviewed August 20, 2026");
     await expect(page.locator("[data-content-scope]")).toContainText("Scope: ");
@@ -180,6 +204,15 @@ test("publishes visible review details, primary sources, and Article schema for 
       await expect(page).toHaveTitle("Ecommerce Profit Formulas: ROAS, CPA, POAS, MER & Payback");
       await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Connect ecommerce contribution margin/);
       await expect(page.locator("[data-content-scope]")).toContainText("Global, platform-agnostic");
+    }
+    if (path === "/guides/ecommerce-variable-cost-checklist/") {
+      await expect(page).toHaveTitle("Ecommerce Variable-cost Checklist for Break-even ROAS | ROAS Break");
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Audit ecommerce revenue deductions/);
+      await expect(page.locator("[data-content-scope]")).toContainText("GA4, Shopify GraphQL, and Stripe field examples");
+      await expect(page.getByText("One cost, one input, one period.", { exact: true })).toBeVisible();
+      await expect(page.getByText("This checklist audits input coverage.", { exact: false })).toBeVisible();
+      await expect(page.locator(".source-list a")).toHaveCount(5);
+      await expect(page.getByRole("button", { name: "Copy checklist" })).toHaveCount(1);
     }
     if (path === "/guides/poas-vs-roas/") {
       await expect(page).toHaveTitle("POAS vs ROAS: Why High Revenue ROAS Can Mean Weak Profit | ROAS Break");
@@ -257,6 +290,33 @@ test("publishes visible review details, primary sources, and Article schema for 
 });
 
 test("restores worked guide examples in the matching calculator", async ({ page }) => {
+  await page.goto("/guides/ecommerce-variable-cost-checklist/");
+  await page.locator(".guide-action").click();
+  const variableCostParams = {
+    mode: "costs", aov: "120", cogs: "48", ship: "9", other: "7", fees: "3", returns: "8", roas: "3",
+  };
+  expect(new URL(page.url()).pathname).toBe("/");
+  for (const [parameter, value] of Object.entries(variableCostParams)) {
+    expect(new URL(page.url()).searchParams.get(parameter), parameter).toBe(value);
+  }
+  await expect(page.locator("#order-value")).toHaveValue("120");
+  await expect(page.locator("#product-cost")).toHaveValue("48");
+  await expect(page.locator("#fulfillment-cost")).toHaveValue("9");
+  await expect(page.locator("#other-cost")).toHaveValue("7");
+  await expect(page.locator("#fee-pct")).toHaveValue("3");
+  await expect(page.locator("#return-pct")).toHaveValue("8");
+  await expect(page.locator("#current-roas")).toHaveValue("3");
+  await expect(page.locator("#max-cpa")).toHaveText("$42.80");
+  await expect(page.locator("#contribution-margin")).toHaveText("35.7%");
+  await expect(page.locator("#break-even-roas")).toHaveText("2.80x");
+  await expect(page.locator("#profit-per-order")).toHaveText("+$2.80");
+  await expect(page.locator("#profit-per-thousand")).toHaveText("+$70");
+  await page.reload();
+  await expect(page.locator("#current-roas")).toHaveValue("3");
+  await expect(page.locator("#break-even-roas")).toHaveText("2.80x");
+  await expect(page.locator("#profit-per-order")).toHaveText("+$2.80");
+  await expect(page.locator("#profit-per-thousand")).toHaveText("+$70");
+
   await page.goto("/guides/shopify-net-sales-for-roas/");
   await page.locator(".guide-action").click();
   await expect(page).toHaveURL(/aov=85.*cogs=30.*ship=8/);
