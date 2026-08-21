@@ -2,7 +2,7 @@
 
 > 创建日期：2026-08-19<br>
 > 状态：执行中<br>
-> 最近同步：2026-08-21（`main` 分支 `8974a66`）<br>
+> 最近同步：2026-08-21（`main` 分支 `dc8d676`）<br>
 > 内容策略：[`content-enhancement-strategy.md`](./content-enhancement-strategy.md)<br>
 > 来源研究：[`cross-border-commerce-content-research.md`](../research/cross-border-commerce-content-research.md)
 
@@ -51,7 +51,7 @@
   - 验收：每篇内容都有来源主体、URL、最后核验日期、下次复查日期；没有用聚合页支撑关键公式。
 
 - [x] `CONTENT-006` 建立内容到工具的事件基线。
-  - 产出：`guide_view`、`guide_to_tool_clicked`、来源页、目标工具和非敏感内容 ID；沿用已有计算完成、复制、分享事件。
+  - 产出：`guide_view`、`guide_to_tool_clicked`、session 级来源 guide、首次真实 `calculation_completed` 和成功复制事件；只发送固定 tool/guide/path ID。
   - 依赖：现有隐私同意机制。
   - 验收：拒绝 Analytics 时不加载/发送；接受后不发送计算金额、URL query 或个人数据；补充隐私与 E2E 验证。
 
@@ -99,10 +99,11 @@
   - 对应工具：Target ROAS，并通过目录连接其他决策工具。
   - 验收：包含统一单位、透明算例、Global/USD 范围边界、结构化来源和可恢复 CTA；目录、sitemap、移动端及结果路径 E2E 均已覆盖。
 
-- [ ] `NEW-003` 发布 Profit Margin to Allowable CPA and Target ROAS。
+- [x] `NEW-003` 把 Profit Margin to Allowable CPA and Target ROAS 合并进既有资产，不新增竞争 URL。
   - 主意图：把订单利润转换成 CPA、ROAS 和 ACoS 上限。
   - 对应工具：Target ROAS。
   - 验收：区分 break-even 与 retained-profit target；不可行目标有明确解释；不与 Contribution Margin 指南重复定义段落。
+  - 完成证据：Ecommerce Profit Formulas 统一 CPA/ROAS/ACoS 公式，Target ROAS 工具处理 retained-profit 与不可行状态，Google Target 指南承接平台工作流。
 
 - [x] `NEW-004` 发布 Google Ads Target ROAS vs Break-even ROAS。
   - 主意图：解释出价目标和经营底线的区别。
@@ -114,12 +115,13 @@
   - 对应工具：ROAS vs ACoS / Target ROAS。
   - 验收：与 `GUIDE-002` 分工明确，前者回答具体经营工作流，后者维护核心指标关系；包含一个完整 Seller 场景。
 
-- [ ] `NEW-006` 发布 Discount Break-even: Required Order or Conversion Lift。
+- [x] `NEW-006` 把 Discount Break-even 合并进 Discount vs Bundle Profit。
   - 主意图：折扣需要多少订单或 CVR 提升才能不降低总利润。
   - 对应工具：Promotion Profit。
   - 验收：包含价格、成本、履约、流量基线和增量假设；不把相关性写成折扣因果效果。
+  - 完成证据：同一页面和 Promotion Profit 预填场景覆盖订单量/CVR 阈值、成本边界与非因果限制。
 
-- [ ] `NEW-007` 发布 Contribution LTV vs Revenue LTV for CAC。
+- [x] `NEW-007` 发布 Contribution LTV vs Revenue LTV for CAC。
   - 主意图：为什么累计销售额不能直接当成 allowable CAC。
   - 对应工具：CAC Payback。
   - 验收：定义明确时间窗；扣除每次订单的变量成本；不外推“终身”价值或插入行业复购率。
@@ -129,83 +131,93 @@
   - 对应工具：CAC Payback。
   - 验收：解释累计贡献必须单调与否的输入护栏、未回本状态和数据成熟度；案例可恢复。
 
-- [ ] `NEW-009` 发布 Meta Attributed ROAS vs Ecommerce Profit 工作流。
+- [x] `NEW-009` 发布 Meta Attributed ROAS vs Ecommerce Profit 工作流。
   - 主意图：把 Meta 的归因收入转换成贡献利润判断。
   - 对应资产：Attributed ROAS vs MER / Target ROAS。
   - 验收：引用可公开核验的官方来源；若官方帮助要求登录，明确证据限制，不猜默认窗口。
 
-- [ ] `NEW-010` 发布 TikTok Ads Attribution Windows and Profit Inputs。
+- [x] `NEW-010` 发布 TikTok Ads Attribution Windows and Profit Inputs。
   - 主意图：理解 TikTok 归因窗口和基础指标如何映射到经营模型。
   - 对应工具：Target / Scenario。
   - 验收：引用 TikTok 官方帮助；不混淆 TikTok Ads 与 TikTok Shop GMV；记录核验日期。
 
-- [ ] `NEW-011` 发布 Product vs Channel Profitability Scenario。
+- [x] `NEW-011` 发布 Product vs Channel Profitability Scenario。
   - 主意图：比较高 ROAS/低毛利与低 ROAS/高毛利方案。
   - 对应工具：Scenario Planner。
   - 验收：使用透明的虚构案例，明确规模与转化不保持线性的限制；提供两个以上可恢复场景。
 
-- [ ] `NEW-012` 发布 Ecommerce Variable-cost Checklist。
+- [x] `NEW-012` 发布 Ecommerce Variable-cost Checklist。
   - 主意图：检查广告前贡献成本是否覆盖完整。
   - 对应工具：Break-even / Profit Lever。
   - 验收：按收入扣减、商品、履约、支付/平台、退货、客服等分组；可直接复制；不把税务或会计建议泛化。
 
 ## P0-D：发布与复盘
 
-- [ ] `RELEASE-001` 为每篇新内容建立发布前检查。
+- [x] `RELEASE-001` 为每篇新内容建立发布前检查。
   - 检查：主意图唯一、来源可访问、事实/建议分离、算例复算、CTA 可恢复、元信息完整、无薄内容占位。
-  - 验收：检查结果随 PR 保存；任何关键项失败则不进 sitemap。**部分完成：** 自动门禁已覆盖精确主意图唯一、来源治理及正文一致性、CTA 与资产清单一致、canonical、sitemap 和元信息；仍缺逐篇保存的语义意图、事实/建议和算例复算记录。
+  - 验收：检查结果随提交保存；任何关键项失败则不进 sitemap。自动门禁与 `content/content-manual-review.json` 已覆盖 23 个资产及语义意图、事实/建议、算例复算三类独立审查，缺失或陈旧记录会阻断发布。
 
 - [ ] `RELEASE-002` 每篇发布后验证生产环境。
   - 检查：HTTP 200、canonical、robots、sitemap、结构化数据、桌面/移动布局、站内/站外链接、工具状态传递。
-  - 验收：关键路径由 Playwright smoke 或现有 E2E 覆盖；不只检查构建成功。**部分完成：** 本地桌面/移动 E2E 已覆盖全部已发布资产的工具结果和 URL 恢复；仍缺每次发布后的生产 HTTP 与浏览器 smoke 记录。
+  - 验收：关键路径由 Playwright smoke 或现有 E2E 覆盖；不只检查构建成功。**基础设施完成、当前发布仍阻断：** `pnpm production:smoke` 与浏览器模式已覆盖生产 HTTP、robots、sitemap、canonical、schema、链接、桌面/移动布局和 CTA 状态；最新本地内容尚未部署，不能标记本轮生产验证通过。
 
-- [ ] `RELEASE-003` 建立 30/60/90 天内容复盘。
+- [x] `RELEASE-003` 建立 30/60/90 天内容复盘。
   - 检查：索引、查询、点击、guide-to-tool、计算完成、复制/分享和来源新鲜度。
   - 验收：每次复盘得出“扩展、重写、合并、保留观察”之一，不以继续发布作为默认结论。
+  - 完成证据：`content/content-performance-reviews.json`、`pnpm review:check` 和 `--draft` 建立 UTC 检查点与到期阻断；草稿占位、跨资产行为、未来/陈旧证据、未知 Git commit 和无证据扩展均会失败。2026-08-21 为 0 completed、0 due、69 scheduled。
 
 ## P1：经营场景与模板
 
-- [ ] `P1-001` Free-shipping Threshold Profitability。
+- [x] `P1-001` Free-shipping Threshold Profitability。
   - 先验证搜索/用户需求，再决定是指南、Promotion 模式还是新工具。
   - 验收：同时处理运费收入、商家运费、AOV/件单数和订单提升假设；交互实现有 E2E。
 
-- [ ] `P1-002` Bundle Pricing and AOV Contribution。
+- [x] `P1-002` Bundle Pricing and AOV Contribution。
   - 产出：bundle 前后收入、COGS、件单履约和可承受 CPA 的透明案例。
   - 验收：不默认 bundle 一定提高转化；复用 Profit Lever 或 Promotion，而非复制计算公式。
 
 - [ ] `P1-003` Return-rate Impact on Allowable CPA。
   - 产出：Returns 指南的任务型扩展或交互案例。
   - 验收：与现有主指南 canonical/意图分工明确；区分退货率、退款率和净损失率。
+  - 状态：既有 Returns 与 Refund Adjustments 已覆盖口径，但尚无独立 allowable CPA 任务的使用信号，暂不新增 URL。
 
-- [ ] `P1-004` New-customer ROAS vs Blended ROAS。
+- [x] `P1-004` New-customer ROAS vs Blended ROAS。
   - 产出：新客收入、总收入、首单贡献和复购贡献的口径图与案例。
   - 验收：不把平台归因的新客标签当作财务真相；明确 cohort 窗口。
 
-- [ ] `P1-005` MER, Platform ROAS, and Finance Reconciliation。
+- [x] `P1-005` MER, Platform ROAS, and Finance Reconciliation。
   - 产出：月度对账检查表，作为现有 Attributed ROAS vs MER 指南的扩展。
   - 验收：不会与现有页面竞争相同主意图；包含延迟转化、退款更新和不同收入窗口。
+  - 完成证据：合并到 Attributed ROAS vs MER，并由 Conversion Delay 和 Refunds/Conversion Adjustments 补齐成熟度与回填流程。
 
 - [ ] `P1-006` Payment and Marketplace Fee Impact。
   - 产出：固定费、百分比费、分层费率对贡献利润与 allowable CPA 的影响。
   - 验收：来源与适用时间明确；不维护容易过期的全平台费率大全。
+  - 状态：Variable-cost Checklist 已覆盖字段归属；固定费、比例费和分层费率的独立需求尚未验证，暂缓扩写。
 
 - [ ] `P1-007` BFCM Promotion Planning。
   - 产出：季节性促销场景模板和 Promotion 预填案例。
   - 验收：每年复查；不发布没有样本方法的 BFCM benchmark；过季仍保留长期可用的公式价值。
+  - 状态：缺少季节性查询、用户问题或可复核样本，保留候选。
 
 - [ ] `P1-008` Monthly Ad Budget and Contribution-profit Scenarios。
   - 先以内容/模板验证，再决定是否开发新工具。
   - 验收：预算、CPA/CVR、订单量和利润关系明确；不假设扩量效率不变。
+  - 状态：Scenario Planner 已提供透明情景能力，但没有月度预算模板的稳定使用证据，暂不新建页面或工具。
 
 - [ ] `P1-009` Scale-spend Profit Guardrail Checklist。
   - 产出：目标差距、数据成熟度、库存、回本和边际效率检查表。
   - 验收：不输出无依据的自动扩量建议；每条守门条件可由用户输入或数据验证。
+  - 状态：数据成熟度与商品/渠道场景已覆盖部分判断边界，尚无完整守门清单的真实需求信号。
 
 - [ ] `P1-010` Shopify Product-level Profit Workflow。
   - 产出：手工导出/映射到 Scenario Planner 的流程。
   - 验收：先证明手工流程被使用，再立项 CSV；涉及文件上传前重新做隐私和安全评审。
+  - 状态：Product vs Channel 场景已验证比较模型；尚无 Shopify 手工导出流程的使用数据，CSV 前置条件未满足。
 
 ## P2：数据产品与长期编辑
+
+> 2026-08-21 已完成前置条件评估，当前六项均暂缓；证据、未满足条件和重开门槛见 [`conditional-expansion-evaluation.md`](./conditional-expansion-evaluation.md)。未勾选表示能力未实现，不表示评估遗漏。
 
 - [ ] `P2-001` 评估商品/渠道 CSV 导入。
   - 前置条件：`P1-010` 有稳定使用证据；字段模型、大小限制、错误恢复和本地处理方式已定义。
@@ -244,4 +256,4 @@
 - [ ] 站内链接、sitemap、robots 和生产 HTTP 状态正确。
 - [ ] 移动端与桌面端无横向溢出或遮挡；交互变化已有 E2E。
 - [ ] Analytics 拒绝状态仍可完整使用；事件不携带金额、query 或个人数据。
-- [ ] 资产清单记录发布状态、来源复查期限和下一次复盘日期。
+- [ ] 资产清单记录发布状态与来源复查期限；复盘账本能由 `publishedOn` 推导下一次 30/60/90 天检查点。
