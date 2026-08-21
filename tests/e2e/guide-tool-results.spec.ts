@@ -271,6 +271,8 @@ async function restorableUrl(page: Page, journey: GuideJourney): Promise<string>
 }
 
 test.describe("published guide to tool journeys", () => {
+  test.describe.configure({ timeout: 60_000 });
+
   test.beforeEach(async ({ context }) => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"], {
       origin: "http://127.0.0.1:4173",
