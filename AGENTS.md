@@ -113,3 +113,4 @@
 - `seo-google` skill 的 `google_auth.py` 未携带项目级依赖声明，直接运行 `uv run python ...\google_auth.py --check --json` 可能因缺少 `requests` 报 `ModuleNotFoundError`。使用隔离命令 `uv run --with requests python ...\google_auth.py --check --json`，不要为一次只读认证检查改动本项目依赖。
 - 人工发布审查账本按资产 `reviewedOn` 和三类语义检查严格覆盖；新增或重新审校资产尚未补独立记录时，`pnpm release:check:verify` 会以 missing/stale manual review record 退出 1。这是预期门禁，不要降级检查或复用旧结论；应在内容提交后独立复核该资产并追加新日期证据。
 - TypeScript 测试 fixture 若以必选 `Record` 类型声明，对其键使用 `delete` 会在构建时报 TS2790。需要构造“缺键”坏数据时，用对象解构排除目标键并创建新对象，或先把 fixture 类型显式建模为可选字段；不要靠 `delete` 绕过类型契约。
+- 并行内容任务可能在未提交阶段先把新资产加入 inventory；人工审查账本的历史 fixture 若用“当前 inventory 减一个已知新资产”构造范围，会被第二个并行新增资产污染并产生假失败。历史 fixture 应从账本中已固定的资产 ID 构造；正式发布门禁仍必须检查完整当前 inventory，不能沿用测试范围。
