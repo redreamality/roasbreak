@@ -200,10 +200,10 @@
   - 验收：每年复查；不发布没有样本方法的 BFCM benchmark；过季仍保留长期可用的公式价值。
   - 完成证据：在 Discount vs Bundle canonical 内加入可复制的季节/BFCM worksheet，记录自有成熟基线、完整成本、所需订单/CVR、库存与履约容量、外部固定成本、owner、复查日期和事后读数；复用 20% fictional Promotion 预填场景，E2E 覆盖复制、`+67.3%/4.18%` 结果及 `promo=72` 恢复。页面明确非 BFCM benchmark、公式全年可用，并要求每个周期前且至少每年复查。
 
-- [ ] `P1-008` Monthly Ad Budget and Contribution-profit Scenarios。
+- [x] `P1-008` Monthly Ad Budget and Contribution-profit Scenarios。
   - 先以内容/模板验证，再决定是否开发新工具。
   - 验收：预算、CPA/CVR、订单量和利润关系明确；不假设扩量效率不变。
-  - 状态：Scenario Planner 已提供透明情景能力，但没有月度预算模板的稳定使用证据，暂不新建页面或工具。
+  - 完成证据：在现有 Scenario Planner 内加入可加载、可编辑并可由 URL 恢复的虚构月度预算模板，逐行连接预算、收入、订单量、implied CPA 与贡献利润；同时给出按百分数输入的 CPC/CVR 换算路径，并明确 CVR 单独不足、不同预算档必须各自提供效率证据，不假设扩量时 ROAS、CPC、CVR、产品组合或贡献率保持不变。单元测试及桌面/移动 E2E 覆盖三档模板、2.4x 压力场景、原生输入有效性、参数恢复和响应式列可见性；新增事件仅记录模板标识，不含名称、金额、URL 或计算结果。本实现不声称已有真实需求或使用证据，也未新建页面或工具。
 
 - [ ] `P1-009` Scale-spend Profit Guardrail Checklist。
   - 产出：目标差距、数据成熟度、库存、回本和边际效率检查表。

@@ -5,6 +5,7 @@ import {
   calculateLevers,
   calculatePayback,
   calculatePromotion,
+  calculateScenario,
   calculateTarget,
   roasToAcos,
 } from "../src/lib/decision-tools";
@@ -53,6 +54,19 @@ describe("decision tools", () => {
     expect(result.paybackDay).toBe(90);
     expect(result.allowableCac).toBe(61);
     expect(result.gap).toBe(0);
+  });
+
+  it("connects monthly budget, implied CPA, orders, and contribution profit", () => {
+    const current = calculateScenario(100, 40, 3, 10_000);
+    const higherBudget = calculateScenario(100, 40, 2.67, 15_000);
+    const downside = calculateScenario(100, 40, 2, 15_000);
+
+    expect(current).toEqual({ revenue: 30_000, orders: 300, impliedCpa: 100 / 3, profit: 2_000 });
+    expect(higherBudget.revenue).toBeCloseTo(40_050);
+    expect(higherBudget.orders).toBeCloseTo(400.5);
+    expect(higherBudget.impliedCpa).toBeCloseTo(37.4532);
+    expect(higherBudget.profit).toBeCloseTo(1_020);
+    expect(downside).toEqual({ revenue: 30_000, orders: 300, impliedCpa: 50, profit: -3_000 });
   });
 
   it("converts ROAS and ACoS in both directions", () => {

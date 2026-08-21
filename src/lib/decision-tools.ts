@@ -39,8 +39,36 @@ export interface PaybackResult {
   recoveredPct: number;
 }
 
+export interface ScenarioResult {
+  revenue: number;
+  orders: number;
+  impliedCpa: number;
+  profit: number;
+}
+
 const finiteNonNegative = (value: number): number =>
   Number.isFinite(value) ? Math.max(0, value) : 0;
+
+export function calculateScenario(
+  aov: number,
+  contributionMarginPct: number,
+  roas: number,
+  spend: number,
+): ScenarioResult {
+  const safeAov = finiteNonNegative(aov);
+  const safeMargin = finiteNonNegative(contributionMarginPct) / 100;
+  const safeRoas = finiteNonNegative(roas);
+  const safeSpend = finiteNonNegative(spend);
+  const revenue = safeSpend * safeRoas;
+  const orders = safeAov > 0 ? revenue / safeAov : 0;
+
+  return {
+    revenue,
+    orders,
+    impliedCpa: orders > 0 ? safeSpend / orders : Number.POSITIVE_INFINITY,
+    profit: revenue * safeMargin - safeSpend,
+  };
+}
 
 export function calculateTarget(
   inputs: CalculatorInputs,

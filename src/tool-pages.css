@@ -339,6 +339,59 @@ button.lever-row:focus-visible {
   box-shadow: 0 20px 55px rgba(32, 38, 31, 0.08);
 }
 
+.scenario-period {
+  display: grid;
+  max-width: 340px;
+  gap: 7px;
+  margin-top: 22px;
+  color: #5d625a;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.scenario-period input {
+  width: 100%;
+  height: 44px;
+  padding: 0 10px;
+  border: 1px solid #cfd3cb;
+  border-radius: 4px;
+}
+
+.scenario-template-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.scenario-template-controls strong {
+  font-size: 0.82rem;
+}
+
+.scenario-template-controls p {
+  max-width: 660px;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.scenario-template-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 7px;
+  align-items: center;
+  margin-top: 0;
+}
+
+.scenario-template-button svg {
+  width: 15px;
+  height: 15px;
+}
+
 .scenario-inputs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -390,7 +443,7 @@ button.lever-row:focus-visible {
 
 .scenario-row {
   display: grid;
-  grid-template-columns: 1.2fr repeat(3, 0.75fr);
+  grid-template-columns: 1.2fr repeat(4, 0.75fr);
   gap: 14px;
   align-items: center;
   min-height: 62px;
@@ -420,6 +473,21 @@ button.lever-row:focus-visible {
   font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.scenario-formulas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #cbd0c8;
+}
+
+.scenario-formulas p {
+  color: #555b54;
+  font-size: 0.76rem;
+  line-height: 1.55;
 }
 
 .page-content {
@@ -799,6 +867,10 @@ button.lever-row:focus-visible {
   .scenario-inputs {
     grid-template-columns: 1fr;
   }
+
+  .scenario-template-controls {
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 620px) {
@@ -863,12 +935,22 @@ button.lever-row:focus-visible {
   }
 
   .scenario-row {
-    grid-template-columns: 1fr 0.8fr;
+    grid-template-columns: minmax(0, 1.2fr) minmax(62px, 0.7fr) minmax(82px, 0.9fr);
+    gap: 8px;
   }
 
   .scenario-row > :nth-child(2),
   .scenario-row > :nth-child(3) {
     display: none;
+  }
+
+  .scenario-template-controls {
+    display: grid;
+  }
+
+  .scenario-formulas {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .page-content {

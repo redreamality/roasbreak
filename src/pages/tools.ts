@@ -4,6 +4,7 @@ import {
   calculateLevers,
   calculatePayback,
   calculatePromotion,
+  calculateScenario,
   calculateTarget,
   type LeverResult,
 } from "../lib/decision-tools";
@@ -274,6 +275,7 @@ function paybackPage(): void {
 
 function scenarioPage(): void {
   const defaults = sharedInputs();
+  const planningPeriod = readTextParam("period", "Custom scenarios");
   const defaultScenarios = [
     { name: "Baseline", aov: defaults.orderValue, margin: 57, roas: defaults.currentRoas, spend: 1000 },
     { name: "Higher AOV", aov: defaults.orderValue * 1.15, margin: 57, roas: defaults.currentRoas, spend: 1000 },
@@ -288,13 +290,19 @@ function scenarioPage(): void {
       spend: readNumberParam(`s${index}s`, scenario.spend),
     };
   });
-  const scenario = (index: number, values: typeof defaultScenarios[number]): string => `<fieldset class="scenario-input"><legend>${escapeHtml(values.name)}</legend><label>Name<input id="scenario-${index}-name" value="${escapeHtml(values.name)}"></label>${moneyField(`scenario-${index}-aov`, "AOV", values.aov)}${percentField(`scenario-${index}-margin`, "Contribution margin", values.margin)}<label class="field"><span>ROAS</span><span class="input-wrap suffix"><input id="scenario-${index}-roas" type="number" min="0.01" step="0.1" value="${values.roas}"><span>x</span></span></label>${moneyField(`scenario-${index}-spend`, "Ad spend", values.spend)}</fieldset>`;
-  app.innerHTML = `<section class="scenario-tool"><form id="scenario-form"><div class="tool-panel-heading"><div><p class="step-label">01 / Scenarios</p><h2>Compare plans on contribution profit</h2></div></div><div class="scenario-inputs">${defaultScenarios.map((values, offset) => scenario(offset + 1, values)).join("")}</div></form><section class="scenario-results" aria-live="polite"><div class="tool-panel-heading"><div><p class="step-label">02 / Comparison</p><h2>Profit, not revenue alone</h2></div><button class="share-button light-share" id="copy-scenarios" type="button"><i data-lucide="link"></i><span>Copy scenarios</span></button></div><div class="scenario-table" id="scenario-table"></div><p class="tool-note">Each scenario assumes its entered ROAS remains stable at the specified spend. It does not predict the efficiency of scaling.</p></section></section>`;
+  const monthlyScenarios = [
+    { name: "Current budget", aov: 100, margin: 40, roas: 3, spend: 10000 },
+    { name: "Higher budget", aov: 100, margin: 40, roas: 2.67, spend: 15000 },
+    { name: "Downside efficiency", aov: 100, margin: 40, roas: 2, spend: 15000 },
+  ];
+  const scenario = (index: number, values: typeof defaultScenarios[number]): string => `<fieldset class="scenario-input"><legend id="scenario-${index}-legend">${escapeHtml(values.name)}</legend><label>Name<input id="scenario-${index}-name" value="${escapeHtml(values.name)}"></label>${moneyField(`scenario-${index}-aov`, "AOV", values.aov)}${percentField(`scenario-${index}-margin`, "Contribution margin", values.margin)}<label class="field"><span>ROAS</span><span class="input-wrap suffix"><input id="scenario-${index}-roas" type="number" min="0.01" step="0.01" value="${values.roas}"><span>x</span></span></label>${moneyField(`scenario-${index}-spend`, "Ad spend", values.spend)}</fieldset>`;
+  app.innerHTML = `<section class="scenario-tool"><form id="scenario-form"><div class="tool-panel-heading"><div><p class="step-label">01 / Scenarios</p><h2>Compare plans on contribution profit</h2></div></div><label class="scenario-period"><span>Planning period</span><input id="scenario-period" value="${escapeHtml(planningPeriod)}" maxlength="80"></label><div class="scenario-template-controls"><div><strong>Monthly budget example</strong><p>Loads three fictional spend and efficiency assumptions on one $100 AOV and 40% contribution margin.</p></div><button class="secondary-button scenario-template-button" id="load-monthly-template" type="button"><i data-lucide="calendar-range"></i><span>Load monthly example</span></button></div><div class="scenario-inputs">${defaultScenarios.map((values, offset) => scenario(offset + 1, values)).join("")}</div></form><section class="scenario-results" aria-live="polite"><div class="tool-panel-heading"><div><p class="step-label">02 / Comparison</p><h2>Profit, not revenue alone</h2></div><button class="share-button light-share" id="copy-scenarios" type="button"><i data-lucide="link"></i><span>Copy scenarios</span></button></div><div class="scenario-table" id="scenario-table"></div><div class="scenario-formulas" aria-label="Monthly scenario formulas"><p><strong>ROAS path:</strong> Revenue = monthly ad spend x ROAS; orders = revenue / AOV; implied CPA = spend / orders; contribution profit = revenue x contribution margin - spend.</p><p><strong>CVR path:</strong> Clicks = budget / CPC; orders = clicks x (CVR / 100); CPA = CPC / (CVR / 100); ROAS = AOV x (CVR / 100) / CPC. CVR alone cannot connect budget to orders.</p></div><p class="tool-note">Each row requires its own efficiency evidence. The template does not assume a higher monthly budget retains the current ROAS, CPC, CVR, product mix, or contribution margin.</p></section></section>`;
   const form = app.querySelector<HTMLElement>("#scenario-form");
   if (!form) return;
   bindToolCalculation(form);
   const scenarioState = (): URLSearchParams => {
     const params = new URLSearchParams();
+    params.set("period", form.querySelector<HTMLInputElement>("#scenario-period")?.value || "Custom scenarios");
     [1, 2, 3].forEach((index) => {
       const name = form.querySelector<HTMLInputElement>(`#scenario-${index}-name`)?.value || `Scenario ${index}`;
       params.set(`s${index}n`, name);
@@ -312,18 +320,33 @@ function scenarioPage(): void {
       const margin = numberValue(form, `scenario-${index}-margin`) / 100;
       const roas = numberValue(form, `scenario-${index}-roas`);
       const spend = numberValue(form, `scenario-${index}-spend`);
-      const revenue = spend * roas;
-      const profit = revenue * margin - spend;
-      const orders = aov > 0 ? revenue / aov : 0;
-      return { name, revenue, profit, orders, roas };
+      const result = calculateScenario(aov, margin * 100, roas, spend);
+      text(`scenario-${index}-legend`, name);
+      return { name, ...result, roas };
     }).sort((left, right) => right.profit - left.profit);
-    app.querySelector<HTMLElement>("#scenario-table")!.innerHTML = `<div class="scenario-row scenario-head"><span>Scenario</span><span>Revenue</span><span>Orders</span><span>Contribution profit</span></div>${rows.map((row, index) => `<div class="scenario-row ${index === 0 ? "winner" : ""}"><span>${escapeHtml(row.name)}<small>${row.roas.toFixed(2)}x ROAS</small></span><strong>${wholeCurrency.format(row.revenue)}</strong><strong>${row.orders.toFixed(1)}</strong><strong>${formatSigned(row.profit)}</strong></div>`).join("")}`;
+    app.querySelector<HTMLElement>("#scenario-table")!.innerHTML = `<div class="scenario-row scenario-head"><span>Scenario</span><span>Revenue</span><span>Orders</span><span>Implied CPA</span><span>Contribution profit</span></div>${rows.map((row, index) => `<div class="scenario-row ${index === 0 ? "winner" : ""}"><span>${escapeHtml(row.name)}<small>${row.roas.toFixed(2)}x ROAS</small></span><strong>${wholeCurrency.format(row.revenue)}</strong><strong>${row.orders.toFixed(1)}</strong><strong>${Number.isFinite(row.impliedCpa) ? currency.format(row.impliedCpa) : "--"}</strong><strong>${formatSigned(row.profit)}</strong></div>`).join("")}`;
     replaceUrlState(scenarioState());
   };
   form.addEventListener("input", update);
+  app.querySelector("#load-monthly-template")?.addEventListener("click", () => {
+    const periodInput = form.querySelector<HTMLInputElement>("#scenario-period");
+    if (periodInput) periodInput.value = "Monthly budget example";
+    monthlyScenarios.forEach((values, offset) => {
+      const index = offset + 1;
+      const nameInput = form.querySelector<HTMLInputElement>(`#scenario-${index}-name`);
+      if (nameInput) nameInput.value = values.name;
+      form.querySelector<HTMLInputElement>(`#scenario-${index}-aov`)!.value = String(values.aov);
+      form.querySelector<HTMLInputElement>(`#scenario-${index}-margin`)!.value = String(values.margin);
+      form.querySelector<HTMLInputElement>(`#scenario-${index}-roas`)!.value = String(values.roas);
+      form.querySelector<HTMLInputElement>(`#scenario-${index}-spend`)!.value = String(values.spend);
+    });
+    update();
+    track("scenario_template_loaded", { template: "monthly_budget" });
+  });
   app.querySelector("#copy-scenarios")?.addEventListener("click", () => {
-    const winner = app.querySelector<HTMLElement>(".scenario-row.winner")?.innerText.replace(/\s+/g, " ").trim() ?? "";
-    copyAndTrack(`Scenario comparison winner: ${winner}\nBasis: entered contribution margins and attributed ROAS; each ROAS is assumed stable at its spend level, not forecast.\nRestore scenarios: ${stateUrl(scenarioState())}`, "Scenarios copied", "scenarios_copied", { page: "scenarios" });
+    const comparison = app.querySelector<HTMLElement>("#scenario-table")?.innerText.replace(/\s+/g, " ").trim() ?? "";
+    const period = form.querySelector<HTMLInputElement>("#scenario-period")?.value || "Custom scenarios";
+    copyAndTrack(`Scenario period: ${period}\n${comparison}\nBasis: entered contribution margins and attributed ROAS; each ROAS is assumed stable only within its row, not forecast across spend levels.\nRestore scenarios: ${stateUrl(scenarioState())}`, "Scenarios copied", "scenarios_copied", { page: "scenarios" });
   });
   update();
 }

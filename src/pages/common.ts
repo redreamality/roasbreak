@@ -1,4 +1,4 @@
-import { createIcons, Link, RotateCcw } from "lucide";
+import { CalendarRange, createIcons, Link, RotateCcw } from "lucide";
 import { defaultInputs, type CalculatorInputs, type CalculatorMode } from "../lib/calculator";
 import { initializePrivacyControls, trackAnalytics } from "../lib/privacy";
 
@@ -209,7 +209,7 @@ export function showInvalidParamNotice(root: HTMLElement): void {
 export function setYearAndIcons(): void {
   document.querySelectorAll<HTMLElement>("[data-year]").forEach((node) => { node.textContent = String(new Date().getFullYear()); });
   initializePageSemantics();
-  createIcons({ icons: { Link, RotateCcw } });
+  createIcons({ icons: { CalendarRange, Link, RotateCcw } });
   initializePrivacyControls();
 }
 

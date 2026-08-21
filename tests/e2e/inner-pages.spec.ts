@@ -130,6 +130,53 @@ test("ranks scenarios by total contribution profit", async ({ page }) => {
   await expect(page.locator("#scenario-3-roas")).toHaveValue("3");
 });
 
+test("loads and restores a monthly budget contribution template", async ({ page }, testInfo) => {
+  await page.goto("/scenario-planner/");
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /monthly ad budgets through implied CPA/);
+  await page.getByRole("button", { name: "Load monthly example" }).click();
+
+  await expect(page.locator("#scenario-period")).toHaveValue("Monthly budget example");
+  expect(await page.locator("#scenario-2-roas").evaluate((input: HTMLInputElement) => input.validity.stepMismatch)).toBe(false);
+  await expect.poll(() => new URL(page.url()).searchParams.get("period")).toBe("Monthly budget example");
+  const current = page.locator(".scenario-row").filter({ hasText: "Current budget" });
+  const higher = page.locator(".scenario-row").filter({ hasText: "Higher budget" });
+  const downside = page.locator(".scenario-row").filter({ hasText: "Downside efficiency" });
+  await expect(current).toContainText("$30,000");
+  await expect(current).toContainText("300.0");
+  await expect(current).toContainText("$33.33");
+  await expect(current).toContainText("+$2,000.00");
+  await expect(higher).toContainText("$40,050");
+  await expect(higher).toContainText("400.5");
+  await expect(higher).toContainText("$37.45");
+  await expect(higher).toContainText("+$1,020.00");
+  await expect(downside).toContainText("$50.00");
+  await expect(downside).toContainText("-$3,000.00");
+  await expect(page.locator(".scenario-row.winner")).toContainText("Current budget");
+  await expect(page.getByText(/CVR alone cannot connect budget to orders/)).toBeVisible();
+  await expect(page.getByText(/does not assume a higher monthly budget retains/)).toBeVisible();
+
+  await page.locator("#scenario-2-roas").fill("2.4");
+  await expect(higher).toContainText("$36,000");
+  await expect(higher).toContainText("360.0");
+  await expect(higher).toContainText("$41.67");
+  await expect(higher).toContainText("-$600.00");
+  await expect(page).toHaveURL(/s2r=2.4/);
+  await page.reload();
+  await expect(page.locator("#scenario-period")).toHaveValue("Monthly budget example");
+  await expect(page.locator("#scenario-2-roas")).toHaveValue("2.4");
+  await expect(page.locator(".scenario-row").filter({ hasText: "Higher budget" })).toContainText("-$600.00");
+
+  if (testInfo.project.name === "mobile") {
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+    await expect(page.locator(".scenario-head > span").nth(1)).toBeHidden();
+    await expect(page.locator(".scenario-head > span").nth(2)).toBeHidden();
+    await expect(page.locator(".scenario-head > span").nth(3)).toHaveText("Implied CPA");
+    await expect(page.locator(".scenario-head > span").nth(3)).toBeVisible();
+    await expect(page.locator(".scenario-head > span").nth(4)).toBeVisible();
+  }
+});
+
 test("falls back from invalid shared values with a visible notice", async ({ page }) => {
   await page.goto("/target-roas-calculator/?aov=oops&fees=200&profit=-1");
   await expect(page.locator(".param-warning")).toContainText("reset to defaults");
