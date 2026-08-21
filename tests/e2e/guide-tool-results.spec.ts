@@ -182,6 +182,17 @@ const guideJourneys: GuideJourney[] = [
     inputValue: "70",
   },
   {
+    name: "product versus channel profitability",
+    guidePath: "/guides/product-vs-channel-profitability-scenario/",
+    toolPath: "/scenario-planner/",
+    resultSelector: ".scenario-row.winner",
+    resultText: "Lower ROAS high margin",
+    inputSelector: "#scenario-3-roas",
+    inputValue: "3",
+    restoreInputValue: "2.8",
+    restoredResultText: "Balanced mix",
+  },
+  {
     name: "refunds and conversion adjustments",
     guidePath: "/guides/refunds-and-conversion-adjustments/",
     toolPath: "/scenario-planner/",

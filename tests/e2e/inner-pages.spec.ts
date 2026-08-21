@@ -17,6 +17,7 @@ const guidePaths = [
   "/guides/contribution-ltv-vs-revenue-ltv/",
   "/guides/new-customer-roas-vs-blended-roas/",
   "/guides/cac-payback-cohort-data/",
+  "/guides/product-vs-channel-profitability-scenario/",
   "/guides/refunds-and-conversion-adjustments/",
   "/guides/conversion-delay-and-data-maturity/",
   "/guides/tiktok-shop-roas-and-attribution/",
@@ -147,13 +148,14 @@ test("lists every published tool and guide", async ({ page }) => {
   await expect(page.locator(".directory-item")).toHaveCount(6);
   await page.goto("/guides/");
   await expect(page.locator(".topic-group")).toHaveCount(5);
-  await expect(page.locator(".topic-guide")).toHaveCount(21);
+  await expect(page.locator(".topic-guide")).toHaveCount(22);
   await expect(page.getByRole("link", { name: /Ecommerce Profit Formulas/ })).toHaveAttribute("href", "/guides/ecommerce-profit-formulas/");
   await expect(page.getByRole("link", { name: /POAS vs ROAS/ })).toHaveAttribute("href", "/guides/poas-vs-roas/");
   await expect(page.getByRole("link", { name: /Meta Ads ROAS and Attribution/ })).toHaveAttribute("href", "/guides/meta-ads-roas-and-attribution/");
   await expect(page.getByRole("link", { name: /TikTok Shop ROAS and Attribution/ })).toHaveAttribute("href", "/guides/tiktok-shop-roas-and-attribution/");
   await expect(page.getByRole("link", { name: /Conversion Delay and Data Maturity/ })).toHaveAttribute("href", "/guides/conversion-delay-and-data-maturity/");
   await expect(page.getByRole("link", { name: /Refunds and Conversion Adjustments/ })).toHaveAttribute("href", "/guides/refunds-and-conversion-adjustments/");
+  await expect(page.getByRole("link", { name: /Product vs Channel Profitability/ })).toHaveAttribute("href", "/guides/product-vs-channel-profitability-scenario/");
   await expect(page.getByRole("link", { name: /New Customer ROAS vs Blended ROAS/ })).toHaveAttribute("href", "/guides/new-customer-roas-vs-blended-roas/");
   await expect(page.getByRole("link", { name: /Free Shipping Profit Threshold/ })).toHaveAttribute("href", "/guides/free-shipping-profit-threshold/");
   await expect(page.getByRole("link", { name: /Discount vs Bundle Profit/ })).toHaveAttribute("href", "/guides/discount-vs-bundle-profit/");
@@ -170,7 +172,7 @@ test("navigates the guide library by operating topic", async ({ page }) => {
 
 test("publishes visible review details, primary sources, and Article schema for every guide", async ({ page }) => {
   for (const path of guidePaths) {
-    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/", "/guides/meta-ads-roas-and-attribution/", "/guides/tiktok-shop-roas-and-attribution/", "/guides/conversion-delay-and-data-maturity/", "/guides/refunds-and-conversion-adjustments/"].includes(path);
+    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/", "/guides/meta-ads-roas-and-attribution/", "/guides/tiktok-shop-roas-and-attribution/", "/guides/conversion-delay-and-data-maturity/", "/guides/refunds-and-conversion-adjustments/", "/guides/product-vs-channel-profitability-scenario/"].includes(path);
     await page.goto(path);
     await expect(page.locator("[data-editorial-meta]")).toContainText(isNewGuide ? "Reviewed August 21, 2026" : "Reviewed August 20, 2026");
     await expect(page.locator("[data-content-scope]")).toContainText("Scope: ");
@@ -237,6 +239,13 @@ test("publishes visible review details, primary sources, and Article schema for 
       await expect(page.locator("[data-content-scope]")).toContainText("English documentation; product availability varies");
       await expect(page.getByText("Correct the original transaction once, then rebuild the numerator.", { exact: true })).toBeVisible();
       await expect(page.locator(".source-list a")).toHaveCount(5);
+    }
+    if (path === "/guides/product-vs-channel-profitability-scenario/") {
+      await expect(page).toHaveTitle("Product vs Channel Profitability Scenarios | ROAS Break");
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /total contribution profit at equal ad spend/);
+      await expect(page.locator("[data-content-scope]")).toContainText("GA4; Shopify GraphQL; Amazon terminology");
+      await expect(page.getByText("The highest ROAS can produce the least contribution profit.", { exact: true })).toBeVisible();
+      await expect(page.locator(".source-list a")).toHaveCount(4);
     }
     await expect(page.locator(".source-list a").first()).toHaveAttribute("href", /^https:\/\//);
     await expect(page.locator(".guide-action")).toHaveCount(1);
@@ -319,6 +328,38 @@ test("restores worked guide examples in the matching calculator", async ({ page 
   await expect(page.locator("#cac")).toHaveValue("70");
   await expect(page.locator("#payback-day")).toHaveText("Day 180");
   await expect(page.locator("#allowable-cac")).toHaveText("$77.00");
+
+  await page.goto("/guides/product-vs-channel-profitability-scenario/");
+  await page.locator(".guide-action").click();
+  const productChannelParams = {
+    s1n: "High ROAS low margin", s1a: "50", s1m: "20", s1r: "5", s1s: "10000",
+    s2n: "Balanced mix", s2a: "80", s2m: "40", s2r: "4", s2s: "10000",
+    s3n: "Lower ROAS high margin", s3a: "100", s3m: "55", s3r: "3", s3s: "10000",
+  };
+  for (const [parameter, value] of Object.entries(productChannelParams)) {
+    expect(new URL(page.url()).searchParams.get(parameter), parameter).toBe(value);
+  }
+  const highRoasRow = page.locator(".scenario-row").filter({ hasText: "High ROAS low margin" });
+  const balancedRow = page.locator(".scenario-row").filter({ hasText: "Balanced mix" });
+  const lowerRoasRow = page.locator(".scenario-row").filter({ hasText: "Lower ROAS high margin" });
+  await expect(highRoasRow).toContainText("$50,000");
+  await expect(highRoasRow).toContainText("1000.0");
+  await expect(highRoasRow).toContainText("$0.00");
+  await expect(balancedRow).toContainText("$40,000");
+  await expect(balancedRow).toContainText("500.0");
+  await expect(balancedRow).toContainText("+$6,000.00");
+  await expect(lowerRoasRow).toContainText("$30,000");
+  await expect(lowerRoasRow).toContainText("300.0");
+  await expect(lowerRoasRow).toContainText("+$6,500.00");
+  await expect(page.locator(".scenario-row.winner")).toContainText("Lower ROAS high margin");
+  await page.locator("#scenario-3-roas").fill("2.8");
+  await expect(page.locator(".scenario-row.winner")).toContainText("Balanced mix");
+  await expect(lowerRoasRow).toContainText("$28,000");
+  await expect(lowerRoasRow).toContainText("280.0");
+  await expect(lowerRoasRow).toContainText("+$5,400.00");
+  await page.reload();
+  await expect(page.locator("#scenario-3-roas")).toHaveValue("2.8");
+  await expect(page.locator(".scenario-row.winner")).toContainText("Balanced mix");
 
   await page.goto("/guides/refunds-and-conversion-adjustments/");
   await page.locator(".guide-action").click();

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product vs Channel Profitability Scenarios | ROAS Break</title>
+    <meta name="description" content="Compare product-channel combinations on total contribution profit at equal ad spend instead of ranking them by attributed ROAS alone." />
+    <link rel="canonical" href="https://roasbreak.com/guides/product-vs-channel-profitability-scenario/" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Product vs Channel Profitability Scenarios","datePublished":"2026-08-21","dateModified":"2026-08-21","author":{"@type":"Organization","name":"floatboat.ai"},"publisher":{"@type":"Organization","name":"ROAS Break"},"mainEntityOfPage":"https://roasbreak.com/guides/product-vs-channel-profitability-scenario/"}</script>
+    <script type="application/ld+json" data-schema="breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://roasbreak.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://roasbreak.com/guides/"},{"@type":"ListItem","position":3,"name":"Product vs Channel Profitability","item":"https://roasbreak.com/guides/product-vs-channel-profitability-scenario/"}]}</script>
+  </head>
+  <body class="inner-page" data-guide="product-channel-profitability-scenario">
+    <header class="inner-header">
+      <a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a>
+      <nav class="inner-nav" aria-label="Primary"><a href="/tools/">Tools</a><a href="/guides/" aria-current="page">Guides</a><a href="/methodology/">Methodology</a><a href="/about/">About</a></nav>
+    </header>
+    <main>
+      <nav class="breadcrumb"><a href="/">Home</a><a href="/guides/">Guides</a><span>Product vs Channel Profitability</span></nav>
+      <article>
+        <section class="inner-intro">
+          <div><p class="eyebrow">Planning and measurement</p><h1>Product vs Channel Profitability</h1></div>
+          <p>Compare product-channel combinations at equal ad spend using total contribution profit, not the highest attributed revenue ROAS.</p>
+        </section>
+        <aside class="editorial-note" data-editorial-meta><strong>Reviewed August 21, 2026</strong><span>Published by floatboat.ai</span><span data-content-scope>Scope: Global ecommerce; GA4; Shopify GraphQL; Amazon terminology; fictional USD example</span><span>Scenario workflow reviewed every 90 days</span><a href="/contact/">Suggest a correction</a></aside>
+
+        <section class="page-content">
+          <div><p class="section-kicker">60-second answer</p><h2>The highest ROAS can produce the least contribution profit.</h2></div>
+          <div class="content-copy">
+            <p>ROAS measures attributed revenue per ad dollar. A product-channel combination also carries its own average order value, product mix, fulfillment, fees, returns, and other variable costs. Rank comparable scenarios by the contribution left after those costs and ad spend.</p>
+            <p class="formula-line">Scenario revenue = ad spend x attributed ROAS</p>
+            <p class="formula-line">Normalized orders = scenario revenue / average order value</p>
+            <p class="formula-line">Contribution profit after ads = scenario revenue x contribution margin - ad spend</p>
+            <p>Equal spend controls only the amount invested in each scenario. It does not equalize impressions, clicks, conversion rate, order availability, customer quality, attribution rules, or incrementality.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Input contract</p><h2>Build a contribution margin for each product-channel pair.</h2></div>
+          <div class="content-copy">
+            <table class="definition-table"><thead><tr><th>Input</th><th>Possible evidence</th><th>Required boundary</th></tr></thead><tbody><tr><td>Attributed revenue and ROAS</td><td>Channel report using a documented window and value field</td><td>Attribution is reporting credit, not causal proof</td></tr><tr><td>AOV and item mix</td><td>GA4 ecommerce events and selected Data API metrics/dimensions</td><td>Use the same revenue and refund basis</td></tr><tr><td>Product unit cost</td><td>Shopify InventoryItem <code>unitCost</code> when populated and current</td><td>Unit cost is not complete contribution cost</td></tr><tr><td>Other variable costs</td><td>Fulfillment, payment, marketplace, returns, duties, packaging, and service ledgers</td><td>Include costs caused by the order or channel</td></tr><tr><td>Ad spend</td><td>Matched channel, product set, dates, timezone, and currency</td><td>Do not mix different spend populations</td></tr></tbody></table>
+            <p>Shopify <code>unitCost</code> can support merchandise-cost mapping, but it does not include the complete product-channel cost boundary. Add fulfillment, payment and marketplace fees, return loss, duties, packaging, incentives, and other variable costs before treating the result as contribution margin.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Equal-spend example</p><h2>3.00x ROAS earns $500 more than 4.00x and $6,500 more than 5.00x.</h2></div>
+          <div class="content-copy">
+            <p>Give three fictional product-channel combinations the same $10,000 ad spend. The margin is contribution before advertising, not gross margin. Each scenario assumes its entered AOV, contribution margin, and attributed ROAS hold at that spend level.</p>
+            <table class="definition-table"><thead><tr><th>Scenario</th><th>AOV</th><th>Contribution margin</th><th>ROAS</th><th>Revenue</th><th>Normalized orders</th><th>Contribution profit</th></tr></thead><tbody><tr><td>High ROAS low margin</td><td>$50</td><td>20%</td><td>5.00x</td><td>$50,000</td><td>1,000</td><td>$50,000 x 20% - $10,000 = $0</td></tr><tr><td>Balanced mix</td><td>$80</td><td>40%</td><td>4.00x</td><td>$40,000</td><td>500</td><td>$40,000 x 40% - $10,000 = $6,000</td></tr><tr><td>Lower ROAS high margin</td><td>$100</td><td>55%</td><td>3.00x</td><td>$30,000</td><td>300</td><td>$30,000 x 55% - $10,000 = $6,500</td></tr></tbody></table>
+            <p>The 5.00x scenario merely breaks even after advertising because its 20% contribution margin supplies exactly $10,000 for the $10,000 spend. The 3.00x scenario wins because 55% of $30,000 creates $16,500 of contribution before ads and leaves $6,500 afterward.</p>
+            <p><strong>Orders are normalization only:</strong> The planner divides revenue by AOV. The resulting 1,000, 500, and 300 are not imported order counts and should not replace observed transactions when those are available.</p>
+            <a class="guide-action" href="/scenario-planner/?s1n=High+ROAS+low+margin&amp;s1a=50&amp;s1m=20&amp;s1r=5&amp;s1s=10000&amp;s2n=Balanced+mix&amp;s2a=80&amp;s2m=40&amp;s2r=4&amp;s2s=10000&amp;s3n=Lower+ROAS+high+margin&amp;s3a=100&amp;s3m=55&amp;s3r=3&amp;s3s=10000">Compare the three product-channel scenarios</a>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Sensitivity and scale</p><h2>A small efficiency change can switch the winner.</h2></div>
+          <div class="content-copy">
+            <p>If Lower ROAS high margin falls from 3.00x to 2.80x at the same $10,000 spend, revenue becomes $28,000, normalized orders become 280, and contribution profit becomes $28,000 x 55% - $10,000 = $5,400. Balanced mix remains at $6,000 and becomes the winner.</p>
+            <table class="definition-table"><thead><tr><th>Stress test</th><th>Revenue</th><th>Normalized orders</th><th>Contribution profit</th><th>Rank</th></tr></thead><tbody><tr><td>Balanced mix at 4.00x</td><td>$40,000</td><td>500</td><td>$6,000</td><td>Winner</td></tr><tr><td>Lower ROAS high margin at 2.80x</td><td>$28,000</td><td>280</td><td>$5,400</td><td>Second</td></tr><tr><td>High ROAS low margin at 5.00x</td><td>$50,000</td><td>1,000</td><td>$0</td><td>Third</td></tr></tbody></table>
+            <p>Do not scale this ranking linearly. More spend can change auction price, traffic quality, conversion rate, AOV, stock availability, discounting, fulfillment cost, return rate, and product mix. Recalculate marginal contribution at realistic spend steps instead of multiplying the current winner.</p>
+            <p>Attributed revenue is not proof of incremental revenue. Use experiments or another credible causal design when the decision depends on lift. If multiple channels credit the same order, reconcile those claims separately rather than adding scenario revenue.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Operating workflow</p><h2>Keep extraction, economics, and decision ownership visible.</h2></div>
+          <div class="content-copy">
+            <ol><li>Define each product-channel pair and freeze report dates, attribution settings, timezone, currency, and revenue field.</li><li>Export observed product and transaction evidence from GA4 and the commerce platform.</li><li>Map Shopify unit cost where useful, then complete the variable cost boundary outside that field.</li><li>Calculate scenario-specific contribution margin and document whether refunds are mature.</li><li>Compare at equal spend, then stress-test ROAS, AOV, margin, and spend independently.</li><li>Choose the action from total and marginal contribution, inventory capacity, and uncertainty, not ratio rank alone.</li></ol>
+            <p class="scope-note"><strong>Boundary:</strong> The POAS guide defines profit-on-ad-spend metrics. The attribution-versus-MER guide reconciles channel credit with the store. The Shopify guide maps report fields. This page uses already-defined inputs to rank product-channel combinations on total contribution profit.</p>
+          </div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Official sources and model limits</p><h2>Source the fields, then declare every modeling assumption.</h2></div>
+          <div class="content-copy">
+            <p>Google documents ecommerce collection and Data API reporting fields. Shopify documents InventoryItem and <code>unitCost</code>. Amazon Ads supplies the ROAS terminology used in the scenario. ROAS Break supplies the fictional AOV, margins, ratios, equal-spend control, and profit ranking.</p>
+            <ul class="source-list"><li data-source="01"><span><a href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce">Google Analytics: Measure ecommerce</a><small>Official transaction, item, purchase, and refund collection context. Checked August 21, 2026.</small></span></li><li data-source="02"><span><a href="https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema">Google Analytics Data API schema</a><small>Official reporting dimensions and metrics for selecting a consistent extract. Checked August 21, 2026.</small></span></li><li data-source="03"><span><a href="https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem">Shopify Admin GraphQL: InventoryItem</a><small>Official InventoryItem fields, including unitCost. Checked August 21, 2026.</small></span></li><li data-source="04"><span><a href="https://advertising.amazon.com/library/guides/return-on-ad-spend-roas">Amazon Ads ROAS guide</a><small>Official ROAS definition and interpretation. Checked August 21, 2026.</small></span></li></ul>
+          </div>
+        </section>
+
+        <section class="related-reading" aria-labelledby="product-channel-next"><div><p class="section-kicker">Continue the decision</p><h2 id="product-channel-next">Define, reconcile, then compare.</h2></div><div class="related-links"><a href="/guides/poas-vs-roas/"><span>Define profit after advertising</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/attributed-roas-vs-mer/"><span>Reconcile channel credit with store-wide revenue</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/shopify-net-sales-for-roas/"><span>Map Shopify reporting inputs</span><span aria-hidden="true">&rarr;</span></a></div></section>
+      </article>
+    </main>
+    <footer class="inner-footer"><a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a><nav class="footer-links" aria-label="Company and legal"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><p class="footer-copyright">&copy; <span data-year></span> ROAS Break</p></footer>
+    <script type="module" src="/src/pages/guide.ts"></script>
+  </body>
+</html>
