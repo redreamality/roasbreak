@@ -1,6 +1,7 @@
 # Project Agent Instructions
 
 - 所有推送仓库默认设为私有仓库。
+- 本仓库 `redreamality/roasbreak` 是用户明确指定的公开仓库，必须保持 `public`；不得应用“默认私有”规则，也不得擅自改为 private。
 - Python 包管理默认使用 `uv`。
 - Node.js 包管理默认使用 `pnpm`。
 - 使用中文交流。
