@@ -158,7 +158,7 @@ test("navigates the guide library by operating topic", async ({ page }) => {
 
 test("publishes visible review details, primary sources, and Article schema for every guide", async ({ page }) => {
   for (const path of guidePaths) {
-    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/"].includes(path);
+    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/"].includes(path);
     await page.goto(path);
     await expect(page.locator("[data-editorial-meta]")).toContainText(isNewGuide ? "Reviewed August 21, 2026" : "Reviewed August 20, 2026");
     await expect(page.locator("[data-content-scope]")).toContainText("Scope: ");
