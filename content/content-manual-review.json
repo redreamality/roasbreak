@@ -778,16 +778,16 @@
     {
       "id": "ecommerce-variable-cost-checklist",
       "reviewedOn": "2026-08-21",
-      "contentSha256": "bf11d598e4aef278f0a5c8c65175f9d4120cb5182db69813fa941c70052f0e36",
+      "contentSha256": "bacf6331c5f45d0ce3347ffc474e762defe4fe6ea95882d77bf77160d962a28b",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "The page fulfills its unique input-audit intent by requiring source, period, currency, owner, amount, destination, and status for every pre-ad variable cost, then enforcing one destination, fixed-versus-variable, and missing-versus-zero checks before opening the calculator.",
-            "All six groups map explicitly to the calculator: revenue deductions to aov, product and inbound to cogs, fulfillment to ship, percentage payment/platform costs to fees and fixed components to other, refunded revenue to returns with reverse-logistics or unrecovered loss in other, and remaining variable service costs to other.",
-            "Its boundary is distinct from related assets: contribution-margin explains why contribution sets the acquisition ceiling, ecommerce-profit-formulas connects approved inputs to CPA/POAS/MER/payback, and methodology states the site's broader revenue, cost, attribution, and review rules."
+            "The fee-structure sensitivity section deepens the page's existing input-audit intent without creating a competing URL: it holds one revenue and non-fee cost boundary constant, maps per-order fixed components to other, and maps percentage or blended tiered charges to fees before opening the existing Break-even ROAS calculator.",
+            "The new comparison remains consistent with the six-group map and one-destination rule: the $2 fixed component is added once to other, the 3% percentage charge is entered once in fees, and the tiered $4.20 charge is converted once to a 3.5% effective fee rate.",
+            "The copyable checklist now preserves provider or marketplace, contract or settlement source, route and category scope, fee base, fixed component, tier thresholds, refund treatment, effective dates, and review date; dedicated Playwright checks verify the copied fields and restoration of fixed, percentage, and tiered calculator inputs."
           ]
         },
         "facts-vs-recommendations": {
@@ -795,9 +795,10 @@
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "All five official sources returned HTTP 200: GA4 documents ecommerce value, currency, discount, item, purchase, and refund fields; its Data API documents revenue and refund metrics; Shopify documents InventoryItem unitCost and Refund line items, transactions, order adjustments, and totals; Stripe documents balance-transaction amount, fee, net, currency, and reporting_category.",
-            "The guide treats platform fields as source evidence rather than a completed cost model and explicitly labels the six-group mapping, one-destination rule, contribution boundary, and fictional calculations as ROAS Break choices rather than platform accounting guidance.",
-            "The refund rule prevents deducting mature refunded revenue in both aov and returns/other, while the fixed-cost and missing-zero controls keep baseline overhead separate and require evidence for genuine zero values; tax, accounting classification, cash timing, attribution, demand, inventory, and forecasting remain outside scope."
+            "The $2 fixed component, 3% percentage fee, and 2%/5% tiers are explicitly labeled fictional modeling inputs rather than current provider rates or industry benchmarks, so the page does not present volatile platform pricing as an externally established fact.",
+            "The page continues to use official GA4, Shopify GraphQL, and Stripe documentation only as evidence for available revenue, cost, refund, and settlement fields; users are directed to their own contract or settlement source for the applicable fee amount.",
+            "Applicability and freshness are explicit controls: the audit records provider or marketplace, region/category/payment-route scope, fee base, tier thresholds, refund and chargeback treatment, effective start/end, and last review date, with a required recheck after contract, route, mix, or refund-policy changes.",
+            "A per-order fixed component is variable because an order triggers it, while monthly subscriptions and baseline overhead remain outside the comparison; multiple capture, retry, or refund charges are normalized from matched-period actuals rather than assumed once per order, and tiered charges use a same-period weighted effective rate."
           ]
         },
         "worked-example-recalculation": {
@@ -805,9 +806,10 @@
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "Revenue and cost ledger recomputed: 135-15=120 aov; fees=120*3%=3.60; expected refunded revenue=120*8%=9.60; total pre-ad variable cost=48+9+7+3.60+9.60=77.20.",
-            "Contribution=120-77.20=42.80, contribution margin=42.80/120=35.6667% displayed as 35.7%, and break-even ROAS=120/42.80=2.8037x displayed as 2.80x.",
-            "The incomplete COGS-only view gives 120-48=72, 72/120=60%, and 120/72=1.67x while omitting 9+7+3.60+9.60=29.20; at 3.00x, ad cost is 120/3=40 and after-ad contribution is 2.80 per order, so 1000/40=25 orders produce 25*2.80=70."
+            "The shared non-fee boundary recomputes to $46.40: expected return loss is $120*8%=$9.60, so fee-free contribution and break-even allowable CPA are $120-$48-$9-$7-$9.60=$46.40.",
+            "For the fixed case, adding the $2 per-order component to other produces $44.40 contribution and allowable CPA; $120/$44.40=2.7027x, displayed as 2.70x. For the percentage case, $120*3%=$3.60 leaves $42.80; $120/$42.80=2.8037x, displayed as 2.80x.",
+            "For the tiered case, the first $60*2%=$1.20 and next $60*5%=$3.00 sum to $4.20; $4.20/$120=3.5% effective fees, leaving $42.20 contribution and allowable CPA, and $120/$42.20=2.8436x, displayed as 2.84x.",
+            "The Playwright flow recalculates all three cases, copies the tiered other=7 and fees=3.5 state, and restores $42.20 allowable CPA and 2.84x break-even ROAS on desktop and mobile."
           ]
         }
       }

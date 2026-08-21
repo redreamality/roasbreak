@@ -12,13 +12,17 @@ Fields: Group | Source | Period | Currency | Owner | Amount | Tool input | Statu
 Revenue deductions | [order report] | [period] | [currency] | [owner] | [amount per order] | aov | [status]
 Product and inbound | [inventory ledger] | [period] | [currency] | [owner] | [landed unit cost] | cogs | [status]
 Fulfillment | [carrier / 3PL invoice] | [period] | [currency] | [owner] | [cost per order] | ship | [status]
-Payment and platform | [settlement report] | [period] | [currency] | [owner] | [rate and per-order fee] | fees + other | [status]
+Payment and platform | [settlement or contract] | [effective range] | [currency] | [owner] | [scope, base, fixed component, tiers, refund treatment] | fees + other | [status]
 Refunds and returns | [mature refund cohort] | [period] | [currency] | [owner] | [loss rate and handling] | returns + other | [status]
 Service and other | [support / vendor log] | [period] | [currency] | [owner] | [cost per order] | other | [status]
 
 Duplicate check: Each cost appears in one tool input only; refunded revenue is deducted in aov or returns, never both.
 Fixed-variable check: Include order-driven costs; separate fixed overhead unless deliberately allocated.
-Missing-zero check: Give every zero an owner and evidence; distinguish zero, missing, and unavailable.`;
+Missing-zero check: Give every zero an owner and evidence; distinguish zero, missing, and unavailable.
+Fee schedule: Provider / marketplace | Contract or settlement source | Region / category / payment route | Fee base | Fixed component | Tier thresholds | Refund / chargeback treatment | Effective from | Effective to | Reviewed on
+Fee-schedule check: Record every fee component, scope, effective date, and review date before modeling it.
+Fixed-component check: Divide actual fixed charges from captures, retries, and refunds by matched orders; do not assume one charge per order.
+Effective-rate check: Divide actual total fees by same-basis model revenue for the matched period, currency, and order population.`;
 
 if (roasInput && acosInput) {
   let updating = false;

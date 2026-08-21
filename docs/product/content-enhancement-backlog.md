@@ -190,10 +190,10 @@
   - 验收：不会与现有页面竞争相同主意图；包含延迟转化、退款更新和不同收入窗口。
   - 完成证据：合并到 Attributed ROAS vs MER，并由 Conversion Delay 和 Refunds/Conversion Adjustments 补齐成熟度与回填流程。
 
-- [ ] `P1-006` Payment and Marketplace Fee Impact。
+- [x] `P1-006` Payment and Marketplace Fee Impact。
   - 产出：固定费、百分比费、分层费率对贡献利润与 allowable CPA 的影响。
   - 验收：来源与适用时间明确；不维护容易过期的全平台费率大全。
-  - 状态：Variable-cost Checklist 已覆盖字段归属；固定费、比例费和分层费率的独立需求尚未验证，暂缓扩写。
+  - 完成证据：在 Variable-cost Checklist 内用同一 `$120` 成本边界并列每单固定组件、3% 比例费和 2%/5% 分层费，展示 `$44.40/$42.80/$42.20` allowable CPA 与 `2.70x/2.80x/2.84x` break-even ROAS；复制模板记录来源、scope、生效期、tier、退款处理和复核日期，E2E 覆盖计算与恢复。未维护平台费率大全，也未声称独立 URL 的需求已验证。
 
 - [ ] `P1-007` BFCM Promotion Planning。
   - 产出：季节性促销场景模板和 Promotion 预填案例。

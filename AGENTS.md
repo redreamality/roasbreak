@@ -101,6 +101,9 @@
 - 定向运行 Playwright 前先读取 `playwright.config.ts` 的实际项目名；本仓库桌面项目名是 `chromium`，不是泛称 `desktop`，传错 `--project` 会在测试启动前失败。
 - `pnpm release:check:verify` 使用 `--no-write`，不会生成临时 `reports/release-check.json`；读取发布报告前先核对脚本的实际输出路径与 `Test-Path`，持久基线位于 `reports/content-release-baseline.json`。
 - 读取计算模型前先用 `rg --files src` 定位真实模块；本仓库核心计算位于 `src/lib/calculator.ts` 与 `src/lib/decision-tools.ts`，不要凭常见命名猜测不存在的 `src/calculations.ts` 或 `src/types.ts`。
+- 不要把新增的多步输入、恢复和 reload 流程继续塞进已有的全指南串行 E2E；该用例本身接近 30 秒总超时，会掩盖新增流程的真实失败点。为新的交互契约建立短而独立的测试。
+- 主页 Break-even 工具编辑输入时只更新结果和“Copy result”中的恢复链接，不会同步地址栏；E2E 不应在 `fill()` 后等待 URL 变化。应授权剪贴板、点击 `Copy result`、读取生成的 URL，再导航并验证恢复状态。
+- 主代理与子代理不要同时启动 Playwright：本仓库 `reuseExistingServer: false` 会让后启动者因 4173 已被占用而正确失败。委派人工复核时应明确只读静态检查，或等主测试进程退出后再让子代理执行 E2E。
 - PowerShell 的 `Get-ChildItem -Recurse -File src scripts tests` 会把多个目录当成无效位置参数并报错；扫描多个目录时应显式使用 `Get-ChildItem -Path src,scripts,tests -Recurse -File`，或分别调用后汇总。
 - 用 `rg` 显式列出不存在的文件会返回路径错误；扫描 `sitemap.xml`、`robots.txt` 等静态资产前先用 `rg --files` 定位真实目录（本项目在 `public/`），不要假定文件位于仓库根目录。
 - 为指南到 Target ROAS 的 E2E 推导期望结果时，`profit` 查询参数表示保留利润占收入的百分比，不是金额。正文若写保留 `$6` 且 AOV 为 `$60`，CTA 应传 `profit=10`；先核对参数单位再断言结果，避免把内容参数错误固化为测试期望。

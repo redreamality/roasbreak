@@ -152,6 +152,12 @@ test("copies the ecommerce variable-cost audit checklist", async ({ context, pag
     origin: "http://127.0.0.1:4173",
   });
   await page.goto("/guides/ecommerce-variable-cost-checklist/");
+  await expect(page.getByRole("heading", { name: "Compare fixed, percentage, and tiered fees on one cost boundary." })).toBeVisible();
+  await expect(page.getByRole("row", { name: /Per-order fixed component/ })).toContainText("$44.40");
+  await expect(page.getByRole("row", { name: /Percentage fee/ })).toContainText("2.80x");
+  await expect(page.getByRole("row", { name: /Tiered fee/ })).toContainText("3.5");
+  await expect(page.getByRole("row", { name: /Tiered fee/ })).toContainText("$42.20");
+  await expect(page.getByText(/modeling inputs, not current provider rates or industry benchmarks/)).toBeVisible();
   const copyButton = page.getByRole("button", { name: "Copy checklist" });
   await expect(copyButton).not.toHaveClass(/guide-action/);
   await copyButton.click();
@@ -167,6 +173,39 @@ test("copies the ecommerce variable-cost audit checklist", async ({ context, pag
   expect(copied).toContain("Duplicate check:");
   expect(copied).toContain("Fixed-variable check:");
   expect(copied).toContain("Missing-zero check:");
+  expect(copied).toContain("Fee schedule: Provider / marketplace");
+  expect(copied).toContain("Tier thresholds | Refund / chargeback treatment | Effective from | Effective to | Reviewed on");
+  expect(copied).toContain("Fee-schedule check:");
+  expect(copied).toContain("Fixed-component check:");
+  expect(copied).toContain("Effective-rate check:");
+});
+
+test("compares and restores fixed, percentage, and tiered fee inputs", async ({ context, page }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"], {
+    origin: "http://127.0.0.1:4173",
+  });
+  await page.goto("/guides/ecommerce-variable-cost-checklist/");
+  await page.locator(".guide-action").click();
+  await expect(page.locator("#max-cpa")).toHaveText("$42.80");
+  await expect(page.locator("#break-even-roas")).toHaveText("2.80x");
+
+  await page.locator("#other-cost").fill("9");
+  await page.locator("#fee-pct").fill("0");
+  await expect(page.locator("#max-cpa")).toHaveText("$44.40");
+  await expect(page.locator("#break-even-roas")).toHaveText("2.70x");
+
+  await page.locator("#other-cost").fill("7");
+  await page.locator("#fee-pct").fill("3.5");
+  await expect(page.locator("#max-cpa")).toHaveText("$42.20");
+  await expect(page.locator("#break-even-roas")).toHaveText("2.84x");
+  await page.getByRole("button", { name: "Copy result" }).click();
+  const restoreUrl = await page.evaluate(() => navigator.clipboard.readText());
+  expect(new URL(restoreUrl).searchParams.get("other")).toBe("7");
+  expect(new URL(restoreUrl).searchParams.get("fees")).toBe("3.5");
+  await page.goto(restoreUrl);
+  await expect(page.locator("#fee-pct")).toHaveValue("3.5");
+  await expect(page.locator("#max-cpa")).toHaveText("$42.20");
+  await expect(page.locator("#break-even-roas")).toHaveText("2.84x");
 });
 
 test("lists every published tool and guide", async ({ page }) => {

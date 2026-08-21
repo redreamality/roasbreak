@@ -47,12 +47,12 @@
                 <tr><td>Revenue deductions</td><td>Order report / month / USD</td><td>Analytics / discount per order</td><td><code>aov</code> / needs review</td></tr>
                 <tr><td>Product and inbound</td><td>Inventory ledger / month / USD</td><td>Operations / landed unit cost</td><td><code>cogs</code> / needs review</td></tr>
                 <tr><td>Fulfillment</td><td>Carrier and 3PL invoice / month / USD</td><td>Operations / cost per order</td><td><code>ship</code> / needs review</td></tr>
-                <tr><td>Payment and platform</td><td>Settlement report / month / USD</td><td>Finance / rate and per-order fee</td><td><code>fees</code> + <code>other</code> / needs review</td></tr>
+                <tr><td>Payment and platform</td><td>Settlement or contract / effective range / USD</td><td>Finance / scope, base, fixed component, tiers, and refund treatment</td><td><code>fees</code> + <code>other</code> / needs review</td></tr>
                 <tr><td>Refunds and returns</td><td>Mature refund cohort / month / USD</td><td>Finance / loss rate and handling</td><td><code>returns</code> + <code>other</code> / needs review</td></tr>
                 <tr><td>Service and other</td><td>Support or vendor log / month / USD</td><td>Service owner / cost per order</td><td><code>other</code> / needs review</td></tr>
               </tbody>
             </table>
-            <ol><li><strong>Duplicate check:</strong> Trace every component to one destination and search totals for a second copy.</li><li><strong>Fixed-variable check:</strong> Include costs caused by the modeled order; keep rent, salaries, and baseline subscriptions outside unless deliberately allocated.</li><li><strong>Missing-zero check:</strong> A zero needs an owner and evidence. Blank, unavailable, and genuinely zero are different statuses.</li></ol>
+            <ol><li><strong>Duplicate check:</strong> Trace every component to one destination and search totals for a second copy.</li><li><strong>Fixed-variable check:</strong> Include costs caused by the modeled order; keep rent, salaries, and baseline subscriptions outside unless deliberately allocated.</li><li><strong>Missing-zero check:</strong> A zero needs an owner and evidence. Blank, unavailable, and genuinely zero are different statuses.</li><li><strong>Fee-schedule check:</strong> Record provider, source, scope, fee base, fixed component, tier thresholds, refund treatment, effective dates, and review date.</li><li><strong>Effective-rate check:</strong> Reconcile actual fees and model revenue for the same period, currency, and order population before entering a blended percentage.</li></ol>
             <button type="button" class="secondary-button" id="copy-variable-cost-checklist">Copy checklist</button>
           </div>
         </section>
@@ -83,6 +83,24 @@
             <p>A COGS-only view leaves $72, reports a 60% margin, and suggests 1.67x break-even ROAS. It overstates the acquisition budget by ignoring $29.20 of other pre-ad variable cost.</p>
             <p>At 3.00x ROAS, ad spend is $40 per order. Contribution after ads is $42.80 - $40 = <strong>+$2.80 per order</strong>. Each $1,000 of spend buys 25 same-basis orders and produces <strong>+$70 contribution profit</strong> under these inputs.</p>
             <a class="guide-action" href="/?mode=costs&amp;aov=120&amp;cogs=48&amp;ship=9&amp;other=7&amp;fees=3&amp;returns=8&amp;roas=3">Open the audited $120 order</a>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Fee structure sensitivity</p><h2>Compare fixed, percentage, and tiered fees on one cost boundary.</h2></div>
+          <div class="content-copy">
+            <p>Keep the same fictional $120 order, $48 product cost, $9 fulfillment, $7 other non-fee variable cost, and 8% return-loss allowance. The fee-free contribution and acquisition ceiling are $46.40. The rows below change only the payment or marketplace fee structure; they are modeling inputs, not current provider rates or industry benchmarks.</p>
+            <table class="definition-table">
+              <thead><tr><th>Illustrative fee structure</th><th>Fee calculation and tool mapping</th><th>Contribution / allowable CPA</th><th>Break-even ROAS</th></tr></thead>
+              <tbody>
+                <tr><td>Per-order fixed component</td><td>$2.00; add to <code>other</code> ($7 + $2)</td><td>$44.40</td><td>2.70x</td></tr>
+                <tr><td>Percentage fee</td><td>$120 x 3% = $3.60; <code>fees=3</code></td><td>$42.80</td><td>2.80x</td></tr>
+                <tr><td>Tiered fee</td><td>First $60 x 2% + next $60 x 5% = $4.20; effective <code>fees=3.5</code></td><td>$42.20</td><td>2.84x</td></tr>
+              </tbody>
+            </table>
+            <p>Each fee dollar reduces contribution and break-even allowable CPA by one dollar: $2.00, $3.60, and $4.20 below the $46.40 fee-free ceiling. A per-order fixed component is variable in this model because the order triggers it; monthly subscriptions and baseline overhead stay outside this table. If captures, retries, or refunds create multiple fixed charges, divide the matched period's actual fixed-component total by matched orders instead of assuming one charge per order.</p>
+            <p class="scope-note"><strong>Tier rule:</strong> Do not multiply the highest marginal tier by all revenue. When tiers depend on monthly volume, category, region, or payment route, calculate actual total fees divided by same-basis model revenue for the matched settlement period and record the weighted effective rate.</p>
+            <p class="scope-note"><strong>Maintenance rule:</strong> Store the contract or settlement source, provider or marketplace, region/category/route scope, fee base, fixed component, tier thresholds, refund and chargeback treatment, effective start/end, and last review date. Recheck after any contract, route, mix, or refund-policy change.</p>
           </div>
         </section>
 
