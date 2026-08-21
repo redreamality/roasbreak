@@ -104,6 +104,15 @@ const guideJourneys: GuideJourney[] = [
     inputValue: "60",
   },
   {
+    name: "free shipping profit threshold",
+    guidePath: "/guides/free-shipping-profit-threshold/",
+    toolPath: "/promotion-profit-calculator/",
+    resultSelector: "#required-lift",
+    resultText: "+18.6%",
+    inputSelector: "#promotion-price",
+    inputValue: "80",
+  },
+  {
     name: "returns and discounts",
     guidePath: "/guides/returns-and-discounts/",
     toolPath: "/promotion-profit-calculator/",

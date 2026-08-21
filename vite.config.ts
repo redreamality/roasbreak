@@ -19,6 +19,7 @@ export default defineConfig({
         roasAcos: resolve(import.meta.dirname, "guides/roas-vs-acos/index.html"),
         attributedMer: resolve(import.meta.dirname, "guides/attributed-roas-vs-mer/index.html"),
         revenueBasis: resolve(import.meta.dirname, "guides/ecommerce-revenue-basis/index.html"),
+        freeShippingProfitThreshold: resolve(import.meta.dirname, "guides/free-shipping-profit-threshold/index.html"),
         returnsDiscounts: resolve(import.meta.dirname, "guides/returns-and-discounts/index.html"),
         shopifyNetSales: resolve(import.meta.dirname, "guides/shopify-net-sales-for-roas/index.html"),
         goodRoas: resolve(import.meta.dirname, "guides/good-roas-for-profit-margin/index.html"),

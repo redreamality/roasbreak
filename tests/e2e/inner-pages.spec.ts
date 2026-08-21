@@ -10,6 +10,7 @@ const guidePaths = [
   "/guides/good-roas-for-profit-margin/",
   "/guides/google-ads-target-roas-profit/",
   "/guides/amazon-break-even-acos/",
+  "/guides/free-shipping-profit-threshold/",
   "/guides/returns-and-discounts/",
   "/guides/new-customer-roas-vs-blended-roas/",
   "/guides/cac-payback-cohort-data/",
@@ -140,10 +141,11 @@ test("lists every published tool and guide", async ({ page }) => {
   await expect(page.locator(".directory-item")).toHaveCount(6);
   await page.goto("/guides/");
   await expect(page.locator(".topic-group")).toHaveCount(5);
-  await expect(page.locator(".topic-guide")).toHaveCount(14);
+  await expect(page.locator(".topic-guide")).toHaveCount(15);
   await expect(page.getByRole("link", { name: /Ecommerce Profit Formulas/ })).toHaveAttribute("href", "/guides/ecommerce-profit-formulas/");
   await expect(page.getByRole("link", { name: /POAS vs ROAS/ })).toHaveAttribute("href", "/guides/poas-vs-roas/");
   await expect(page.getByRole("link", { name: /New Customer ROAS vs Blended ROAS/ })).toHaveAttribute("href", "/guides/new-customer-roas-vs-blended-roas/");
+  await expect(page.getByRole("link", { name: /Free Shipping Profit Threshold/ })).toHaveAttribute("href", "/guides/free-shipping-profit-threshold/");
 });
 
 test("navigates the guide library by operating topic", async ({ page }) => {
@@ -156,7 +158,7 @@ test("navigates the guide library by operating topic", async ({ page }) => {
 
 test("publishes visible review details, primary sources, and Article schema for every guide", async ({ page }) => {
   for (const path of guidePaths) {
-    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/new-customer-roas-vs-blended-roas/"].includes(path);
+    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/"].includes(path);
     await page.goto(path);
     await expect(page.locator("[data-editorial-meta]")).toContainText(isNewGuide ? "Reviewed August 21, 2026" : "Reviewed August 20, 2026");
     await expect(page.locator("[data-content-scope]")).toContainText("Scope: ");
@@ -177,6 +179,12 @@ test("publishes visible review details, primary sources, and Article schema for 
       await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /different profit thresholds/);
       await expect(page.locator("[data-content-scope]")).toContainText("Global ecommerce");
       await expect(page.getByText("A platform new-customer label is not financial truth.", { exact: true })).toBeVisible();
+    }
+    if (path === "/guides/free-shipping-profit-threshold/") {
+      await expect(page).toHaveTitle("Free Shipping Profit Threshold: Required AOV, Orders, or CVR | ROAS Break");
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /separating customer shipping revenue from merchant fulfillment cost/);
+      await expect(page.locator("[data-content-scope]")).toContainText("Global ecommerce");
+      await expect(page.getByText("Free shipping must replace contribution, not shipping revenue alone.", { exact: true })).toBeVisible();
     }
     await expect(page.locator(".source-list a").first()).toHaveAttribute("href", /^https:\/\//);
     await expect(page.locator(".guide-action")).toHaveCount(1);
@@ -218,6 +226,15 @@ test("restores worked guide examples in the matching calculator", async ({ page 
   await expect(page).toHaveURL(/cac=80.*profit=12.*d180=90.*d365=112/);
   await expect(page.locator("#payback-day")).toHaveText("Day 180");
   await expect(page.locator("#allowable-cac")).toHaveText("$100.00");
+
+  await page.goto("/guides/free-shipping-profit-threshold/");
+  await page.locator(".guide-action").click();
+  await expect(page).toHaveURL(/mode=costs.*aov=86.*cogs=32.*ship=8.*promo=80.*cvr=2.5/);
+  await expect(page.locator("#order-value")).toHaveValue("86");
+  await expect(page.locator("#promotion-price")).toHaveValue("80");
+  await expect(page.locator("#required-lift")).toHaveText("+18.6%");
+  await expect(page.locator("#required-cvr")).toHaveText("2.97%");
+  await expect(page.locator("#promo-contribution")).toHaveText("$29.60");
 });
 
 test("tracks guide-to-tool actions without calculation values or URL queries", async ({ page }) => {

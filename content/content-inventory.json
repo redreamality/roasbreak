@@ -323,6 +323,42 @@
       ]
     },
     {
+      "id": "free-shipping-profit-threshold",
+      "type": "guide",
+      "url": "/guides/free-shipping-profit-threshold/",
+      "file": "guides/free-shipping-profit-threshold/index.html",
+      "cluster": "Promotions & Merchandising",
+      "primaryIntent": "Calculate the AOV, order, or conversion lift required for free shipping to preserve contribution profit",
+      "primaryTool": "/promotion-profit-calculator/?mode=costs&aov=86&cogs=32&ship=8&other=4&fees=3&returns=5&roas=2.5&promo=80&cvr=2.5",
+      "publishedOn": "2026-08-21",
+      "reviewedOn": "2026-08-21",
+      "reviewDue": "2026-11-19",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://help.shopify.com/en/manual/fulfillment/setup/shipping-rates/free-shipping-rates",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "returns-discounts",
       "type": "guide",
       "url": "/guides/returns-and-discounts/",
