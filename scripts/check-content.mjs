@@ -100,7 +100,17 @@ for (const asset of inventory.assets) {
   const canonical = `https://roasbreak.com${asset.url}`;
   assert(html.includes(`<link rel="canonical" href="${canonical}"`), `${asset.id}: canonical does not match inventory`);
   assert(sitemap.includes(`<loc>${canonical}</loc>`), `${asset.id}: missing from sitemap`);
-  assert(html.includes("data-editorial-meta"), `${asset.id}: missing visible editorial metadata`);
+  const editorialMeta = [...html.matchAll(/<aside\b[^>]*\bdata-editorial-meta\b[^>]*>([\s\S]*?)<\/aside>/g)];
+  assert(editorialMeta.length === 1, `${asset.id}: expected one visible editorial metadata block, found ${editorialMeta.length}`);
+  const contentScopes = editorialMeta.length === 1
+    ? [...editorialMeta[0][1].matchAll(/<span\b[^>]*\bdata-content-scope\b[^>]*>([^<]*)<\/span>/g)]
+    : [];
+  assert(contentScopes.length === 1, `${asset.id}: expected one visible content scope, found ${contentScopes.length}`);
+  if (contentScopes.length === 1) {
+    const contentScope = contentScopes[0][1].trim();
+    assert(isNonEmptyString(contentScope), `${asset.id}: content scope must not be empty`);
+    assert(contentScope.startsWith("Scope: "), `${asset.id}: content scope must start with "Scope: "`);
+  }
   assert(html.includes('class="source-list'), `${asset.id}: missing source list`);
   if (Array.isArray(asset.sources)) {
     asset.sources.forEach((source, index) => {
