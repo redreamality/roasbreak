@@ -609,8 +609,8 @@
       "url": "/guides/product-vs-channel-profitability-scenario/",
       "file": "guides/product-vs-channel-profitability-scenario/index.html",
       "cluster": "Planning & Measurement",
-      "primaryIntent": "Compare product-channel combinations on total contribution profit at equal ad spend instead of ranking them by ROAS alone",
-      "primaryTool": "/scenario-planner/?s1n=High+ROAS+low+margin&s1a=50&s1m=20&s1r=5&s1s=10000&s2n=Balanced+mix&s2a=80&s2m=40&s2r=4&s2s=10000&s3n=Lower+ROAS+high+margin&s3a=100&s3m=55&s3r=3&s3s=10000",
+      "primaryIntent": "Manually map Shopify product and matched channel aggregates into comparable contribution-profit scenarios instead of ranking them by ROAS alone",
+      "primaryTool": "/scenario-planner/?period=Fictional+matched+period+%7C+USD+%7C+UTC+%7C+documented+attribution&s1n=High+ROAS+low+margin&s1a=50&s1m=20&s1r=5&s1s=10000&s2n=Balanced+mix&s2a=80&s2m=40&s2r=4&s2s=10000&s3n=Lower+ROAS+high+margin&s3a=100&s3m=55&s3r=3&s3s=10000",
       "publishedOn": "2026-08-21",
       "reviewedOn": "2026-08-21",
       "reviewDue": "2026-11-19",
@@ -626,6 +626,62 @@
         {
           "url": "https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema",
           "owner": "Google Analytics",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/analytics-fields",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://shopify.dev/docs/api/shopifyql/latest/schemas/sales_revenue/sales",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/custom-reports/filter-and-edit",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/custom-reports/export-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/products/import-export/using-csv",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/products/details/sku",
+          "owner": "Shopify",
           "region": "Global",
           "verifiedOn": "2026-08-21",
           "reviewStatus": "verified"

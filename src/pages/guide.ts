@@ -7,6 +7,7 @@ const roasInput = document.querySelector<HTMLInputElement>("#guide-roas");
 const acosInput = document.querySelector<HTMLInputElement>("#guide-acos");
 const checklistButton = document.querySelector<HTMLButtonElement>("#copy-variable-cost-checklist");
 const seasonalWorksheetButton = document.querySelector<HTMLButtonElement>("#copy-seasonal-promotion-worksheet");
+const shopifyMappingButton = document.querySelector<HTMLButtonElement>("#copy-shopify-product-mapping");
 
 const variableCostChecklist = `Ecommerce variable-cost audit
 Fields: Group | Source | Period | Currency | Owner | Amount | Tool input | Status
@@ -50,6 +51,39 @@ Post-event actuals and next action: [result]
 Boundary: Use your own mature control; this is not a BFCM benchmark or a forecast of conversion lift.
 Review: Before every seasonal event, at least annually, and after material price, cost, return, inventory, fulfillment, or traffic changes.`;
 
+const shopifyProductMappingWorksheet = `Shopify product-channel manual mapping
+Decision period: [start / end]
+Timezone: [timezone]
+Currency: [single currency]
+Attribution setting: [channel setting and window]
+Refund maturity date: [date]
+Owner: [owner]
+
+Crosswalk fields: Scenario alias | Shopify Product ID | Shopify Product variant ID | Validated unique SKU | Ad product / product-set key | Ad channel | Effective dates
+Join rule: Prefer Product variant ID mapped explicitly to the ad key for the extract period. Use SKU only when non-empty, unique, and stable. Titles are labels, never fuzzy join keys; replacement variants can have new IDs.
+
+Shopify compatible exploration: Product | Product variant | Product / variant ID when compatible | SKU | Sales channel | Gross sales | Discounts | Sales reversals (legacy: Returns) | Net sales | Order ID or same-grain Orders | Net quantity | COGS | Net sales with cost recorded | Net sales without cost recorded
+Advertising extract: Ad product / product-set key | Attributed revenue | Ad spend | Ad channel | Date range | Timezone | Currency | Attribution setting
+Cost ledger: Fulfillment | Payment / marketplace fees | Reverse logistics outside net sales / COGS | Duties | Packaging | Other order-driven costs
+Compatibility stop: If split extracts have no shared lossless Order ID, Sale ID, or Product variant ID, do not infer product-by-channel results from separate totals. Shopify Sales channel is not an ad channel.
+Cost-coverage stop: Missing product cost can make COGS display as $0. Stop when material net sales lack cost coverage; missing is not a verified zero.
+
+Ratio-of-sums calculations
+Modeled scenario AOV = sum mature net sales / count unique matched orders
+Contribution margin % = (sum net sales - sum COGS - sum fulfillment - sum fees - sum reverse logistics outside net sales / COGS - sum other variable costs) / sum net sales x 100
+Attributed ROAS = sum attributed revenue / sum matched ad spend
+Do not average row-level AOV, margin percentages, or ROAS. Net quantity is not order count. This modeled AOV is not Shopify's official Average order value metric.
+
+Scenario Planner mapping
+period = period + currency + timezone + attribution setting
+s#n = non-sensitive product-channel alias
+s#a = ratio-of-sums AOV
+s#m = ratio-of-sums contribution margin %
+s#r = ratio-of-sums attributed ROAS
+s#s = summed matched ad spend
+
+Privacy boundary: Put only aggregate values and non-sensitive aliases in the URL. Do not include SKU, product or variant ID, order ID, customer data, or source filename. No file is uploaded by this workflow.`;
+
 if (roasInput && acosInput) {
   let updating = false;
   roasInput.addEventListener("input", () => {
@@ -87,6 +121,12 @@ checklistButton?.addEventListener("click", async () => {
 seasonalWorksheetButton?.addEventListener("click", async () => {
   if (await copyText(seasonalPromotionWorksheet, "Worksheet copied")) {
     track("guide_seasonal_worksheet_copied", { guide: document.body.dataset.guide ?? "unknown" });
+  }
+});
+
+shopifyMappingButton?.addEventListener("click", async () => {
+  if (await copyText(shopifyProductMappingWorksheet, "Mapping worksheet copied")) {
+    track("guide_shopify_mapping_copied", { guide: document.body.dataset.guide ?? "unknown" });
   }
 });
 

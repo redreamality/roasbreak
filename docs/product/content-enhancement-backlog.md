@@ -210,10 +210,10 @@
   - 验收：不输出无依据的自动扩量建议；每条守门条件可由用户输入或数据验证。
   - 状态：数据成熟度与商品/渠道场景已覆盖部分判断边界，尚无完整守门清单的真实需求信号。
 
-- [ ] `P1-010` Shopify Product-level Profit Workflow。
+- [x] `P1-010` Shopify Product-level Profit Workflow。
   - 产出：手工导出/映射到 Scenario Planner 的流程。
   - 验收：先证明手工流程被使用，再立项 CSV；涉及文件上传前重新做隐私和安全评审。
-  - 状态：Product vs Channel 场景已验证比较模型；尚无 Shopify 手工导出流程的使用数据，CSV 前置条件未满足。
+  - 完成证据：在 Product vs Channel canonical 中加入 Shopify compatible exploration、Product/Variant ID 与广告 item key 显式 crosswalk、SKU 校验、Sales channel 与广告渠道分离、Sales reversals 和 COGS coverage 门禁；用 ratio-of-sums 将净销售额、唯一订单、贡献额、归因收入和广告花费映射到 `period` 与 `s#n/a/m/r/s`。可复制 worksheet、CTA、桌面/移动 E2E 和静态 guide-ID 事件均已落地；URL 明确禁止 SKU、商品/变体/订单 ID、客户信息和文件名。本项未上传文件，也不声称已有稳定使用数据；CSV 仍须等待手工流程使用证据及独立隐私/安全评审。
 
 ## P2：数据产品与长期编辑
 

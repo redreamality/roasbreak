@@ -745,15 +745,15 @@
     {
       "id": "product-channel-profitability-scenario",
       "reviewedOn": "2026-08-21",
-      "contentSha256": "b25197c0c198640a60316ad9d8ed0b6836ac0fec12370281be35f6b44991b98e",
+      "contentSha256": "478ce1af5acabf71a701315e52e5a6a5b42dad414e76429f5daf79a03f97a336",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "The page directly fulfills its declared intent by holding ad spend equal, deriving revenue and normalized orders from each scenario's ROAS and AOV, and ranking product-channel combinations by total contribution after advertising rather than ROAS alone.",
-            "Its role remains distinct from related assets: poas-vs-roas defines the profit ratio, attributed-roas-vs-mer reconciles channel credit with store totals, shopify-net-sales-for-roas maps commerce report inputs, and ecommerce-profit-formulas connects the general metric relationships; this guide applies already-defined inputs to scenario ranking."
+            "The revised primary intent, direct answer, Shopify manual workflow, ratio-of-sums table, and sole prefilled CTA form one task: mapping Shopify product evidence and matched advertising aggregates into comparable contribution-profit scenarios on the existing canonical page.",
+            "The workflow maps the period contract, non-sensitive alias, modeled scenario AOV, contribution margin, attributed ROAS, and ad spend to period and s#n/a/m/r/s while explicitly stopping incompatible joins, missing cost coverage, ratio averaging, and raw identifiers or customer data in shareable URLs."
           ]
         },
         "facts-vs-recommendations": {
@@ -761,9 +761,8 @@
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "All four official sources returned HTTP 200: GA4 documents ecommerce transaction, item, purchase, refund, metric, and dimension fields; Shopify defines InventoryItem unitCost as the unit cost associated with the inventory item; Amazon defines ROAS as campaign revenue divided by campaign spend.",
-            "The guide explicitly limits Shopify unitCost to merchandise-cost mapping and requires fulfillment, payment, marketplace, return, duty, packaging, incentive, and other variable costs before calling the result contribution margin.",
-            "The fictional AOV, margins, ROAS values, equal-spend control, and ranking are labeled ROAS Break assumptions; attribution is separated from causality and overlapping channel credit, while the scale warning rejects linear extrapolation when auctions, mix, inventory, or costs change."
+            "Shopify field, compatibility, sales-reversal, cost-coverage, export, SKU, variant-lifecycle, and unit-cost claims are tied to twelve dated primary sources; the page correctly states that Shopify Sales channel is a purchase channel rather than an advertising attribution channel.",
+            "The page distinguishes Sales reversals from physical returns, treats missing COGS as unknown rather than verified zero, limits SKU to a validated crosswalk, and labels the manual crosswalk, modeled scenario AOV, ratio-of-sums method, privacy boundary, and fictional scenarios as ROAS Break modeling choices."
           ]
         },
         "worked-example-recalculation": {
@@ -771,9 +770,9 @@
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "At 10000 spend, the 50 AOV, 20% margin, 5.00x scenario gives revenue=50000, normalized orders=50000/50=1000, and contribution after ads=50000*20%-10000=0.",
-            "The 80 AOV, 40% margin, 4.00x scenario gives revenue=40000, orders=500, and contribution=6000; the 100 AOV, 55% margin, 3.00x scenario gives revenue=30000, orders=300, and contribution=6500, correctly winning by 500 over Balanced and 6500 over High ROAS.",
-            "When the high-margin scenario falls to 2.80x, revenue=28000, normalized orders=28000/100=280, and contribution=28000*55%-10000=5400, so Balanced remains at 6000 and becomes the winner; all displayed order counts are correctly labeled revenue/AOV normalization rather than observed transactions."
+            "The two-row aggregation recomputes to modeled AOV=(12000+28000)/(200+300)=80.00, contribution margin=(3000+13000)/(12000+28000)=40.00%, and attributed ROAS=(12000+28000)/(4000+6000)=4.00x; the unweighted row averages are 76.67, 35.71%, and 3.83x.",
+            "At equal $10,000 spend, the 5.00x/$50/20% scenario produces $50,000 revenue, 1,000 normalized orders, and $0 after-ad contribution; the 4.00x/$80/40% scenario produces $40,000, 500 orders, and $6,000; the 3.00x/$100/55% scenario produces $30,000, 300 orders, and $6,500.",
+            "The 2.80x sensitivity case recomputes to $28,000 revenue, 280 normalized orders, and 28000*55%-10000=$5,400, so the unchanged $6,000 Balanced mix becomes the winner by $600."
           ]
         }
       }

@@ -286,6 +286,47 @@ test("copies and applies the seasonal promotion worksheet", async ({ context, pa
   await expect(page.locator("#required-lift")).toHaveText("+25.2%");
 });
 
+test("copies the Shopify product mapping contract without exposing business data", async ({ context, page }, testInfo) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"], {
+    origin: "http://127.0.0.1:4173",
+  });
+  await page.route("https://www.googletagmanager.com/**", async (route) => {
+    await route.fulfill({ status: 200, contentType: "application/javascript", body: "" });
+  });
+  await page.addInitScript(() => window.localStorage.setItem("roasbreak-privacy-choice", "accepted"));
+  await page.goto("/guides/product-vs-channel-profitability-scenario/");
+
+  await expect(page.getByRole("heading", { name: "Join product evidence before entering three aggregate scenarios." })).toBeVisible();
+  await expect(page.getByText(/Never average the row ratios/)).toBeVisible();
+  await expect(page.getByText(/This workflow does not upload a file/)).toBeVisible();
+  await expect(page.locator("#toast")).toBeEmpty();
+  await page.getByRole("button", { name: "Copy Shopify mapping worksheet" }).click();
+  await expect(page.locator("#toast")).toHaveAttribute("role", "status");
+  await expect(page.locator("#toast")).toHaveText("Mapping worksheet copied");
+  await expect(page.locator("#toast")).toHaveClass(/is-visible/);
+
+  const copied = await page.evaluate(() => navigator.clipboard.readText());
+  for (const field of ["Shopify Product variant ID", "Validated unique SKU", "Sales reversals (legacy: Returns)", "Order ID or same-grain Orders", "Net sales without cost recorded", "Attribution setting", "Refund maturity date"]) {
+    expect(copied, field).toContain(field);
+  }
+  expect(copied).toContain("Modeled scenario AOV = sum mature net sales / count unique matched orders");
+  expect(copied).toContain("Attributed ROAS = sum attributed revenue / sum matched ad spend");
+  expect(copied).toContain("Shopify Sales channel is not an ad channel");
+  expect(copied).toContain("missing is not a verified zero");
+  expect(copied).toContain("s#n = non-sensitive product-channel alias");
+  expect(copied).toContain("Do not include SKU, product or variant ID, order ID, customer data, or source filename");
+
+  await expect.poll(async () => page.evaluate(() => {
+    const dataLayer = (window as Window & { dataLayer?: unknown[][] }).dataLayer ?? [];
+    return dataLayer.find((entry) => entry[0] === "event" && entry[1] === "guide_shopify_mapping_copied");
+  })).toEqual(["event", "guide_shopify_mapping_copied", { guide: "product-channel-profitability-scenario" }]);
+
+  if (testInfo.project.name === "mobile") {
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+  }
+});
+
 test("lists every published tool and guide", async ({ page }) => {
   await page.goto("/tools/");
   await expect(page.locator(".directory-item")).toHaveCount(6);
@@ -395,10 +436,10 @@ test("publishes visible review details, primary sources, and Article schema for 
     }
     if (path === "/guides/product-vs-channel-profitability-scenario/") {
       await expect(page).toHaveTitle("Product vs Channel Profitability Scenarios | ROAS Break");
-      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /total contribution profit at equal ad spend/);
-      await expect(page.locator("[data-content-scope]")).toContainText("GA4; Shopify GraphQL; Amazon terminology");
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Shopify product reports and matched channel spend/);
+      await expect(page.locator("[data-content-scope]")).toContainText("Shopify sales, profit, and GraphQL reporting");
       await expect(page.getByText("The highest ROAS can produce the least contribution profit.", { exact: true })).toBeVisible();
-      await expect(page.locator(".source-list a")).toHaveCount(4);
+      await expect(page.locator(".source-list a")).toHaveCount(12);
     }
     await expect(page.locator(".source-list a").first()).toHaveAttribute("href", /^https:\/\//);
     await expect(page.locator(".guide-action")).toHaveCount(1);
@@ -512,6 +553,7 @@ test("restores worked guide examples in the matching calculator", async ({ page 
   await page.goto("/guides/product-vs-channel-profitability-scenario/");
   await page.locator(".guide-action").click();
   const productChannelParams = {
+    period: "Fictional matched period | USD | UTC | documented attribution",
     s1n: "High ROAS low margin", s1a: "50", s1m: "20", s1r: "5", s1s: "10000",
     s2n: "Balanced mix", s2a: "80", s2m: "40", s2r: "4", s2s: "10000",
     s3n: "Lower ROAS high margin", s3a: "100", s3m: "55", s3r: "3", s3s: "10000",
@@ -519,6 +561,7 @@ test("restores worked guide examples in the matching calculator", async ({ page 
   for (const [parameter, value] of Object.entries(productChannelParams)) {
     expect(new URL(page.url()).searchParams.get(parameter), parameter).toBe(value);
   }
+  await expect(page.locator("#scenario-period")).toHaveValue(productChannelParams.period);
   const highRoasRow = page.locator(".scenario-row").filter({ hasText: "High ROAS low margin" });
   const balancedRow = page.locator(".scenario-row").filter({ hasText: "Balanced mix" });
   const lowerRoasRow = page.locator(".scenario-row").filter({ hasText: "Lower ROAS high margin" });

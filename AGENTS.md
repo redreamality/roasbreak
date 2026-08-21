@@ -136,3 +136,6 @@
 - 新增会被 `noUnusedLocals` 检查的 helper 常量时，应在同一个最小编辑片段中补齐对应函数引用后再运行全局 `tsc`；不要在只声明 key/pattern、尚未接线的中间态做类型验证，否则会产生与最终实现无关的 TS6133 失败。
 - 用条件表达式构造 Analytics 参数（如 `{ tool, source_guide } : { tool }`）会被 TypeScript 推断为含 `source_guide?: undefined` 的 union，不能传给 `Record<string, string>`。先声明 `const parameters: Record<string, string> = { tool }`，再在来源存在时赋值，避免 TS2345。
 - 内容审查账本和样式文件不一定按功能名分目录（例如人工审查实际位于 `content/content-manual-review.json`，通用指南样式位于 `src/tool-pages.css`）。读取前先用 `rg --files content src docs` 或 inventory 的 `file` 字段定位真实路径，不要猜测 `content/reviews/<slug>.json`、`src/guide-pages.css` 等路径。
+- 修改已发布指南 HTML 后，完整 `pnpm test` 会因 `content/content-manual-review.json` 仍绑定旧 SHA-256 而按设计失败。先跑与哈希无关的内容校验、构建和定向 E2E，完成独立审查并更新账本哈希后，再跑完整单测和发布门禁；不要把预期的 stale-review 失败误判成业务回归。
+- 给指南新增复制按钮时，页面还必须提供唯一的 `.toast#toast[aria-live="polite"]` 状态节点；只接 `copyText()` 而没有该节点会静默复制、没有可访问反馈。E2E 应同时断言剪贴板内容、toast 文案和可见状态。
+- 给 `content-inventory.json` 等含大量重复 source 对象的 JSON 打补丁时，不能只用常见 URL 或 `sources` 作为上下文；必须让同一 hunk 包含目标资产的唯一 `id`，补丁后立即检查该文件的 `git diff`，再运行内容校验，避免把来源插入其他资产。
