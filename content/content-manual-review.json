@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "scope": {
     "startedAtCommit": "1031047e9eb75ef58b59c8e57cffbc7e52a5d2b5",
-    "reviewedThroughCommit": "cffec6b22e352b0994a8f1dadc33f31ae37f6ff5",
+    "reviewedThroughCommit": "a1c566dc9ca3ced6cddd33cb25a7250defc6351c",
     "reviewedAt": "2026-08-21",
     "reviewer": "Codex independent release review",
-    "assetCount": 18,
+    "assetCount": 19,
     "excludedAfterStart": []
   },
   "assets": [
@@ -573,6 +573,42 @@
           "evidence": [
             "Against CAC 70, cumulative contribution leaves gaps of 25 at day 30 and 8 at day 60, then exceeds CAC by 6 at day 90, 22 at day 180, and 48 at day 365.",
             "The first checkpoint at or above 70 is day 90, and allowable day-365 CAC with retained profit 15 is 118-15=103."
+          ]
+        }
+      }
+    },
+    {
+      "id": "tiktok-shop-roas-attribution",
+      "reviewedOn": "2026-08-21",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page normalizes CTA-only, CTA+VTA, Assisted gross revenue (Shop), and store net revenue as separately labeled replacement numerators under one contribution formula, directly satisfying the declared comparison intent.",
+            "Its boundary leaves cross-channel overlap and store-wide MER reconciliation to the distinct attributed-roas-vs-mer guide, while this page focuses on TikTok settings, windows, revenue meanings, and financial normalization.",
+            "The workflow explicitly prohibits summing the four views or calling attribution incremental without a causal design, and requires event, window, value basis, timezone, currency, and extraction-time labels."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "TikTok Ads Manager Help directly defines Assisted gross revenue (Shop) as gross revenue from people exposed to ads within 28 days before purchase and also documents attribution metrics including VTA; both official URLs returned HTTP 200 during review.",
+            "The TikTok for Business article separately contains Performance Comparison and Time to Conversion analysis; after correction a1c566d, the guide no longer uses that blog as evidence for Assisted Shop or the 28-day exposure period.",
+            "The page limits the 28-day statement to Assisted Shop, requires the configured CTA/VTA windows for exact reports, labels feature availability as variable, and identifies the 40% margin and fictional scenarios as ROAS Break assumptions rather than TikTok profit claims."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "With spend 10000 and AOV 50, CTA-only gives revenue=2.50*10000=25000, orders=25000/50=500, and contribution profit=25000*40%-10000=0.",
+            "CTA+VTA gives revenue=3.20*10000=32000, orders=640, and contribution profit=32000*40%-10000=2800; store net at 2.70x gives revenue=27000, orders=540, and contribution profit=800.",
+            "Changing store net to 3.50x gives revenue=35000, orders=35000/50=700, and contribution profit=35000*40%-10000=4000; the page correctly treats this as a changed scenario input rather than a prediction."
           ]
         }
       }
