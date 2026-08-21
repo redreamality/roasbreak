@@ -2,7 +2,7 @@
 
 > 创建日期：2026-08-19<br>
 > 状态：执行中<br>
-> 最近同步：2026-08-21（`main` 分支 `8fd3679`）<br>
+> 最近同步：2026-08-21（`main` 分支 `8974a66`）<br>
 > 内容策略：[`content-enhancement-strategy.md`](./content-enhancement-strategy.md)<br>
 > 来源研究：[`cross-border-commerce-content-research.md`](../research/cross-border-commerce-content-research.md)
 
@@ -94,6 +94,11 @@
   - 对应工具：Break-even / Target ROAS。
   - 验收：首屏明确“没有脱离成本结构的通用 good ROAS”；展示 3 个透明假设场景，不称为行业 benchmark。
 
+- [x] `CNT-003`（研究清单）发布 Ecommerce Profit Formulas。
+  - 主意图：用一致的收入、成本、转化和时间边界连接贡献毛利、ROAS、CPA、POAS、MER 与 CAC payback。
+  - 对应工具：Target ROAS，并通过目录连接其他决策工具。
+  - 验收：包含统一单位、透明算例、Global/USD 范围边界、结构化来源和可恢复 CTA；目录、sitemap、移动端及结果路径 E2E 均已覆盖。
+
 - [ ] `NEW-003` 发布 Profit Margin to Allowable CPA and Target ROAS。
   - 主意图：把订单利润转换成 CPA、ROAS 和 ACoS 上限。
   - 对应工具：Target ROAS。
@@ -148,11 +153,11 @@
 
 - [ ] `RELEASE-001` 为每篇新内容建立发布前检查。
   - 检查：主意图唯一、来源可访问、事实/建议分离、算例复算、CTA 可恢复、元信息完整、无薄内容占位。
-  - 验收：检查结果随 PR 保存；任何关键项失败则不进 sitemap。
+  - 验收：检查结果随 PR 保存；任何关键项失败则不进 sitemap。**部分完成：** 自动门禁已覆盖精确主意图唯一、来源治理及正文一致性、CTA 与资产清单一致、canonical、sitemap 和元信息；仍缺逐篇保存的语义意图、事实/建议和算例复算记录。
 
 - [ ] `RELEASE-002` 每篇发布后验证生产环境。
   - 检查：HTTP 200、canonical、robots、sitemap、结构化数据、桌面/移动布局、站内/站外链接、工具状态传递。
-  - 验收：关键路径由 Playwright smoke 或现有 E2E 覆盖；不只检查构建成功。
+  - 验收：关键路径由 Playwright smoke 或现有 E2E 覆盖；不只检查构建成功。**部分完成：** 本地桌面/移动 E2E 已覆盖全部已发布资产的工具结果和 URL 恢复；仍缺每次发布后的生产 HTTP 与浏览器 smoke 记录。
 
 - [ ] `RELEASE-003` 建立 30/60/90 天内容复盘。
   - 检查：索引、查询、点击、guide-to-tool、计算完成、复制/分享和来源新鲜度。
