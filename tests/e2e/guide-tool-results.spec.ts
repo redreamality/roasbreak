@@ -23,6 +23,15 @@ const guideJourneys: GuideJourney[] = [
     inputValue: "101",
   },
   {
+    name: "ecommerce profit formulas",
+    guidePath: "/guides/ecommerce-profit-formulas/",
+    toolPath: "/target-roas-calculator/",
+    resultSelector: "#target-roas",
+    resultText: "3.33x",
+    inputSelector: "#order-value",
+    inputValue: "100",
+  },
+  {
     name: "contribution margin",
     guidePath: "/guides/contribution-margin-vs-gross-margin/",
     toolPath: "/",

@@ -34,6 +34,56 @@
       ]
     },
     {
+      "id": "ecommerce-profit-formulas",
+      "type": "guide",
+      "url": "/guides/ecommerce-profit-formulas/",
+      "file": "guides/ecommerce-profit-formulas/index.html",
+      "cluster": "Unit Economics",
+      "primaryIntent": "Connect ecommerce contribution margin, acquisition targets, realized profit, store efficiency, and customer payback",
+      "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=5&roas=4&profit=10",
+      "publishedOn": "2026-08-21",
+      "reviewedOn": "2026-08-21",
+      "reviewDue": "2026-11-19",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas",
+          "owner": "Amazon Ads",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/marketing-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customer-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "contribution-margin",
       "type": "guide",
       "url": "/guides/contribution-margin-vs-gross-margin/",

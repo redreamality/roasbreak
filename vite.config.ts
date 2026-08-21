@@ -13,6 +13,7 @@ export default defineConfig({
         promotionProfit: resolve(import.meta.dirname, "promotion-profit-calculator/index.html"),
         cacPayback: resolve(import.meta.dirname, "cac-payback-calculator/index.html"),
         scenarioPlanner: resolve(import.meta.dirname, "scenario-planner/index.html"),
+        ecommerceProfitFormulas: resolve(import.meta.dirname, "guides/ecommerce-profit-formulas/index.html"),
         contributionMargin: resolve(import.meta.dirname, "guides/contribution-margin-vs-gross-margin/index.html"),
         roasAcos: resolve(import.meta.dirname, "guides/roas-vs-acos/index.html"),
         attributedMer: resolve(import.meta.dirname, "guides/attributed-roas-vs-mer/index.html"),
