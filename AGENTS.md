@@ -115,3 +115,5 @@
 - TypeScript 测试 fixture 若以必选 `Record` 类型声明，对其键使用 `delete` 会在构建时报 TS2790。需要构造“缺键”坏数据时，用对象解构排除目标键并创建新对象，或先把 fixture 类型显式建模为可选字段；不要靠 `delete` 绕过类型契约。
 - 并行内容任务可能在未提交阶段先把新资产加入 inventory；人工审查账本的历史 fixture 若用“当前 inventory 减一个已知新资产”构造范围，会被第二个并行新增资产污染并产生假失败。历史 fixture 应从账本中已固定的资产 ID 构造；正式发布门禁仍必须检查完整当前 inventory，不能沿用测试范围。
 - 本项目内容资产清单的固定路径是 `content/content-inventory.json`，不在 `docs/content/`。读取或修改前先用 `rg --files | rg 'content-inventory'` 核对；不要按文档归属猜测文件目录。
+- 本任务的 Codex 会话目录可能是 `...\2026-08-21\yan`，但项目仓库位于 `C:\Users\unknown\Documents\Codex\2026-08-19\ben\roasbreak`。所有 `git`、`pnpm` 和项目文件命令都要显式设置该 workdir；不要依赖会话默认目录，否则会分别报非 Git 仓库或找不到 `package.json`。
+- 并行代理可能先创建测试、随后才创建被测模块；TypeScript 会立即纳入未提交的 `tests/**/*.ts`，使其他任务的 `pnpm build` 暂时出现模块缺失或 unused `@ts-expect-error`。先用 `git status` 确认文件所有者并等待其完成最小可编译状态，不要跨任务修改、删除或暂存在途文件。
