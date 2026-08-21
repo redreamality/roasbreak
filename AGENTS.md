@@ -135,3 +135,4 @@
 - 不要按功能名猜测测试文件（例如假定存在 `tests/content-validation.test.ts`）后直接 `Get-Content`；先用 `rg --files tests` 获取实际测试清单，再读取与目标脚本或行为对应的文件。
 - 新增会被 `noUnusedLocals` 检查的 helper 常量时，应在同一个最小编辑片段中补齐对应函数引用后再运行全局 `tsc`；不要在只声明 key/pattern、尚未接线的中间态做类型验证，否则会产生与最终实现无关的 TS6133 失败。
 - 用条件表达式构造 Analytics 参数（如 `{ tool, source_guide } : { tool }`）会被 TypeScript 推断为含 `source_guide?: undefined` 的 union，不能传给 `Record<string, string>`。先声明 `const parameters: Record<string, string> = { tool }`，再在来源存在时赋值，避免 TS2345。
+- 内容审查账本和样式文件不一定按功能名分目录（例如人工审查实际位于 `content/content-manual-review.json`，通用指南样式位于 `src/tool-pages.css`）。读取前先用 `rg --files content src docs` 或 inventory 的 `file` 字段定位真实路径，不要猜测 `content/reviews/<slug>.json`、`src/guide-pages.css` 等路径。
