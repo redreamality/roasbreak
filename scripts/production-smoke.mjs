@@ -68,6 +68,33 @@ function nodeHasType(node, expected) {
   return type === expected || (Array.isArray(type) && type.includes(expected));
 }
 
+function schemaReferenceUrl(value, base) {
+  if (typeof value === "string") return absoluteUrl(value, base);
+  if (!value || typeof value !== "object") return undefined;
+  return absoluteUrl(value["@id"] ?? value.url ?? "", base);
+}
+
+function inventorySourceUrls(asset, origin) {
+  const urls = [];
+  const invalid = [];
+  const productionHost = new URL(origin).host;
+  for (const source of asset.sources ?? []) {
+    const value = source?.url;
+    try {
+      const url = new URL(value);
+      if (url.protocol !== "https:" || url.host === productionHost) {
+        invalid.push(value);
+        continue;
+      }
+      url.hash = "";
+      urls.push(url.href);
+    } catch {
+      invalid.push(value);
+    }
+  }
+  return { urls: [...new Set(urls)].sort(), invalid };
+}
+
 export function collectInternalLinks(html, pageUrl, origin = productionOrigin) {
   const expectedOrigin = new URL(origin).origin;
   const links = new Set();
@@ -85,6 +112,38 @@ export function collectInternalLinks(html, pageUrl, origin = productionOrigin) {
   return [...links].sort();
 }
 
+export function inspectSourceLinks(asset, html, origin = productionOrigin) {
+  const failures = [];
+  const inventorySources = inventorySourceUrls(asset, origin);
+  const pageUrl = new URL(asset.url, origin).href;
+  const linkedUrls = new Set(tags(html, "a").flatMap((tag) => {
+    const href = attribute(tag, "href")?.trim();
+    const resolved = href ? absoluteUrl(href, pageUrl) : undefined;
+    if (!resolved) return [];
+    const url = new URL(resolved);
+    if (url.protocol !== "https:") return [];
+    url.hash = "";
+    return [url.href];
+  }));
+  const linkedSources = inventorySources.urls.filter((url) => linkedUrls.has(url));
+  const missingSources = inventorySources.urls.filter((url) => !linkedUrls.has(url));
+  inventorySources.invalid.forEach((url) =>
+    failures.push(`${asset.id}: inventory source must be an external HTTPS URL; found ${url ?? "missing URL"}`));
+  missingSources.forEach((url) =>
+    failures.push(`${asset.id}: inventory source is not linked from the published document: ${url}`));
+  return {
+    failures,
+    evidence: {
+      expectedCount: inventorySources.urls.length,
+      linkedCount: linkedSources.length,
+      expectedSources: inventorySources.urls,
+      linkedSources,
+      missingSources,
+      invalidSources: inventorySources.invalid,
+    },
+  };
+}
+
 export function inspectAssetDocument(asset, html, origin = productionOrigin) {
   const failures = [];
   const canonical = new URL(asset.url, origin).href;
@@ -97,13 +156,42 @@ export function inspectAssetDocument(asset, html, origin = productionOrigin) {
 
   const schemas = jsonLd(html);
   schemas.invalid.forEach((message) => failures.push(`${asset.id}: invalid JSON-LD (${message})`));
-  const articleSchemaCount = schemas.nodes.filter((node) => nodeHasType(node, "Article")).length;
-  const breadcrumbSchemaCount = schemas.nodes.filter((node) => nodeHasType(node, "BreadcrumbList")).length;
+  const articleSchemas = schemas.nodes.filter((node) => nodeHasType(node, "Article"));
+  const breadcrumbSchemas = schemas.nodes.filter((node) => nodeHasType(node, "BreadcrumbList"));
+  const articleSchemaCount = articleSchemas.length;
+  const breadcrumbSchemaCount = breadcrumbSchemas.length;
+  let articleDateModified = null;
+  let articleMainEntityOfPage = null;
+  let breadcrumbFinalItem = null;
   if (asset.type === "guide" && articleSchemaCount !== 1) {
     failures.push(`${asset.id}: missing static Article schema (found ${articleSchemaCount})`);
+  } else if (asset.type === "guide") {
+    const article = articleSchemas[0];
+    articleDateModified = article.dateModified ?? null;
+    articleMainEntityOfPage = schemaReferenceUrl(article.mainEntityOfPage, canonical) ?? null;
+    if (articleDateModified !== asset.reviewedOn) {
+      failures.push(`${asset.id}: Article dateModified must be ${asset.reviewedOn}; found ${articleDateModified ?? "none"}`);
+    }
+    if (articleMainEntityOfPage !== canonical) {
+      failures.push(`${asset.id}: Article mainEntityOfPage must be ${canonical}; found ${articleMainEntityOfPage ?? "none"}`);
+    }
   }
   if (breadcrumbSchemaCount !== 1) {
     failures.push(`${asset.id}: expected one static BreadcrumbList schema, found ${breadcrumbSchemaCount}`);
+  } else {
+    const items = breadcrumbSchemas[0].itemListElement;
+    if (!Array.isArray(items) || items.length === 0) {
+      failures.push(`${asset.id}: BreadcrumbList itemListElement must contain at least one item`);
+    } else {
+      const finalItem = items.at(-1);
+      breadcrumbFinalItem = schemaReferenceUrl(finalItem?.item, canonical) ?? null;
+      if (!nodeHasType(finalItem, "ListItem")) {
+        failures.push(`${asset.id}: BreadcrumbList final item must be a ListItem`);
+      }
+      if (breadcrumbFinalItem !== canonical) {
+        failures.push(`${asset.id}: BreadcrumbList final item must be ${canonical}; found ${breadcrumbFinalItem ?? "none"}`);
+      }
+    }
   }
 
   const actionTags = tags(html, "a").filter((tag) => hasClass(tag, "guide-action"));
@@ -128,7 +216,10 @@ export function inspectAssetDocument(asset, html, origin = productionOrigin) {
       jsonLdCount: schemas.nodes.length,
       invalidJsonLdCount: schemas.invalid.length,
       articleSchemaCount,
+      articleDateModified,
+      articleMainEntityOfPage,
       breadcrumbSchemaCount,
+      breadcrumbFinalItem,
       primaryCtaCount: actionTags.length,
       primaryCta: actionUrls[0] ?? null,
     },
@@ -145,6 +236,25 @@ export function inspectFetchOutcome(resource, expectedUrl) {
   return {
     failures,
     evidence: {
+      requestedUrl: resource.requestedUrl,
+      finalUrl: resource.finalUrl ?? null,
+      status: resource.status ?? null,
+      contentType: resource.contentType ?? null,
+      bytes: Buffer.byteLength(resource.body ?? "", "utf8"),
+    },
+  };
+}
+
+export function inspectExternalSourceOutcome(resource) {
+  const failures = [];
+  if (resource.error) failures.push(`GET request failed: ${resource.error}`);
+  if (!Number.isInteger(resource.status) || resource.status < 200 || resource.status >= 400) {
+    failures.push(`expected HTTP 2xx or 3xx from GET, received ${resource.status ?? "no response"}`);
+  }
+  return {
+    failures,
+    evidence: {
+      method: "GET",
       requestedUrl: resource.requestedUrl,
       finalUrl: resource.finalUrl ?? null,
       status: resource.status ?? null,
@@ -231,6 +341,7 @@ function makeCheck(id, label, target, failures, evidence) {
 async function fetchResource(url) {
   try {
     const response = await fetch(url, {
+      method: "GET",
       headers: {
         accept: "text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.1",
         "user-agent": "ROASBreak-Production-Smoke/1.0 (+https://roasbreak.com/)",
@@ -349,16 +460,19 @@ async function runHttpChecks(assets, origin) {
     const document = resource.status === 200
       ? inspectAssetDocument(asset, resource.body, origin)
       : { failures: [], evidence: null };
+    const sources = resource.status === 200
+      ? inspectSourceLinks(asset, resource.body, origin)
+      : { failures: [], evidence: null };
     return {
       asset,
       target,
       resource,
       check: makeCheck(
         `asset:${asset.id}`,
-        "Published asset returns HTTP 200 with matching canonical and static schema",
+        "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
         target,
-        [...http.failures, ...document.failures],
-        { http: http.evidence, document: document.evidence },
+        [...http.failures, ...document.failures, ...sources.failures],
+        { http: http.evidence, document: document.evidence, sources: sources.evidence },
       ),
     };
   }));
@@ -391,6 +505,38 @@ async function runHttpChecks(assets, origin) {
     origin,
     internalFailures,
     { inspectedLinks: internalLinkResults.length, links: internalLinkResults },
+  ));
+
+  const sourceOwners = new Map();
+  const sourceInventoryFailures = [];
+  for (const asset of assets) {
+    const sources = inventorySourceUrls(asset, origin);
+    sources.invalid.forEach((url) => sourceInventoryFailures.push(
+      `${asset.id}: inventory source must be an external HTTPS URL; found ${url ?? "missing URL"}`));
+    for (const url of sources.urls) {
+      if (!sourceOwners.has(url)) sourceOwners.set(url, []);
+      sourceOwners.get(url).push(asset.id);
+    }
+  }
+  const externalSourceResults = await Promise.all([...sourceOwners].map(async ([url, owners]) => {
+    const resource = await fetchCached(url);
+    const inspection = inspectExternalSourceOutcome(resource);
+    return {
+      url,
+      owners,
+      status: inspection.failures.length === 0 ? "passed" : "failed",
+      failures: inspection.failures,
+      http: inspection.evidence,
+    };
+  }));
+  const externalSourceFailures = externalSourceResults.flatMap((result) =>
+    result.failures.map((failure) => `${result.url} (source for ${result.owners.join(", ")}): ${failure}`));
+  checks.push(makeCheck(
+    "external-sources",
+    "Unique external HTTPS sources declared by the inventory are reachable with GET",
+    origin,
+    [...sourceInventoryFailures, ...externalSourceFailures],
+    { inspectedSources: externalSourceResults.length, sources: externalSourceResults },
   ));
 
   return checks;
