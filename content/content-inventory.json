@@ -323,6 +323,42 @@
       ]
     },
     {
+      "id": "discount-vs-bundle-profit",
+      "type": "guide",
+      "url": "/guides/discount-vs-bundle-profit/",
+      "file": "guides/discount-vs-bundle-profit/index.html",
+      "cluster": "Promotions & Merchandising",
+      "primaryIntent": "Compare direct-discount and bundle contribution profit against the same order and traffic target",
+      "primaryTool": "/promotion-profit-calculator/?mode=costs&aov=80&cogs=28&ship=6&other=3&fees=3&returns=5&roas=2.5&promo=64&cvr=2.5",
+      "publishedOn": "2026-08-21",
+      "reviewedOn": "2026-08-21",
+      "reviewDue": "2026-11-19",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://help.shopify.com/en/manual/discounts/discount-types",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/products/bundles",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "free-shipping-profit-threshold",
       "type": "guide",
       "url": "/guides/free-shipping-profit-threshold/",

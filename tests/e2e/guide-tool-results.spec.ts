@@ -104,6 +104,15 @@ const guideJourneys: GuideJourney[] = [
     inputValue: "60",
   },
   {
+    name: "discount versus bundle profit",
+    guidePath: "/guides/discount-vs-bundle-profit/",
+    toolPath: "/promotion-profit-calculator/",
+    resultSelector: "#required-lift",
+    resultText: "+67.3%",
+    inputSelector: "#promotion-price",
+    inputValue: "64",
+  },
+  {
     name: "free shipping profit threshold",
     guidePath: "/guides/free-shipping-profit-threshold/",
     toolPath: "/promotion-profit-calculator/",
