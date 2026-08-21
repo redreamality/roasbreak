@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "scope": {
     "startedAtCommit": "1031047e9eb75ef58b59c8e57cffbc7e52a5d2b5",
-    "reviewedThroughCommit": "6addf78723b56d7534c7bb57619161464a5942de",
+    "reviewedThroughCommit": "dcdabfc24b6bd4a43142467ac2021d64158bbe4e",
     "reviewedAt": "2026-08-21",
     "reviewer": "Codex independent release review",
-    "assetCount": 16,
+    "assetCount": 17,
     "excludedAfterStart": []
   },
   "assets": [
@@ -437,6 +437,40 @@
           "evidence": [
             "After correction 4575903, original contribution is 100-35-3=62; a restockable return loses 62 contribution plus 3 retained fee plus 9 reverse logistics, totaling 74 versus keeping the sale.",
             "An unsellable return adds 35 inventory loss, so total impact is 74+35=109; an 8% to 10% rate change is 2 percentage points and 2/8=25% relative."
+          ]
+        }
+      }
+    },
+    {
+      "id": "contribution-ltv-vs-revenue-ltv",
+      "reviewedOn": "2026-08-21",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The direct answer prevents revenue LTV from becoming allowable CAC by defining fixed-window revenue LTV, contribution LTV before acquisition, and allowable CAC with the original acquired-customer denominator.",
+            "The order-level cost boundary, interval ledger, fixed-window table, maturity rules, and payback conclusion carry the declared contribution-versus-revenue intent through 30/60/90/180/365 days."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Shopify customer, sales, and profit reports plus GA4 purchase/refund fields are linked as external reporting facts; fixed checkpoints, contribution boundaries, fictional order history, retained-profit policy, and allowable-CAC math are explicitly labeled ROAS Break modeling judgments.",
+            "The page labels repeat counts fictional observations rather than forecasts, refuses to call a 365-day observation lifetime value, and separates contribution payback from cash payback and net income."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Per-order and interval ledgers recomputed: variable cost=40+8+3+5+4=60 and contribution=40; 100/30/20/35/45 orders produce revenue 10000/3000/2000/3500/4500, costs 6000/1800/1200/2100/2700, and contribution 4000/1200/800/1400/1800.",
+            "Using the original 100-customer denominator, cumulative orders are 100/130/150/185/230, Revenue LTV is 100/130/150/185/230, repeat contribution is 0/12/20/34/52, and Contribution LTV is 40/52/60/74/92 at days 30/60/90/180/365.",
+            "Actual CAC 70 is not covered at 40, 52, or 60 and first pays back at day 180 where 74 leaves 4; day-365 allowable CAC=92-15=77, while actual CAC leaves 92-70=22 and 22-15=7 beyond the retained target."
           ]
         }
       }
