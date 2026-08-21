@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "scope": {
     "startedAtCommit": "1031047e9eb75ef58b59c8e57cffbc7e52a5d2b5",
-    "reviewedThroughCommit": "dcdabfc24b6bd4a43142467ac2021d64158bbe4e",
+    "reviewedThroughCommit": "cffec6b22e352b0994a8f1dadc33f31ae37f6ff5",
     "reviewedAt": "2026-08-21",
     "reviewer": "Codex independent release review",
-    "assetCount": 17,
+    "assetCount": 18,
     "excludedAfterStart": []
   },
   "assets": [
@@ -303,6 +303,41 @@
           "evidence": [
             "Contribution recomputed from a 100 order: gross profit 58 minus fees 3 and returns allowance 5 equals 50; break-even ROAS=100/50=2.00.",
             "Retaining 15 leaves target CPA 35; target ROAS=100/35=2.857, displayed as 2.86x and 286% after conversion and rounding."
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-ads-roas-attribution",
+      "reviewedOn": "2026-08-21",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The direct answer maps one Meta ad set's attributed purchase value and recorded attribution settings into separate contribution break-even and retained-profit thresholds, matching the declared primary intent.",
+            "The reporting contract captures ad set, event, model/settings, value basis, dates, timezone, and currency; the boundary explicitly excludes channel-claim aggregation and store-wide MER, leaving that reconciliation to the distinct attributed-roas-vs-mer guide."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Both Meta Business Help Center links returned HTTP 200 with the expected attribution-settings and attribution-system titles; their responses contain substantial JavaScript and serialized page content, supporting the guide's cautious statement that the full public body can depend on JavaScript.",
+            "The guide attributes reporting controls and concepts to Meta, labels contribution math and the 2.63x/3.57x thresholds as ROAS Break modeling rather than Meta recommendations, and avoids asserting a universal default attribution window.",
+            "Account- and campaign-specific option availability cannot be established from a public page alone; the guide states this evidence limit and requires the actual selected account/ad-set settings as the operational source of truth."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Reported Meta ROAS recomputed as 32000/10000=3.20x; per-order contribution is 100-42-8-4-3-5=38, so the 38% contribution floor is 100/38=2.63x.",
+            "Retaining 10 leaves target CPA 38-10=28 and target ROAS 100/28=3.57x; at 3.20x the ad cost per credited order is 100/3.20=31.25 and modeled after-ad contribution is 38-31.25=6.75.",
+            "The stated conclusion is correct: 3.20x exceeds the 2.63x zero-profit floor but remains below 3.57x and retains 6.75 rather than the planned 10."
           ]
         }
       }
