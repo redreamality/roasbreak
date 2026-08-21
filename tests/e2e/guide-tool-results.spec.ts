@@ -133,6 +133,15 @@ const guideJourneys: GuideJourney[] = [
     restoredResultText: "+25.2%",
   },
   {
+    name: "contribution LTV versus revenue LTV",
+    guidePath: "/guides/contribution-ltv-vs-revenue-ltv/",
+    toolPath: "/cac-payback-calculator/",
+    resultSelector: "#payback-day",
+    resultText: "Day 180",
+    inputSelector: "#cac",
+    inputValue: "70",
+  },
+  {
     name: "new customer ROAS versus blended ROAS",
     guidePath: "/guides/new-customer-roas-vs-blended-roas/",
     toolPath: "/cac-payback-calculator/",

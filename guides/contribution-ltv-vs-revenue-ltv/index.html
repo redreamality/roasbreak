@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contribution LTV vs Revenue LTV for Allowable CAC | ROAS Break</title>
+    <meta name="description" content="Learn why cumulative revenue LTV is not allowable CAC, then calculate fixed-window cohort contribution after product, fulfillment, fees, refunds, and returns." />
+    <link rel="canonical" href="https://roasbreak.com/guides/contribution-ltv-vs-revenue-ltv/" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Contribution LTV vs Revenue LTV for Allowable CAC","datePublished":"2026-08-21","dateModified":"2026-08-21","author":{"@type":"Organization","name":"floatboat.ai"},"publisher":{"@type":"Organization","name":"ROAS Break"},"mainEntityOfPage":"https://roasbreak.com/guides/contribution-ltv-vs-revenue-ltv/"}</script>
+    <script type="application/ld+json" data-schema="breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://roasbreak.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://roasbreak.com/guides/"},{"@type":"ListItem","position":3,"name":"Contribution LTV vs Revenue LTV","item":"https://roasbreak.com/guides/contribution-ltv-vs-revenue-ltv/"}]}</script>
+  </head>
+  <body class="inner-page" data-guide="contribution-ltv-vs-revenue-ltv">
+    <header class="inner-header">
+      <a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a>
+      <nav class="inner-nav" aria-label="Primary"><a href="/tools/">Tools</a><a href="/guides/" aria-current="page">Guides</a><a href="/methodology/">Methodology</a><a href="/about/">About</a></nav>
+    </header>
+    <main>
+      <nav class="breadcrumb"><a href="/">Home</a><a href="/guides/">Guides</a><span>Contribution LTV vs Revenue LTV</span></nav>
+      <article>
+        <section class="inner-intro">
+          <div><p class="eyebrow">Customer economics</p><h1>Contribution LTV vs Revenue LTV</h1></div>
+          <p>Cumulative sales show how much customers paid. Allowable CAC must come from the contribution left after every order's variable costs, inside a fixed and observable cohort window.</p>
+        </section>
+        <aside class="editorial-note" data-editorial-meta><strong>Reviewed August 21, 2026</strong><span>Published by floatboat.ai</span><span data-content-scope>Scope: Global ecommerce; platform-agnostic cohorts; USD example</span><span>Fixed 30/60/90/180/365-day windows</span><a href="/contact/">Suggest a correction</a></aside>
+
+        <section class="page-content">
+          <div><p class="section-kicker">60-second answer</p><h2>Revenue LTV cannot be spent as allowable CAC.</h2></div>
+          <div class="content-copy">
+            <p>Revenue LTV is cumulative net revenue per original acquired customer. It still contains money needed for products, fulfillment, payment and platform fees, refunds, returns, and other variable order costs. Using the whole amount as allowable CAC spends the same dollars twice.</p>
+            <p>For this guide, contribution LTV means cumulative contribution <strong>before acquisition cost</strong> per original acquired customer through an exact checkpoint. CAC is compared afterward, so it is not buried inside the contribution numerator or subtracted twice.</p>
+            <p class="formula-line">Revenue LTV by day N = cumulative cohort net revenue through day N / original acquired customers</p>
+            <p class="formula-line">Contribution LTV by day N = (cumulative net revenue - cumulative variable order costs) / original acquired customers</p>
+            <p class="formula-line">Allowable CAC by day N = contribution LTV by day N - retained contribution target</p>
+            <p>Always name the window: day 30, 60, 90, 180, or 365. A 365-day observation is not lifetime value, and an immature cohort cannot prove a future checkpoint.</p>
+            <a class="guide-action" href="/cac-payback-calculator/?cac=70&amp;profit=15&amp;d30=40&amp;d60=52&amp;d90=60&amp;d180=74&amp;d365=92">Open the day-180 contribution payback scenario</a>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Cost boundary</p><h2>Recalculate contribution for every first and repeat order.</h2></div>
+          <div class="content-copy">
+            <p>Do not apply a first-order margin to all repeat revenue without checking the repeat basket. For each observed order, start with net revenue after discounts and mature refunds, then deduct the variable costs caused by that order.</p>
+            <table class="definition-table"><thead><tr><th>Order line</th><th>Include</th><th>Common boundary error</th></tr></thead><tbody><tr><td>Net revenue</td><td>Product revenue after discounts and mature refunds; tax excluded</td><td>Using gross sales or refunded revenue</td></tr><tr><td>Product cost</td><td>COGS for the exact items and quantities</td><td>Applying a blended margin to a changed mix</td></tr><tr><td>Fulfillment</td><td>Pick, pack, packaging, outbound shipping, and variable service</td><td>Counting only carrier cost or only the first order</td></tr><tr><td>Payment and platform</td><td>Transaction, marketplace, and other variable order fees</td><td>Treating all fees as fixed overhead</td></tr><tr><td>Refunds and returns</td><td>Refunded margin, retained fees, reverse logistics, and inventory recovery</td><td>Using return rate as the loss percentage</td></tr><tr><td>Other variable costs</td><td>Per-order support, duties, consumables, or incentives in scope</td><td>Omitting costs that grow with repeat orders</td></tr></tbody></table>
+            <p>Fixed payroll, rent, and software are outside this example unless deliberately allocated. That boundary makes contribution useful for a CAC ceiling, but positive contribution after CAC is not automatically net income.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Fictional cohort</p><h2>One observed $100 order contributes $40 before acquisition.</h2></div>
+          <div class="content-copy">
+            <p>This transparent example is fictional and uses 100 customers acquired in one cohort. Every observed order has $100 net revenue, $40 product cost, $8 fulfillment, $3 payment and platform fees, $5 mature refund and return loss, and $4 other variable cost.</p>
+            <table class="definition-table"><thead><tr><th>Per observed order</th><th>Calculation</th><th>Amount</th></tr></thead><tbody><tr><td>Net revenue</td><td>After discount and mature refund adjustments</td><td>$100</td></tr><tr><td>Variable costs</td><td>$40 + $8 + $3 + $5 + $4</td><td>-$60</td></tr><tr><td>Contribution before acquisition</td><td>$100 - $60</td><td>$40</td></tr></tbody></table>
+            <p>All 100 customers place the first order by day 30. The cohort then records 30 repeat orders during days 31-60, 20 during days 61-90, 35 during days 91-180, and 45 during days 181-365. These counts are illustrative observations, not an industry repeat rate or a forecast.</p>
+            <table class="definition-table"><thead><tr><th>Observed interval</th><th>Orders</th><th>Net revenue</th><th>Variable costs</th><th>Contribution</th></tr></thead><tbody><tr><td>Acquisition through day 30</td><td>100 first orders</td><td>$10,000</td><td>-$6,000</td><td>$4,000</td></tr><tr><td>Days 31-60</td><td>30 repeat orders</td><td>$3,000</td><td>-$1,800</td><td>$1,200</td></tr><tr><td>Days 61-90</td><td>20 repeat orders</td><td>$2,000</td><td>-$1,200</td><td>$800</td></tr><tr><td>Days 91-180</td><td>35 repeat orders</td><td>$3,500</td><td>-$2,100</td><td>$1,400</td></tr><tr><td>Days 181-365</td><td>45 repeat orders</td><td>$4,500</td><td>-$2,700</td><td>$1,800</td></tr></tbody></table>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Fixed-window result</p><h2>Revenue appears to cover $70 CAC at day 30; contribution does not until day 180.</h2></div>
+          <div class="content-copy">
+            <p>The denominator remains the original 100 acquired customers at every checkpoint. Do not divide later value only by customers who repeated; that would condition on survival and overstate the acquired cohort's value.</p>
+            <table class="definition-table"><thead><tr><th>Checkpoint</th><th>Cumulative orders</th><th>Revenue LTV</th><th>First-order contribution</th><th>Repeat contribution</th><th>Contribution LTV</th></tr></thead><tbody><tr><td>Day 30</td><td>100</td><td>$100</td><td>$40</td><td>$0</td><td>$40</td></tr><tr><td>Day 60</td><td>130</td><td>$130</td><td>$40</td><td>$12</td><td>$52</td></tr><tr><td>Day 90</td><td>150</td><td>$150</td><td>$40</td><td>$20</td><td>$60</td></tr><tr><td>Day 180</td><td>185</td><td>$185</td><td>$40</td><td>$34</td><td>$74</td></tr><tr><td>Day 365</td><td>230</td><td>$230</td><td>$40</td><td>$52</td><td>$92</td></tr></tbody></table>
+            <p>A revenue-only comparison says $100 day-30 Revenue LTV exceeds $70 CAC. That ignores $60 of variable cost per first order. Contribution LTV is only $40 at day 30, $52 at day 60, and $60 at day 90. It first exceeds CAC at the observed day-180 checkpoint, where $74 leaves $4 after acquisition.</p>
+            <p>By day 365, contribution LTV is $92. If the business requires $15 retained contribution, allowable 365-day CAC is $92 - $15 = $77. Actual $70 CAC leaves $22 after acquisition and $7 beyond the retained-contribution requirement.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Window discipline</p><h2>Stop at the last mature checkpoint instead of inventing a lifetime.</h2></div>
+          <div class="content-copy">
+            <ol><li><strong>Fix acquisition membership:</strong> Define the cohort from verified first-order date and keep the original customer count as denominator.</li><li><strong>Use exact windows:</strong> Include orders and adjustments occurring within 30, 60, 90, 180, or 365 days of each customer's acquisition.</li><li><strong>Wait for maturity:</strong> Do not publish day-180 value for customers observed only 90 days.</li><li><strong>Backfill late losses:</strong> Recalculate checkpoints when refunds, chargebacks, returns, or cost corrections arrive.</li><li><strong>Keep values cumulative:</strong> Day 180 includes all contribution from acquisition through day 180, not just days 91-180.</li><li><strong>Label the observation:</strong> Say “365-day contribution per acquired customer,” not “lifetime value.”</li></ol>
+            <p>Do not extend the curve with a generic repeat-purchase rate, terminal value, or industry multiple. A forecast can be shown separately, with assumptions and uncertainty, but it is not observed contribution and should not silently raise allowable CAC.</p>
+            <p class="scope-note"><strong>Cash boundary:</strong> Contribution payback is not cash payback when inventory is purchased early, processors delay settlement, or suppliers offer terms. Add a separate cash-timing model when liquidity sets the acquisition ceiling.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Definitions and sources</p><h2>Reports supply events and costs; the cohort boundary is a modeling choice.</h2></div>
+          <div class="content-copy">
+            <p>Shopify documents customer, sales, and profit reports used to identify cohorts, net sales, product cost, and margin context. Google Analytics documents ecommerce purchase and refund fields. The fixed checkpoints, contribution boundary, fictional order history, retained-profit rule, and allowable-CAC calculation are ROAS Break modeling judgments, not platform forecasts.</p>
+            <ul class="source-list"><li data-source="01"><span><a href="https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customer-reports">Shopify customer reports</a><small>Customer and cohort reporting context. Checked August 20, 2026.</small></span></li><li data-source="02"><span><a href="https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report">Shopify sales reports</a><small>Net sales, discounts, returns, and sales adjustments. Checked August 20, 2026.</small></span></li><li data-source="03"><span><a href="https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports">Shopify profit reports</a><small>Product cost, gross margin, and profit reporting context. Checked August 20, 2026.</small></span></li><li data-source="04"><span><a href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce">Google Analytics ecommerce</a><small>Purchase, item, and refund event fields. Checked August 20, 2026.</small></span></li></ul>
+          </div>
+        </section>
+
+        <section class="related-reading" aria-labelledby="ltv-next"><div><p class="section-kicker">Continue the decision</p><h2 id="ltv-next">Keep identity, windows, and costs aligned.</h2></div><div class="related-links"><a href="/guides/cac-payback-cohort-data/"><span>Prepare mature contribution checkpoints</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/new-customer-roas-vs-blended-roas/"><span>Separate new-customer and blended thresholds</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/returns-and-discounts/"><span>Calculate mature return loss</span><span aria-hidden="true">&rarr;</span></a></div></section>
+      </article>
+    </main>
+    <footer class="inner-footer"><a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a><nav class="footer-links" aria-label="Company and legal"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><p class="footer-copyright">&copy; <span data-year></span> ROAS Break</p></footer>
+    <script type="module" src="/src/pages/guide.ts"></script>
+  </body>
+</html>

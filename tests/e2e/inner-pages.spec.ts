@@ -13,6 +13,7 @@ const guidePaths = [
   "/guides/discount-vs-bundle-profit/",
   "/guides/free-shipping-profit-threshold/",
   "/guides/returns-and-discounts/",
+  "/guides/contribution-ltv-vs-revenue-ltv/",
   "/guides/new-customer-roas-vs-blended-roas/",
   "/guides/cac-payback-cohort-data/",
   "/guides/attributed-roas-vs-mer/",
@@ -142,12 +143,13 @@ test("lists every published tool and guide", async ({ page }) => {
   await expect(page.locator(".directory-item")).toHaveCount(6);
   await page.goto("/guides/");
   await expect(page.locator(".topic-group")).toHaveCount(5);
-  await expect(page.locator(".topic-guide")).toHaveCount(16);
+  await expect(page.locator(".topic-guide")).toHaveCount(17);
   await expect(page.getByRole("link", { name: /Ecommerce Profit Formulas/ })).toHaveAttribute("href", "/guides/ecommerce-profit-formulas/");
   await expect(page.getByRole("link", { name: /POAS vs ROAS/ })).toHaveAttribute("href", "/guides/poas-vs-roas/");
   await expect(page.getByRole("link", { name: /New Customer ROAS vs Blended ROAS/ })).toHaveAttribute("href", "/guides/new-customer-roas-vs-blended-roas/");
   await expect(page.getByRole("link", { name: /Free Shipping Profit Threshold/ })).toHaveAttribute("href", "/guides/free-shipping-profit-threshold/");
   await expect(page.getByRole("link", { name: /Discount vs Bundle Profit/ })).toHaveAttribute("href", "/guides/discount-vs-bundle-profit/");
+  await expect(page.getByRole("link", { name: /Contribution LTV vs Revenue LTV/ })).toHaveAttribute("href", "/guides/contribution-ltv-vs-revenue-ltv/");
 });
 
 test("navigates the guide library by operating topic", async ({ page }) => {
@@ -160,7 +162,7 @@ test("navigates the guide library by operating topic", async ({ page }) => {
 
 test("publishes visible review details, primary sources, and Article schema for every guide", async ({ page }) => {
   for (const path of guidePaths) {
-    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/"].includes(path);
+    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/"].includes(path);
     await page.goto(path);
     await expect(page.locator("[data-editorial-meta]")).toContainText(isNewGuide ? "Reviewed August 21, 2026" : "Reviewed August 20, 2026");
     await expect(page.locator("[data-content-scope]")).toContainText("Scope: ");
@@ -193,6 +195,12 @@ test("publishes visible review details, primary sources, and Article schema for 
       await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /same traffic and order target/);
       await expect(page.locator("[data-content-scope]")).toContainText("Global ecommerce");
       await expect(page.getByText("Compare total contribution at one declared traffic and order target.", { exact: true })).toBeVisible();
+    }
+    if (path === "/guides/contribution-ltv-vs-revenue-ltv/") {
+      await expect(page).toHaveTitle("Contribution LTV vs Revenue LTV for Allowable CAC | ROAS Break");
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /cumulative revenue LTV is not allowable CAC/);
+      await expect(page.locator("[data-content-scope]")).toContainText("Global ecommerce");
+      await expect(page.getByText("Revenue LTV cannot be spent as allowable CAC.", { exact: true })).toBeVisible();
     }
     await expect(page.locator(".source-list a").first()).toHaveAttribute("href", /^https:\/\//);
     await expect(page.locator(".guide-action")).toHaveCount(1);
@@ -252,6 +260,13 @@ test("restores worked guide examples in the matching calculator", async ({ page 
   await expect(page.locator("#required-lift")).toHaveText("+67.3%");
   await expect(page.locator("#required-cvr")).toHaveText("4.18%");
   await expect(page.locator("#promo-contribution")).toHaveText("$21.88");
+
+  await page.goto("/guides/contribution-ltv-vs-revenue-ltv/");
+  await page.locator(".guide-action").click();
+  await expect(page).toHaveURL(/cac=70.*profit=15.*d30=40.*d180=74.*d365=92/);
+  await expect(page.locator("#cac")).toHaveValue("70");
+  await expect(page.locator("#payback-day")).toHaveText("Day 180");
+  await expect(page.locator("#allowable-cac")).toHaveText("$77.00");
 });
 
 test("tracks guide-to-tool actions without calculation values or URL queries", async ({ page }) => {

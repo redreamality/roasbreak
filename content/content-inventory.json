@@ -424,6 +424,49 @@
       ]
     },
     {
+      "id": "contribution-ltv-vs-revenue-ltv",
+      "type": "guide",
+      "url": "/guides/contribution-ltv-vs-revenue-ltv/",
+      "file": "guides/contribution-ltv-vs-revenue-ltv/index.html",
+      "cluster": "Customer Economics",
+      "primaryIntent": "Prevent cumulative revenue LTV from being used directly as allowable CAC by calculating fixed-window cohort contribution",
+      "primaryTool": "/cac-payback-calculator/?cac=70&profit=15&d30=40&d60=52&d90=60&d180=74&d365=92",
+      "publishedOn": "2026-08-21",
+      "reviewedOn": "2026-08-21",
+      "reviewDue": "2027-02-17",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customer-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+          "owner": "Google Analytics",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "new-customer-roas-vs-blended-roas",
       "type": "guide",
       "url": "/guides/new-customer-roas-vs-blended-roas/",
