@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Refunds and Conversion Adjustments for ROAS | ROAS Break</title>
+    <meta name="description" content="Correct canceled and partially refunded ecommerce transactions in Google Ads and GA4 before recalculating attributed ROAS." />
+    <link rel="canonical" href="https://roasbreak.com/guides/refunds-and-conversion-adjustments/" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Refunds and Conversion Adjustments for ROAS","datePublished":"2026-08-21","dateModified":"2026-08-21","author":{"@type":"Organization","name":"floatboat.ai"},"publisher":{"@type":"Organization","name":"ROAS Break"},"mainEntityOfPage":"https://roasbreak.com/guides/refunds-and-conversion-adjustments/"}</script>
+    <script type="application/ld+json" data-schema="breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://roasbreak.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://roasbreak.com/guides/"},{"@type":"ListItem","position":3,"name":"Refunds and Conversion Adjustments","item":"https://roasbreak.com/guides/refunds-and-conversion-adjustments/"}]}</script>
+  </head>
+  <body class="inner-page" data-guide="refunds-conversion-adjustments">
+    <header class="inner-header">
+      <a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a>
+      <nav class="inner-nav" aria-label="Primary"><a href="/tools/">Tools</a><a href="/guides/" aria-current="page">Guides</a><a href="/methodology/">Methodology</a><a href="/about/">About</a></nav>
+    </header>
+    <main>
+      <nav class="breadcrumb"><a href="/">Home</a><a href="/guides/">Guides</a><span>Refunds and Conversion Adjustments</span></nav>
+      <article>
+        <section class="inner-intro">
+          <div><p class="eyebrow">Planning and measurement</p><h1>Refunds and Conversion Adjustments</h1></div>
+          <p>Correct canceled and partially refunded transactions in Google Ads and GA4, reconcile them to the store ledger, and only then recalculate attributed ROAS.</p>
+        </section>
+        <aside class="editorial-note" data-editorial-meta><strong>Reviewed August 21, 2026</strong><span>Published by floatboat.ai</span><span data-content-scope>Scope: Global Google Ads and GA4; English documentation; product availability varies; USD example</span><span>Adjustment workflow reviewed every 90 days</span><a href="/contact/">Suggest a correction</a></aside>
+
+        <section class="page-content">
+          <div><p class="section-kicker">60-second answer</p><h2>Correct the original transaction once, then rebuild the numerator.</h2></div>
+          <div class="content-copy">
+            <p>A canceled order should no longer contribute conversion count or value in Google Ads. A partially refunded order should retain its conversion but use the final corrected value. GA4 needs a refund tied to the original transaction so reporting can connect the reversal to the purchase.</p>
+            <p class="formula-line">Adjusted attributed ROAS = corrected attributed conversion value / matched ad spend</p>
+            <p>Keep an idempotent adjustment ledger keyed to the original transaction and platform conversion identifiers. Record the initial value, adjustment type, final value, refund items, event time, upload status, and store control amount. Retries must not create a second economic refund.</p>
+            <p>Platform correction and economic loss are related but different. This page fixes platform transaction reporting. The returns guide models refunded margin, reverse logistics, fees, and inventory recovery; the revenue-basis guide defines the numerator; the Google target guide sets the required profitability threshold.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Google Ads rules</p><h2>Use RETRACTION for removal and RESTATEMENT for a final value.</h2></div>
+          <div class="content-copy">
+            <table class="definition-table"><thead><tr><th>Adjustment</th><th>Use when</th><th>Effect</th></tr></thead><tbody><tr><td>RETRACTION</td><td>The conversion should no longer count, such as a fully canceled or invalid transaction</td><td>Removes conversion count and value</td></tr><tr><td>RESTATEMENT</td><td>The conversion remains valid but its value changed, such as a partial refund</td><td>Replaces value; conversion count stays</td></tr></tbody></table>
+            <p>For a RESTATEMENT, upload the conversion's final adjusted value after the refund. Do not upload the refund delta. If an order originally carried $500 of value and $100 is refunded, the adjusted value is $400, not -$100 and not $100.</p>
+            <p>A RETRACTION removes both value and count. After a conversion is retracted, it cannot be adjusted further, so do not retract a still-valid partially refunded transaction. Match the adjustment to the original conversion action and identifiers required by the upload method, and preserve the platform response for reconciliation.</p>
+            <ol><li>Lock the original transaction or order ID to one adjustment record.</li><li>Classify full cancellation versus final reduced value from the commerce ledger.</li><li>Submit RETRACTION or RESTATEMENT with a deterministic adjustment timestamp.</li><li>Record success, partial failure, and retry state without generating a second adjustment.</li><li>Wait for reporting to process before recalculating the Ads numerator.</li></ol>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">GA4 rules</p><h2>Send refunds against the original transaction ID.</h2></div>
+          <div class="content-copy">
+            <p>Send the GA4 refund event with the original purchase <code>transaction_id</code>. For a partial item refund, include the affected items and refunded quantities so item reporting can identify what was reversed. Keep the currency and value treatment consistent with the purchase implementation.</p>
+            <p>Do not invent a new transaction ID for the refund, and do not resend the same refund as a new economic event during a retry. Store an event key or equivalent delivery state so the pipeline can distinguish a retry from another refund against the same order.</p>
+            <p>In the GA4 Data API schema, <code>purchaseRevenue</code> already subtracts revenue from refunded transactions. If a control table starts from <code>purchaseRevenue</code>, do not subtract refund revenue again. Other revenue fields can use different definitions, so select the metric deliberately and label it in the reconciliation.</p>
+            <p class="scope-note"><strong>Processing boundary:</strong> A successful request does not guarantee that every reporting surface updates immediately. Reconcile after processing delay, using the same dates, timezone, currency, transaction population, and revenue field.</p>
+          </div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Worked reconciliation</p><h2>$6,000 of corrections turns 4.00x into 3.40x.</h2></div>
+          <div class="content-copy">
+            <p>A frozen cohort initially shows $40,000 of attributed conversion value on $10,000 of spend, or 4.00x. The store later identifies fully refunded or canceled transactions with $5,000 of original credited value and partial refunds that reduce valid transaction values by another $1,000.</p>
+            <p>In Google Ads, retract the fully refunded conversions. Restate each partially refunded conversion to its final value; the aggregate $1,000 is the reduction across those final values, not the number sent as every RESTATEMENT. Corrected Ads value is $40,000 - $5,000 - $1,000 = $34,000, so adjusted attributed ROAS is 3.40x.</p>
+            <p>GA4 receives refund events against the corresponding original transaction IDs, including affected items for partial item refunds. The store control report currently shows $33,000 of net revenue. The remaining $1,000 gap is a reconciliation queue item: it can be timing, scope, identity, or value treatment. Do not hide it with an unverified second adjustment.</p>
+            <table class="definition-table"><thead><tr><th>Scenario</th><th>Revenue</th><th>ROAS</th><th>Normalized orders</th><th>Contribution profit at 40%</th></tr></thead><tbody><tr><td>Stale initial</td><td>$40,000</td><td>4.00x</td><td>400</td><td>$40,000 x 40% - $10,000 = $6,000</td></tr><tr><td>Ads adjusted</td><td>$34,000</td><td>3.40x</td><td>340</td><td>$34,000 x 40% - $10,000 = $3,600</td></tr><tr><td>Store control</td><td>$33,000</td><td>3.30x</td><td>330</td><td>$33,000 x 40% - $10,000 = $3,200</td></tr></tbody></table>
+            <p><strong>Orders are normalization only:</strong> The planner calculates revenue / $100 AOV to make scenarios comparable. Those 400, 340, and 330 figures are not Google Ads conversion counts. A RESTATEMENT leaves conversion count unchanged; a RETRACTION removes the retracted conversion count and value.</p>
+            <a class="guide-action" href="/scenario-planner/?s1n=Stale+initial&amp;s1a=100&amp;s1m=40&amp;s1r=4&amp;s1s=10000&amp;s2n=Ads+adjusted&amp;s2a=100&amp;s2m=40&amp;s2r=3.4&amp;s2s=10000&amp;s3n=Store+control&amp;s3a=100&amp;s3m=40&amp;s3r=3.3&amp;s3s=10000">Compare stale, adjusted, and store-control value</a>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Control loop</p><h2>Close the $1,000 gap before calling the numerator final.</h2></div>
+          <div class="content-copy">
+            <ol><li><strong>Freeze the cohort:</strong> Match ad spend, original purchases, report dates, timezone, currency, and conversion action.</li><li><strong>Export the store ledger:</strong> Separate full cancellations, partial refunds, shipping, tax, discounts, and unsettled cases.</li><li><strong>Adjust Google Ads:</strong> Retract invalid conversions and restate still-valid conversions to their final values.</li><li><strong>Emit GA4 refunds:</strong> Reuse original transaction IDs and include affected items for partial item refunds.</li><li><strong>Wait and re-export:</strong> Allow both systems to process, then compare the same cohort again.</li><li><strong>Classify every gap:</strong> Resolve timing, missing IDs, failed uploads, metric definition, currency, or late refunds instead of forcing equality.</li></ol>
+            <p>A matched store number is a control, not proof that ad attribution is incremental. Once the transaction values reconcile, calculate profit with the correct cost boundary and compare the resulting mature ROAS with the business target.</p>
+          </div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Official sources and model limits</p><h2>Platform documentation defines the write-back; the store ledger controls the money.</h2></div>
+          <div class="content-copy">
+            <p>Google documents conversion adjustments in Google Ads and the API, ecommerce and refund events in GA4, and reporting metric definitions in the Data API schema. Product and method availability can vary. ROAS Break supplies the fictional cohort, shared 40% contribution assumption, reconciliation control, and scenario comparison.</p>
+            <ul class="source-list"><li data-source="01"><span><a href="https://support.google.com/google-ads/answer/7686447?hl=en">Google Ads: About conversion adjustments</a><small>Official retraction and restatement workflow. Checked August 21, 2026.</small></span></li><li data-source="02"><span><a href="https://developers.google.com/google-ads/api/docs/conversions/upload-adjustments">Google Ads API: Upload conversion adjustments</a><small>Official API adjustment types, identifiers, and upload behavior. Checked August 21, 2026.</small></span></li><li data-source="03"><span><a href="https://developers.google.com/analytics/devguides/collection/ga4/ecommerce">Google Analytics: Measure ecommerce</a><small>Official purchase and ecommerce event implementation context. Checked August 21, 2026.</small></span></li><li data-source="04"><span><a href="https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events#refund">Google Analytics: refund event</a><small>Official refund transaction and item parameter reference. Checked August 21, 2026.</small></span></li><li data-source="05"><span><a href="https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema">Google Analytics Data API schema</a><small>Official reporting metric definitions, including purchaseRevenue. Checked August 21, 2026.</small></span></li></ul>
+          </div>
+        </section>
+
+        <section class="related-reading" aria-labelledby="refund-next"><div><p class="section-kicker">Continue the decision</p><h2 id="refund-next">Correct reporting, economics, and targets in that order.</h2></div><div class="related-links"><a href="/guides/returns-and-discounts/"><span>Model refund and return economics</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/ecommerce-revenue-basis/"><span>Choose the corrected revenue numerator</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/google-ads-target-roas-profit/"><span>Compare mature ROAS with the profit target</span><span aria-hidden="true">&rarr;</span></a></div></section>
+      </article>
+    </main>
+    <footer class="inner-footer"><a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a><nav class="footer-links" aria-label="Company and legal"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><p class="footer-copyright">&copy; <span data-year></span> ROAS Break</p></footer>
+    <script type="module" src="/src/pages/guide.ts"></script>
+  </body>
+</html>

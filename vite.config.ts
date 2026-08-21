@@ -30,6 +30,7 @@ export default defineConfig({
         contributionLtv: resolve(import.meta.dirname, "guides/contribution-ltv-vs-revenue-ltv/index.html"),
         newCustomerRoas: resolve(import.meta.dirname, "guides/new-customer-roas-vs-blended-roas/index.html"),
         cacPaybackCohort: resolve(import.meta.dirname, "guides/cac-payback-cohort-data/index.html"),
+        refundsConversionAdjustments: resolve(import.meta.dirname, "guides/refunds-and-conversion-adjustments/index.html"),
         conversionDelayDataMaturity: resolve(import.meta.dirname, "guides/conversion-delay-and-data-maturity/index.html"),
         tiktokShopRoasAttribution: resolve(import.meta.dirname, "guides/tiktok-shop-roas-and-attribution/index.html"),
         tools: resolve(import.meta.dirname, "tools/index.html"),

@@ -554,6 +554,56 @@
       ]
     },
     {
+      "id": "refunds-conversion-adjustments",
+      "type": "guide",
+      "url": "/guides/refunds-and-conversion-adjustments/",
+      "file": "guides/refunds-and-conversion-adjustments/index.html",
+      "cluster": "Planning & Measurement",
+      "primaryIntent": "Correct canceled and partially refunded ecommerce transactions in Google Ads and GA4 before recalculating ROAS",
+      "primaryTool": "/scenario-planner/?s1n=Stale+initial&s1a=100&s1m=40&s1r=4&s1s=10000&s2n=Ads+adjusted&s2a=100&s2m=40&s2r=3.4&s2s=10000&s3n=Store+control&s3a=100&s3m=40&s3r=3.3&s3s=10000",
+      "publishedOn": "2026-08-21",
+      "reviewedOn": "2026-08-21",
+      "reviewDue": "2026-11-19",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://support.google.com/google-ads/answer/7686447?hl=en",
+          "owner": "Google Ads",
+          "region": "Global; English documentation; product availability varies",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://developers.google.com/google-ads/api/docs/conversions/upload-adjustments",
+          "owner": "Google Ads API",
+          "region": "Global; English documentation; product availability varies",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+          "owner": "Google Analytics",
+          "region": "Global; English documentation; product availability varies",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events#refund",
+          "owner": "Google Analytics",
+          "region": "Global; English documentation; product availability varies",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema",
+          "owner": "Google Analytics",
+          "region": "Global; English documentation; product availability varies",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "conversion-delay-data-maturity",
       "type": "guide",
       "url": "/guides/conversion-delay-and-data-maturity/",

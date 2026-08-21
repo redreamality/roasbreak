@@ -182,6 +182,17 @@ const guideJourneys: GuideJourney[] = [
     inputValue: "70",
   },
   {
+    name: "refunds and conversion adjustments",
+    guidePath: "/guides/refunds-and-conversion-adjustments/",
+    toolPath: "/scenario-planner/",
+    resultSelector: "#scenario-table",
+    resultText: "Ads adjusted",
+    inputSelector: "#scenario-2-roas",
+    inputValue: "3.4",
+    restoreInputValue: "3.2",
+    restoredResultText: "$32,000",
+  },
+  {
     name: "TikTok Shop ROAS and attribution",
     guidePath: "/guides/tiktok-shop-roas-and-attribution/",
     toolPath: "/scenario-planner/",
