@@ -11,6 +11,7 @@ const guidePaths = [
   "/guides/google-ads-target-roas-profit/",
   "/guides/amazon-break-even-acos/",
   "/guides/returns-and-discounts/",
+  "/guides/new-customer-roas-vs-blended-roas/",
   "/guides/cac-payback-cohort-data/",
   "/guides/attributed-roas-vs-mer/",
 ];
@@ -139,9 +140,10 @@ test("lists every published tool and guide", async ({ page }) => {
   await expect(page.locator(".directory-item")).toHaveCount(6);
   await page.goto("/guides/");
   await expect(page.locator(".topic-group")).toHaveCount(5);
-  await expect(page.locator(".topic-guide")).toHaveCount(13);
+  await expect(page.locator(".topic-guide")).toHaveCount(14);
   await expect(page.getByRole("link", { name: /Ecommerce Profit Formulas/ })).toHaveAttribute("href", "/guides/ecommerce-profit-formulas/");
   await expect(page.getByRole("link", { name: /POAS vs ROAS/ })).toHaveAttribute("href", "/guides/poas-vs-roas/");
+  await expect(page.getByRole("link", { name: /New Customer ROAS vs Blended ROAS/ })).toHaveAttribute("href", "/guides/new-customer-roas-vs-blended-roas/");
 });
 
 test("navigates the guide library by operating topic", async ({ page }) => {
@@ -154,7 +156,7 @@ test("navigates the guide library by operating topic", async ({ page }) => {
 
 test("publishes visible review details, primary sources, and Article schema for every guide", async ({ page }) => {
   for (const path of guidePaths) {
-    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/"].includes(path);
+    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/new-customer-roas-vs-blended-roas/"].includes(path);
     await page.goto(path);
     await expect(page.locator("[data-editorial-meta]")).toContainText(isNewGuide ? "Reviewed August 21, 2026" : "Reviewed August 20, 2026");
     await expect(page.locator("[data-content-scope]")).toContainText("Scope: ");
@@ -170,8 +172,15 @@ test("publishes visible review details, primary sources, and Article schema for 
       await expect(page.getByText("POAS = contribution profit after ads / ad spend", { exact: true })).toBeVisible();
       await expect(page.locator('script[data-schema="breadcrumb"]')).toHaveCount(1);
     }
+    if (path === "/guides/new-customer-roas-vs-blended-roas/") {
+      await expect(page).toHaveTitle("New Customer ROAS vs Blended ROAS: Set Different Targets | ROAS Break");
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /different profit thresholds/);
+      await expect(page.locator("[data-content-scope]")).toContainText("Global ecommerce");
+      await expect(page.getByText("A platform new-customer label is not financial truth.", { exact: true })).toBeVisible();
+    }
     await expect(page.locator(".source-list a").first()).toHaveAttribute("href", /^https:\/\//);
     await expect(page.locator(".guide-action")).toHaveCount(1);
+    await expect(page.locator('script[data-schema="breadcrumb"]')).toHaveCount(1);
     const articleSchema = await page.locator('script[type="application/ld+json"]').first().textContent();
     expect(articleSchema, path).toContain('"@type":"Article"');
     expect(articleSchema, path).toContain(`"dateModified":"${isNewGuide ? "2026-08-21" : "2026-08-20"}"`);
@@ -203,6 +212,12 @@ test("restores worked guide examples in the matching calculator", async ({ page 
   await expect(page.locator("#target-break-even")).toHaveText("2.78x");
   await expect(page.locator("#target-cpa")).toHaveText("$26.00");
   await expect(page.locator("#target-roas")).toHaveText("3.85x");
+
+  await page.goto("/guides/new-customer-roas-vs-blended-roas/");
+  await page.locator(".guide-action").click();
+  await expect(page).toHaveURL(/cac=80.*profit=12.*d180=90.*d365=112/);
+  await expect(page.locator("#payback-day")).toHaveText("Day 180");
+  await expect(page.locator("#allowable-cac")).toHaveText("$100.00");
 });
 
 test("tracks guide-to-tool actions without calculation values or URL queries", async ({ page }) => {

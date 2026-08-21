@@ -352,6 +352,35 @@
       ]
     },
     {
+      "id": "new-customer-roas-vs-blended-roas",
+      "type": "guide",
+      "url": "/guides/new-customer-roas-vs-blended-roas/",
+      "file": "guides/new-customer-roas-vs-blended-roas/index.html",
+      "cluster": "Customer Economics",
+      "primaryIntent": "Set distinct profitability thresholds for new-customer acquisition and blended store ROAS",
+      "primaryTool": "/cac-payback-calculator/?cac=80&profit=12&d30=40&d60=55&d90=68&d180=90&d365=112",
+      "publishedOn": "2026-08-21",
+      "reviewedOn": "2026-08-21",
+      "reviewDue": "2026-11-19",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://support.google.com/google-ads/answer/12080169?hl=en",
+          "owner": "Google Ads",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customer-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-20",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "cac-payback-cohort",
       "type": "guide",
       "url": "/guides/cac-payback-cohort-data/",

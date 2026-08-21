@@ -115,6 +115,15 @@ const guideJourneys: GuideJourney[] = [
     restoredResultText: "+25.2%",
   },
   {
+    name: "new customer ROAS versus blended ROAS",
+    guidePath: "/guides/new-customer-roas-vs-blended-roas/",
+    toolPath: "/cac-payback-calculator/",
+    resultSelector: "#payback-day",
+    resultText: "Day 180",
+    inputSelector: "#cac",
+    inputValue: "80",
+  },
+  {
     name: "CAC payback cohort",
     guidePath: "/guides/cac-payback-cohort-data/",
     toolPath: "/cac-payback-calculator/",
