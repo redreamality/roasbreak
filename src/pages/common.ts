@@ -212,23 +212,28 @@ function initializePageSemantics(): void {
   const breadcrumb = document.querySelector<HTMLElement>(".breadcrumb");
   if (breadcrumb) {
     breadcrumb.setAttribute("aria-label", "Breadcrumb");
-    const items = Array.from(breadcrumb.children).map((node, index, nodes) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: node.textContent?.trim() || `Level ${index + 1}`,
-      item: node instanceof HTMLAnchorElement
-        ? new URL(node.getAttribute("href") ?? "/", window.location.origin).href
-        : index === nodes.length - 1 ? `${window.location.origin}${window.location.pathname}` : undefined,
-    }));
-    const schema = document.createElement("script");
-    schema.type = "application/ld+json";
-    schema.dataset.schema = "breadcrumb";
-    schema.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: items,
-    });
-    document.head.append(schema);
+    const existingSchema = document.querySelector<HTMLScriptElement>(
+      'script[type="application/ld+json"][data-schema="breadcrumb"]',
+    );
+    if (!existingSchema) {
+      const items = Array.from(breadcrumb.children).map((node, index, nodes) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: node.textContent?.trim() || `Level ${index + 1}`,
+        item: node instanceof HTMLAnchorElement
+          ? new URL(node.getAttribute("href") ?? "/", window.location.origin).href
+          : index === nodes.length - 1 ? `${window.location.origin}${window.location.pathname}` : undefined,
+      }));
+      const schema = document.createElement("script");
+      schema.type = "application/ld+json";
+      schema.dataset.schema = "breadcrumb";
+      schema.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: items,
+      });
+      document.head.append(schema);
+    }
   }
   const toast = document.querySelector<HTMLElement>("#toast");
   if (toast) toast.setAttribute("role", "status");

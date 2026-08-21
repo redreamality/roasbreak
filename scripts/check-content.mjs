@@ -9,6 +9,7 @@ const guideDirectory = await readFile(resolve(root, "guides/index.html"), "utf8"
 const failures = [];
 const sourceReviewStatuses = new Set(["verified", "needs-review", "unavailable"]);
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+const siteOrigin = "https://roasbreak.com";
 
 const assert = (condition, message) => {
   if (!condition) failures.push(message);
@@ -29,6 +30,34 @@ const isHttpsUrl = (value) => {
   } catch {
     return false;
   }
+};
+
+const decodeHtml = (value) => value
+  .replaceAll("&amp;", "&")
+  .replaceAll("&lt;", "<")
+  .replaceAll("&gt;", ">")
+  .replaceAll("&quot;", '"')
+  .replaceAll("&#39;", "'");
+
+const breadcrumbSchemaPattern = /<script\b(?=[^>]*\btype="application\/ld\+json")(?=[^>]*\bdata-schema="breadcrumb")[^>]*>([\s\S]*?)<\/script>/g;
+
+const visibleBreadcrumbItems = (html, canonical) => {
+  const breadcrumbs = [...html.matchAll(/<nav\b[^>]*class="[^"]*\bbreadcrumb\b[^"]*"[^>]*>([\s\S]*?)<\/nav>/g)];
+  if (breadcrumbs.length !== 1) return { breadcrumbs, items: [] };
+
+  const children = [...breadcrumbs[0][1].matchAll(/<(a|span)\b([^>]*)>([\s\S]*?)<\/\1>/g)];
+  return {
+    breadcrumbs,
+    items: children.map((child, index) => {
+      const href = child[1] === "a" ? child[2].match(/\bhref="([^"]+)"/)?.[1] : undefined;
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        name: decodeHtml(child[3].replace(/<[^>]+>/g, "").trim()),
+        item: href ? new URL(decodeHtml(href), siteOrigin).href : canonical,
+      };
+    }),
+  };
 };
 
 const ids = new Set();
@@ -97,8 +126,37 @@ for (const asset of inventory.assets) {
   }
 
   const html = await readFile(filePath, "utf8");
-  const canonical = `https://roasbreak.com${asset.url}`;
+  const canonical = `${siteOrigin}${asset.url}`;
   assert(html.includes(`<link rel="canonical" href="${canonical}"`), `${asset.id}: canonical does not match inventory`);
+  const head = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/)?.[1] ?? "";
+  const pageBreadcrumbSchemas = [...html.matchAll(breadcrumbSchemaPattern)];
+  const headBreadcrumbSchemas = [...head.matchAll(breadcrumbSchemaPattern)];
+  assert(pageBreadcrumbSchemas.length === 1, `${asset.id}: expected one static breadcrumb schema, found ${pageBreadcrumbSchemas.length}`);
+  assert(headBreadcrumbSchemas.length === 1, `${asset.id}: static breadcrumb schema must be in the document head`);
+
+  const visibleBreadcrumb = visibleBreadcrumbItems(html, canonical);
+  assert(visibleBreadcrumb.breadcrumbs.length === 1, `${asset.id}: expected one visible breadcrumb, found ${visibleBreadcrumb.breadcrumbs.length}`);
+  assert(visibleBreadcrumb.items.length > 0, `${asset.id}: visible breadcrumb must contain items`);
+  if (pageBreadcrumbSchemas.length === 1 && visibleBreadcrumb.items.length > 0) {
+    try {
+      const schema = JSON.parse(pageBreadcrumbSchemas[0][1]);
+      assert(schema["@context"] === "https://schema.org", `${asset.id}: breadcrumb schema has invalid @context`);
+      assert(schema["@type"] === "BreadcrumbList", `${asset.id}: breadcrumb schema must be a BreadcrumbList`);
+      assert(Array.isArray(schema.itemListElement), `${asset.id}: breadcrumb schema itemListElement must be an array`);
+      if (Array.isArray(schema.itemListElement)) {
+        assert(schema.itemListElement.length === visibleBreadcrumb.items.length, `${asset.id}: breadcrumb schema item count does not match visible breadcrumb`);
+        visibleBreadcrumb.items.forEach((expected, index) => {
+          const actual = schema.itemListElement[index];
+          assert(actual?.["@type"] === expected["@type"], `${asset.id}: breadcrumb item ${index + 1} must be a ListItem`);
+          assert(actual?.position === expected.position, `${asset.id}: breadcrumb item ${index + 1} has the wrong position`);
+          assert(actual?.name === expected.name, `${asset.id}: breadcrumb item ${index + 1} name does not match visible breadcrumb`);
+          assert(actual?.item === expected.item, `${asset.id}: breadcrumb item ${index + 1} URL does not match visible breadcrumb/canonical`);
+        });
+      }
+    } catch (error) {
+      failures.push(`${asset.id}: breadcrumb schema is not valid JSON (${error instanceof Error ? error.message : String(error)})`);
+    }
+  }
   assert(sitemap.includes(`<loc>${canonical}</loc>`), `${asset.id}: missing from sitemap`);
   const editorialMeta = [...html.matchAll(/<aside\b[^>]*\bdata-editorial-meta\b[^>]*>([\s\S]*?)<\/aside>/g)];
   assert(editorialMeta.length === 1, `${asset.id}: expected one visible editorial metadata block, found ${editorialMeta.length}`);
