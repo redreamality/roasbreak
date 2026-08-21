@@ -110,3 +110,4 @@
 - 运行定向 Playwright 桌面用例前先读取 `playwright.config.ts` 的实际 project 名；本项目桌面项目是 `chromium`，不是设备类别的泛称 `desktop`。使用 `--project=chromium`，不要凭视口类型猜项目名。
 - 在 PowerShell 中不要把可执行文件和每个参数都写成相邻的独立双引号字符串（如 `"git" "status"`）；PowerShell 会把首项当作字符串表达式，并在后续参数处报 `Unexpected token`。直接使用 `git status`，仅对确实含空格的单个参数加引号；若可执行文件路径本身含空格，则用调用运算符 `&`。
 - Shopify Help 的普通 HTTP GET 也可能返回 Cloudflare/JavaScript connection verification 页面。不要把验证页当作链接失效或正文核验成功；优先复用已治理且仍在复核期内的官方来源，确需重新核验时使用可执行 JavaScript 的浏览器或可访问的官方镜像，并记录核验方式。
+- `seo-google` skill 的 `google_auth.py` 未携带项目级依赖声明，直接运行 `uv run python ...\google_auth.py --check --json` 可能因缺少 `requests` 报 `ModuleNotFoundError`。使用隔离命令 `uv run --with requests python ...\google_auth.py --check --json`，不要为一次只读认证检查改动本项目依赖。
