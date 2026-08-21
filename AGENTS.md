@@ -102,3 +102,8 @@
 - 为指南到 Target ROAS 的 E2E 推导期望结果时，`profit` 查询参数表示保留利润占收入的百分比，不是金额。正文若写保留 `$6` 且 AOV 为 `$60`，CTA 应传 `profit=10`；先核对参数单位再断言结果，避免把内容参数错误固化为测试期望。
 - 不要假定指南页面样式位于 `src/styles/inner.css`；本项目指南通过 `src/pages/guide.ts` 引入根级 `src/styles.css` 与 `src/tool-pages.css`。读取样式前先用 `rg --files src` 定位真实文件，避免 `Get-Content` 因路径不存在失败。
 - 不要把端口检查、`Start-Process` 后台启动、日志重定向和 HTTP 探测组合成一条复杂 PowerShell 命令；执行策略可能在创建进程前整体拒绝。需要保留本地预览时，直接用受管命令会话运行 `pnpm dev --host <host> --port <port>`，再用独立只读命令验证 URL。
+- 验证运行时 BreadcrumbList fallback 时不要使用没有 `.breadcrumb` 的首页；fallback 只会为页面中已有的可见 breadcrumb 生成 schema。应选择 `/target-roas-calculator/` 等明确带 breadcrumb、且没有静态 schema 的工具页。
+- Windows 下不要给 `rg` 传 `tests/e2e/*.spec.ts` 这类裸路径通配符；PowerShell 不会展开，`rg` 会按非法文件名处理。应使用 `rg -g '*.spec.ts' <pattern> tests/e2e`，或直接扫描目录。
+- 并行任务正在补内容契约字段时，`pnpm release:check` 可能正确拦截尚未收敛的部分资产。先根据报告核对失败是否仅来自协作者仍在编辑的文件，等待其提交后基于最终 `HEAD` 重跑；不要提交中间态的失败 baseline，也不要为让门禁变绿而降低规则。
+- Scenario Planner 与其他决策工具共用 `src/pages/tools.ts`，仓库没有 `src/pages/scenario-planner.ts`。读取页面逻辑前先用 `rg -n 'scenarioState|data-page="scenarios"' src` 定位实现，不要按 URL 名猜测独立脚本路径。
+- 新页加入静态 `data-schema="breadcrumb"` 后，必须确认 `src/pages/common.ts` 会在节点已存在时跳过动态注入；并行迁移中应等共享逻辑提交后再跑 E2E，否则页面会短暂出现两个 BreadcrumbList 并触发 strict-mode 失败。
