@@ -171,6 +171,17 @@ const guideJourneys: GuideJourney[] = [
     inputValue: "70",
   },
   {
+    name: "TikTok Shop ROAS and attribution",
+    guidePath: "/guides/tiktok-shop-roas-and-attribution/",
+    toolPath: "/scenario-planner/",
+    resultSelector: ".scenario-row.winner",
+    resultText: "CTA + VTA",
+    inputSelector: "#scenario-3-roas",
+    inputValue: "2.7",
+    restoreInputValue: "3.5",
+    restoredResultText: "Store net",
+  },
+  {
     name: "attributed ROAS versus MER",
     guidePath: "/guides/attributed-roas-vs-mer/",
     toolPath: "/scenario-planner/",

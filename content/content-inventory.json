@@ -554,6 +554,35 @@
       ]
     },
     {
+      "id": "tiktok-shop-roas-attribution",
+      "type": "guide",
+      "url": "/guides/tiktok-shop-roas-and-attribution/",
+      "file": "guides/tiktok-shop-roas-and-attribution/index.html",
+      "cluster": "Planning & Measurement",
+      "primaryIntent": "Normalize TikTok Shop click-through, view-through, and gross revenue reporting into comparable contribution-profit scenarios",
+      "primaryTool": "/scenario-planner/?s1n=CTA+only&s1a=50&s1m=40&s1r=2.5&s1s=10000&s2n=CTA+%2B+VTA&s2a=50&s2m=40&s2r=3.2&s2s=10000&s3n=Store+net&s3a=50&s3m=40&s3r=2.7&s3s=10000",
+      "publishedOn": "2026-08-21",
+      "reviewedOn": "2026-08-21",
+      "reviewDue": "2026-11-19",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://ads.tiktok.com/resources/help/article/attribution?lang=en",
+          "owner": "TikTok Ads Manager",
+          "region": "Global; English resources; feature availability varies",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://ads.tiktok.com/business/en-US/blog/attribution-analytics-performance-comparison",
+          "owner": "TikTok for Business",
+          "region": "Global; English resources; feature availability varies",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "attributed-mer",
       "type": "guide",
       "url": "/guides/attributed-roas-vs-mer/",

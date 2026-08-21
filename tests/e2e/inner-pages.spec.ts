@@ -17,6 +17,7 @@ const guidePaths = [
   "/guides/contribution-ltv-vs-revenue-ltv/",
   "/guides/new-customer-roas-vs-blended-roas/",
   "/guides/cac-payback-cohort-data/",
+  "/guides/tiktok-shop-roas-and-attribution/",
   "/guides/attributed-roas-vs-mer/",
 ];
 
@@ -144,10 +145,11 @@ test("lists every published tool and guide", async ({ page }) => {
   await expect(page.locator(".directory-item")).toHaveCount(6);
   await page.goto("/guides/");
   await expect(page.locator(".topic-group")).toHaveCount(5);
-  await expect(page.locator(".topic-guide")).toHaveCount(18);
+  await expect(page.locator(".topic-guide")).toHaveCount(19);
   await expect(page.getByRole("link", { name: /Ecommerce Profit Formulas/ })).toHaveAttribute("href", "/guides/ecommerce-profit-formulas/");
   await expect(page.getByRole("link", { name: /POAS vs ROAS/ })).toHaveAttribute("href", "/guides/poas-vs-roas/");
   await expect(page.getByRole("link", { name: /Meta Ads ROAS and Attribution/ })).toHaveAttribute("href", "/guides/meta-ads-roas-and-attribution/");
+  await expect(page.getByRole("link", { name: /TikTok Shop ROAS and Attribution/ })).toHaveAttribute("href", "/guides/tiktok-shop-roas-and-attribution/");
   await expect(page.getByRole("link", { name: /New Customer ROAS vs Blended ROAS/ })).toHaveAttribute("href", "/guides/new-customer-roas-vs-blended-roas/");
   await expect(page.getByRole("link", { name: /Free Shipping Profit Threshold/ })).toHaveAttribute("href", "/guides/free-shipping-profit-threshold/");
   await expect(page.getByRole("link", { name: /Discount vs Bundle Profit/ })).toHaveAttribute("href", "/guides/discount-vs-bundle-profit/");
@@ -164,7 +166,7 @@ test("navigates the guide library by operating topic", async ({ page }) => {
 
 test("publishes visible review details, primary sources, and Article schema for every guide", async ({ page }) => {
   for (const path of guidePaths) {
-    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/", "/guides/meta-ads-roas-and-attribution/"].includes(path);
+    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/", "/guides/meta-ads-roas-and-attribution/", "/guides/tiktok-shop-roas-and-attribution/"].includes(path);
     await page.goto(path);
     await expect(page.locator("[data-editorial-meta]")).toContainText(isNewGuide ? "Reviewed August 21, 2026" : "Reviewed August 20, 2026");
     await expect(page.locator("[data-content-scope]")).toContainText("Scope: ");
@@ -209,6 +211,13 @@ test("publishes visible review details, primary sources, and Article schema for 
       await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /selected attribution settings into an ecommerce break-even and target ROAS threshold/);
       await expect(page.locator("[data-content-scope]")).toContainText("availability varies by account and campaign");
       await expect(page.getByText("Meta ROAS is only interpretable with its attribution settings attached.", { exact: true })).toBeVisible();
+      await expect(page.locator(".source-list a")).toHaveCount(2);
+    }
+    if (path === "/guides/tiktok-shop-roas-and-attribution/") {
+      await expect(page).toHaveTitle("TikTok Shop ROAS and Attribution Views | ROAS Break");
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /click-through, view-through, Assisted Shop gross revenue, and store net revenue/);
+      await expect(page.locator("[data-content-scope]")).toContainText("English resources; feature availability varies");
+      await expect(page.getByText("Attribution views are alternative lenses, not revenue lines to add.", { exact: true })).toBeVisible();
       await expect(page.locator(".source-list a")).toHaveCount(2);
     }
     await expect(page.locator(".source-list a").first()).toHaveAttribute("href", /^https:\/\//);
@@ -284,6 +293,26 @@ test("restores worked guide examples in the matching calculator", async ({ page 
   await expect(page.locator("#cac")).toHaveValue("70");
   await expect(page.locator("#payback-day")).toHaveText("Day 180");
   await expect(page.locator("#allowable-cac")).toHaveText("$77.00");
+
+  await page.goto("/guides/tiktok-shop-roas-and-attribution/");
+  await page.locator(".guide-action").click();
+  const tiktokScenarioUrl = new URL(page.url());
+  expect(tiktokScenarioUrl.pathname).toBe("/scenario-planner/");
+  expect(tiktokScenarioUrl.searchParams.get("s1n")).toBe("CTA only");
+  expect(tiktokScenarioUrl.searchParams.get("s2n")).toBe("CTA + VTA");
+  expect(tiktokScenarioUrl.searchParams.get("s3n")).toBe("Store net");
+  await expect(page.locator(".scenario-row.winner")).toContainText("CTA + VTA");
+  await expect(page.locator(".scenario-row.winner")).toContainText("$32,000");
+  await expect(page.locator(".scenario-row.winner")).toContainText("640.0");
+  await expect(page.locator(".scenario-row.winner")).toContainText("+$2,800.00");
+  await page.locator("#scenario-3-roas").fill("3.5");
+  await expect(page.locator(".scenario-row.winner")).toContainText("Store net");
+  await expect(page.locator(".scenario-row.winner")).toContainText("$35,000");
+  await expect(page.locator(".scenario-row.winner")).toContainText("700.0");
+  await expect(page.locator(".scenario-row.winner")).toContainText("+$4,000.00");
+  await page.reload();
+  await expect(page.locator("#scenario-3-roas")).toHaveValue("3.5");
+  await expect(page.locator(".scenario-row.winner")).toContainText("Store net");
 });
 
 test("tracks guide-to-tool actions without calculation values or URL queries", async ({ page }) => {
