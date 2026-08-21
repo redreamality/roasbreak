@@ -1,14 +1,33 @@
 import { spawnSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 
 const root = resolve(import.meta.dirname, "..");
 const reportJsonPath = resolve(root, "reports/content-release-baseline.json");
 const reportMarkdownPath = resolve(root, "docs/release/content-release-checklist.md");
+const manualReviewPath = resolve(root, "content/content-manual-review.json");
 const siteOrigin = "https://roasbreak.com";
 const sourceReviewStatuses = new Set(["verified", "needs-review", "unavailable"]);
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
 const writeReports = !process.argv.includes("--no-write");
+const manualCheckDefinitions = [
+  {
+    id: "semantic-intent-alignment",
+    label: "Page content satisfies its declared primary intent",
+    reviewInstruction: "Compare the primaryIntent with the title, direct answer, sections, and conclusion; record evidence for every asset.",
+  },
+  {
+    id: "facts-vs-recommendations",
+    label: "External facts are separated from ROAS Break recommendations",
+    reviewInstruction: "Identify externally sourced claims and editorial recommendations; confirm each is labeled and sourced appropriately.",
+  },
+  {
+    id: "worked-example-recalculation",
+    label: "Worked examples have been independently recalculated",
+    reviewInstruction: "Recalculate every example from displayed inputs and formulas, including units and rounding; record the reviewer and result per asset.",
+  },
+];
 
 function run(command, args, options = {}) {
   const result = spawnSync(command, args, {
@@ -99,6 +118,65 @@ function result(id, label, failures, evidence) {
 
 function normalizeHref(value) {
   return value?.replaceAll("&amp;", "&");
+}
+
+export function validateManualReviews(assets, reviewDocument) {
+  const reviewAssets = Array.isArray(reviewDocument?.assets) ? reviewDocument.assets : [];
+  const reviewsById = new Map();
+  const duplicateIds = new Set();
+  for (const review of reviewAssets) {
+    if (!isNonEmptyString(review?.id)) continue;
+    if (reviewsById.has(review.id)) duplicateIds.add(review.id);
+    else reviewsById.set(review.id, review);
+  }
+
+  const publishedIds = new Set(assets.map((asset) => asset.id));
+  const unexpectedIds = [...reviewsById.keys()].filter((id) => !publishedIds.has(id));
+  const assetIds = assets.map((asset) => asset.id);
+
+  return manualCheckDefinitions.map((definition) => {
+    const failures = [];
+    for (const duplicateId of duplicateIds) failures.push(`${duplicateId}: duplicate manual review record`);
+    for (const unexpectedId of unexpectedIds) failures.push(`${unexpectedId}: manual review record is not a published inventory asset`);
+
+    for (const asset of assets) {
+      const review = reviewsById.get(asset.id);
+      if (!review) {
+        failures.push(`${asset.id}: missing manual review record`);
+        continue;
+      }
+      if (review.reviewedOn !== asset.reviewedOn) {
+        failures.push(`${asset.id}: manual review targets ${review.reviewedOn ?? "(missing)"}, inventory reviewedOn is ${asset.reviewedOn}`);
+      }
+      const check = review.checks?.[definition.id];
+      if (!check || typeof check !== "object" || Array.isArray(check)) {
+        failures.push(`${asset.id}: missing ${definition.id} check`);
+        continue;
+      }
+      if (check.result !== "passed") failures.push(`${asset.id}: ${definition.id} result is ${check.result ?? "(missing)"}`);
+      if (!isNonEmptyString(check.reviewer)) failures.push(`${asset.id}: ${definition.id} reviewer is missing`);
+      if (!isIsoDate(check.reviewedAt)) failures.push(`${asset.id}: ${definition.id} reviewedAt must be YYYY-MM-DD`);
+      if (isIsoDate(check.reviewedAt) && isIsoDate(asset.reviewedOn) && check.reviewedAt < asset.reviewedOn) {
+        failures.push(`${asset.id}: ${definition.id} predates the content reviewedOn date`);
+      }
+      if (!Array.isArray(check.evidence) || check.evidence.length === 0 || check.evidence.some((entry) => !isNonEmptyString(entry))) {
+        failures.push(`${asset.id}: ${definition.id} evidence must be a non-empty string array`);
+      }
+    }
+
+    return {
+      id: definition.id,
+      label: definition.label,
+      status: failures.length === 0 ? "passed" : "failed",
+      assetIds,
+      reviewInstruction: definition.reviewInstruction,
+      evidence: {
+        source: "content/content-manual-review.json",
+        reviewedAssets: assets.length,
+      },
+      failures,
+    };
+  });
 }
 
 async function inspectAssets(inventory, sitemap) {
@@ -341,7 +419,7 @@ Automated failures block the command. The BreadcrumbList check reads static JSON
 
 ## Manual checks
 
-These semantic checks are deliberately not marked passed by automation. A human reviewer must record page-by-page evidence in the PR or release review before publishing.
+These semantic checks pass only when \`content/content-manual-review.json\` contains current, page-by-page reviewer evidence for every published asset. Missing, stale, incomplete, or failed records block release.
 
 | Check | Status | Reviewer action |
 | --- | --- | --- |
@@ -357,6 +435,12 @@ async function main() {
   const generatedAt = new Date().toISOString();
   const inventory = JSON.parse(await readFile(resolve(root, "content/content-inventory.json"), "utf8"));
   const sitemap = await readFile(resolve(root, "public/sitemap.xml"), "utf8");
+  let manualReviewDocument;
+  try {
+    manualReviewDocument = JSON.parse(await readFile(manualReviewPath, "utf8"));
+  } catch (error) {
+    manualReviewDocument = { loadFailure: error.message };
+  }
   const { assets, htmlById, checks } = await inspectAssets(inventory, sitemap);
   checks.push(...inspectPageContracts(assets, htmlById, sitemap));
 
@@ -392,30 +476,13 @@ async function main() {
   const gitBranch = run("git", ["branch", "--show-current"]);
   const gitStatus = run("git", ["status", "--short"]);
   const automaticFailures = checks.flatMap((check) => check.failures.map((failure) => `${check.id}: ${failure}`));
-  const assetIds = assets.map((asset) => asset.id);
-  const manualChecks = [
-    {
-      id: "semantic-intent-alignment",
-      label: "Page content satisfies its declared primary intent",
-      status: "manual-review-required",
-      assetIds,
-      reviewInstruction: "Compare the primaryIntent with the title, direct answer, sections, and conclusion; record evidence for every asset.",
-    },
-    {
-      id: "facts-vs-recommendations",
-      label: "External facts are separated from ROAS Break recommendations",
-      status: "manual-review-required",
-      assetIds,
-      reviewInstruction: "Identify externally sourced claims and editorial recommendations; confirm each is labeled and sourced appropriately.",
-    },
-    {
-      id: "worked-example-recalculation",
-      label: "Worked examples have been independently recalculated",
-      status: "manual-review-required",
-      assetIds,
-      reviewInstruction: "Recalculate every example from displayed inputs and formulas, including units and rounding; record the reviewer and result per asset.",
-    },
-  ];
+  const manualChecks = validateManualReviews(assets, manualReviewDocument);
+  if (manualReviewDocument?.loadFailure) {
+    manualChecks.forEach((check) => check.failures.unshift(`Cannot load manual review file: ${manualReviewDocument.loadFailure}`));
+    manualChecks.forEach((check) => { check.status = "failed"; });
+  }
+  const manualFailures = manualChecks.flatMap((check) => check.failures.map((failure) => `${check.id}: ${failure}`));
+  const releaseFailures = [...automaticFailures, ...manualFailures];
   const report = {
     schemaVersion: 1,
     generatedAt,
@@ -440,9 +507,12 @@ async function main() {
       guideCount: assets.filter((asset) => asset.type === "guide").length,
       automatedPassed: checks.filter((check) => check.status === "passed").length,
       automatedFailed: checks.filter((check) => check.status === "failed").length,
-      manualReviewRequired: manualChecks.length,
+      manualPassed: manualChecks.filter((check) => check.status === "passed").length,
+      manualFailed: manualChecks.filter((check) => check.status === "failed").length,
+      manualReviewRequired: manualChecks.filter((check) => check.status !== "passed").length,
       automatedGate: automaticFailures.length === 0 ? "passed" : "failed",
-      releaseDecision: automaticFailures.length === 0 ? "manual-review-required" : "blocked",
+      manualGate: manualFailures.length === 0 ? "passed" : "failed",
+      releaseDecision: releaseFailures.length === 0 ? "passed" : "blocked",
     },
   };
 
@@ -453,9 +523,9 @@ async function main() {
     await writeFile(reportMarkdownPath, markdownReport(report), "utf8");
   }
 
-  if (automaticFailures.length > 0) {
-    console.error(`Release checks failed (${automaticFailures.length}).${writeReports ? " Reports were written for review:" : ""}`);
-    automaticFailures.forEach((failure) => console.error(`- ${failure}`));
+  if (releaseFailures.length > 0) {
+    console.error(`Release checks failed (${releaseFailures.length}).${writeReports ? " Reports were written for review:" : ""}`);
+    releaseFailures.forEach((failure) => console.error(`- ${failure}`));
     if (writeReports) {
       console.error(`- ${reportJsonPath}`);
       console.error(`- ${reportMarkdownPath}`);
@@ -465,9 +535,10 @@ async function main() {
   }
 
   console.log(`Release checks passed for ${assets.length} published assets.`);
-  console.log(`Manual review remains required for ${manualChecks.length} semantic checks.`);
+  console.log(`Manual review passed for all ${manualChecks.length} semantic checks.`);
   if (writeReports) console.log(`Reports: ${reportJsonPath} and ${reportMarkdownPath}`);
   else console.log("Verification mode: no report files were changed.");
 }
 
-await main();
+const directEntry = process.argv[1] ? pathToFileURL(resolve(process.argv[1])).href : "";
+if (import.meta.url === directEntry) await main();

@@ -1,0 +1,479 @@
+{
+  "schemaVersion": 1,
+  "scope": {
+    "startedAtCommit": "1031047e9eb75ef58b59c8e57cffbc7e52a5d2b5",
+    "reviewedThroughCommit": "457590387dde51c5bb8a6a3ac024380826b47fe0",
+    "reviewedAt": "2026-08-21",
+    "reviewer": "Codex independent release review",
+    "assetCount": 14,
+    "excludedAfterStart": [
+      "free-shipping-profit-threshold"
+    ]
+  },
+  "assets": [
+    {
+      "id": "methodology",
+      "reviewedOn": "2026-08-20",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The introduction promises revenue, variable-cost, attribution, and assumption boundaries; the six sections then cover model boundary, revenue basis, cost boundary, attribution, examples/rounding, and source review policy.",
+            "The conclusion routes readers to tools and guides only after defining how ROAS Break turns contribution into break-even and target thresholds."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Shopify sales fields and GA4 ecommerce fields are linked as official sources, while the page labels its revenue treatment as the default recommendation and its calculators as decision models rather than accounting statements.",
+            "The attribution section explicitly limits platform-reported ROAS and states that the calculators do not prove incrementality or promise delivery."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page contains no numeric worked scenario to recalculate; its three displayed identities were checked dimensionally: C=R-V, break-even ROAS=R/C, and target ROAS=R/(C-P).",
+            "The rounding section is internally consistent with the stated two-decimal money/ratio and one-decimal percentage display policy."
+          ]
+        }
+      }
+    },
+    {
+      "id": "ecommerce-profit-formulas",
+      "reviewedOn": "2026-08-21",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page connects contribution margin, break-even ROAS, target CPA, realized POAS, period MER, and cohort CAC payback using one named revenue and cost basis.",
+            "Separate order, store, and customer sections explain why units and populations cannot be substituted, directly satisfying the declared connection intent."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The sources section attributes report fields and ROAS definitions to Shopify and Amazon, then explicitly labels contribution, POAS, allowable CPA, and payback relationships as ROAS Break modeling choices.",
+            "The model-limit note separates calculation outputs from incrementality, delivery forecasts, accounting definitions, cash timing, and benchmarks."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Order example recomputed: 40+8+4+3+5=60; 100-60=40; margin=40%; break-even ROAS=100/40=2.50; retained target=10; allowable CPA=30; target ROAS=100/30=3.33.",
+            "Actual result recomputed: CPA 25 gives ROAS 100/25=4.00, after-ad contribution 40-25=15, and POAS 15/25=0.60.",
+            "Period and cohort extensions recomputed: 100000-60000-25000=15000, MER=100000/25000=4.00, claimed ratio=110000/25000=4.40, CAC=25000/600=41.67, day-90 payback, and allowable day-365 CAC=72-15=57."
+          ]
+        }
+      }
+    },
+    {
+      "id": "poas-vs-roas",
+      "reviewedOn": "2026-08-21",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The direct answer defines revenue ROAS and the page-specific after-ad contribution POAS boundary, then the metric table and operating sections explain when contribution profit is more useful.",
+            "MER, incrementality, fixed overhead, attribution, and volume limits prevent the comparison from collapsing into a single ratio recommendation."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The sources section assigns Amazon ROAS and Shopify report fields to official documentation and explicitly calls the POAS numerator, assumptions, and incrementality advice ROAS Break modeling choices.",
+            "The page states that its POAS definition is not universal and labels the example as neither a benchmark, forecast, nor causal estimate."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Base case recomputed: 45+8+3+3+5=64; contribution=100-64=36; spend=100/4=25; after-ad contribution=11; POAS=11/25=0.44.",
+            "Sensitivity cases recomputed: at 2.50x spend=40, result=-4 and POAS=-4/40=-0.10; at 5.00x spend=20, result=16 and POAS=16/20=0.80."
+          ]
+        }
+      }
+    },
+    {
+      "id": "contribution-margin",
+      "reviewedOn": "2026-08-20",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The direct answer distinguishes gross from contribution margin and states why contribution, not gross margin, sets the acquisition ceiling.",
+            "The cost-coverage table, margin-versus-markup warning, complete order example, and input workflow support the declared choice intent."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Shopify profit and sales definitions are linked as sources; cost inclusion, cohort maturity, and segmentation language is presented as a modeling workflow rather than attributed to Shopify.",
+            "The decision-boundary note explicitly excludes fixed overhead and directs readers to reserve it deliberately instead of presenting the boundary as universal accounting."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Partial view recomputed: 120-48=72, gross margin=72/120=60%, break-even ROAS=1/0.60=1.67; the $60-on-$100 margin/markup example gives 40% margin and 66.7% markup.",
+            "Full view recomputed: 120-48-9-3.60-9.60=49.80, contribution margin=41.5%, break-even ROAS=120/49.80=2.41, and the unrounded partial allowance 72 exceeds the full allowance by 22.20."
+          ]
+        }
+      }
+    },
+    {
+      "id": "revenue-basis",
+      "reviewedOn": "2026-08-20",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The direct answer recommends a consistent net product revenue basis, while the field map explains how gross sales, net sales, total sales, tax, shipping, platform value, and losses differ.",
+            "The reconciliation and workflow show how to choose and preserve one numerator before comparing ROAS, directly satisfying the declared intent."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page explicitly labels net product revenue as ROAS Break's decision-model default rather than a universal accounting standard.",
+            "Shopify sales definitions and GA4 purchase/refund fields are cited separately from the page's recommendations about tax, shipping, maturity, and reconciliation."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Revenue reconciliation recomputed: gross product sales 100 minus discount 10 and mature return 5 equals net product revenue 85; tax 8 is excluded and shipping 6 is tracked separately.",
+            "Contribution recomputed: fee=3% of 85=2.55; 85-30-8-3-2.55=41.45; break-even ROAS=85/41.45=2.05."
+          ]
+        }
+      }
+    },
+    {
+      "id": "shopify-net-sales",
+      "reviewedOn": "2026-08-20",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page maps Shopify net sales, orders, COGS, shipping, taxes, fees, fulfillment, and return handling into the calculator's order-level inputs.",
+            "The worked report and missing-cost checklist turn that mapping into a break-even ROAS workflow, matching the declared primary intent."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page says 'For the ROAS Break model' before recommending net sales per order and links official Shopify sales and profit reports for the field definitions.",
+            "Warnings about maturity, missing costs, tax, shipping, and double-counting are visibly framed as model checks rather than Shopify guarantees."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Net sales recomputed: 100-10-5=85; fee=0.03*85=2.55; contribution=85-30-8-3-2.55=41.45; break-even ROAS=85/41.45=2.05.",
+            "At 2.40x, CPA=85/2.40=35.42 and after-ad contribution=41.45-35.4167=6.03, matching the displayed result."
+          ]
+        }
+      }
+    },
+    {
+      "id": "roas-acos",
+      "reviewedOn": "2026-08-20",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The converter, reciprocal table, and formulas explain both ROAS-to-ACoS directions, then the profit-threshold section connects both ratios to available contribution.",
+            "The Amazon cost checklist prevents the conversion from being mistaken for a profitability target, satisfying the full declared intent."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page attributes ACoS and ROAS definitions to two Amazon Ads sources, then separately states that seller economics require a product-specific contribution model.",
+            "Advice about complete costs, reporting windows, and what counts as a good ACoS is framed as decision guidance rather than an Amazon rule."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Every reciprocal table row recomputes with ACoS%=100/ROAS: 1.25->80%, 2.00->50%, 2.50->40%, 4.00->25%, and 5.00->20%.",
+            "Profit target recomputed: 40% contribution gives 2.50x break-even; retaining 10% leaves 30% ACoS and target ROAS=100/30=3.33."
+          ]
+        }
+      }
+    },
+    {
+      "id": "good-roas",
+      "reviewedOn": "2026-08-20",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page rejects a universal good ROAS and derives a target from store contribution, retained profit, revenue basis, maturity, and useful volume.",
+            "Three margin scenarios and the operating checklist demonstrate how the store's own cost structure changes its threshold."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Amazon ROAS and Shopify profit-report context are sourced, while the page explicitly identifies the target method and scenarios as ROAS Break modeling choices.",
+            "The examples are labeled illustrative and not sector averages; the delivery and volume tradeoff is stated as a model limit."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "For 75% margin: contribution=75-3-5=67, break-even=100/67=1.49, target=100/(67-15)=1.92.",
+            "For 55% margin: contribution=47, break-even=100/47=2.13, target=100/32=3.13; for 40% margin: contribution=32, break-even=3.13, target=100/17=5.88."
+          ]
+        }
+      }
+    },
+    {
+      "id": "google-target-roas",
+      "reviewedOn": "2026-08-20",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The direct answer derives allowable ad spend from contribution and retained profit, converts the ratio to Google's percentage format, and distinguishes the business floor from the bidding input.",
+            "The conversion-value boundary and operational checks explain how to apply the threshold without treating it as a delivery promise."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Google target ROAS bidding and conversion adjustments are linked to official documentation; the page explicitly calls retained-profit conversion ROAS Break's model, not a Google recommendation.",
+            "The warning that a 286% bid target does not promise realized ROAS or volume keeps platform behavior separate from business advice."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Contribution recomputed from a 100 order: gross profit 58 minus fees 3 and returns allowance 5 equals 50; break-even ROAS=100/50=2.00.",
+            "Retaining 15 leaves target CPA 35; target ROAS=100/35=2.857, displayed as 2.86x and 286% after conversion and rounding."
+          ]
+        }
+      }
+    },
+    {
+      "id": "amazon-break-even-acos",
+      "reviewedOn": "2026-08-20",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The formulas calculate break-even and target ACoS directly from contribution and retained profit, then convert both to ROAS.",
+            "The worked seller scenario and fee checklist show the product-specific costs needed to use the thresholds, matching the declared Amazon acquisition intent."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Amazon Ads ACoS and ROAS definitions are cited as official facts; the seller cost boundary and retained-profit target are explicitly labeled ROAS Break modeling choices.",
+            "The 15% marketplace fee is labeled an input rather than a universal Amazon category benchmark."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Fee and contribution recomputed: 15% of 60=9; 60-18-8-4-9=21; cost shares are 30%, 13.3%, 6.7%, and 15%, leaving 35% contribution.",
+            "Break-even ACoS=21/60=35% and ROAS=1/0.35=2.86; reserving 6 leaves 15 for ads, so target ACoS=25% and ROAS=4.00."
+          ]
+        }
+      }
+    },
+    {
+      "id": "returns-discounts",
+      "reviewedOn": "2026-08-21",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page separately defines discount, refund, restockable return, unsellable return, and cancellation mechanisms and assigns each a different operating response.",
+            "The corrected worked return and promotion workflow show why return-rate percentages and discount economics require different models, satisfying the separation intent."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Shopify sales adjustments and GA4 purchase/refund fields are linked as official source context; the expected-loss equation and possible actions are visibly presented as the page's modeling workflow.",
+            "The page states that return rate does not automatically equal a loss allowance and exposes product recovery and operational costs as assumptions."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "After correction 4575903, original contribution is 100-35-3=62; a restockable return loses 62 contribution plus 3 retained fee plus 9 reverse logistics, totaling 74 versus keeping the sale.",
+            "An unsellable return adds 35 inventory loss, so total impact is 74+35=109; an 8% to 10% rate change is 2 percentage points and 2/8=25% relative."
+          ]
+        }
+      }
+    },
+    {
+      "id": "new-customer-roas-vs-blended-roas",
+      "reviewedOn": "2026-08-21",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The direct answer defines separate new-customer, cohort, and blended-store denominators and formulas rather than assigning one common threshold.",
+            "Identity controls, payback-window rules, and the three-boundary table explain how to set and govern distinct acquisition and store-wide profitability thresholds."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Google Ads new-customer controls and Shopify customer reporting are tied to official sources; the reconciliation order, contribution boundary, fictional calculations, and CAC policy are explicitly labeled modeling judgments.",
+            "The example is labeled fictional, and platform new-customer labels are separated from the finance-approved ledger definition without dismissing their optimization use."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Period results recomputed: blended ROAS=100000/20000=5.00; target=1/(45%-10%)=2.86; new-customer ROAS=25000/20000=1.25; CAC=20000/250=80.",
+            "First-order results recomputed: revenue per customer=100, contribution=(25000-15000)/250=40, break-even ROAS=100/40=2.50, and 75000 of store revenue lies outside verified first orders.",
+            "Cohort results recomputed: checkpoints 40/55/68 remain below CAC 80 until day 180 at 90; day-365 allowable CAC=112-12=100."
+          ]
+        }
+      }
+    },
+    {
+      "id": "cac-payback-cohort",
+      "reviewedOn": "2026-08-20",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The page defines cumulative contribution and first mature payback checkpoint, then gives a six-step cohort preparation workflow aligned to customer identity, dates, revenue, costs, and spend.",
+            "The worked cohort, input-shape warning, and data limits show how to prepare mature 30/60/90/180/365-day values without calling them lifetime value."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "GA4 purchase/refund fields and Shopify customer-report context are linked as source inputs; the contribution boundary, checkpoint policy, and allowable-CAC rule are presented as the page's method.",
+            "The page explicitly refuses unobserved extrapolation and labels the exact observation window rather than treating platform or revenue data as a universal LTV claim."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Against CAC 70, cumulative contribution leaves gaps of 25 at day 30 and 8 at day 60, then exceeds CAC by 6 at day 90, 22 at day 180, and 48 at day 365.",
+            "The first checkpoint at or above 70 is day 90, and allowable day-365 CAC with retained profit 15 is 118-15=103."
+          ]
+        }
+      }
+    },
+    {
+      "id": "attributed-mer",
+      "reviewedOn": "2026-08-20",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "The three-view table distinguishes platform-attributed ROAS, store-total MER, and contribution profit, then the reconciliation workflow keeps windows, spend, and revenue definitions separate.",
+            "The overlapping-credit example directly demonstrates how channel claims reconcile to a smaller store total without manufacturing revenue."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Shopify marketing reporting and attribution context is cited as the external fact source; the recommendation to keep platform credit, store revenue, and contribution profit separate is explicitly labeled a ROAS Break modeling judgment.",
+            "The boundary note states that neither MER nor attributed ROAS proves profit or causality."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-08-21",
+          "evidence": [
+            "Store MER recomputed as 100000/25000=4.00; Google ratio=55000/12000=4.58 and Meta ratio=65000/13000=5.00.",
+            "Platform credit sums to 120000 while spend sums to 25000, leaving 20000 more credited revenue than the 100000 store total; the page correctly refuses to treat that overlap as sales."
+          ]
+        }
+      }
+    }
+  ]
+}
