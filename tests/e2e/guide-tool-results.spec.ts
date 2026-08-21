@@ -95,6 +95,17 @@ const guideJourneys: GuideJourney[] = [
     inputValue: "58",
   },
   {
+    name: "conversion delay and data maturity",
+    guidePath: "/guides/conversion-delay-and-data-maturity/",
+    toolPath: "/target-roas-calculator/",
+    resultSelector: "#target-roas",
+    resultText: "3.33x",
+    inputSelector: "#target-profit",
+    inputValue: "10",
+    restoreInputValue: "12",
+    restoredResultText: "3.57x",
+  },
+  {
     name: "Meta Ads ROAS and attribution",
     guidePath: "/guides/meta-ads-roas-and-attribution/",
     toolPath: "/target-roas-calculator/",

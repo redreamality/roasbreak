@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Conversion Delay and Data Maturity for ROAS | ROAS Break</title>
+    <meta name="description" content="Decide when recent attributed ROAS is mature enough for a budget decision using account-specific conversion delay and a fixed reporting contract." />
+    <link rel="canonical" href="https://roasbreak.com/guides/conversion-delay-and-data-maturity/" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Conversion Delay and Data Maturity for ROAS","datePublished":"2026-08-21","dateModified":"2026-08-21","author":{"@type":"Organization","name":"floatboat.ai"},"publisher":{"@type":"Organization","name":"ROAS Break"},"mainEntityOfPage":"https://roasbreak.com/guides/conversion-delay-and-data-maturity/"}</script>
+    <script type="application/ld+json" data-schema="breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://roasbreak.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://roasbreak.com/guides/"},{"@type":"ListItem","position":3,"name":"Conversion Delay and Data Maturity","item":"https://roasbreak.com/guides/conversion-delay-and-data-maturity/"}]}</script>
+  </head>
+  <body class="inner-page" data-guide="conversion-delay-data-maturity">
+    <header class="inner-header">
+      <a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a>
+      <nav class="inner-nav" aria-label="Primary"><a href="/tools/">Tools</a><a href="/guides/" aria-current="page">Guides</a><a href="/methodology/">Methodology</a><a href="/about/">About</a></nav>
+    </header>
+    <main>
+      <nav class="breadcrumb"><a href="/">Home</a><a href="/guides/">Guides</a><span>Conversion Delay and Data Maturity</span></nav>
+      <article>
+        <section class="inner-intro">
+          <div><p class="eyebrow">Planning and measurement</p><h1>Conversion Delay and Data Maturity</h1></div>
+          <p>Spend can accrue before all attributed conversion value is reported. Use the account's own delay curve and a frozen reporting contract before treating recent ROAS as budget evidence.</p>
+        </section>
+        <aside class="editorial-note" data-editorial-meta><strong>Reviewed August 21, 2026</strong><span>Published by floatboat.ai</span><span data-content-scope>Scope: Global Google Ads reporting; ecommerce budget decisions; USD example</span><span>Google reporting workflow reviewed every 90 days</span><a href="/contact/">Suggest a correction</a></aside>
+
+        <section class="page-content">
+          <div><p class="section-kicker">60-second answer</p><h2>An immature window supports sensitivity analysis, not a deterministic budget move.</h2></div>
+          <div class="content-copy">
+            <p>Recent attributed ROAS is mature enough only when the decision window has accumulated the share of conversion value required by the business's predeclared rule. Build that rule from the account's own days-to-conversion history, not a generic lag assumption.</p>
+            <p>Before comparing periods, freeze the conversion action, attribution window, report date basis, timezone, currency, and value definition. A changed contract can look like conversion delay even when customer behavior did not change.</p>
+            <p class="formula-line">Reported ROAS at T+n = value reported for the frozen cohort by T+n / cohort spend</p>
+            <p class="formula-line">Delay sensitivity value = reported value / historical reported share at the same age</p>
+            <p>The sensitivity calculation is a range-planning aid, not booked revenue and not a forecast guarantee. When the most recent window is below the chosen maturity threshold, schedule a re-read and avoid a deterministic scale, pause, or target change based on that window alone.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Freeze the contract</p><h2>Hold six reporting choices constant before measuring delay.</h2></div>
+          <div class="content-copy">
+            <ol><li><strong>Conversion action:</strong> Use the same purchase action, inclusion status, and value source.</li><li><strong>Attribution window:</strong> Record the selected click, engaged-view, or other applicable window rather than assuming a default.</li><li><strong>Date basis:</strong> State whether the cohort is organized by ad interaction date, conversion date, or another report date.</li><li><strong>Timezone and currency:</strong> Keep the account day boundary and any conversion rules fixed.</li><li><strong>Value boundary:</strong> State whether purchase value includes tax, shipping, discounts, cancellations, or later adjustments.</li><li><strong>Extraction age:</strong> Label every read T+1, T+3, T+7, or another explicit age from the same cohort cutoff.</li></ol>
+            <p>Google Ads documents that conversion reporting can be delayed and provides account reporting that helps investigate the lag. Use the account's evidence because action mix, customer journey, import method, and reporting configuration can change how quickly value appears.</p>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Transparent example</p><h2>T+1 looks like 2.00x; T+7 matures at 2.70x.</h2></div>
+          <div class="content-copy">
+            <p>A merchant's own comparable historical cohorts usually report 70% of eventual attributed conversion value by T+1, 90% by T+3, and are treated as mature at T+7. This curve is fictional and belongs only to this merchant's example. It is not a Google benchmark, a universal threshold, or a substitute for the current account's days-to-conversion distribution.</p>
+            <table class="definition-table"><thead><tr><th>Cohort age</th><th>Merchant's historical reported share</th><th>Permitted use</th></tr></thead><tbody><tr><td>T+1</td><td>Usually 70%</td><td>Sensitivity only</td></tr><tr><td>T+3</td><td>Usually 90%</td><td>Provisional read under the merchant's rule</td></tr><tr><td>T+7</td><td>Treated as mature</td><td>Budget comparison, subject to value corrections</td></tr></tbody></table>
+            <p>The current cohort has already accrued $10,000 of spend. At T+1, Google Ads reports $20,000 of attributed value, so the observed ratio is 2.00x. Dividing $20,000 by the merchant's 70% historical share produces a sensitivity estimate of $28,571, or 2.86x. The estimated remaining value is $8,571.</p>
+            <p>At T+7, the cohort actually reaches $27,000 of attributed value and 2.70x ROAS. The result is below the T+1 sensitivity estimate, which is exactly why the estimate must not be booked or treated as certain. The mature observation replaces the sensitivity case.</p>
+            <table class="definition-table"><thead><tr><th>Ledger</th><th>T+1</th><th>T+7</th></tr></thead><tbody><tr><td>Cost accrued</td><td>$10,000</td><td>$10,000</td></tr><tr><td>Reported attributed value</td><td>$20,000</td><td>$27,000</td></tr><tr><td>Estimated remaining value</td><td>$8,571 sensitivity</td><td>$0 reporting-delay estimate</td></tr><tr><td>Observed ROAS</td><td>2.00x</td><td>2.70x</td></tr><tr><td>Refund maturity</td><td>Tracked separately</td><td>Still tracked separately</td></tr></tbody></table>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Economic gate</p><h2>Mature does not mean profitable enough.</h2></div>
+          <div class="content-copy">
+            <p>Reporting maturity only says the attributed value is stable enough for the declared comparison. It does not set the business target. For a $100 net order, subtract $40 product cost, $8 fulfillment, $4 other variable cost, 3% payment and platform fees, and a 5% returns allowance. Contribution before advertising is $40.</p>
+            <table class="definition-table"><thead><tr><th>Economic check</th><th>Calculation</th><th>Result</th></tr></thead><tbody><tr><td>Contribution before ads</td><td>$100 - $40 - $8 - $4 - $3 - $5</td><td>$40.00</td></tr><tr><td>Break-even ROAS</td><td>$100 / $40</td><td>2.50x</td></tr><tr><td>Retained profit</td><td>10% x $100</td><td>$10.00</td></tr><tr><td>Target CPA</td><td>$40 - $10</td><td>$30.00</td></tr><tr><td>Target ROAS</td><td>$100 / $30</td><td>3.33x</td></tr><tr><td>Mature T+7 ROAS</td><td>$27,000 / $10,000</td><td>2.70x</td></tr></tbody></table>
+            <p>The mature 2.70x is above the 2.50x zero-profit floor but below the 3.33x retained-profit target. At 2.70x, modeled ad cost per $100 order is $37.04, leaving about $2.96 after advertising rather than the planned $10. Maturity makes that shortfall more decision-ready; it does not erase it.</p>
+            <a class="guide-action" href="/target-roas-calculator/?mode=costs&amp;aov=100&amp;cogs=40&amp;ship=8&amp;other=4&amp;fees=3&amp;returns=5&amp;roas=2.7&amp;profit=10">Open the mature 2.70x profit-threshold scenario</a>
+          </div>
+        </section>
+
+        <section class="page-content">
+          <div><p class="section-kicker">Budget decision gate</p><h2>Separate four states before acting.</h2></div>
+          <div class="content-copy">
+            <table class="definition-table"><thead><tr><th>State</th><th>Evidence</th><th>Allowed conclusion</th></tr></thead><tbody><tr><td>Immature and below target</td><td>Window has not reached the chosen historical maturity share</td><td>Show observed and sensitivity cases; wait for the scheduled read</td></tr><tr><td>Mature and below target</td><td>Frozen cohort reaches its maturity rule but misses 3.33x</td><td>Evaluate a budget, bid, mix, or economics change</td></tr><tr><td>Mature and above target</td><td>Frozen cohort reaches maturity and clears 3.33x</td><td>Assess volume and marginal profit before scaling</td></tr><tr><td>Reporting mature, value unresolved</td><td>Conversions settled but refunds or cancellations remain open</td><td>Keep a separate correction reserve and later value review</td></tr></tbody></table>
+            <p>Define the maturity rule and action bands before seeing the newest result. Compare cohorts with similar conversion actions, windows, weekdays, seasonality, and value imports. A curve built during a different tracking setup is not a valid denominator for the current sensitivity estimate.</p>
+            <p class="scope-note"><strong>Decision boundary:</strong> This page determines when recent attributed ROAS is stable enough to compare. The Google target guide calculates the economic target. A separate refund-adjustment workflow should later replace attributed gross value with mature net value when refunds and cancellations settle.</p>
+          </div>
+        </section>
+        <section class="page-content">
+          <div><p class="section-kicker">Official sources and judgment</p><h2>Google describes reporting delay; the merchant chooses the maturity rule.</h2></div>
+          <div class="content-copy">
+            <p>Google Ads documents how to investigate conversion reporting delays and describes target ROAS bidding. ROAS Break supplies the fictional 70%/90%/T+7 curve, sensitivity calculation, contribution costs, and decision gate. None of those example thresholds is a Google recommendation.</p>
+            <p>Recheck the current product interface and documentation when conversion actions, imports, attribution settings, or bidding strategies change. Preserve dated exports so a later report can be compared with the exact earlier read rather than memory.</p>
+            <ul class="source-list"><li data-source="01"><span><a href="https://support.google.com/google-ads/answer/6239119?hl=en">Google Ads: Find conversion reporting delays</a><small>Official guidance for investigating how long conversions take to appear. Checked August 21, 2026.</small></span></li><li data-source="02"><span><a href="https://support.google.com/google-ads/answer/6268637?hl=en">Google Ads: About target ROAS bidding</a><small>Official target ROAS definition and bidding context. Checked August 21, 2026.</small></span></li></ul>
+          </div>
+        </section>
+
+        <section class="related-reading" aria-labelledby="maturity-next"><div><p class="section-kicker">Continue the decision</p><h2 id="maturity-next">Use a mature result against the right target.</h2></div><div class="related-links"><a href="/guides/google-ads-target-roas-profit/"><span>Calculate the Google Ads profit target</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/ecommerce-revenue-basis/"><span>Align attributed value with net revenue</span><span aria-hidden="true">&rarr;</span></a><a href="/guides/attributed-roas-vs-mer/"><span>Reconcile channel credit after reports mature</span><span aria-hidden="true">&rarr;</span></a></div></section>
+      </article>
+    </main>
+    <footer class="inner-footer"><a class="brand" href="/"><span class="brand-mark">R</span><span>ROAS BREAK</span></a><nav class="footer-links" aria-label="Company and legal"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><p class="footer-copyright">&copy; <span data-year></span> ROAS Break</p></footer>
+    <script type="module" src="/src/pages/guide.ts"></script>
+  </body>
+</html>

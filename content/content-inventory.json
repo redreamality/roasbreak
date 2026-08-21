@@ -554,6 +554,35 @@
       ]
     },
     {
+      "id": "conversion-delay-data-maturity",
+      "type": "guide",
+      "url": "/guides/conversion-delay-and-data-maturity/",
+      "file": "guides/conversion-delay-and-data-maturity/index.html",
+      "cluster": "Planning & Measurement",
+      "primaryIntent": "Determine when recent attributed ROAS is mature enough for a budget decision",
+      "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=5&roas=2.7&profit=10",
+      "publishedOn": "2026-08-21",
+      "reviewedOn": "2026-08-21",
+      "reviewDue": "2026-11-19",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://support.google.com/google-ads/answer/6239119?hl=en",
+          "owner": "Google Ads",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://support.google.com/google-ads/answer/6268637?hl=en",
+          "owner": "Google Ads",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "tiktok-shop-roas-attribution",
       "type": "guide",
       "url": "/guides/tiktok-shop-roas-and-attribution/",
