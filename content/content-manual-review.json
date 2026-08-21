@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "scope": {
     "startedAtCommit": "1031047e9eb75ef58b59c8e57cffbc7e52a5d2b5",
     "reviewedThroughCommit": "4cfca1a48a8e2a2bddf320b63ecb5099037c6440",
@@ -12,6 +12,7 @@
     {
       "id": "methodology",
       "reviewedOn": "2026-08-20",
+      "contentSha256": "719b68f5113047d017c84a8e98acd23fb6dce022876d1c5c131ff65e42d5740e",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -45,6 +46,7 @@
     {
       "id": "ecommerce-profit-formulas",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "434ccaaf91873d8abd07fea877092d8e8d3a68993c917942e6d537698f722edb",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -79,6 +81,7 @@
     {
       "id": "poas-vs-roas",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "3861750ae26eda3fa25dbf444d0aee1c04bc4f71774244998973becbeb15834f",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -112,6 +115,7 @@
     {
       "id": "contribution-margin",
       "reviewedOn": "2026-08-20",
+      "contentSha256": "0f5693f5e1d49bdb48133a22935f0d9fe6a6a66a1e38654438bf97ba4c21a568",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -145,6 +149,7 @@
     {
       "id": "revenue-basis",
       "reviewedOn": "2026-08-20",
+      "contentSha256": "d2f5c1915e206507bde595d5276f1f20b228d638a69428b6956de70ddf5c5a91",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -178,6 +183,7 @@
     {
       "id": "shopify-net-sales",
       "reviewedOn": "2026-08-20",
+      "contentSha256": "f6935fe695eb8ddf928fb71a4e09437169cf7d4970b461aebe09b31a10eeae4a",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -211,6 +217,7 @@
     {
       "id": "roas-acos",
       "reviewedOn": "2026-08-20",
+      "contentSha256": "8f708802b84ca987a6f6a56f4e4290e3a0ce0b3d6c09c95cb092525fbe7e9dde",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -244,6 +251,7 @@
     {
       "id": "good-roas",
       "reviewedOn": "2026-08-20",
+      "contentSha256": "41e4b830bfb1bc2ef6b2c4f84bee68813a228d1c2abda268db0ca97ca5ee812f",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -277,6 +285,7 @@
     {
       "id": "google-target-roas",
       "reviewedOn": "2026-08-20",
+      "contentSha256": "02a2683ea89fe9607827627b4b8b9694422a8aa3e6f0a1d6662601cda7a77b43",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -310,6 +319,7 @@
     {
       "id": "meta-ads-roas-attribution",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "d761665177ca43a9d4a5d26e16cebede5db5d290a99dfef1578d466e2c68a4b7",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -345,6 +355,7 @@
     {
       "id": "amazon-break-even-acos",
       "reviewedOn": "2026-08-20",
+      "contentSha256": "4618ecf588fe575709387ce04e12b923e2ab31f31786db95f2faac68955a1968",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -378,6 +389,7 @@
     {
       "id": "discount-vs-bundle-profit",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "73ff1a613544a6274be5852009d349d97b863a307c9975cefe4e92bac587457f",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -412,6 +424,7 @@
     {
       "id": "free-shipping-profit-threshold",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "e84ce129e75cf197341a1e79ed6d0e34342ef143b7404d08792051542c8a6c46",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -446,6 +459,7 @@
     {
       "id": "returns-discounts",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "a806a11dc86ebe3c310604a37ff2be93a72f1953421eb90848c329f2c4a58b30",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -479,6 +493,7 @@
     {
       "id": "contribution-ltv-vs-revenue-ltv",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "afcc5f05dedc96fc16cc9c86fe67a9e5e9381960b3df257c00d6224bb48c9ab5",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -513,6 +528,7 @@
     {
       "id": "new-customer-roas-vs-blended-roas",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "6401ba3d183d0d9488ccd1431fc654e4db105e5ed3e8ee624905d65473013825",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -547,6 +563,7 @@
     {
       "id": "cac-payback-cohort",
       "reviewedOn": "2026-08-20",
+      "contentSha256": "44d11327955432fe62748c71491cd0626c9963445f8bd8764d8da946a2a50c3a",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -580,6 +597,7 @@
     {
       "id": "tiktok-shop-roas-attribution",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "9395287e3b9df628f1e29456a4a0358fff384ab82e288ea324cca0089a63e873",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -616,6 +634,7 @@
     {
       "id": "attributed-mer",
       "reviewedOn": "2026-08-20",
+      "contentSha256": "a9505e219bc313330e26aecbc154e7b89be67d5f52968289dbc6a5bf2f32d9bc",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -649,6 +668,7 @@
     {
       "id": "conversion-delay-data-maturity",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "076efc1c7f3266035ad34ccb505d6f4f300fbb8f685c1b146b67258d9d1241d2",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -683,6 +703,7 @@
     {
       "id": "refunds-conversion-adjustments",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "08cc9e4d43760ccdadc01b4e6bc4403aae53d1d8a58ef614758cccfe85ea133f",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -718,6 +739,7 @@
     {
       "id": "product-channel-profitability-scenario",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "b25197c0c198640a60316ad9d8ed0b6836ac0fec12370281be35f6b44991b98e",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
@@ -753,6 +775,7 @@
     {
       "id": "ecommerce-variable-cost-checklist",
       "reviewedOn": "2026-08-21",
+      "contentSha256": "bf11d598e4aef278f0a5c8c65175f9d4120cb5182db69813fa941c70052f0e36",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",

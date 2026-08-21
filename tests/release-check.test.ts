@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 // @ts-expect-error The executable release script intentionally remains plain JavaScript.
-import { validateManualReviews } from "../scripts/release-check.mjs";
+import { contentSha256, validateManualReviews } from "../scripts/release-check.mjs";
 
 const checkIds = [
   "semantic-intent-alignment",
@@ -20,17 +20,18 @@ function reviewCheck(result = "passed") {
   };
 }
 
-function assetReview(id: string, reviewedOn = "2026-08-20") {
+function assetReview(id: string, reviewedOn = "2026-08-20", hash = contentSha256(`<article>${id}</article>`)) {
   return {
     id,
     reviewedOn,
+    contentSha256: hash,
     checks: Object.fromEntries(checkIds.map((checkId) => [checkId, reviewCheck()])) as Partial<Record<CheckId, ReturnType<typeof reviewCheck>>>,
   };
 }
 
 const assets = [
-  { id: "alpha", reviewedOn: "2026-08-20" },
-  { id: "beta", reviewedOn: "2026-08-21" },
+  { id: "alpha", reviewedOn: "2026-08-20", contentSha256: contentSha256("<article>alpha</article>") },
+  { id: "beta", reviewedOn: "2026-08-21", contentSha256: contentSha256("<article>beta</article>") },
 ];
 
 describe("manual content review release gate", () => {
@@ -38,9 +39,12 @@ describe("manual content review release gate", () => {
     const inventory = JSON.parse(readFileSync(new URL("../content/content-inventory.json", import.meta.url), "utf8"));
     const reviewDocument = JSON.parse(readFileSync(new URL("../content/content-manual-review.json", import.meta.url), "utf8"));
     const reviewedIds = new Set(reviewDocument.assets.map((asset: { id: string }) => asset.id));
-    const scopedAssets = inventory.assets.filter((asset: { id: string; status: string }) =>
-      asset.status === "published" && reviewedIds.has(asset.id),
-    );
+    const scopedAssets = inventory.assets
+      .filter((asset: { id: string; status: string }) => asset.status === "published" && reviewedIds.has(asset.id))
+      .map((asset: { file: string }) => ({
+        ...asset,
+        contentSha256: contentSha256(readFileSync(new URL(`../${asset.file}`, import.meta.url))),
+      }));
 
     expect(reviewedIds.size).toBe(reviewDocument.scope.assetCount);
     expect(scopedAssets).toHaveLength(reviewDocument.scope.assetCount);
@@ -69,6 +73,23 @@ describe("manual content review release gate", () => {
 
     expect(checks.every((check: { status: string }) => check.status === "failed")).toBe(true);
     expect(checks[0].failures).toContain("alpha: manual review targets 2026-08-19, inventory reviewedOn is 2026-08-20");
+  });
+
+  it("blocks a same-day content change when the review targets the old HTML hash", () => {
+    const oldHash = contentSha256("<article>Original content</article>\n");
+    const changedHash = contentSha256("<article>Changed content</article>\n");
+    const review = assetReview("alpha", "2026-08-20", oldHash);
+    const changedAsset = { ...assets[0], contentSha256: changedHash };
+    const checks = validateManualReviews([changedAsset], { assets: [review] });
+
+    expect(checks.every((check: { status: string }) => check.status === "failed")).toBe(true);
+    expect(checks[0].failures).toContain(`alpha: manual review contentSha256 ${oldHash} does not match current HTML ${changedHash}`);
+  });
+
+  it("hashes the exact HTML bytes", () => {
+    expect(contentSha256(Buffer.from("<article>Stable</article>\n", "utf8"))).not.toBe(
+      contentSha256(Buffer.from("<article>Stable</article>\r\n", "utf8")),
+    );
   });
 
   it("blocks a missing check and an explicit failed result", () => {

@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -120,6 +121,10 @@ function normalizeHref(value) {
   return value?.replaceAll("&amp;", "&");
 }
 
+export function contentSha256(content) {
+  return createHash("sha256").update(content).digest("hex");
+}
+
 export function validateManualReviews(assets, reviewDocument) {
   const reviewAssets = Array.isArray(reviewDocument?.assets) ? reviewDocument.assets : [];
   const reviewsById = new Map();
@@ -147,6 +152,9 @@ export function validateManualReviews(assets, reviewDocument) {
       }
       if (review.reviewedOn !== asset.reviewedOn) {
         failures.push(`${asset.id}: manual review targets ${review.reviewedOn ?? "(missing)"}, inventory reviewedOn is ${asset.reviewedOn}`);
+      }
+      if (review.contentSha256 !== asset.contentSha256) {
+        failures.push(`${asset.id}: manual review contentSha256 ${review.contentSha256 ?? "(missing)"} does not match current HTML ${asset.contentSha256 ?? "(missing)"}`);
       }
       const check = review.checks?.[definition.id];
       if (!check || typeof check !== "object" || Array.isArray(check)) {
@@ -180,12 +188,15 @@ export function validateManualReviews(assets, reviewDocument) {
 }
 
 async function inspectAssets(inventory, sitemap) {
-  const assets = inventory.assets.filter((asset) => asset.status === "published");
+  const assets = inventory.assets.filter((asset) => asset.status === "published").map((asset) => ({ ...asset }));
   const htmlById = new Map();
   const fileFailures = [];
   for (const asset of assets) {
     try {
-      htmlById.set(asset.id, await readFile(resolve(root, asset.file), "utf8"));
+      const htmlBytes = await readFile(resolve(root, asset.file));
+      const html = htmlBytes.toString("utf8");
+      htmlById.set(asset.id, html);
+      asset.contentSha256 = contentSha256(htmlBytes);
     } catch (error) {
       fileFailures.push(`${asset.id}: cannot read ${asset.file} (${error.message})`);
     }
@@ -491,7 +502,7 @@ async function main() {
       branch: gitBranch.status === 0 ? gitBranch.stdout : "unknown",
       workingTreeClean: gitStatus.status === 0 && gitStatus.stdout.length === 0,
     },
-    assets: assets.map(({ id, type, url, file, primaryIntent, primaryTool, reviewedOn }) => ({
+    assets: assets.map(({ id, type, url, file, primaryIntent, primaryTool, reviewedOn, contentSha256 }) => ({
       id,
       type,
       url,
@@ -499,6 +510,7 @@ async function main() {
       primaryIntent,
       primaryTool,
       reviewedOn,
+      contentSha256,
     })),
     automatedChecks: checks,
     manualChecks,
