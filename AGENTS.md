@@ -99,3 +99,5 @@
 - 完整 Playwright 套件以多 worker 并发运行时，单个 `page.goto()` 可能因本机资源争用超过 30 秒，而同一用例在另一个项目或定向单 worker 复跑通过。遇到仅导航超时且其余同路径用例正常时，先用 `pnpm exec playwright test <spec> --project=<project> --grep '<test>'` 定向复核；复跑稳定通过后按并发瞬时超时记录，不要直接判定产品回归。
 - PowerShell 的 `Get-ChildItem -Recurse -File src scripts tests` 会把多个目录当成无效位置参数并报错；扫描多个目录时应显式使用 `Get-ChildItem -Path src,scripts,tests -Recurse -File`，或分别调用后汇总。
 - 用 `rg` 显式列出不存在的文件会返回路径错误；扫描 `sitemap.xml`、`robots.txt` 等静态资产前先用 `rg --files` 定位真实目录（本项目在 `public/`），不要假定文件位于仓库根目录。
+- 为指南到 Target ROAS 的 E2E 推导期望结果时，`profit` 查询参数表示保留利润占收入的百分比，不是金额。正文若写保留 `$6` 且 AOV 为 `$60`，CTA 应传 `profit=10`；先核对参数单位再断言结果，避免把内容参数错误固化为测试期望。
+- 不要假定指南页面样式位于 `src/styles/inner.css`；本项目指南通过 `src/pages/guide.ts` 引入根级 `src/styles.css` 与 `src/tool-pages.css`。读取样式前先用 `rg --files src` 定位真实文件，避免 `Get-Content` 因路径不存在失败。
