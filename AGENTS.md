@@ -145,3 +145,4 @@
 - 首页计算器的静态表单会早于模块 hydration 可见；Analytics E2E 从指南跳转后必须先等待 `#calculator[data-status]`，再做 trusted input/change，避免在事件监听器和隐私初始化前完成交互。扫描 dataLayer 是否泄露输入时应排除 `js` Date 初始化行，或结构化检查 config/event payload；不能对含随机 ISO 时间戳的整层 JSON 做短数值子串断言。
 - 给子代理分派本仓库任务时，消息中必须写出绝对仓库路径，并要求每条 `git`/`pnpm`/文件命令显式使用该 workdir；子代理继承会话上下文不等于继承正确当前目录，不能只依赖项目级路径说明。
 - `guide-tool-results.spec.ts` 的每条参数化路径包含指南打开、工具跳转、返回指南和恢复 URL 共 4 次导航；在 8-worker 全套负载下可能超过 Playwright 默认 30 秒，即使同项定向只需约 5 秒。该 describe 应保留 60 秒 per-test 预算且不加重试；遇超时时先定向复跑整组确认逻辑，再判断是否为真实 URL/结果回归。
+- 用 `rg` 跨多个候选目录扫描时，只要其中一个目录不存在，命令就会报 `os error 2` 并以退出码 1 结束，即使其他目录已有有效匹配。先用 `rg --files` 或 `Test-Path` 确认实际目录（本项目 E2E 位于 `tests/e2e`，没有顶层 `e2e`），再把存在的路径传给 `rg`。
