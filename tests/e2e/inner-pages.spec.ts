@@ -76,10 +76,13 @@ test("passes target state to the profit lever ranking", async ({ page }) => {
   await expect(page.locator("#order-value")).toHaveValue("125");
   await expect(page.locator("#target-profit")).toHaveValue("12");
   await expect(page.locator(".lever-row").nth(1)).toContainText("Raise average order value");
+  await expect(page.locator("#selected-lever")).toContainText("Highest-impact scenario");
   await expect(page.locator("#selected-lever")).toContainText("Adds");
   await page.locator('[data-lever="fees"]').click();
   await expect(page).toHaveURL(/lever=fees/);
+  await expect(page.locator("#selected-lever")).toContainText("Selected scenario");
   await page.reload();
+  await expect(page.locator("#selected-lever")).toContainText("Selected scenario");
   await expect(page.locator("#selected-lever")).toContainText("Reduce payment and platform fees");
 });
 

@@ -97,6 +97,10 @@
 - 指南模板把 `.guide-action` 作为唯一主工具 CTA、Analytics 事件和发布测试契约；同页的辅助动作应使用 `.text-action` 或 `.related-links`。不要给两个链接都套 `.guide-action`，否则 E2E 会正确报主动作不唯一。
 - GitHub Actions job 若在 runner 分配前失败，`gh run view <run-id> --log-failed` 会因根本没有 step 日志而返回退出码 1 和 `log not found`；不要把它误判为日志权限或 CLI 故障。改查 job 的 `steps`/`runner_id`，并读取 check-run annotations 获取 Billing、spending limit 等平台级拒绝原因。
 - 完整 Playwright 套件以多 worker 并发运行时，单个 `page.goto()` 可能因本机资源争用超过 30 秒，而同一用例在另一个项目或定向单 worker 复跑通过。遇到仅导航超时且其余同路径用例正常时，先用 `pnpm exec playwright test <spec> --project=<project> --grep '<test>'` 定向复核；复跑稳定通过后按并发瞬时超时记录，不要直接判定产品回归。
+- `content/content-inventory.json` 的 `primaryTool` 必须与页面唯一 `.guide-action` 的完整 `href` 精确一致，包括查询参数及其顺序；把它只写成工具 pathname 会导致 `pnpm test:content` 失败。修改预填 CTA 时应同步复制完整 URL 到资产清单。
+- 定向运行 Playwright 前先读取 `playwright.config.ts` 的实际项目名；本仓库桌面项目名是 `chromium`，不是泛称 `desktop`，传错 `--project` 会在测试启动前失败。
+- `pnpm release:check:verify` 使用 `--no-write`，不会生成临时 `reports/release-check.json`；读取发布报告前先核对脚本的实际输出路径与 `Test-Path`，持久基线位于 `reports/content-release-baseline.json`。
+- 读取计算模型前先用 `rg --files src` 定位真实模块；本仓库核心计算位于 `src/lib/calculator.ts` 与 `src/lib/decision-tools.ts`，不要凭常见命名猜测不存在的 `src/calculations.ts` 或 `src/types.ts`。
 - PowerShell 的 `Get-ChildItem -Recurse -File src scripts tests` 会把多个目录当成无效位置参数并报错；扫描多个目录时应显式使用 `Get-ChildItem -Path src,scripts,tests -Recurse -File`，或分别调用后汇总。
 - 用 `rg` 显式列出不存在的文件会返回路径错误；扫描 `sitemap.xml`、`robots.txt` 等静态资产前先用 `rg --files` 定位真实目录（本项目在 `public/`），不要假定文件位于仓库根目录。
 - 为指南到 Target ROAS 的 E2E 推导期望结果时，`profit` 查询参数表示保留利润占收入的百分比，不是金额。正文若写保留 `$6` 且 AOV 为 `$60`，CTA 应传 `profit=10`；先核对参数单位再断言结果，避免把内容参数错误固化为测试期望。

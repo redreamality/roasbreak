@@ -459,15 +459,16 @@
     {
       "id": "returns-discounts",
       "reviewedOn": "2026-08-21",
-      "contentSha256": "a806a11dc86ebe3c310604a37ff2be93a72f1953421eb90848c329f2c4a58b30",
+      "contentSha256": "44f80760d74e536df618ff08eba20ea48664f1f5c8a089849e101f8c43450eed",
       "checks": {
         "semantic-intent-alignment": {
           "result": "passed",
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "The page separately defines discount, refund, restockable return, unsellable return, and cancellation mechanisms and assigns each a different operating response.",
-            "The corrected worked return and promotion workflow show why return-rate percentages and discount economics require different models, satisfying the separation intent."
+            "The existing canonical page retains one primary intent: separating the profit effects of discounts, refunds, and returns, while the allowable-CPA section adds a subordinate decision task without creating a competing URL.",
+            "The direct answer distinguishes return rate, refund rate, and expected net economic loss; the new scenario translates the loss allowance into contribution, allowable CPA, and target ROAS while keeping promotion economics separate.",
+            "The page has one primary CTA with complete, non-sensitive cost-mode inputs and an explicit returns selection; its initial and edited states restore successfully."
           ]
         },
         "facts-vs-recommendations": {
@@ -475,8 +476,9 @@
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "Shopify sales adjustments and GA4 purchase/refund fields are linked as official source context; the expected-loss equation and possible actions are visibly presented as the page's modeling workflow.",
-            "The page states that return rate does not automatically equal a loss allowance and exposes product recovery and operational costs as assumptions."
+            "Shopify sales adjustments and GA4 purchase/refund fields remain tied to dated first-party sources, while operating actions and allowance calculations are presented as the page's modeling workflow rather than platform promises.",
+            "The $100 scenario is explicitly labeled illustrative and non-benchmark, and the page states that the 2-point change is a sensitivity test rather than a forecast of lower returns or additional spend.",
+            "The linked tool labels the explicitly selected returns lever as \"Selected scenario\"; only the first-ranked result is labeled \"Highest-impact scenario\", so the CTA no longer presents the third-ranked returns lever as an unsupported recommendation."
           ]
         },
         "worked-example-recalculation": {
@@ -484,8 +486,9 @@
           "reviewer": "Codex independent release review",
           "reviewedAt": "2026-08-21",
           "evidence": [
-            "After correction 4575903, original contribution is 100-35-3=62; a restockable return loses 62 contribution plus 3 retained fee plus 9 reverse logistics, totaling 74 versus keeping the sale.",
-            "An unsellable return adds 35 inventory loss, so total impact is 74+35=109; an 8% to 10% rate change is 2 percentage points and 2/8=25% relative."
+            "The original return example still recomputes: 100-35-3=62 contribution; a restockable return loses 62+3+9=74 versus keeping the sale, and an unsellable return adds 35 for a total impact of 109.",
+            "At a 10% return-loss allowance, contribution is 100-40-8-4-3-10=35; reserving $10 leaves $25 allowable CPA, and 100/25=4.00x target ROAS.",
+            "At an 8% allowance, contribution is 100-40-8-4-3-8=37; allowable CPA is 37-10=27, and 100/27=3.7037, displayed as 3.70x. At 3.00x ROAS, ad cost is 100/3=33.3333, so after-ad contribution rises from 35-33.3333=1.6667 to 37-33.3333=3.6667, displayed as $1.67 and $3.67."
           ]
         }
       }

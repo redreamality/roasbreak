@@ -152,7 +152,8 @@ function leverPage(): void {
     state.set("profit", String(numberValue(form, "target-profit")));
     state.set("lever", selected.id);
     replaceUrlState(state);
-    panel.innerHTML = `<span>Highest-impact scenario</span><strong>${selected.label} ${selected.change}</strong><p>Adds ${currency.format(selected.targetCpaDelta)} of CPA room and ${currency.format(selected.profitDelta)} profit per order at the current ROAS.</p><button type="button" class="secondary-button" id="copy-action">Copy action summary</button>`;
+    const scenarioLabel = selected.id === currentResults[0]?.id ? "Highest-impact scenario" : "Selected scenario";
+    panel.innerHTML = `<span>${scenarioLabel}</span><strong>${selected.label} ${selected.change}</strong><p>Adds ${currency.format(selected.targetCpaDelta)} of CPA room and ${currency.format(selected.profitDelta)} profit per order at the current ROAS.</p><button type="button" class="secondary-button" id="copy-action">Copy action summary</button>`;
     panel.querySelector("#copy-action")?.addEventListener("click", () => {
       copyAndTrack(`${selected.label} ${selected.change}: Target CPA ${currency.format(selected.targetCpa)} (${formatSigned(selected.targetCpaDelta)}); target ROAS ${formatRoas(selected.targetRoas)}.\nBasis: single-variable scenario using net product revenue and entered variable costs; feasibility and demand response not forecast.\nRestore scenario: ${stateUrl(state)}`, "Action copied", "lever_copied", { lever: selected.id });
     });

@@ -6,8 +6,11 @@ type GuideJourney = {
   toolPath: string;
   resultSelector: string;
   resultText: string;
+  additionalResultText?: string;
   inputSelector: string;
   inputValue: string;
+  secondaryResultSelector?: string;
+  secondaryResultText?: string;
   restoreInputValue?: string;
   restoredResultText?: string;
 };
@@ -155,13 +158,16 @@ const guideJourneys: GuideJourney[] = [
   {
     name: "returns and discounts",
     guidePath: "/guides/returns-and-discounts/",
-    toolPath: "/promotion-profit-calculator/",
-    resultSelector: "#required-lift",
-    resultText: "+67.3%",
-    inputSelector: "#promotion-price",
-    inputValue: "64",
-    restoreInputValue: "72",
-    restoredResultText: "+25.2%",
+    toolPath: "/profit-lever-calculator/",
+    resultSelector: "#selected-lever",
+    resultText: "Selected scenario",
+    additionalResultText: "Adds $2.00 of CPA room",
+    secondaryResultSelector: '[data-lever="returns"]',
+    secondaryResultText: "3.70x",
+    inputSelector: "#return-pct",
+    inputValue: "10",
+    restoreInputValue: "8",
+    restoredResultText: "Adds $2.00 of CPA room",
   },
   {
     name: "contribution LTV versus revenue LTV",
@@ -280,6 +286,12 @@ test.describe("published guide to tool journeys", () => {
       await expect.poll(() => new URL(page.url()).pathname).toBe(journey.toolPath);
       await expect(page.locator(journey.resultSelector)).toBeVisible();
       await expect(page.locator(journey.resultSelector)).toContainText(journey.resultText);
+      if (journey.additionalResultText) {
+        await expect(page.locator(journey.resultSelector)).toContainText(journey.additionalResultText);
+      }
+      if (journey.secondaryResultSelector && journey.secondaryResultText) {
+        await expect(page.locator(journey.secondaryResultSelector)).toContainText(journey.secondaryResultText);
+      }
 
       const restoreUrl = await restorableUrl(page, journey);
       expect(new URL(restoreUrl).search).not.toBe("");

@@ -176,10 +176,10 @@
   - 产出：bundle 前后收入、COGS、件单履约和可承受 CPA 的透明案例。
   - 验收：不默认 bundle 一定提高转化；复用 Profit Lever 或 Promotion，而非复制计算公式。
 
-- [ ] `P1-003` Return-rate Impact on Allowable CPA。
+- [x] `P1-003` Return-rate Impact on Allowable CPA。
   - 产出：Returns 指南的任务型扩展或交互案例。
   - 验收：与现有主指南 canonical/意图分工明确；区分退货率、退款率和净损失率。
-  - 状态：既有 Returns 与 Refund Adjustments 已覆盖口径，但尚无独立 allowable CPA 任务的使用信号，暂不新增 URL。
+  - 完成证据：在现有 Returns canonical 内加入 10%→8% expected net-loss allowance 的透明案例，展示 allowable CPA `$25→$27` 与 target ROAS `4.00x→3.70x`；主 CTA 预填并预选 Returns lever，E2E 覆盖计算结果、编辑和 URL 恢复。未声称存在新增 URL 的独立需求信号。
 
 - [x] `P1-004` New-customer ROAS vs Blended ROAS。
   - 产出：新客收入、总收入、首单贡献和复购贡献的口径图与案例。

@@ -480,7 +480,7 @@
       "file": "guides/returns-and-discounts/index.html",
       "cluster": "Promotions & Merchandising",
       "primaryIntent": "Separate the profit effects of discounts, refunds, and returns",
-      "primaryTool": "/promotion-profit-calculator/",
+      "primaryTool": "/profit-lever-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=10&roas=3&profit=10&lever=returns",
       "publishedOn": "2026-08-13",
       "reviewedOn": "2026-08-21",
       "reviewDue": "2027-02-17",
