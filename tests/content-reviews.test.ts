@@ -18,6 +18,8 @@ const asset = {
 };
 
 const inventory = { assets: [asset, { ...asset, id: "beta", publishedOn: "2026-02-01" }] };
+const repositoryCommit = "a".repeat(40);
+const knownRepositoryCommits = new Set([repositoryCommit]);
 
 function unavailable(reasonCode = "credentials-unavailable") {
   return {
@@ -46,7 +48,7 @@ function validReview(assetId = "alpha", checkpointDay = 30): any {
     checkpointDay,
     completedAt: "2026-03-02T12:00:00.000Z",
     window: { from: "2026-01-31", through: "2026-03-01" },
-    repositoryCommit: "a".repeat(40),
+    repositoryCommit,
     signals: {
       indexing: unavailable(),
       organicSearch: unavailable(),
@@ -103,7 +105,7 @@ describe("content performance review schedule", () => {
   });
 
   it("marks only a complete, valid checkpoint record as completed", () => {
-    const result = buildReviewSchedule({ assets: [asset] }, ledger([validReview()]), "2026-03-02");
+    const result = buildReviewSchedule({ assets: [asset] }, ledger([validReview()]), "2026-03-02", knownRepositoryCommits);
     expect(result.failures).toEqual([]);
     expect(result.schedule[0].status).toBe("completed");
     expect(result.schedule[1].status).toBe("scheduled");
@@ -127,11 +129,12 @@ describe("content performance review validation", () => {
       { assets: [asset] },
       ledger([missingSignal, validReview(), validReview(), unknownCheckpoint, unknownAsset]),
       "2026-03-02",
+      knownRepositoryCommits,
     );
 
     expect(result.failures.some((failure: string) => failure.includes("copyShare: signal is required"))).toBe(true);
     expect(result.failures).toContain("alpha:30: duplicate review record");
-    expect(buildReviewSchedule({ assets: [asset] }, ledger([validReview(), validReview()]), "2026-03-02").schedule[0].status).toBe("due");
+    expect(buildReviewSchedule({ assets: [asset] }, ledger([validReview(), validReview()]), "2026-03-02", knownRepositoryCommits).schedule[0].status).toBe("due");
     expect(result.failures.some((failure: string) => failure.includes("checkpointDay must be 30, 60, or 90"))).toBe(true);
     expect(result.failures.some((failure: string) => failure.includes("assetId is not a published"))).toBe(true);
   });
@@ -139,17 +142,32 @@ describe("content performance review validation", () => {
   it("rejects reviews completed early or in the future", () => {
     const early = { ...validReview(), completedAt: "2026-03-01T23:59:59.000Z" };
     const future = { ...validReview(), completedAt: "2026-03-03T00:00:00.000Z" };
-    const earlyResult = validateReviewLedger({ assets: [asset] }, ledger([early]), "2026-03-02");
-    const futureResult = validateReviewLedger({ assets: [asset] }, ledger([future]), "2026-03-02");
+    const earlyResult = validateReviewLedger({ assets: [asset] }, ledger([early]), "2026-03-02", knownRepositoryCommits);
+    const futureResult = validateReviewLedger({ assets: [asset] }, ledger([future]), "2026-03-02", knownRepositoryCommits);
 
     expect(earlyResult.failures.some((failure: string) => failure.includes("cannot be completed before"))).toBe(true);
     expect(futureResult.failures.some((failure: string) => failure.includes("completedAt is in the future"))).toBe(true);
   });
 
+  it("rejects evidence captured before the window closes or after completion", () => {
+    const review = validReview();
+    review.signals.organicSearch.attemptedAt = "2026-02-28T23:59:59.000Z";
+    review.signals.indexing.attemptedAt = "2026-03-02T13:00:00.000Z";
+    const failures = validateReviewLedger({ assets: [asset] }, ledger([review]), "2026-03-02", knownRepositoryCommits).failures;
+
+    expect(failures.some((failure: string) => failure.includes("predates the review window close"))).toBe(true);
+    expect(failures.some((failure: string) => failure.includes("is after completedAt"))).toBe(true);
+  });
+
+  it("requires the recorded repository commit to exist in the checkout", () => {
+    const failures = validateReviewLedger({ assets: [asset] }, ledger([validReview()]), "2026-03-02", new Set()).failures;
+    expect(failures.some((failure: string) => failure.includes("not available in this Git checkout"))).toBe(true);
+  });
+
   it("requires explicit reason and evidence when a signal is unavailable", () => {
     const review = validReview();
     review.signals.calculations = { ...unavailable("not-instrumented"), reason: "", evidence: [] };
-    const result = validateReviewLedger({ assets: [asset] }, ledger([review]), "2026-03-02");
+    const result = validateReviewLedger({ assets: [asset] }, ledger([review]), "2026-03-02", knownRepositoryCommits);
 
     expect(result.failures.some((failure: string) => failure.includes("calculations: reason is required"))).toBe(true);
     expect(result.failures.some((failure: string) => failure.includes("calculations: evidence must be"))).toBe(true);
@@ -158,11 +176,11 @@ describe("content performance review validation", () => {
   it("accepts genuine zero search values but requires all typed fields", () => {
     const zero = validReview();
     zero.signals.organicSearch = available({ impressions: 0, clicks: 0, queries: [] });
-    expect(validateReviewLedger({ assets: [asset] }, ledger([zero]), "2026-03-02").failures).toEqual([]);
+    expect(validateReviewLedger({ assets: [asset] }, ledger([zero]), "2026-03-02", knownRepositoryCommits).failures).toEqual([]);
 
     const incomplete = validReview();
     incomplete.signals.organicSearch = available({ impressions: 0, clicks: 0 }) as typeof incomplete.signals.organicSearch;
-    expect(validateReviewLedger({ assets: [asset] }, ledger([incomplete]), "2026-03-02").failures.some(
+    expect(validateReviewLedger({ assets: [asset] }, ledger([incomplete]), "2026-03-02", knownRepositoryCommits).failures.some(
       (failure: string) => failure.includes("value.queries must be an array"),
     )).toBe(true);
   });
@@ -176,7 +194,7 @@ describe("content performance review validation", () => {
       reviewDue: "2026-11-30",
       status: "current",
     });
-    const failures = validateReviewLedger({ assets: [asset] }, ledger([review]), "2026-03-02").failures;
+    const failures = validateReviewLedger({ assets: [asset] }, ledger([review]), "2026-03-02", knownRepositoryCommits).failures;
 
     expect(failures.some((failure: string) => failure.includes("sourceCount must match inventory"))).toBe(true);
     expect(failures.some((failure: string) => failure.includes("reviewDue must match inventory"))).toBe(true);
@@ -188,10 +206,10 @@ describe("content performance review validation", () => {
     const selfMerge = validReview();
     selfMerge.decision = { ...selfMerge.decision, type: "merge", targetAssetId: "alpha" } as typeof selfMerge.decision;
 
-    expect(validateReviewLedger(inventory, ledger([invalidType]), "2026-03-02").failures.some(
+    expect(validateReviewLedger(inventory, ledger([invalidType]), "2026-03-02", knownRepositoryCommits).failures.some(
       (failure: string) => failure.includes("decision.type must be"),
     )).toBe(true);
-    expect(validateReviewLedger(inventory, ledger([selfMerge]), "2026-03-02").failures.some(
+    expect(validateReviewLedger(inventory, ledger([selfMerge]), "2026-03-02", knownRepositoryCommits).failures.some(
       (failure: string) => failure.includes("different published targetAssetId"),
     )).toBe(true);
   });
@@ -200,17 +218,28 @@ describe("content performance review validation", () => {
     const review = validReview();
     review.decision.type = "expand";
     review.signals.organicSearch = available({ impressions: 0, clicks: 0, queries: [] });
-    review.signals.guideToTool = available({ guideId: "alpha", target: "/?mode=costs", guideViews: 0, guideToToolClicks: 0 });
-    review.signals.calculations = available({ completed: 0 });
-    review.signals.copyShare = available({ targetCopied: 0, leverCopied: 0, promotionCopied: 0, paybackCopied: 0, scenariosCopied: 0 });
+    review.signals.guideToTool = available({ guideId: "alpha", targetPath: "/", guideViews: 0, guideToToolClicks: 0 });
+    review.signals.calculations = available({ guideId: "alpha", completed: 0 });
+    review.signals.copyShare = available({ guideId: "alpha", breakEvenCopied: 0, targetCopied: 0, leverCopied: 0, promotionCopied: 0, paybackCopied: 0, scenariosCopied: 0, guideChecklistCopied: 0 });
 
-    expect(validateReviewLedger({ assets: [asset] }, ledger([review]), "2026-03-02").failures.some(
+    expect(validateReviewLedger({ assets: [asset] }, ledger([review]), "2026-03-02", knownRepositoryCommits).failures.some(
       (failure: string) => failure.includes("expand requires positive demand"),
     )).toBe(true);
 
     review.signals.organicSearch = available({ impressions: 10, clicks: 1, queries: [] });
-    review.signals.guideToTool = available({ guideId: "alpha", target: "/?mode=costs", guideViews: 5, guideToToolClicks: 1 });
-    expect(validateReviewLedger({ assets: [asset] }, ledger([review]), "2026-03-02").failures).toEqual([]);
+    review.signals.guideToTool = available({ guideId: "alpha", targetPath: "/", guideViews: 5, guideToToolClicks: 1 });
+    expect(validateReviewLedger({ assets: [asset] }, ledger([review]), "2026-03-02", knownRepositoryCommits).failures).toEqual([]);
+  });
+
+  it("does not count another guide's calculation or copy activity toward expand", () => {
+    const review = validReview();
+    review.decision.type = "expand";
+    review.signals.organicSearch = available({ impressions: 10, clicks: 1, queries: [] });
+    review.signals.calculations = available({ guideId: "beta", completed: 2 });
+    review.signals.copyShare = available({ guideId: "beta", breakEvenCopied: 1, targetCopied: 0, leverCopied: 0, promotionCopied: 0, paybackCopied: 0, scenariosCopied: 0, guideChecklistCopied: 0 });
+    const failures = validateReviewLedger(inventory, ledger([review]), "2026-03-02", knownRepositoryCommits).failures;
+
+    expect(failures.filter((failure: string) => failure.includes("value.guideId must match alpha"))).toHaveLength(2);
   });
 
   it("creates a stdout-ready draft without mutating the ledger", () => {
@@ -221,5 +250,9 @@ describe("content performance review validation", () => {
       window: { from: "2026-01-31", through: "2026-03-01" },
       decision: { type: "observe" },
     });
+    draft.repositoryCommit = repositoryCommit;
+    expect(validateReviewLedger({ assets: [asset] }, ledger([draft]), "2026-03-02", knownRepositoryCommits).failures.some(
+      (failure: string) => failure.includes("draft placeholders must be replaced"),
+    )).toBe(true);
   });
 });

@@ -1,8 +1,10 @@
+import { spawnSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 const root = resolve(import.meta.dirname, "..");
+const siteOrigin = "https://roasbreak.com";
 const inventoryPath = resolve(root, "content/content-inventory.json");
 const ledgerPath = resolve(root, "content/content-performance-reviews.json");
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -88,9 +90,16 @@ function expectedFreshness(asset, completedDate) {
   };
 }
 
-function validateEvidence(signal, label, timestampField, failures) {
+function validateEvidence(signal, label, timestampField, windowThrough, completedAt, asOf, failures) {
   if (!isNonEmptyString(signal.source)) failures.push(`${label}: source is required`);
-  if (!isIsoInstant(signal[timestampField])) failures.push(`${label}: ${timestampField} must be an ISO UTC instant`);
+  const timestamp = signal[timestampField];
+  if (!isIsoInstant(timestamp)) failures.push(`${label}: ${timestampField} must be an ISO UTC instant`);
+  else {
+    const timestampDate = timestamp.slice(0, 10);
+    if (timestampDate < windowThrough) failures.push(`${label}: ${timestampField} predates the review window close ${windowThrough}`);
+    if (isIsoInstant(completedAt) && timestamp > completedAt) failures.push(`${label}: ${timestampField} is after completedAt`);
+    if (timestampDate > asOf) failures.push(`${label}: ${timestampField} is in the future relative to ${asOf}`);
+  }
   if (!Array.isArray(signal.evidence) || signal.evidence.length === 0 || signal.evidence.some((entry) => !isNonEmptyString(entry))) {
     failures.push(`${label}: evidence must be a non-empty string array`);
   }
@@ -131,7 +140,8 @@ function validateAvailableValue(name, value, asset, completedDate, label, failur
 
   if (name === "guideToTool") {
     if (value.guideId !== asset.id) failures.push(`${label}: value.guideId must match ${asset.id}`);
-    if (value.target !== asset.primaryTool) failures.push(`${label}: value.target must match the inventory primaryTool`);
+    const expectedTargetPath = new URL(asset.primaryTool, siteOrigin).pathname;
+    if (value.targetPath !== expectedTargetPath) failures.push(`${label}: value.targetPath must match the inventory primaryTool pathname (${expectedTargetPath})`);
     if (!isNonNegativeInteger(value.guideViews)) failures.push(`${label}: value.guideViews must be a non-negative integer`);
     if (!isNonNegativeInteger(value.guideToToolClicks)) failures.push(`${label}: value.guideToToolClicks must be a non-negative integer`);
     if (isNonNegativeInteger(value.guideViews) && isNonNegativeInteger(value.guideToToolClicks) && value.guideToToolClicks > value.guideViews) {
@@ -139,12 +149,14 @@ function validateAvailableValue(name, value, asset, completedDate, label, failur
     }
   }
 
-  if (name === "calculations" && !isNonNegativeInteger(value.completed)) {
-    failures.push(`${label}: value.completed must be a non-negative integer`);
+  if (name === "calculations") {
+    if (value.guideId !== asset.id) failures.push(`${label}: value.guideId must match ${asset.id}`);
+    if (!isNonNegativeInteger(value.completed)) failures.push(`${label}: value.completed must be a non-negative integer`);
   }
 
   if (name === "copyShare") {
-    for (const event of ["targetCopied", "leverCopied", "promotionCopied", "paybackCopied", "scenariosCopied"]) {
+    if (value.guideId !== asset.id) failures.push(`${label}: value.guideId must match ${asset.id}`);
+    for (const event of ["breakEvenCopied", "targetCopied", "leverCopied", "promotionCopied", "paybackCopied", "scenariosCopied", "guideChecklistCopied"]) {
       if (!isNonNegativeInteger(value[event])) failures.push(`${label}: value.${event} must be a non-negative integer`);
     }
   }
@@ -157,18 +169,19 @@ function validateAvailableValue(name, value, asset, completedDate, label, failur
   }
 }
 
-function validateSignal(name, signal, asset, completedDate, label, failures) {
+function validateSignal(name, signal, asset, windowThrough, completedAt, asOf, label, failures) {
   if (!isObject(signal)) {
     failures.push(`${label}: signal is required`);
     return;
   }
   if (signal.availability === "available") {
-    validateEvidence(signal, label, "queriedAt", failures);
+    validateEvidence(signal, label, "queriedAt", windowThrough, completedAt, asOf, failures);
+    const completedDate = isIsoInstant(completedAt) ? completedAt.slice(0, 10) : asOf;
     validateAvailableValue(name, signal.value, asset, completedDate, label, failures);
     return;
   }
   if (signal.availability === "unavailable") {
-    validateEvidence(signal, label, "attemptedAt", failures);
+    validateEvidence(signal, label, "attemptedAt", windowThrough, completedAt, asOf, failures);
     if (!unavailableReasonCodes.has(signal.reasonCode)) failures.push(`${label}: reasonCode is invalid`);
     if (!isNonEmptyString(signal.reason)) failures.push(`${label}: reason is required`);
     if ("value" in signal) failures.push(`${label}: unavailable signals must not contain value`);
@@ -204,7 +217,7 @@ function validateDecision(review, asset, publishedIds, label, failures) {
     const demandCount = signalCount(review.signals?.organicSearch, ["impressions", "clicks"]);
     const behaviorCount = signalCount(review.signals?.guideToTool, ["guideToToolClicks"])
       + signalCount(review.signals?.calculations, ["completed"])
-      + signalCount(review.signals?.copyShare, ["targetCopied", "leverCopied", "promotionCopied", "paybackCopied", "scenariosCopied"]);
+      + signalCount(review.signals?.copyShare, ["breakEvenCopied", "targetCopied", "leverCopied", "promotionCopied", "paybackCopied", "scenariosCopied", "guideChecklistCopied"]);
     if (demandCount === 0 || behaviorCount === 0) failures.push(`${label}: expand requires positive demand and product-behavior evidence`);
   }
 }
@@ -222,12 +235,14 @@ function validatePolicy(ledger, failures) {
   if (!Array.isArray(ledger.reviews)) failures.push("ledger: reviews must be an array");
 }
 
-function validateReview(review, asset, asOf, publishedIds) {
+function validateReview(review, asset, asOf, publishedIds, knownRepositoryCommits) {
   const label = `${review?.assetId ?? "(missing)"}:${review?.checkpointDay ?? "(missing)"}`;
   const failures = [];
   if (!checkpointDays.includes(review?.checkpointDay)) failures.push(`${label}: checkpointDay must be 30, 60, or 90`);
   if (!isIsoInstant(review?.completedAt)) failures.push(`${label}: completedAt must be an ISO UTC instant`);
   if (!commitPattern.test(review?.repositoryCommit ?? "")) failures.push(`${label}: repositoryCommit must be a 40-character Git SHA`);
+  else if (!knownRepositoryCommits?.has(review.repositoryCommit.toLowerCase())) failures.push(`${label}: repositoryCommit is not available in this Git checkout`);
+  if (review?.draft === true || JSON.stringify(review).includes("REPLACE_")) failures.push(`${label}: draft placeholders must be replaced before committing a review`);
 
   const dueOn = checkpointDays.includes(review?.checkpointDay) ? addUtcDays(asset.publishedOn, review.checkpointDay) : null;
   const completedDate = isIsoInstant(review?.completedAt) ? review.completedAt.slice(0, 10) : null;
@@ -244,7 +259,10 @@ function validateReview(review, asset, asOf, publishedIds) {
   if (!isObject(review?.signals)) {
     failures.push(`${label}: signals are required`);
   } else {
-    for (const name of signalNames) validateSignal(name, review.signals[name], asset, completedDate ?? asOf, `${label}:${name}`, failures);
+    const windowThrough = isObject(review.window) && isIsoDate(review.window.through) ? review.window.through : dueOn ? previousUtcDay(dueOn) : asset.publishedOn;
+    for (const name of signalNames) {
+      validateSignal(name, review.signals[name], asset, windowThrough, review.completedAt, asOf, `${label}:${name}`, failures);
+    }
     for (const unexpectedName of Object.keys(review.signals).filter((name) => !signalNames.includes(name))) {
       failures.push(`${label}: unexpected signal ${unexpectedName}`);
     }
@@ -253,7 +271,7 @@ function validateReview(review, asset, asOf, publishedIds) {
   return failures;
 }
 
-export function validateReviewLedger(inventory, ledger, asOf) {
+export function validateReviewLedger(inventory, ledger, asOf, knownRepositoryCommits = new Set()) {
   const failures = [];
   if (!isIsoDate(asOf)) return { failures: [`asOf must be a valid YYYY-MM-DD date`], validKeys: new Set() };
   validatePolicy(ledger, failures);
@@ -279,7 +297,7 @@ export function validateReviewLedger(inventory, ledger, asOf) {
       failures.push(`${key}: assetId is not a published guide or methodology asset`);
       continue;
     }
-    const recordFailures = validateReview(review, asset, asOf, publishedIds);
+    const recordFailures = validateReview(review, asset, asOf, publishedIds, knownRepositoryCommits);
     failures.push(...recordFailures);
     if (recordFailures.length === 0) validKeys.add(key);
   }
@@ -287,8 +305,8 @@ export function validateReviewLedger(inventory, ledger, asOf) {
   return { failures, validKeys };
 }
 
-export function buildReviewSchedule(inventory, ledger, asOf) {
-  const validation = validateReviewLedger(inventory, ledger, asOf);
+export function buildReviewSchedule(inventory, ledger, asOf, knownRepositoryCommits = new Set()) {
+  const validation = validateReviewLedger(inventory, ledger, asOf, knownRepositoryCommits);
   const assets = Array.isArray(inventory?.assets)
     ? inventory.assets.filter((asset) => asset.status === "published" && (asset.type === "guide" || asset.type === "methodology"))
     : [];
@@ -320,11 +338,11 @@ function parseArguments(args) {
   return options;
 }
 
-function unavailableSignal(source, reasonCode, reason) {
+function unavailableSignal(source, reasonCode, reason, attemptedAt) {
   return {
     availability: "unavailable",
     source,
-    attemptedAt: new Date().toISOString(),
+    attemptedAt,
     reasonCode,
     reason,
     evidence: ["Replace this draft evidence with the exact query, report, or instrumentation check performed."],
@@ -338,22 +356,24 @@ export function createReviewDraft(inventory, draftKey) {
   if (!asset) throw new Error(`${match[1]} is not a published asset`);
   const checkpointDay = Number(match[2]);
   const dueOn = addUtcDays(asset.publishedOn, checkpointDay);
+  const completedAt = `${dueOn}T12:00:00.000Z`;
   return {
+    draft: true,
     assetId: asset.id,
     checkpointDay,
-    completedAt: `${dueOn}T00:00:00.000Z`,
+    completedAt,
     window: { from: asset.publishedOn, through: previousUtcDay(dueOn) },
     repositoryCommit: "REPLACE_WITH_40_CHARACTER_COMMIT_SHA",
     signals: {
-      indexing: unavailableSignal("Google Search Console URL Inspection", "credentials-unavailable", "Replace with the actual access result."),
-      organicSearch: unavailableSignal("Google Search Console Search Analytics", "credentials-unavailable", "Replace with the actual access result."),
-      guideToTool: unavailableSignal("GA4 guide events", "credentials-unavailable", "Replace with the actual access result."),
-      calculations: unavailableSignal("GA4 calculation_completed", "not-instrumented", "Replace after verifying current instrumentation."),
-      copyShare: unavailableSignal("GA4 copy events", "attribution-not-available", "Replace after checking guide attribution."),
+      indexing: unavailableSignal("Google Search Console URL Inspection", "credentials-unavailable", "Replace with the actual access result.", completedAt),
+      organicSearch: unavailableSignal("Google Search Console Search Analytics", "credentials-unavailable", "Replace with the actual access result.", completedAt),
+      guideToTool: unavailableSignal("GA4 guide events", "credentials-unavailable", "Replace with the actual access result.", completedAt),
+      calculations: unavailableSignal("GA4 calculation_completed", "not-instrumented", "Replace after verifying current instrumentation.", completedAt),
+      copyShare: unavailableSignal("GA4 copy events", "attribution-not-available", "Replace after checking guide attribution.", completedAt),
       sourceFreshness: {
         availability: "available",
         source: "content/content-inventory.json",
-        queriedAt: new Date().toISOString(),
+        queriedAt: completedAt,
         evidence: ["Replace with the inventory commit reviewed at this checkpoint."],
         value: expectedFreshness(asset, dueOn),
       },
@@ -364,6 +384,17 @@ export function createReviewDraft(inventory, draftKey) {
       nextAction: "Replace with a dated and owned follow-up action.",
     },
   };
+}
+
+function resolveKnownRepositoryCommits(ledger) {
+  const commits = new Set();
+  for (const review of Array.isArray(ledger?.reviews) ? ledger.reviews : []) {
+    const commit = review?.repositoryCommit;
+    if (!commitPattern.test(commit ?? "")) continue;
+    const result = spawnSync("git", ["cat-file", "-e", `${commit}^{commit}`], { cwd: root, stdio: "ignore" });
+    if (result.status === 0) commits.add(commit.toLowerCase());
+  }
+  return commits;
 }
 
 async function main() {
@@ -388,7 +419,8 @@ async function main() {
   }
 
   const ledger = JSON.parse(await readFile(ledgerPath, "utf8"));
-  const report = buildReviewSchedule(inventory, ledger, options.asOf);
+  const knownRepositoryCommits = resolveKnownRepositoryCommits(ledger);
+  const report = buildReviewSchedule(inventory, ledger, options.asOf, knownRepositoryCommits);
   const summary = {
     assets: new Set(report.schedule.map((entry) => entry.assetId)).size,
     completed: report.schedule.filter((entry) => entry.status === "completed").length,
