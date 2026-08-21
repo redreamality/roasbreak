@@ -1,0 +1,2222 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-21T09:38:56.865Z",
+  "completedAt": "2026-08-21T09:39:05.017Z",
+  "durationMs": 8152,
+  "target": {
+    "origin": "https://roasbreak.com",
+    "robots": "https://roasbreak.com/robots.txt",
+    "sitemap": "https://roasbreak.com/sitemap.xml"
+  },
+  "repository": {
+    "commit": "52d00587a5d94ad7a8a10fc9401545cf61b6ffcd",
+    "branch": "main",
+    "workingTreeClean": true,
+    "stableDuringRun": true,
+    "start": {
+      "commit": "52d00587a5d94ad7a8a10fc9401545cf61b6ffcd",
+      "branch": "main",
+      "workingTreeClean": true,
+      "workingTreeStatus": []
+    },
+    "end": {
+      "commit": "52d00587a5d94ad7a8a10fc9401545cf61b6ffcd",
+      "branch": "main",
+      "workingTreeClean": true,
+      "workingTreeStatus": []
+    }
+  },
+  "invocation": {
+    "browserChecksEnabled": false,
+    "requestTimeoutMs": 20000
+  },
+  "inventory": {
+    "source": "content/content-inventory.json",
+    "sha256": "7f1b6c2fb553bf70d271345130865cb5cd3d95bc1766a491db63d1e397f3c8c8",
+    "publishedAssetCount": 23,
+    "assets": [
+      {
+        "id": "methodology",
+        "type": "methodology",
+        "url": "/methodology/",
+        "primaryTool": "/tools/",
+        "reviewedOn": "2026-08-20"
+      },
+      {
+        "id": "ecommerce-profit-formulas",
+        "type": "guide",
+        "url": "/guides/ecommerce-profit-formulas/",
+        "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=5&roas=4&profit=10",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "poas-vs-roas",
+        "type": "guide",
+        "url": "/guides/poas-vs-roas/",
+        "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=45&ship=8&other=3&fees=3&returns=5&roas=4&profit=10",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "ecommerce-variable-cost-checklist",
+        "type": "guide",
+        "url": "/guides/ecommerce-variable-cost-checklist/",
+        "primaryTool": "/?mode=costs&aov=120&cogs=48&ship=9&other=7&fees=3&returns=8&roas=3",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "contribution-margin",
+        "type": "guide",
+        "url": "/guides/contribution-margin-vs-gross-margin/",
+        "primaryTool": "/?mode=costs&aov=120&cogs=48&ship=9&other=0&fees=3&returns=8&roas=2.5",
+        "reviewedOn": "2026-08-20"
+      },
+      {
+        "id": "revenue-basis",
+        "type": "guide",
+        "url": "/guides/ecommerce-revenue-basis/",
+        "primaryTool": "/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4",
+        "reviewedOn": "2026-08-20"
+      },
+      {
+        "id": "shopify-net-sales",
+        "type": "guide",
+        "url": "/guides/shopify-net-sales-for-roas/",
+        "primaryTool": "/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4",
+        "reviewedOn": "2026-08-20"
+      },
+      {
+        "id": "roas-acos",
+        "type": "guide",
+        "url": "/guides/roas-vs-acos/",
+        "primaryTool": "/target-roas-calculator/?mode=margin&aov=100&margin=48&fees=3&returns=5&roas=3&profit=10",
+        "reviewedOn": "2026-08-20"
+      },
+      {
+        "id": "good-roas",
+        "type": "guide",
+        "url": "/guides/good-roas-for-profit-margin/",
+        "primaryTool": "/target-roas-calculator/?mode=margin&aov=100&margin=55&fees=3&returns=5&roas=3.5&profit=15",
+        "reviewedOn": "2026-08-20"
+      },
+      {
+        "id": "google-target-roas",
+        "type": "guide",
+        "url": "/guides/google-ads-target-roas-profit/",
+        "primaryTool": "/target-roas-calculator/?mode=margin&aov=100&margin=58&fees=3&returns=5&roas=3&profit=15",
+        "reviewedOn": "2026-08-20"
+      },
+      {
+        "id": "meta-ads-roas-attribution",
+        "type": "guide",
+        "url": "/guides/meta-ads-roas-and-attribution/",
+        "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=42&ship=8&other=4&fees=3&returns=5&roas=3.2&profit=10",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "amazon-break-even-acos",
+        "type": "guide",
+        "url": "/guides/amazon-break-even-acos/",
+        "primaryTool": "/target-roas-calculator/?mode=costs&aov=60&cogs=18&ship=8&other=4&fees=15&returns=0&roas=4&profit=10",
+        "reviewedOn": "2026-08-20"
+      },
+      {
+        "id": "discount-vs-bundle-profit",
+        "type": "guide",
+        "url": "/guides/discount-vs-bundle-profit/",
+        "primaryTool": "/promotion-profit-calculator/?mode=costs&aov=80&cogs=28&ship=6&other=3&fees=3&returns=5&roas=2.5&promo=64&cvr=2.5",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "free-shipping-profit-threshold",
+        "type": "guide",
+        "url": "/guides/free-shipping-profit-threshold/",
+        "primaryTool": "/promotion-profit-calculator/?mode=costs&aov=86&cogs=32&ship=8&other=4&fees=3&returns=5&roas=2.5&promo=80&cvr=2.5",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "returns-discounts",
+        "type": "guide",
+        "url": "/guides/returns-and-discounts/",
+        "primaryTool": "/profit-lever-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=10&roas=3&profit=10&lever=returns",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "contribution-ltv-vs-revenue-ltv",
+        "type": "guide",
+        "url": "/guides/contribution-ltv-vs-revenue-ltv/",
+        "primaryTool": "/cac-payback-calculator/?cac=70&profit=15&d30=40&d60=52&d90=60&d180=74&d365=92",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "new-customer-roas-vs-blended-roas",
+        "type": "guide",
+        "url": "/guides/new-customer-roas-vs-blended-roas/",
+        "primaryTool": "/cac-payback-calculator/?cac=80&profit=12&d30=40&d60=55&d90=68&d180=90&d365=112",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "cac-payback-cohort",
+        "type": "guide",
+        "url": "/guides/cac-payback-cohort-data/",
+        "primaryTool": "/cac-payback-calculator/?cac=70&profit=15&d30=45&d60=62&d90=76&d180=92&d365=118",
+        "reviewedOn": "2026-08-20"
+      },
+      {
+        "id": "product-channel-profitability-scenario",
+        "type": "guide",
+        "url": "/guides/product-vs-channel-profitability-scenario/",
+        "primaryTool": "/scenario-planner/?period=Fictional+matched+period+%7C+USD+%7C+UTC+%7C+documented+attribution&s1n=High+ROAS+low+margin&s1a=50&s1m=20&s1r=5&s1s=10000&s2n=Balanced+mix&s2a=80&s2m=40&s2r=4&s2s=10000&s3n=Lower+ROAS+high+margin&s3a=100&s3m=55&s3r=3&s3s=10000",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "refunds-conversion-adjustments",
+        "type": "guide",
+        "url": "/guides/refunds-and-conversion-adjustments/",
+        "primaryTool": "/scenario-planner/?s1n=Stale+initial&s1a=100&s1m=40&s1r=4&s1s=10000&s2n=Ads+adjusted&s2a=100&s2m=40&s2r=3.4&s2s=10000&s3n=Store+control&s3a=100&s3m=40&s3r=3.3&s3s=10000",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "conversion-delay-data-maturity",
+        "type": "guide",
+        "url": "/guides/conversion-delay-and-data-maturity/",
+        "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=5&roas=2.7&profit=10",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "tiktok-shop-roas-attribution",
+        "type": "guide",
+        "url": "/guides/tiktok-shop-roas-and-attribution/",
+        "primaryTool": "/scenario-planner/?s1n=CTA+only&s1a=50&s1m=40&s1r=2.5&s1s=10000&s2n=CTA+%2B+VTA&s2a=50&s2m=40&s2r=3.2&s2s=10000&s3n=Store+net&s3a=50&s3m=40&s3r=2.7&s3s=10000",
+        "reviewedOn": "2026-08-21"
+      },
+      {
+        "id": "attributed-mer",
+        "type": "guide",
+        "url": "/guides/attributed-roas-vs-mer/",
+        "primaryTool": "/scenario-planner/",
+        "reviewedOn": "2026-08-20"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "repository-snapshot",
+      "label": "Evidence uses one clean, stable repository and inventory snapshot",
+      "target": "C:\\Users\\unknown\\Documents\\Codex\\2026-08-19\\ben\\roasbreak",
+      "status": "passed",
+      "failures": [],
+      "evidence": {
+        "start": {
+          "commit": "52d00587a5d94ad7a8a10fc9401545cf61b6ffcd",
+          "branch": "main",
+          "workingTreeClean": true,
+          "workingTreeStatus": []
+        },
+        "end": {
+          "commit": "52d00587a5d94ad7a8a10fc9401545cf61b6ffcd",
+          "branch": "main",
+          "workingTreeClean": true,
+          "workingTreeStatus": []
+        },
+        "startInventoryHash": "7f1b6c2fb553bf70d271345130865cb5cd3d95bc1766a491db63d1e397f3c8c8",
+        "endInventoryHash": "7f1b6c2fb553bf70d271345130865cb5cd3d95bc1766a491db63d1e397f3c8c8",
+        "stable": true
+      }
+    },
+    {
+      "id": "robots",
+      "label": "Production robots.txt is reachable, crawlable, and declares the sitemap",
+      "target": "https://roasbreak.com/robots.txt",
+      "status": "passed",
+      "failures": [],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/robots.txt",
+          "finalUrl": "https://roasbreak.com/robots.txt",
+          "status": 200,
+          "contentType": "text/plain; charset=utf-8",
+          "bytes": 67
+        },
+        "policy": {
+          "wildcardGroupCount": 1,
+          "disallowsRoot": false,
+          "sitemapUrls": [
+            "https://roasbreak.com/sitemap.xml"
+          ]
+        }
+      }
+    },
+    {
+      "id": "sitemap",
+      "label": "Production sitemap contains every published canonical exactly once",
+      "target": "https://roasbreak.com/sitemap.xml",
+      "status": "failed",
+      "failures": [
+        "https://roasbreak.com/guides/ecommerce-profit-formulas/ appears 0 times in sitemap; expected exactly once",
+        "https://roasbreak.com/guides/poas-vs-roas/ appears 0 times in sitemap; expected exactly once",
+        "https://roasbreak.com/guides/ecommerce-variable-cost-checklist/ appears 0 times in sitemap; expected exactly once",
+        "https://roasbreak.com/guides/meta-ads-roas-and-attribution/ appears 0 times in sitemap; expected exactly once",
+        "https://roasbreak.com/guides/discount-vs-bundle-profit/ appears 0 times in sitemap; expected exactly once",
+        "https://roasbreak.com/guides/free-shipping-profit-threshold/ appears 0 times in sitemap; expected exactly once",
+        "https://roasbreak.com/guides/contribution-ltv-vs-revenue-ltv/ appears 0 times in sitemap; expected exactly once",
+        "https://roasbreak.com/guides/new-customer-roas-vs-blended-roas/ appears 0 times in sitemap; expected exactly once",
+        "https://roasbreak.com/guides/product-vs-channel-profitability-scenario/ appears 0 times in sitemap; expected exactly once",
+        "https://roasbreak.com/guides/refunds-and-conversion-adjustments/ appears 0 times in sitemap; expected exactly once",
+        "https://roasbreak.com/guides/conversion-delay-and-data-maturity/ appears 0 times in sitemap; expected exactly once",
+        "https://roasbreak.com/guides/tiktok-shop-roas-and-attribution/ appears 0 times in sitemap; expected exactly once"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/sitemap.xml",
+          "finalUrl": "https://roasbreak.com/sitemap.xml",
+          "status": 200,
+          "contentType": "application/xml",
+          "bytes": 3629
+        },
+        "inventoryCoverage": {
+          "locationCount": 23,
+          "canonicalCounts": {
+            "methodology": 1,
+            "ecommerce-profit-formulas": 0,
+            "poas-vs-roas": 0,
+            "ecommerce-variable-cost-checklist": 0,
+            "contribution-margin": 1,
+            "revenue-basis": 1,
+            "shopify-net-sales": 1,
+            "roas-acos": 1,
+            "good-roas": 1,
+            "google-target-roas": 1,
+            "meta-ads-roas-attribution": 0,
+            "amazon-break-even-acos": 1,
+            "discount-vs-bundle-profit": 0,
+            "free-shipping-profit-threshold": 0,
+            "returns-discounts": 1,
+            "contribution-ltv-vs-revenue-ltv": 0,
+            "new-customer-roas-vs-blended-roas": 0,
+            "cac-payback-cohort": 1,
+            "product-channel-profitability-scenario": 0,
+            "refunds-conversion-adjustments": 0,
+            "conversion-delay-data-maturity": 0,
+            "tiktok-shop-roas-attribution": 0,
+            "attributed-mer": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "asset:methodology",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/methodology/",
+      "status": "failed",
+      "failures": [
+        "methodology: expected one static BreadcrumbList schema, found 0"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/methodology/",
+          "finalUrl": "https://roasbreak.com/methodology/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 11381
+        },
+        "document": {
+          "canonical": "https://roasbreak.com/methodology/",
+          "canonicalCount": 1,
+          "canonicalValues": [
+            "https://roasbreak.com/methodology/"
+          ],
+          "jsonLdCount": 0,
+          "invalidJsonLdCount": 0,
+          "articleSchemaCount": 0,
+          "articleDateModified": null,
+          "articleMainEntityOfPage": null,
+          "breadcrumbSchemaCount": 0,
+          "breadcrumbFinalItem": null,
+          "primaryCtaCount": 1,
+          "primaryCta": "https://roasbreak.com/guides/ecommerce-revenue-basis/"
+        },
+        "sources": {
+          "expectedCount": 2,
+          "linkedCount": 2,
+          "expectedSources": [
+            "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report"
+          ],
+          "linkedSources": [
+            "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report"
+          ],
+          "missingSources": [],
+          "invalidSources": []
+        }
+      }
+    },
+    {
+      "id": "asset:ecommerce-profit-formulas",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/ecommerce-profit-formulas/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/ecommerce-profit-formulas/",
+          "finalUrl": "https://roasbreak.com/guides/ecommerce-profit-formulas/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:poas-vs-roas",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/poas-vs-roas/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/poas-vs-roas/",
+          "finalUrl": "https://roasbreak.com/guides/poas-vs-roas/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:ecommerce-variable-cost-checklist",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/ecommerce-variable-cost-checklist/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/ecommerce-variable-cost-checklist/",
+          "finalUrl": "https://roasbreak.com/guides/ecommerce-variable-cost-checklist/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:contribution-margin",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/contribution-margin-vs-gross-margin/",
+      "status": "failed",
+      "failures": [
+        "contribution-margin: expected one static BreadcrumbList schema, found 0"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/contribution-margin-vs-gross-margin/",
+          "finalUrl": "https://roasbreak.com/guides/contribution-margin-vs-gross-margin/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 9039
+        },
+        "document": {
+          "canonical": "https://roasbreak.com/guides/contribution-margin-vs-gross-margin/",
+          "canonicalCount": 1,
+          "canonicalValues": [
+            "https://roasbreak.com/guides/contribution-margin-vs-gross-margin/"
+          ],
+          "jsonLdCount": 1,
+          "invalidJsonLdCount": 0,
+          "articleSchemaCount": 1,
+          "articleDateModified": "2026-08-20",
+          "articleMainEntityOfPage": "https://roasbreak.com/guides/contribution-margin-vs-gross-margin/",
+          "breadcrumbSchemaCount": 0,
+          "breadcrumbFinalItem": null,
+          "primaryCtaCount": 1,
+          "primaryCta": "https://roasbreak.com/?mode=costs&aov=120&cogs=48&ship=9&other=0&fees=3&returns=8&roas=2.5"
+        },
+        "sources": {
+          "expectedCount": 2,
+          "linkedCount": 2,
+          "expectedSources": [
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report"
+          ],
+          "linkedSources": [
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report"
+          ],
+          "missingSources": [],
+          "invalidSources": []
+        }
+      }
+    },
+    {
+      "id": "asset:revenue-basis",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/ecommerce-revenue-basis/",
+      "status": "failed",
+      "failures": [
+        "revenue-basis: expected one static BreadcrumbList schema, found 0"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/ecommerce-revenue-basis/",
+          "finalUrl": "https://roasbreak.com/guides/ecommerce-revenue-basis/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 8942
+        },
+        "document": {
+          "canonical": "https://roasbreak.com/guides/ecommerce-revenue-basis/",
+          "canonicalCount": 1,
+          "canonicalValues": [
+            "https://roasbreak.com/guides/ecommerce-revenue-basis/"
+          ],
+          "jsonLdCount": 1,
+          "invalidJsonLdCount": 0,
+          "articleSchemaCount": 1,
+          "articleDateModified": "2026-08-20",
+          "articleMainEntityOfPage": "https://roasbreak.com/guides/ecommerce-revenue-basis/",
+          "breadcrumbSchemaCount": 0,
+          "breadcrumbFinalItem": null,
+          "primaryCtaCount": 1,
+          "primaryCta": "https://roasbreak.com/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4"
+        },
+        "sources": {
+          "expectedCount": 2,
+          "linkedCount": 2,
+          "expectedSources": [
+            "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report"
+          ],
+          "linkedSources": [
+            "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report"
+          ],
+          "missingSources": [],
+          "invalidSources": []
+        }
+      }
+    },
+    {
+      "id": "asset:shopify-net-sales",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/shopify-net-sales-for-roas/",
+      "status": "failed",
+      "failures": [
+        "shopify-net-sales: expected one static BreadcrumbList schema, found 0"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/shopify-net-sales-for-roas/",
+          "finalUrl": "https://roasbreak.com/guides/shopify-net-sales-for-roas/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 8839
+        },
+        "document": {
+          "canonical": "https://roasbreak.com/guides/shopify-net-sales-for-roas/",
+          "canonicalCount": 1,
+          "canonicalValues": [
+            "https://roasbreak.com/guides/shopify-net-sales-for-roas/"
+          ],
+          "jsonLdCount": 1,
+          "invalidJsonLdCount": 0,
+          "articleSchemaCount": 1,
+          "articleDateModified": "2026-08-20",
+          "articleMainEntityOfPage": "https://roasbreak.com/guides/shopify-net-sales-for-roas/",
+          "breadcrumbSchemaCount": 0,
+          "breadcrumbFinalItem": null,
+          "primaryCtaCount": 1,
+          "primaryCta": "https://roasbreak.com/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4"
+        },
+        "sources": {
+          "expectedCount": 2,
+          "linkedCount": 2,
+          "expectedSources": [
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report"
+          ],
+          "linkedSources": [
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report"
+          ],
+          "missingSources": [],
+          "invalidSources": []
+        }
+      }
+    },
+    {
+      "id": "asset:roas-acos",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/roas-vs-acos/",
+      "status": "failed",
+      "failures": [
+        "roas-acos: expected one static BreadcrumbList schema, found 0"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/roas-vs-acos/",
+          "finalUrl": "https://roasbreak.com/guides/roas-vs-acos/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 8357
+        },
+        "document": {
+          "canonical": "https://roasbreak.com/guides/roas-vs-acos/",
+          "canonicalCount": 1,
+          "canonicalValues": [
+            "https://roasbreak.com/guides/roas-vs-acos/"
+          ],
+          "jsonLdCount": 1,
+          "invalidJsonLdCount": 0,
+          "articleSchemaCount": 1,
+          "articleDateModified": "2026-08-20",
+          "articleMainEntityOfPage": "https://roasbreak.com/guides/roas-vs-acos/",
+          "breadcrumbSchemaCount": 0,
+          "breadcrumbFinalItem": null,
+          "primaryCtaCount": 1,
+          "primaryCta": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=48&fees=3&returns=5&roas=3&profit=10"
+        },
+        "sources": {
+          "expectedCount": 2,
+          "linkedCount": 2,
+          "expectedSources": [
+            "https://advertising.amazon.com/library/guides/acos-advertising-cost-of-sales",
+            "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas"
+          ],
+          "linkedSources": [
+            "https://advertising.amazon.com/library/guides/acos-advertising-cost-of-sales",
+            "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas"
+          ],
+          "missingSources": [],
+          "invalidSources": []
+        }
+      }
+    },
+    {
+      "id": "asset:good-roas",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/good-roas-for-profit-margin/",
+      "status": "failed",
+      "failures": [
+        "good-roas: expected one static BreadcrumbList schema, found 0"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/good-roas-for-profit-margin/",
+          "finalUrl": "https://roasbreak.com/guides/good-roas-for-profit-margin/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 7954
+        },
+        "document": {
+          "canonical": "https://roasbreak.com/guides/good-roas-for-profit-margin/",
+          "canonicalCount": 1,
+          "canonicalValues": [
+            "https://roasbreak.com/guides/good-roas-for-profit-margin/"
+          ],
+          "jsonLdCount": 1,
+          "invalidJsonLdCount": 0,
+          "articleSchemaCount": 1,
+          "articleDateModified": "2026-08-20",
+          "articleMainEntityOfPage": "https://roasbreak.com/guides/good-roas-for-profit-margin/",
+          "breadcrumbSchemaCount": 0,
+          "breadcrumbFinalItem": null,
+          "primaryCtaCount": 1,
+          "primaryCta": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=55&fees=3&returns=5&roas=3.5&profit=15"
+        },
+        "sources": {
+          "expectedCount": 2,
+          "linkedCount": 2,
+          "expectedSources": [
+            "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports"
+          ],
+          "linkedSources": [
+            "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports"
+          ],
+          "missingSources": [],
+          "invalidSources": []
+        }
+      }
+    },
+    {
+      "id": "asset:google-target-roas",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/google-ads-target-roas-profit/",
+      "status": "failed",
+      "failures": [
+        "google-target-roas: expected one static BreadcrumbList schema, found 0"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/google-ads-target-roas-profit/",
+          "finalUrl": "https://roasbreak.com/guides/google-ads-target-roas-profit/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 7747
+        },
+        "document": {
+          "canonical": "https://roasbreak.com/guides/google-ads-target-roas-profit/",
+          "canonicalCount": 1,
+          "canonicalValues": [
+            "https://roasbreak.com/guides/google-ads-target-roas-profit/"
+          ],
+          "jsonLdCount": 1,
+          "invalidJsonLdCount": 0,
+          "articleSchemaCount": 1,
+          "articleDateModified": "2026-08-20",
+          "articleMainEntityOfPage": "https://roasbreak.com/guides/google-ads-target-roas-profit/",
+          "breadcrumbSchemaCount": 0,
+          "breadcrumbFinalItem": null,
+          "primaryCtaCount": 1,
+          "primaryCta": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=58&fees=3&returns=5&roas=3&profit=15"
+        },
+        "sources": {
+          "expectedCount": 2,
+          "linkedCount": 2,
+          "expectedSources": [
+            "https://support.google.com/google-ads/answer/6268637?hl=en",
+            "https://support.google.com/google-ads/answer/7686447?hl=en"
+          ],
+          "linkedSources": [
+            "https://support.google.com/google-ads/answer/6268637?hl=en",
+            "https://support.google.com/google-ads/answer/7686447?hl=en"
+          ],
+          "missingSources": [],
+          "invalidSources": []
+        }
+      }
+    },
+    {
+      "id": "asset:meta-ads-roas-attribution",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/meta-ads-roas-and-attribution/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/meta-ads-roas-and-attribution/",
+          "finalUrl": "https://roasbreak.com/guides/meta-ads-roas-and-attribution/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:amazon-break-even-acos",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/amazon-break-even-acos/",
+      "status": "failed",
+      "failures": [
+        "amazon-break-even-acos: expected one static BreadcrumbList schema, found 0",
+        "amazon-break-even-acos: guide-action https://roasbreak.com/target-roas-calculator/?mode=costs&aov=60&cogs=18&ship=8&other=4&fees=15&returns=0&roas=4&profit=6 does not match https://roasbreak.com/target-roas-calculator/?mode=costs&aov=60&cogs=18&ship=8&other=4&fees=15&returns=0&roas=4&profit=10"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/amazon-break-even-acos/",
+          "finalUrl": "https://roasbreak.com/guides/amazon-break-even-acos/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 8022
+        },
+        "document": {
+          "canonical": "https://roasbreak.com/guides/amazon-break-even-acos/",
+          "canonicalCount": 1,
+          "canonicalValues": [
+            "https://roasbreak.com/guides/amazon-break-even-acos/"
+          ],
+          "jsonLdCount": 1,
+          "invalidJsonLdCount": 0,
+          "articleSchemaCount": 1,
+          "articleDateModified": "2026-08-20",
+          "articleMainEntityOfPage": "https://roasbreak.com/guides/amazon-break-even-acos/",
+          "breadcrumbSchemaCount": 0,
+          "breadcrumbFinalItem": null,
+          "primaryCtaCount": 1,
+          "primaryCta": "https://roasbreak.com/target-roas-calculator/?mode=costs&aov=60&cogs=18&ship=8&other=4&fees=15&returns=0&roas=4&profit=6"
+        },
+        "sources": {
+          "expectedCount": 2,
+          "linkedCount": 2,
+          "expectedSources": [
+            "https://advertising.amazon.com/library/guides/acos-advertising-cost-of-sales",
+            "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas"
+          ],
+          "linkedSources": [
+            "https://advertising.amazon.com/library/guides/acos-advertising-cost-of-sales",
+            "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas"
+          ],
+          "missingSources": [],
+          "invalidSources": []
+        }
+      }
+    },
+    {
+      "id": "asset:discount-vs-bundle-profit",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/discount-vs-bundle-profit/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/discount-vs-bundle-profit/",
+          "finalUrl": "https://roasbreak.com/guides/discount-vs-bundle-profit/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:free-shipping-profit-threshold",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/free-shipping-profit-threshold/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/free-shipping-profit-threshold/",
+          "finalUrl": "https://roasbreak.com/guides/free-shipping-profit-threshold/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:returns-discounts",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/returns-and-discounts/",
+      "status": "failed",
+      "failures": [
+        "returns-discounts: Article dateModified must be 2026-08-21; found 2026-08-20",
+        "returns-discounts: expected one static BreadcrumbList schema, found 0",
+        "returns-discounts: guide-action https://roasbreak.com/promotion-profit-calculator/ does not match https://roasbreak.com/profit-lever-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=10&roas=3&profit=10&lever=returns"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/returns-and-discounts/",
+          "finalUrl": "https://roasbreak.com/guides/returns-and-discounts/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 8634
+        },
+        "document": {
+          "canonical": "https://roasbreak.com/guides/returns-and-discounts/",
+          "canonicalCount": 1,
+          "canonicalValues": [
+            "https://roasbreak.com/guides/returns-and-discounts/"
+          ],
+          "jsonLdCount": 1,
+          "invalidJsonLdCount": 0,
+          "articleSchemaCount": 1,
+          "articleDateModified": "2026-08-20",
+          "articleMainEntityOfPage": "https://roasbreak.com/guides/returns-and-discounts/",
+          "breadcrumbSchemaCount": 0,
+          "breadcrumbFinalItem": null,
+          "primaryCtaCount": 1,
+          "primaryCta": "https://roasbreak.com/promotion-profit-calculator/"
+        },
+        "sources": {
+          "expectedCount": 2,
+          "linkedCount": 2,
+          "expectedSources": [
+            "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report"
+          ],
+          "linkedSources": [
+            "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report"
+          ],
+          "missingSources": [],
+          "invalidSources": []
+        }
+      }
+    },
+    {
+      "id": "asset:contribution-ltv-vs-revenue-ltv",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/contribution-ltv-vs-revenue-ltv/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/contribution-ltv-vs-revenue-ltv/",
+          "finalUrl": "https://roasbreak.com/guides/contribution-ltv-vs-revenue-ltv/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:new-customer-roas-vs-blended-roas",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/new-customer-roas-vs-blended-roas/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/new-customer-roas-vs-blended-roas/",
+          "finalUrl": "https://roasbreak.com/guides/new-customer-roas-vs-blended-roas/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:cac-payback-cohort",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/cac-payback-cohort-data/",
+      "status": "failed",
+      "failures": [
+        "cac-payback-cohort: expected one static BreadcrumbList schema, found 0"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/cac-payback-cohort-data/",
+          "finalUrl": "https://roasbreak.com/guides/cac-payback-cohort-data/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 8389
+        },
+        "document": {
+          "canonical": "https://roasbreak.com/guides/cac-payback-cohort-data/",
+          "canonicalCount": 1,
+          "canonicalValues": [
+            "https://roasbreak.com/guides/cac-payback-cohort-data/"
+          ],
+          "jsonLdCount": 1,
+          "invalidJsonLdCount": 0,
+          "articleSchemaCount": 1,
+          "articleDateModified": "2026-08-20",
+          "articleMainEntityOfPage": "https://roasbreak.com/guides/cac-payback-cohort-data/",
+          "breadcrumbSchemaCount": 0,
+          "breadcrumbFinalItem": null,
+          "primaryCtaCount": 1,
+          "primaryCta": "https://roasbreak.com/cac-payback-calculator/?cac=70&profit=15&d30=45&d60=62&d90=76&d180=92&d365=118"
+        },
+        "sources": {
+          "expectedCount": 2,
+          "linkedCount": 2,
+          "expectedSources": [
+            "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customer-reports"
+          ],
+          "linkedSources": [
+            "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customer-reports"
+          ],
+          "missingSources": [],
+          "invalidSources": []
+        }
+      }
+    },
+    {
+      "id": "asset:product-channel-profitability-scenario",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/product-vs-channel-profitability-scenario/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/product-vs-channel-profitability-scenario/",
+          "finalUrl": "https://roasbreak.com/guides/product-vs-channel-profitability-scenario/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:refunds-conversion-adjustments",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/refunds-and-conversion-adjustments/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/refunds-and-conversion-adjustments/",
+          "finalUrl": "https://roasbreak.com/guides/refunds-and-conversion-adjustments/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:conversion-delay-data-maturity",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/conversion-delay-and-data-maturity/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/conversion-delay-and-data-maturity/",
+          "finalUrl": "https://roasbreak.com/guides/conversion-delay-and-data-maturity/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:tiktok-shop-roas-attribution",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/tiktok-shop-roas-and-attribution/",
+      "status": "failed",
+      "failures": [
+        "expected HTTP 200, received 404"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/tiktok-shop-roas-and-attribution/",
+          "finalUrl": "https://roasbreak.com/guides/tiktok-shop-roas-and-attribution/",
+          "status": 404,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 2432
+        },
+        "document": null,
+        "sources": null
+      }
+    },
+    {
+      "id": "asset:attributed-mer",
+      "label": "Published asset returns HTTP 200 with matching canonical, static schema, CTA, and inventory sources",
+      "target": "https://roasbreak.com/guides/attributed-roas-vs-mer/",
+      "status": "failed",
+      "failures": [
+        "attributed-mer: expected one static BreadcrumbList schema, found 0"
+      ],
+      "evidence": {
+        "http": {
+          "requestedUrl": "https://roasbreak.com/guides/attributed-roas-vs-mer/",
+          "finalUrl": "https://roasbreak.com/guides/attributed-roas-vs-mer/",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "bytes": 8134
+        },
+        "document": {
+          "canonical": "https://roasbreak.com/guides/attributed-roas-vs-mer/",
+          "canonicalCount": 1,
+          "canonicalValues": [
+            "https://roasbreak.com/guides/attributed-roas-vs-mer/"
+          ],
+          "jsonLdCount": 1,
+          "invalidJsonLdCount": 0,
+          "articleSchemaCount": 1,
+          "articleDateModified": "2026-08-20",
+          "articleMainEntityOfPage": "https://roasbreak.com/guides/attributed-roas-vs-mer/",
+          "breadcrumbSchemaCount": 0,
+          "breadcrumbFinalItem": null,
+          "primaryCtaCount": 1,
+          "primaryCta": "https://roasbreak.com/scenario-planner/"
+        },
+        "sources": {
+          "expectedCount": 1,
+          "linkedCount": 1,
+          "expectedSources": [
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/marketing-reports"
+          ],
+          "linkedSources": [
+            "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/marketing-reports"
+          ],
+          "missingSources": [],
+          "invalidSources": []
+        }
+      }
+    },
+    {
+      "id": "internal-links",
+      "label": "Unique same-origin links discovered in published assets return HTTP 200 without redirecting",
+      "target": "https://roasbreak.com",
+      "status": "passed",
+      "failures": [],
+      "evidence": {
+        "inspectedLinks": 29,
+        "links": [
+          {
+            "url": "https://roasbreak.com/",
+            "owners": [
+              "methodology",
+              "contribution-margin",
+              "revenue-basis",
+              "shopify-net-sales",
+              "roas-acos",
+              "good-roas",
+              "google-target-roas",
+              "amazon-break-even-acos",
+              "returns-discounts",
+              "cac-payback-cohort",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/",
+              "finalUrl": "https://roasbreak.com/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 18653
+            }
+          },
+          {
+            "url": "https://roasbreak.com/about/",
+            "owners": [
+              "methodology",
+              "contribution-margin",
+              "revenue-basis",
+              "shopify-net-sales",
+              "roas-acos",
+              "good-roas",
+              "google-target-roas",
+              "amazon-break-even-acos",
+              "returns-discounts",
+              "cac-payback-cohort",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/about/",
+              "finalUrl": "https://roasbreak.com/about/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4294
+            }
+          },
+          {
+            "url": "https://roasbreak.com/contact/",
+            "owners": [
+              "methodology",
+              "contribution-margin",
+              "revenue-basis",
+              "shopify-net-sales",
+              "roas-acos",
+              "good-roas",
+              "google-target-roas",
+              "amazon-break-even-acos",
+              "returns-discounts",
+              "cac-payback-cohort",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/contact/",
+              "finalUrl": "https://roasbreak.com/contact/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 3627
+            }
+          },
+          {
+            "url": "https://roasbreak.com/guides/",
+            "owners": [
+              "methodology",
+              "contribution-margin",
+              "revenue-basis",
+              "shopify-net-sales",
+              "roas-acos",
+              "good-roas",
+              "google-target-roas",
+              "amazon-break-even-acos",
+              "returns-discounts",
+              "cac-payback-cohort",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/guides/",
+              "finalUrl": "https://roasbreak.com/guides/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 7898
+            }
+          },
+          {
+            "url": "https://roasbreak.com/guides/contribution-margin-vs-gross-margin/",
+            "owners": [
+              "methodology",
+              "revenue-basis",
+              "shopify-net-sales",
+              "roas-acos",
+              "amazon-break-even-acos",
+              "returns-discounts"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/guides/contribution-margin-vs-gross-margin/",
+              "finalUrl": "https://roasbreak.com/guides/contribution-margin-vs-gross-margin/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 9039
+            }
+          },
+          {
+            "url": "https://roasbreak.com/guides/ecommerce-revenue-basis/",
+            "owners": [
+              "methodology",
+              "contribution-margin",
+              "shopify-net-sales",
+              "returns-discounts",
+              "cac-payback-cohort",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/guides/ecommerce-revenue-basis/",
+              "finalUrl": "https://roasbreak.com/guides/ecommerce-revenue-basis/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 8942
+            }
+          },
+          {
+            "url": "https://roasbreak.com/privacy/",
+            "owners": [
+              "methodology",
+              "contribution-margin",
+              "revenue-basis",
+              "shopify-net-sales",
+              "roas-acos",
+              "good-roas",
+              "google-target-roas",
+              "amazon-break-even-acos",
+              "returns-discounts",
+              "cac-payback-cohort",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/privacy/",
+              "finalUrl": "https://roasbreak.com/privacy/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 6844
+            }
+          },
+          {
+            "url": "https://roasbreak.com/terms/",
+            "owners": [
+              "methodology",
+              "contribution-margin",
+              "revenue-basis",
+              "shopify-net-sales",
+              "roas-acos",
+              "good-roas",
+              "google-target-roas",
+              "amazon-break-even-acos",
+              "returns-discounts",
+              "cac-payback-cohort",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/terms/",
+              "finalUrl": "https://roasbreak.com/terms/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4344
+            }
+          },
+          {
+            "url": "https://roasbreak.com/tools/",
+            "owners": [
+              "methodology",
+              "contribution-margin",
+              "revenue-basis",
+              "shopify-net-sales",
+              "roas-acos",
+              "good-roas",
+              "google-target-roas",
+              "amazon-break-even-acos",
+              "returns-discounts",
+              "cac-payback-cohort",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/tools/",
+              "finalUrl": "https://roasbreak.com/tools/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4819
+            }
+          },
+          {
+            "url": "https://roasbreak.com/?mode=costs&aov=120&cogs=48&ship=9&other=0&fees=3&returns=8&roas=2.5",
+            "owners": [
+              "contribution-margin"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/?mode=costs&aov=120&cogs=48&ship=9&other=0&fees=3&returns=8&roas=2.5",
+              "finalUrl": "https://roasbreak.com/?mode=costs&aov=120&cogs=48&ship=9&other=0&fees=3&returns=8&roas=2.5",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 18653
+            }
+          },
+          {
+            "url": "https://roasbreak.com/guides/shopify-net-sales-for-roas/",
+            "owners": [
+              "contribution-margin",
+              "revenue-basis"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/guides/shopify-net-sales-for-roas/",
+              "finalUrl": "https://roasbreak.com/guides/shopify-net-sales-for-roas/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 8839
+            }
+          },
+          {
+            "url": "https://roasbreak.com/methodology/",
+            "owners": [
+              "contribution-margin",
+              "revenue-basis",
+              "shopify-net-sales",
+              "roas-acos",
+              "good-roas",
+              "google-target-roas",
+              "amazon-break-even-acos",
+              "returns-discounts",
+              "cac-payback-cohort",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/methodology/",
+              "finalUrl": "https://roasbreak.com/methodology/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 11381
+            }
+          },
+          {
+            "url": "https://roasbreak.com/target-roas-calculator/",
+            "owners": [
+              "contribution-margin",
+              "revenue-basis",
+              "roas-acos"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/target-roas-calculator/",
+              "finalUrl": "https://roasbreak.com/target-roas-calculator/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4892
+            }
+          },
+          {
+            "url": "https://roasbreak.com/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4",
+            "owners": [
+              "revenue-basis",
+              "shopify-net-sales"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4",
+              "finalUrl": "https://roasbreak.com/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 18653
+            }
+          },
+          {
+            "url": "https://roasbreak.com/guides/attributed-roas-vs-mer/",
+            "owners": [
+              "revenue-basis",
+              "google-target-roas"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/guides/attributed-roas-vs-mer/",
+              "finalUrl": "https://roasbreak.com/guides/attributed-roas-vs-mer/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 8134
+            }
+          },
+          {
+            "url": "https://roasbreak.com/target-roas-calculator/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4&profit=8",
+            "owners": [
+              "shopify-net-sales"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/target-roas-calculator/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4&profit=8",
+              "finalUrl": "https://roasbreak.com/target-roas-calculator/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4&profit=8",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4892
+            }
+          },
+          {
+            "url": "https://roasbreak.com/guides/amazon-break-even-acos/",
+            "owners": [
+              "roas-acos",
+              "good-roas"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/guides/amazon-break-even-acos/",
+              "finalUrl": "https://roasbreak.com/guides/amazon-break-even-acos/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 8022
+            }
+          },
+          {
+            "url": "https://roasbreak.com/guides/good-roas-for-profit-margin/",
+            "owners": [
+              "roas-acos",
+              "google-target-roas"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/guides/good-roas-for-profit-margin/",
+              "finalUrl": "https://roasbreak.com/guides/good-roas-for-profit-margin/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 7954
+            }
+          },
+          {
+            "url": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=48&fees=3&returns=5&roas=3&profit=10",
+            "owners": [
+              "roas-acos"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=48&fees=3&returns=5&roas=3&profit=10",
+              "finalUrl": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=48&fees=3&returns=5&roas=3&profit=10",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4892
+            }
+          },
+          {
+            "url": "https://roasbreak.com/guides/google-ads-target-roas-profit/",
+            "owners": [
+              "good-roas",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/guides/google-ads-target-roas-profit/",
+              "finalUrl": "https://roasbreak.com/guides/google-ads-target-roas-profit/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 7747
+            }
+          },
+          {
+            "url": "https://roasbreak.com/scenario-planner/",
+            "owners": [
+              "good-roas",
+              "google-target-roas",
+              "amazon-break-even-acos",
+              "returns-discounts",
+              "cac-payback-cohort",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/scenario-planner/",
+              "finalUrl": "https://roasbreak.com/scenario-planner/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4099
+            }
+          },
+          {
+            "url": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=55&fees=3&returns=5&roas=3.5&profit=15",
+            "owners": [
+              "good-roas"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=55&fees=3&returns=5&roas=3.5&profit=15",
+              "finalUrl": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=55&fees=3&returns=5&roas=3.5&profit=15",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4892
+            }
+          },
+          {
+            "url": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=58&fees=3&returns=5&roas=3&profit=15",
+            "owners": [
+              "google-target-roas"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=58&fees=3&returns=5&roas=3&profit=15",
+              "finalUrl": "https://roasbreak.com/target-roas-calculator/?mode=margin&aov=100&margin=58&fees=3&returns=5&roas=3&profit=15",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4892
+            }
+          },
+          {
+            "url": "https://roasbreak.com/guides/roas-vs-acos/",
+            "owners": [
+              "amazon-break-even-acos"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/guides/roas-vs-acos/",
+              "finalUrl": "https://roasbreak.com/guides/roas-vs-acos/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 8357
+            }
+          },
+          {
+            "url": "https://roasbreak.com/target-roas-calculator/?mode=costs&aov=60&cogs=18&ship=8&other=4&fees=15&returns=0&roas=4&profit=6",
+            "owners": [
+              "amazon-break-even-acos"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/target-roas-calculator/?mode=costs&aov=60&cogs=18&ship=8&other=4&fees=15&returns=0&roas=4&profit=6",
+              "finalUrl": "https://roasbreak.com/target-roas-calculator/?mode=costs&aov=60&cogs=18&ship=8&other=4&fees=15&returns=0&roas=4&profit=6",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4892
+            }
+          },
+          {
+            "url": "https://roasbreak.com/profit-lever-calculator/",
+            "owners": [
+              "returns-discounts"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/profit-lever-calculator/",
+              "finalUrl": "https://roasbreak.com/profit-lever-calculator/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4738
+            }
+          },
+          {
+            "url": "https://roasbreak.com/promotion-profit-calculator/",
+            "owners": [
+              "returns-discounts"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/promotion-profit-calculator/",
+              "finalUrl": "https://roasbreak.com/promotion-profit-calculator/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4149
+            }
+          },
+          {
+            "url": "https://roasbreak.com/cac-payback-calculator/?cac=70&profit=15&d30=45&d60=62&d90=76&d180=92&d365=118",
+            "owners": [
+              "cac-payback-cohort"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/cac-payback-calculator/?cac=70&profit=15&d30=45&d60=62&d90=76&d180=92&d365=118",
+              "finalUrl": "https://roasbreak.com/cac-payback-calculator/?cac=70&profit=15&d30=45&d60=62&d90=76&d180=92&d365=118",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 4262
+            }
+          },
+          {
+            "url": "https://roasbreak.com/guides/returns-and-discounts/",
+            "owners": [
+              "cac-payback-cohort"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "requestedUrl": "https://roasbreak.com/guides/returns-and-discounts/",
+              "finalUrl": "https://roasbreak.com/guides/returns-and-discounts/",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 8634
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "external-sources",
+      "label": "Unique external HTTPS sources declared by the inventory are reachable or explicitly access-restricted with GET",
+      "target": "https://roasbreak.com",
+      "status": "passed",
+      "failures": [],
+      "evidence": {
+        "inspectedSources": 30,
+        "sources": [
+          {
+            "url": "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+            "owners": [
+              "methodology",
+              "ecommerce-variable-cost-checklist",
+              "revenue-basis",
+              "returns-discounts",
+              "contribution-ltv-vs-revenue-ltv",
+              "cac-payback-cohort",
+              "product-channel-profitability-scenario",
+              "refunds-conversion-adjustments"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+              "finalUrl": "https://developers.google.com/analytics/devguides/collection/ga4/ecommerce",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 247345
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+            "owners": [
+              "methodology",
+              "ecommerce-profit-formulas",
+              "contribution-margin",
+              "revenue-basis",
+              "shopify-net-sales",
+              "free-shipping-profit-threshold",
+              "returns-discounts",
+              "contribution-ltv-vs-revenue-ltv",
+              "product-channel-profitability-scenario"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+              "finalUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9782
+            }
+          },
+          {
+            "url": "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas",
+            "owners": [
+              "ecommerce-profit-formulas",
+              "poas-vs-roas",
+              "roas-acos",
+              "good-roas",
+              "amazon-break-even-acos",
+              "product-channel-profitability-scenario"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas",
+              "finalUrl": "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas",
+              "status": 200,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 1024
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customer-reports",
+            "owners": [
+              "ecommerce-profit-formulas",
+              "contribution-ltv-vs-revenue-ltv",
+              "new-customer-roas-vs-blended-roas",
+              "cac-payback-cohort"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customer-reports",
+              "finalUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customer-reports",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9816
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/marketing-reports",
+            "owners": [
+              "ecommerce-profit-formulas",
+              "poas-vs-roas",
+              "attributed-mer"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/marketing-reports",
+              "finalUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/marketing-reports",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9819
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+            "owners": [
+              "ecommerce-profit-formulas",
+              "poas-vs-roas",
+              "contribution-margin",
+              "shopify-net-sales",
+              "good-roas",
+              "discount-vs-bundle-profit",
+              "free-shipping-profit-threshold",
+              "contribution-ltv-vs-revenue-ltv",
+              "product-channel-profitability-scenario"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+              "finalUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9788
+            }
+          },
+          {
+            "url": "https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema",
+            "owners": [
+              "ecommerce-variable-cost-checklist",
+              "product-channel-profitability-scenario",
+              "refunds-conversion-adjustments"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema",
+              "finalUrl": "https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema?hl=vi",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 390193
+            }
+          },
+          {
+            "url": "https://docs.stripe.com/api/balance_transactions/object",
+            "owners": [
+              "ecommerce-variable-cost-checklist"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://docs.stripe.com/api/balance_transactions/object",
+              "finalUrl": "https://docs.stripe.com/api/balance_transactions/object",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 848687
+            }
+          },
+          {
+            "url": "https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem",
+            "owners": [
+              "ecommerce-variable-cost-checklist",
+              "product-channel-profitability-scenario"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem",
+              "finalUrl": "https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 455400
+            }
+          },
+          {
+            "url": "https://shopify.dev/docs/api/admin-graphql/latest/objects/Refund",
+            "owners": [
+              "ecommerce-variable-cost-checklist"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://shopify.dev/docs/api/admin-graphql/latest/objects/Refund",
+              "finalUrl": "https://shopify.dev/docs/api/admin-graphql/latest/objects/Refund",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 462199
+            }
+          },
+          {
+            "url": "https://advertising.amazon.com/library/guides/acos-advertising-cost-of-sales",
+            "owners": [
+              "roas-acos",
+              "amazon-break-even-acos"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://advertising.amazon.com/library/guides/acos-advertising-cost-of-sales",
+              "finalUrl": "https://advertising.amazon.com/library/guides/acos-advertising-cost-of-sales",
+              "status": 200,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 1024
+            }
+          },
+          {
+            "url": "https://support.google.com/google-ads/answer/6268637?hl=en",
+            "owners": [
+              "google-target-roas",
+              "conversion-delay-data-maturity"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://support.google.com/google-ads/answer/6268637?hl=en",
+              "finalUrl": "https://support.google.com/google-ads/answer/6268637?hl=en",
+              "status": 200,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 1694465
+            }
+          },
+          {
+            "url": "https://support.google.com/google-ads/answer/7686447?hl=en",
+            "owners": [
+              "google-target-roas",
+              "refunds-conversion-adjustments"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://support.google.com/google-ads/answer/7686447?hl=en",
+              "finalUrl": "https://support.google.com/google-ads/answer/7686447?hl=en",
+              "status": 200,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 1665104
+            }
+          },
+          {
+            "url": "https://www.facebook.com/business/help/458681590974355?locale=en_US",
+            "owners": [
+              "meta-ads-roas-attribution"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://www.facebook.com/business/help/458681590974355?locale=en_US",
+              "finalUrl": "https://www.facebook.com/business/help/458681590974355?locale=en_US",
+              "status": 200,
+              "contentType": "text/html; charset=\"utf-8\"",
+              "bytes": 265596
+            }
+          },
+          {
+            "url": "https://www.facebook.com/business/help/460276478298895?locale=en_US",
+            "owners": [
+              "meta-ads-roas-attribution"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://www.facebook.com/business/help/460276478298895?locale=en_US",
+              "finalUrl": "https://www.facebook.com/business/help/460276478298895?locale=en_US",
+              "status": 200,
+              "contentType": "text/html; charset=\"utf-8\"",
+              "bytes": 293848
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/discounts/discount-types",
+            "owners": [
+              "discount-vs-bundle-profit"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/discounts/discount-types",
+              "finalUrl": "https://help.shopify.com/en/manual/discounts/discount-types",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9553
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/products/bundles",
+            "owners": [
+              "discount-vs-bundle-profit"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/products/bundles",
+              "finalUrl": "https://help.shopify.com/en/manual/products/bundles",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9508
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/fulfillment/setup/shipping-rates/free-shipping-rates",
+            "owners": [
+              "free-shipping-profit-threshold"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/fulfillment/setup/shipping-rates/free-shipping-rates",
+              "finalUrl": "https://help.shopify.com/en/manual/fulfillment/setup/shipping-rates/free-shipping-rates",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9680
+            }
+          },
+          {
+            "url": "https://support.google.com/google-ads/answer/12080169?hl=en",
+            "owners": [
+              "new-customer-roas-vs-blended-roas"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://support.google.com/google-ads/answer/12080169?hl=en",
+              "finalUrl": "https://support.google.com/google-ads/answer/12080169?hl=en",
+              "status": 200,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 1671221
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/products/details/sku",
+            "owners": [
+              "product-channel-profitability-scenario"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/products/details/sku",
+              "finalUrl": "https://help.shopify.com/en/manual/products/details/sku",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9541
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/products/import-export/using-csv",
+            "owners": [
+              "product-channel-profitability-scenario"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/products/import-export/using-csv",
+              "finalUrl": "https://help.shopify.com/en/manual/products/import-export/using-csv",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9577
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/analytics-fields",
+            "owners": [
+              "product-channel-profitability-scenario"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/analytics-fields",
+              "finalUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/analytics-fields",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9746
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/custom-reports/export-reports",
+            "owners": [
+              "product-channel-profitability-scenario"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/custom-reports/export-reports",
+              "finalUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/custom-reports/export-reports",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9785
+            }
+          },
+          {
+            "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/custom-reports/filter-and-edit",
+            "owners": [
+              "product-channel-profitability-scenario"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "restricted",
+              "attempts": 1,
+              "requestedUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/custom-reports/filter-and-edit",
+              "finalUrl": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/custom-reports/filter-and-edit",
+              "status": 403,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 9788
+            }
+          },
+          {
+            "url": "https://shopify.dev/docs/api/shopifyql/latest/schemas/sales_revenue/sales",
+            "owners": [
+              "product-channel-profitability-scenario"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://shopify.dev/docs/api/shopifyql/latest/schemas/sales_revenue/sales",
+              "finalUrl": "https://shopify.dev/docs/api/shopifyql/latest/schemas/sales_revenue/sales",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 900022
+            }
+          },
+          {
+            "url": "https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events",
+            "owners": [
+              "refunds-conversion-adjustments"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events",
+              "finalUrl": "https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 664861
+            }
+          },
+          {
+            "url": "https://developers.google.com/google-ads/api/docs/conversions/upload-adjustments",
+            "owners": [
+              "refunds-conversion-adjustments"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://developers.google.com/google-ads/api/docs/conversions/upload-adjustments",
+              "finalUrl": "https://developers.google.com/google-ads/api/docs/conversions/upload-adjustments?hl=th",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 302554
+            }
+          },
+          {
+            "url": "https://support.google.com/google-ads/answer/6239119?hl=en",
+            "owners": [
+              "conversion-delay-data-maturity"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://support.google.com/google-ads/answer/6239119?hl=en",
+              "finalUrl": "https://support.google.com/google-ads/answer/6239119?hl=en",
+              "status": 200,
+              "contentType": "text/html; charset=UTF-8",
+              "bytes": 1675459
+            }
+          },
+          {
+            "url": "https://ads.tiktok.com/business/en-US/blog/attribution-analytics-performance-comparison",
+            "owners": [
+              "tiktok-shop-roas-attribution"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://ads.tiktok.com/business/en-US/blog/attribution-analytics-performance-comparison",
+              "finalUrl": "https://ads.tiktok.com/business/en-US/blog/attribution-analytics-performance-comparison",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 1119673
+            }
+          },
+          {
+            "url": "https://ads.tiktok.com/resources/help/article/attribution?lang=en",
+            "owners": [
+              "tiktok-shop-roas-attribution"
+            ],
+            "status": "passed",
+            "failures": [],
+            "http": {
+              "method": "GET",
+              "access": "reachable",
+              "attempts": 1,
+              "requestedUrl": "https://ads.tiktok.com/resources/help/article/attribution?lang=en",
+              "finalUrl": "https://ads.tiktok.com/resources/help/article/attribution?lang=en",
+              "status": 200,
+              "contentType": "text/html; charset=utf-8",
+              "bytes": 1541163
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 24,
+    "failureCount": 38,
+    "releaseDecision": "blocked"
+  }
+}
