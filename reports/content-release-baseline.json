@@ -1,10 +1,14 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-08-21T06:45:03.678Z",
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-21T08:55:23.420Z",
   "repository": {
-    "commit": "1ff2e6579aa3a286dfb988c2233859a31f4a8657",
+    "commit": "ec6b1af8f3f1ed579a8fa7d5acdaafd3e43da18a",
     "branch": "main",
     "workingTreeClean": true
+  },
+  "contract": {
+    "version": 1,
+    "sha256": "aa28649b20e12fa999248001de7a0c9bcacc534a51bd17f8a69b5d4a9389c10b"
   },
   "assets": [
     {
@@ -14,7 +18,8 @@
       "file": "methodology/index.html",
       "primaryIntent": "Understand the revenue, cost, attribution, and review rules used across ROAS Break",
       "primaryTool": "/tools/",
-      "reviewedOn": "2026-08-20"
+      "reviewedOn": "2026-08-20",
+      "contentSha256": "719b68f5113047d017c84a8e98acd23fb6dce022876d1c5c131ff65e42d5740e"
     },
     {
       "id": "ecommerce-profit-formulas",
@@ -23,7 +28,8 @@
       "file": "guides/ecommerce-profit-formulas/index.html",
       "primaryIntent": "Connect ecommerce contribution margin, acquisition targets, realized profit, store efficiency, and customer payback",
       "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=5&roas=4&profit=10",
-      "reviewedOn": "2026-08-21"
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "434ccaaf91873d8abd07fea877092d8e8d3a68993c917942e6d537698f722edb"
     },
     {
       "id": "poas-vs-roas",
@@ -32,7 +38,8 @@
       "file": "guides/poas-vs-roas/index.html",
       "primaryIntent": "Decide when contribution profit after ads is more useful than revenue ROAS",
       "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=45&ship=8&other=3&fees=3&returns=5&roas=4&profit=10",
-      "reviewedOn": "2026-08-21"
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "3861750ae26eda3fa25dbf444d0aee1c04bc4f71774244998973becbeb15834f"
     },
     {
       "id": "ecommerce-variable-cost-checklist",
@@ -41,7 +48,8 @@
       "file": "guides/ecommerce-variable-cost-checklist/index.html",
       "primaryIntent": "Audit every pre-ad variable cost into one and only one Break-even ROAS input before setting an acquisition ceiling",
       "primaryTool": "/?mode=costs&aov=120&cogs=48&ship=9&other=7&fees=3&returns=8&roas=3",
-      "reviewedOn": "2026-08-21"
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "bacf6331c5f45d0ce3347ffc474e762defe4fe6ea95882d77bf77160d962a28b"
     },
     {
       "id": "contribution-margin",
@@ -50,7 +58,8 @@
       "file": "guides/contribution-margin-vs-gross-margin/index.html",
       "primaryIntent": "Choose the margin that sets an ecommerce acquisition ceiling",
       "primaryTool": "/?mode=costs&aov=120&cogs=48&ship=9&other=0&fees=3&returns=8&roas=2.5",
-      "reviewedOn": "2026-08-20"
+      "reviewedOn": "2026-08-20",
+      "contentSha256": "0f5693f5e1d49bdb48133a22935f0d9fe6a6a66a1e38654438bf97ba4c21a568"
     },
     {
       "id": "revenue-basis",
@@ -59,7 +68,8 @@
       "file": "guides/ecommerce-revenue-basis/index.html",
       "primaryIntent": "Choose a consistent ecommerce revenue basis for ROAS",
       "primaryTool": "/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4",
-      "reviewedOn": "2026-08-20"
+      "reviewedOn": "2026-08-20",
+      "contentSha256": "d2f5c1915e206507bde595d5276f1f20b228d638a69428b6956de70ddf5c5a91"
     },
     {
       "id": "shopify-net-sales",
@@ -68,7 +78,8 @@
       "file": "guides/shopify-net-sales-for-roas/index.html",
       "primaryIntent": "Map Shopify sales and profit reports into break-even ROAS inputs",
       "primaryTool": "/?mode=costs&aov=85&cogs=30&ship=8&other=3&fees=3&returns=0&roas=2.4",
-      "reviewedOn": "2026-08-20"
+      "reviewedOn": "2026-08-20",
+      "contentSha256": "f6935fe695eb8ddf928fb71a4e09437169cf7d4970b461aebe09b31a10eeae4a"
     },
     {
       "id": "roas-acos",
@@ -77,7 +88,8 @@
       "file": "guides/roas-vs-acos/index.html",
       "primaryIntent": "Convert ROAS and ACoS and connect both to contribution margin",
       "primaryTool": "/target-roas-calculator/?mode=margin&aov=100&margin=48&fees=3&returns=5&roas=3&profit=10",
-      "reviewedOn": "2026-08-20"
+      "reviewedOn": "2026-08-20",
+      "contentSha256": "8f708802b84ca987a6f6a56f4e4290e3a0ce0b3d6c09c95cb092525fbe7e9dde"
     },
     {
       "id": "good-roas",
@@ -86,7 +98,8 @@
       "file": "guides/good-roas-for-profit-margin/index.html",
       "primaryIntent": "Calculate a good ROAS from a store's own cost structure",
       "primaryTool": "/target-roas-calculator/?mode=margin&aov=100&margin=55&fees=3&returns=5&roas=3.5&profit=15",
-      "reviewedOn": "2026-08-20"
+      "reviewedOn": "2026-08-20",
+      "contentSha256": "41e4b830bfb1bc2ef6b2c4f84bee68813a228d1c2abda268db0ca97ca5ee812f"
     },
     {
       "id": "google-target-roas",
@@ -95,7 +108,8 @@
       "file": "guides/google-ads-target-roas-profit/index.html",
       "primaryIntent": "Translate a profit target into Google Ads target ROAS",
       "primaryTool": "/target-roas-calculator/?mode=margin&aov=100&margin=58&fees=3&returns=5&roas=3&profit=15",
-      "reviewedOn": "2026-08-20"
+      "reviewedOn": "2026-08-20",
+      "contentSha256": "02a2683ea89fe9607827627b4b8b9694422a8aa3e6f0a1d6662601cda7a77b43"
     },
     {
       "id": "meta-ads-roas-attribution",
@@ -104,7 +118,8 @@
       "file": "guides/meta-ads-roas-and-attribution/index.html",
       "primaryIntent": "Map Meta Ads attributed purchase value and selected attribution settings into an ecommerce profit threshold",
       "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=42&ship=8&other=4&fees=3&returns=5&roas=3.2&profit=10",
-      "reviewedOn": "2026-08-21"
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "d761665177ca43a9d4a5d26e16cebede5db5d290a99dfef1578d466e2c68a4b7"
     },
     {
       "id": "amazon-break-even-acos",
@@ -113,7 +128,8 @@
       "file": "guides/amazon-break-even-acos/index.html",
       "primaryIntent": "Calculate Amazon break-even and target ACoS from contribution profit",
       "primaryTool": "/target-roas-calculator/?mode=costs&aov=60&cogs=18&ship=8&other=4&fees=15&returns=0&roas=4&profit=10",
-      "reviewedOn": "2026-08-20"
+      "reviewedOn": "2026-08-20",
+      "contentSha256": "4618ecf588fe575709387ce04e12b923e2ab31f31786db95f2faac68955a1968"
     },
     {
       "id": "discount-vs-bundle-profit",
@@ -122,7 +138,8 @@
       "file": "guides/discount-vs-bundle-profit/index.html",
       "primaryIntent": "Compare direct-discount and bundle contribution profit against the same order and traffic target",
       "primaryTool": "/promotion-profit-calculator/?mode=costs&aov=80&cogs=28&ship=6&other=3&fees=3&returns=5&roas=2.5&promo=64&cvr=2.5",
-      "reviewedOn": "2026-08-21"
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "62f94dfb6cccbc9be08fef36a30cd610947812c4424dd68eb65a20941d04a7a4"
     },
     {
       "id": "free-shipping-profit-threshold",
@@ -131,7 +148,8 @@
       "file": "guides/free-shipping-profit-threshold/index.html",
       "primaryIntent": "Calculate the AOV, order, or conversion lift required for free shipping to preserve contribution profit",
       "primaryTool": "/promotion-profit-calculator/?mode=costs&aov=86&cogs=32&ship=8&other=4&fees=3&returns=5&roas=2.5&promo=80&cvr=2.5",
-      "reviewedOn": "2026-08-21"
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "e84ce129e75cf197341a1e79ed6d0e34342ef143b7404d08792051542c8a6c46"
     },
     {
       "id": "returns-discounts",
@@ -139,8 +157,9 @@
       "url": "/guides/returns-and-discounts/",
       "file": "guides/returns-and-discounts/index.html",
       "primaryIntent": "Separate the profit effects of discounts, refunds, and returns",
-      "primaryTool": "/promotion-profit-calculator/",
-      "reviewedOn": "2026-08-21"
+      "primaryTool": "/profit-lever-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=10&roas=3&profit=10&lever=returns",
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "44f80760d74e536df618ff08eba20ea48664f1f5c8a089849e101f8c43450eed"
     },
     {
       "id": "contribution-ltv-vs-revenue-ltv",
@@ -149,7 +168,8 @@
       "file": "guides/contribution-ltv-vs-revenue-ltv/index.html",
       "primaryIntent": "Prevent cumulative revenue LTV from being used directly as allowable CAC by calculating fixed-window cohort contribution",
       "primaryTool": "/cac-payback-calculator/?cac=70&profit=15&d30=40&d60=52&d90=60&d180=74&d365=92",
-      "reviewedOn": "2026-08-21"
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "afcc5f05dedc96fc16cc9c86fe67a9e5e9381960b3df257c00d6224bb48c9ab5"
     },
     {
       "id": "new-customer-roas-vs-blended-roas",
@@ -158,7 +178,8 @@
       "file": "guides/new-customer-roas-vs-blended-roas/index.html",
       "primaryIntent": "Set distinct profitability thresholds for new-customer acquisition and blended store ROAS",
       "primaryTool": "/cac-payback-calculator/?cac=80&profit=12&d30=40&d60=55&d90=68&d180=90&d365=112",
-      "reviewedOn": "2026-08-21"
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "6401ba3d183d0d9488ccd1431fc654e4db105e5ed3e8ee624905d65473013825"
     },
     {
       "id": "cac-payback-cohort",
@@ -167,16 +188,18 @@
       "file": "guides/cac-payback-cohort-data/index.html",
       "primaryIntent": "Prepare mature cohort contribution data for CAC payback",
       "primaryTool": "/cac-payback-calculator/?cac=70&profit=15&d30=45&d60=62&d90=76&d180=92&d365=118",
-      "reviewedOn": "2026-08-20"
+      "reviewedOn": "2026-08-20",
+      "contentSha256": "44d11327955432fe62748c71491cd0626c9963445f8bd8764d8da946a2a50c3a"
     },
     {
       "id": "product-channel-profitability-scenario",
       "type": "guide",
       "url": "/guides/product-vs-channel-profitability-scenario/",
       "file": "guides/product-vs-channel-profitability-scenario/index.html",
-      "primaryIntent": "Compare product-channel combinations on total contribution profit at equal ad spend instead of ranking them by ROAS alone",
-      "primaryTool": "/scenario-planner/?s1n=High+ROAS+low+margin&s1a=50&s1m=20&s1r=5&s1s=10000&s2n=Balanced+mix&s2a=80&s2m=40&s2r=4&s2s=10000&s3n=Lower+ROAS+high+margin&s3a=100&s3m=55&s3r=3&s3s=10000",
-      "reviewedOn": "2026-08-21"
+      "primaryIntent": "Manually map Shopify product and matched channel aggregates into comparable contribution-profit scenarios instead of ranking them by ROAS alone",
+      "primaryTool": "/scenario-planner/?period=Fictional+matched+period+%7C+USD+%7C+UTC+%7C+documented+attribution&s1n=High+ROAS+low+margin&s1a=50&s1m=20&s1r=5&s1s=10000&s2n=Balanced+mix&s2a=80&s2m=40&s2r=4&s2s=10000&s3n=Lower+ROAS+high+margin&s3a=100&s3m=55&s3r=3&s3s=10000",
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "478ce1af5acabf71a701315e52e5a6a5b42dad414e76429f5daf79a03f97a336"
     },
     {
       "id": "refunds-conversion-adjustments",
@@ -185,7 +208,8 @@
       "file": "guides/refunds-and-conversion-adjustments/index.html",
       "primaryIntent": "Correct canceled and partially refunded ecommerce transactions in Google Ads and GA4 before recalculating ROAS",
       "primaryTool": "/scenario-planner/?s1n=Stale+initial&s1a=100&s1m=40&s1r=4&s1s=10000&s2n=Ads+adjusted&s2a=100&s2m=40&s2r=3.4&s2s=10000&s3n=Store+control&s3a=100&s3m=40&s3r=3.3&s3s=10000",
-      "reviewedOn": "2026-08-21"
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "08cc9e4d43760ccdadc01b4e6bc4403aae53d1d8a58ef614758cccfe85ea133f"
     },
     {
       "id": "conversion-delay-data-maturity",
@@ -194,7 +218,8 @@
       "file": "guides/conversion-delay-and-data-maturity/index.html",
       "primaryIntent": "Determine when recent attributed ROAS is mature enough for a budget decision",
       "primaryTool": "/target-roas-calculator/?mode=costs&aov=100&cogs=40&ship=8&other=4&fees=3&returns=5&roas=2.7&profit=10",
-      "reviewedOn": "2026-08-21"
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "076efc1c7f3266035ad34ccb505d6f4f300fbb8f685c1b146b67258d9d1241d2"
     },
     {
       "id": "tiktok-shop-roas-attribution",
@@ -203,7 +228,8 @@
       "file": "guides/tiktok-shop-roas-and-attribution/index.html",
       "primaryIntent": "Normalize TikTok Shop click-through, view-through, and gross revenue reporting into comparable contribution-profit scenarios",
       "primaryTool": "/scenario-planner/?s1n=CTA+only&s1a=50&s1m=40&s1r=2.5&s1s=10000&s2n=CTA+%2B+VTA&s2a=50&s2m=40&s2r=3.2&s2s=10000&s3n=Store+net&s3a=50&s3m=40&s3r=2.7&s3s=10000",
-      "reviewedOn": "2026-08-21"
+      "reviewedOn": "2026-08-21",
+      "contentSha256": "9395287e3b9df628f1e29456a4a0358fff384ab82e288ea324cca0089a63e873"
     },
     {
       "id": "attributed-mer",
@@ -212,7 +238,8 @@
       "file": "guides/attributed-roas-vs-mer/index.html",
       "primaryIntent": "Reconcile channel attribution with store-wide marketing efficiency",
       "primaryTool": "/scenario-planner/",
-      "reviewedOn": "2026-08-20"
+      "reviewedOn": "2026-08-20",
+      "contentSha256": "a9505e219bc313330e26aecbc154e7b89be67d5f52968289dbc6a5bf2f32d9bc"
     }
   ],
   "automatedChecks": [
@@ -251,7 +278,7 @@
       "status": "passed",
       "evidence": {
         "inspectedAssets": 23,
-        "inspectedSources": 61
+        "inspectedSources": 69
       },
       "failures": []
     },
@@ -314,7 +341,7 @@
           "methodology": 785,
           "ecommerce-profit-formulas": 1055,
           "poas-vs-roas": 871,
-          "ecommerce-variable-cost-checklist": 1065,
+          "ecommerce-variable-cost-checklist": 1378,
           "contribution-margin": 470,
           "revenue-basis": 488,
           "shopify-net-sales": 493,
@@ -323,13 +350,13 @@
           "google-target-roas": 399,
           "meta-ads-roas-attribution": 1059,
           "amazon-break-even-acos": 428,
-          "discount-vs-bundle-profit": 1066,
+          "discount-vs-bundle-profit": 1345,
           "free-shipping-profit-threshold": 979,
-          "returns-discounts": 498,
+          "returns-discounts": 656,
           "contribution-ltv-vs-revenue-ltv": 1093,
           "new-customer-roas-vs-blended-roas": 1083,
           "cac-payback-cohort": 464,
-          "product-channel-profitability-scenario": 923,
+          "product-channel-profitability-scenario": 1739,
           "refunds-conversion-adjustments": 1146,
           "conversion-delay-data-maturity": 1087,
           "tiktok-shop-roas-attribution": 1008,
@@ -345,7 +372,7 @@
       "evidence": {
         "command": "pnpm exec playwright test tests/e2e/inner-pages.spec.ts --project=chromium --grep <canonical/schema/breadcrumb/sitemap test>",
         "evidenceType": "runtime-e2e",
-        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:553:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (6.1s)\n\n  1 passed (7.9s)"
+        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:807:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (12.3s)\n\n  1 passed (14.3s)"
       },
       "failures": []
     }
