@@ -13,11 +13,12 @@
     "test:content": "node scripts/check-content.mjs",
     "release:check": "node scripts/release-check.mjs",
     "release:check:verify": "node scripts/release-check.mjs --no-write",
+    "review:check": "node scripts/check-content-reviews.mjs",
     "production:smoke": "node scripts/production-smoke.mjs",
     "production:smoke:browser": "node scripts/production-smoke.mjs --browser",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "check": "pnpm test && pnpm release:check:verify && pnpm build && pnpm test:e2e"
+    "check": "pnpm test && pnpm release:check:verify && pnpm review:check && pnpm build && pnpm test:e2e"
   },
   "dependencies": {
     "lucide": "^1.30.0"
