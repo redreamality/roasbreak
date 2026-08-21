@@ -1,15 +1,6 @@
 import { describe, expect, it } from "vitest";
 // @ts-expect-error The production smoke executable intentionally remains plain JavaScript.
-import {
-  collectInternalLinks,
-  inspectAssetDocument,
-  inspectExternalSourceOutcome,
-  inspectFetchOutcome,
-  inspectRepositorySnapshot,
-  inspectRobots,
-  inspectSitemap,
-  inspectSourceLinks,
-} from "../scripts/production-smoke.mjs";
+import { collectInternalLinks, inspectAssetDocument, inspectExternalSourceOutcome, inspectFetchOutcome, inspectRepositorySnapshot, inspectRobots, inspectSitemap, inspectSourceLinks } from "../scripts/production-smoke.mjs";
 
 const origin = "https://roasbreak.com";
 const guide = {
