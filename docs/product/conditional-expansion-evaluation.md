@@ -22,6 +22,15 @@
 | 公开且获授权的客户数据 | 仓库未发现 | 不能启动真实案例或自有 benchmark。 |
 | 工具数据能力 | 当前为 URL 可恢复的手工输入；无 CSV、OAuth、历史序列或 cohort 导入 | 不能发布导入指南，也不能承诺连接或趋势监控。
 
+## 证据采集解锁契约
+
+下一次重评只需要读取聚合数据，不需要写入 Google 产品，也不需要客户级数据。最小权限和输出固定如下：
+
+1. **Search Console**：把独立 service account 加入 `sc-domain:roasbreak.com`，设置 Full（GSC 对 Search Analytics 与 URL Inspection 读取所需的权限档位），但只调用读取接口；只启用 Search Console API，不启用 Indexing API，也不授予 Owner。连续读取至少 28 个完整自然日，并避开最近 3 天的数据延迟窗口；输出仅含 `date`、`query`、`page`、`clicks`、`impressions`、`ctr`、`position`。
+2. **GA4**：service account 只授予目标 property 的 Viewer；只启用 Analytics Data API。输出仅聚合 `guide_to_tool_clicked`（`guide`、`target`）、`calculation_completed`（`tool`、`source_guide`）及成功复制事件，不导出 user ID、client ID、金额、查询串或原始 URL。
+3. **凭据边界**：service account JSON 与配置只放在用户级 `~/.config/codex-seo/`，绝不写入仓库。先用 `uv run python google_auth.py --check --json` 证明达到 GSC/GA4 可读层级，再执行报表；当前 2026-08-21 复核结果仍为 credential tier `-1`。
+4. **决策产物**：保存观察窗口、时区、property、过滤条件、事件定义、样本量和缺失说明；只有主题级查询或同一 `source_guide` 的聚合行为达到可复核的重复信号，才允许重排 CNT-016 至 CNT-018 或重开对应 P2。
+
 ## CNT-016 至 CNT-018 排序决策
 
 `CNT-016` Marketplace fees、`CNT-017` Average vs marginal ROAS 和 `CNT-018` Currency/tax/duty 均保持候选，不指定先后顺序。
