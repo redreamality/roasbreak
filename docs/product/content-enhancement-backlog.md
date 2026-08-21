@@ -159,7 +159,7 @@
 
 - [ ] `RELEASE-002` 每篇发布后验证生产环境。
   - 检查：HTTP 200、canonical、robots、sitemap、结构化数据、桌面/移动布局、站内/站外链接、工具状态传递。
-  - 验收：关键路径由 Playwright smoke 或现有 E2E 覆盖；不只检查构建成功。**基础设施完成、当前发布仍阻断：** `pnpm production:smoke` 与浏览器模式已覆盖生产 HTTP、robots、sitemap、canonical、schema、链接、桌面/移动布局和 CTA 状态；最新本地内容尚未部署，不能标记本轮生产验证通过。
+  - 验收：关键路径由 Playwright smoke 或现有 E2E 覆盖；不只检查构建成功。**基础设施完成、当前发布仍阻断：** 2026-08-21 的 [生产 HTTP smoke 证据](../../reports/production-smoke/production-smoke-2026-08-21T09-38-56-865Z.json) 基于干净稳定的 `52d0058`，记录 38 个失败：12 个 sitemap 缺口、12 个页面 404、11 个旧页面缺 Breadcrumb、2 个旧 CTA 和 1 个旧 `dateModified`。30 个唯一站外来源检查已通过（18 个可直接访问、12 个明确限制自动访问、0 个不可用）。最新本地内容尚未部署；12 个 404 消失前不运行无法完成页面验收的浏览器 smoke，也不能标记本轮生产验证通过。
 
 - [x] `RELEASE-003` 建立 30/60/90 天内容复盘。
   - 检查：索引、查询、点击、guide-to-tool、计算完成、复制/分享和来源新鲜度。
