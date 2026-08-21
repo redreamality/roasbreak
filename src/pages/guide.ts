@@ -1,7 +1,7 @@
 import "../styles.css";
 import "../tool-pages.css";
 import { acosToRoas, roasToAcos } from "../lib/decision-tools";
-import { copyText, setYearAndIcons, track } from "./common";
+import { copyText, rememberGuideHandoff, setYearAndIcons, track } from "./common";
 
 const roasInput = document.querySelector<HTMLInputElement>("#guide-roas");
 const acosInput = document.querySelector<HTMLInputElement>("#guide-acos");
@@ -39,16 +39,19 @@ if (roasInput && acosInput) {
 document.querySelectorAll<HTMLAnchorElement>(".guide-action").forEach((link) => {
   link.addEventListener("click", () => {
     const target = new URL(link.href, window.location.origin);
-    track("guide_to_tool_clicked", {
-      guide: document.body.dataset.guide ?? "unknown",
+    const guide = document.body.dataset.guide ?? "unknown";
+    const tracked = track("guide_to_tool_clicked", {
+      guide,
       target: target.pathname,
     });
+    if (tracked) rememberGuideHandoff(guide, target.href);
   });
 });
 
-checklistButton?.addEventListener("click", () => {
-  void copyText(variableCostChecklist, "Checklist copied");
-  track("guide_checklist_copied", { guide: document.body.dataset.guide ?? "unknown" });
+checklistButton?.addEventListener("click", async () => {
+  if (await copyText(variableCostChecklist, "Checklist copied")) {
+    track("guide_checklist_copied", { guide: document.body.dataset.guide ?? "unknown" });
+  }
 });
 
 setYearAndIcons();

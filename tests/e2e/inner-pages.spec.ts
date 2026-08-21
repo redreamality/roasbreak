@@ -482,6 +482,53 @@ test("tracks guide-to-tool actions without calculation values or URL queries", a
   expect(event).toEqual(["event", "guide_to_tool_clicked", { guide: "shopify-net-sales", target: "/" }]);
 });
 
+test("attributes one completed calculation and successful copy to the originating guide", async ({ context, page }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"], {
+    origin: "http://127.0.0.1:4173",
+  });
+  await page.route("https://www.googletagmanager.com/**", async (route) => {
+    await route.fulfill({ status: 200, contentType: "application/javascript", body: "" });
+  });
+  await page.addInitScript(() => window.localStorage.setItem("roasbreak-privacy-choice", "accepted"));
+  await page.goto("/guides/ecommerce-variable-cost-checklist/");
+  await page.locator(".guide-action").click();
+  await expect(page).toHaveURL(/\/\?mode=costs/);
+
+  await page.locator('[name="currentRoas"]').fill("3.1");
+  await page.locator('[name="currentRoas"]').press("Tab");
+  await page.locator('[name="orderValue"]').fill("125");
+  await page.locator('[name="orderValue"]').press("Tab");
+  await page.locator("#share-button").click();
+
+  await expect.poll(async () => page.evaluate(() => {
+    const dataLayer = (window as Window & { dataLayer?: unknown[][] }).dataLayer ?? [];
+    return dataLayer.filter((entry) => entry[0] === "event" && ["calculation_completed", "break_even_copied"].includes(String(entry[1])));
+  })).toEqual([
+    ["event", "calculation_completed", { tool: "break_even", source_guide: "ecommerce-variable-cost-checklist" }],
+    ["event", "break_even_copied", { tool: "break_even", source_guide: "ecommerce-variable-cost-checklist" }],
+  ]);
+
+  const serializedEvents = await page.evaluate(() => JSON.stringify((window as Window & { dataLayer?: unknown[][] }).dataLayer ?? []));
+  expect(serializedEvents).not.toContain("3.1");
+  expect(serializedEvents).not.toContain("mode=costs");
+  expect(serializedEvents).not.toContain("?");
+});
+
+test("does not attribute a directly visited tool calculation to a guide", async ({ page }) => {
+  await page.route("https://www.googletagmanager.com/**", async (route) => {
+    await route.fulfill({ status: 200, contentType: "application/javascript", body: "" });
+  });
+  await page.addInitScript(() => window.localStorage.setItem("roasbreak-privacy-choice", "accepted"));
+  await page.goto("/target-roas-calculator/");
+  await page.locator("#target-profit").fill("12");
+  await page.locator("#target-profit").press("Tab");
+
+  await expect.poll(async () => page.evaluate(() => {
+    const dataLayer = (window as Window & { dataLayer?: unknown[][] }).dataLayer ?? [];
+    return dataLayer.find((entry) => entry[0] === "event" && entry[1] === "calculation_completed");
+  })).toEqual(["event", "calculation_completed", { tool: "target" }]);
+});
+
 test("copies an assumption-aware restore link from every decision tool", async ({ context, page }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"], {
     origin: "http://127.0.0.1:4173",

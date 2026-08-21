@@ -8,7 +8,9 @@ import {
   type LeverResult,
 } from "../lib/decision-tools";
 import {
+  bindCalculationCompleted,
   bindMode,
+  consumeGuideHandoff,
   copyText,
   currency,
   economicsFields,
@@ -36,6 +38,21 @@ if (!appElement) throw new Error("Missing tool app");
 const app: HTMLElement = appElement;
 
 const page = document.body.dataset.page;
+const sourceGuide = consumeGuideHandoff();
+
+function attributed(parameters: Record<string, string>): Record<string, string> {
+  return sourceGuide ? { ...parameters, source_guide: sourceGuide } : parameters;
+}
+
+function copyAndTrack(text: string, message: string, eventName: string, parameters: Record<string, string>): void {
+  void copyText(text, message).then((copied) => {
+    if (copied) track(eventName, attributed(parameters));
+  });
+}
+
+function bindToolCalculation(root: HTMLElement): void {
+  bindCalculationCompleted(root, page ?? "unknown", sourceGuide);
+}
 
 function resultCard(label: string, id: string, value: string, note: string): string {
   return `<div class="result-cell"><span>${label}</span><strong id="${id}">${value}</strong><p>${note}</p></div>`;
@@ -71,6 +88,7 @@ function targetPage(): void {
     </section>`;
   const form = app.querySelector<HTMLElement>("#target-form");
   if (!form) return;
+  bindToolCalculation(form);
   const update = (): void => {
     const inputs = inputsFrom(form);
     const profitPct = numberValue(form, "target-profit");
@@ -98,8 +116,7 @@ function targetPage(): void {
     const result = calculateTarget(inputs, profitPct);
     const state = sharedParams(inputs);
     state.set("profit", String(profitPct));
-    void copyText(`Target ROAS: ${formatRoas(result.targetRoas)} (${result.feasible ? `${(result.targetRoas * 100).toFixed(0)}%` : "not feasible"})\nTarget CPA: ${result.feasible ? currency.format(result.targetCpa) : "not feasible"}\nTarget ACoS: ${result.feasible ? `${result.targetAcosPct.toFixed(1)}%` : "not feasible"}\nBasis: net product revenue excluding tax; entered variable costs included; fixed overhead and customer lifetime value excluded.\nRestore scenario: ${stateUrl(state)}`, "Targets copied");
-    track("target_copied", { page: "target_roas" });
+    copyAndTrack(`Target ROAS: ${formatRoas(result.targetRoas)} (${result.feasible ? `${(result.targetRoas * 100).toFixed(0)}%` : "not feasible"})\nTarget CPA: ${result.feasible ? currency.format(result.targetCpa) : "not feasible"}\nTarget ACoS: ${result.feasible ? `${result.targetAcosPct.toFixed(1)}%` : "not feasible"}\nBasis: net product revenue excluding tax; entered variable costs included; fixed overhead and customer lifetime value excluded.\nRestore scenario: ${stateUrl(state)}`, "Targets copied", "target_copied", { page: "target_roas" });
   });
   update();
 }
@@ -122,6 +139,7 @@ function leverPage(): void {
     </section>`;
   const form = app.querySelector<HTMLElement>("#lever-form");
   if (!form) return;
+  bindToolCalculation(form);
   let selectedId = readTextParam("lever", "");
   let currentResults: LeverResult[] = [];
   const showSelected = (): void => {
@@ -136,8 +154,7 @@ function leverPage(): void {
     replaceUrlState(state);
     panel.innerHTML = `<span>Highest-impact scenario</span><strong>${selected.label} ${selected.change}</strong><p>Adds ${currency.format(selected.targetCpaDelta)} of CPA room and ${currency.format(selected.profitDelta)} profit per order at the current ROAS.</p><button type="button" class="secondary-button" id="copy-action">Copy action summary</button>`;
     panel.querySelector("#copy-action")?.addEventListener("click", () => {
-      void copyText(`${selected.label} ${selected.change}: Target CPA ${currency.format(selected.targetCpa)} (${formatSigned(selected.targetCpaDelta)}); target ROAS ${formatRoas(selected.targetRoas)}.\nBasis: single-variable scenario using net product revenue and entered variable costs; feasibility and demand response not forecast.\nRestore scenario: ${stateUrl(state)}`, "Action copied");
-      track("lever_copied", { lever: selected.id });
+      copyAndTrack(`${selected.label} ${selected.change}: Target CPA ${currency.format(selected.targetCpa)} (${formatSigned(selected.targetCpaDelta)}); target ROAS ${formatRoas(selected.targetRoas)}.\nBasis: single-variable scenario using net product revenue and entered variable costs; feasibility and demand response not forecast.\nRestore scenario: ${stateUrl(state)}`, "Action copied", "lever_copied", { lever: selected.id });
     });
   };
   const update = (): void => {
@@ -172,6 +189,7 @@ function promotionPage(): void {
       <p class="result-alert" id="promotion-alert"></p></section></section>`;
   const form = app.querySelector<HTMLElement>("#promotion-form");
   if (!form) return;
+  bindToolCalculation(form);
   const update = (): void => {
     const inputs = inputsFrom(form);
     const promo = numberValue(form, "promotion-price");
@@ -197,8 +215,7 @@ function promotionPage(): void {
     const state = sharedParams(inputs);
     state.set("promo", String(promo));
     state.set("cvr", String(cvr));
-    void copyText(`Promotion threshold: ${Number.isFinite(result.requiredOrderLiftPct) ? `+${result.requiredOrderLiftPct.toFixed(1)}% orders / ${result.requiredConversionRate.toFixed(2)}% CVR` : "not viable"}\nContribution: ${currency.format(result.promotionContribution)} per promotional order; break-even ROAS ${formatRoas(result.promotionBreakEvenRoas)}.\nBasis: fixed product, fulfillment, and other costs; constant traffic quality and product mix; lift is a threshold, not a forecast.\nRestore scenario: ${stateUrl(state)}`, "Promotion copied");
-    track("promotion_copied", { page: "promotion" });
+    copyAndTrack(`Promotion threshold: ${Number.isFinite(result.requiredOrderLiftPct) ? `+${result.requiredOrderLiftPct.toFixed(1)}% orders / ${result.requiredConversionRate.toFixed(2)}% CVR` : "not viable"}\nContribution: ${currency.format(result.promotionContribution)} per promotional order; break-even ROAS ${formatRoas(result.promotionBreakEvenRoas)}.\nBasis: fixed product, fulfillment, and other costs; constant traffic quality and product mix; lift is a threshold, not a forecast.\nRestore scenario: ${stateUrl(state)}`, "Promotion copied", "promotion_copied", { page: "promotion" });
   });
   update();
 }
@@ -224,6 +241,7 @@ function paybackPage(): void {
       <p class="result-alert">Use actual cohorts when possible. This calculator does not supply an industry repeat-purchase assumption.</p></section></section>`;
   const form = app.querySelector<HTMLElement>("#payback-form");
   if (!form) return;
+  bindToolCalculation(form);
   const paybackState = (): URLSearchParams => new URLSearchParams({
     cac: String(numberValue(form, "cac")),
     profit: String(numberValue(form, "target-profit")),
@@ -248,8 +266,7 @@ function paybackPage(): void {
   app.querySelector("#copy-payback")?.addEventListener("click", () => {
     const points = [30, 60, 90, 180, 365].map((day) => ({ day, value: numberValue(form, `day-${day}`) }));
     const result = calculatePayback(numberValue(form, "cac"), numberValue(form, "target-profit"), points);
-    void copyText(`CAC payback: ${result.paybackDay === null ? "beyond day 365" : `day ${result.paybackDay}`}; allowable CAC ${currency.format(result.allowableCac)}; unrecovered gap ${currency.format(result.gap)}.\nBasis: cumulative contribution after variable costs, using explicit checkpoints; revenue LTV and extrapolated lifetime value excluded.\nRestore scenario: ${stateUrl(paybackState())}`, "Payback copied");
-    track("payback_copied", { page: "payback" });
+    copyAndTrack(`CAC payback: ${result.paybackDay === null ? "beyond day 365" : `day ${result.paybackDay}`}; allowable CAC ${currency.format(result.allowableCac)}; unrecovered gap ${currency.format(result.gap)}.\nBasis: cumulative contribution after variable costs, using explicit checkpoints; revenue LTV and extrapolated lifetime value excluded.\nRestore scenario: ${stateUrl(paybackState())}`, "Payback copied", "payback_copied", { page: "payback" });
   });
   update();
 }
@@ -274,6 +291,7 @@ function scenarioPage(): void {
   app.innerHTML = `<section class="scenario-tool"><form id="scenario-form"><div class="tool-panel-heading"><div><p class="step-label">01 / Scenarios</p><h2>Compare plans on contribution profit</h2></div></div><div class="scenario-inputs">${defaultScenarios.map((values, offset) => scenario(offset + 1, values)).join("")}</div></form><section class="scenario-results" aria-live="polite"><div class="tool-panel-heading"><div><p class="step-label">02 / Comparison</p><h2>Profit, not revenue alone</h2></div><button class="share-button light-share" id="copy-scenarios" type="button"><i data-lucide="link"></i><span>Copy scenarios</span></button></div><div class="scenario-table" id="scenario-table"></div><p class="tool-note">Each scenario assumes its entered ROAS remains stable at the specified spend. It does not predict the efficiency of scaling.</p></section></section>`;
   const form = app.querySelector<HTMLElement>("#scenario-form");
   if (!form) return;
+  bindToolCalculation(form);
   const scenarioState = (): URLSearchParams => {
     const params = new URLSearchParams();
     [1, 2, 3].forEach((index) => {
@@ -304,8 +322,7 @@ function scenarioPage(): void {
   form.addEventListener("input", update);
   app.querySelector("#copy-scenarios")?.addEventListener("click", () => {
     const winner = app.querySelector<HTMLElement>(".scenario-row.winner")?.innerText.replace(/\s+/g, " ").trim() ?? "";
-    void copyText(`Scenario comparison winner: ${winner}\nBasis: entered contribution margins and attributed ROAS; each ROAS is assumed stable at its spend level, not forecast.\nRestore scenarios: ${stateUrl(scenarioState())}`, "Scenarios copied");
-    track("scenarios_copied", { page: "scenarios" });
+    copyAndTrack(`Scenario comparison winner: ${winner}\nBasis: entered contribution margins and attributed ROAS; each ROAS is assumed stable at its spend level, not forecast.\nRestore scenarios: ${stateUrl(scenarioState())}`, "Scenarios copied", "scenarios_copied", { page: "scenarios" });
   });
   update();
 }

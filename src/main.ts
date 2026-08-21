@@ -7,7 +7,8 @@ import {
   type CalculatorMode,
   type PerformanceStatus,
 } from "./lib/calculator";
-import { initializePrivacyControls } from "./lib/privacy";
+import { initializePrivacyControls, trackAnalytics } from "./lib/privacy";
+import { bindCalculationCompleted, consumeGuideHandoff } from "./pages/common";
 
 const getElement = <T extends HTMLElement>(selector: string): T => {
   const element = document.querySelector<T>(selector);
@@ -21,6 +22,7 @@ getElement<HTMLElement>(".tool-intro").insertAdjacentElement("afterend", calcula
 createIcons({ icons: { Link, RotateCcw } });
 
 const form = getElement<HTMLFormElement>("#calculator-form");
+const sourceGuide = consumeGuideHandoff();
 const modeInputs = [...form.querySelectorAll<HTMLInputElement>('input[name="mode"]')];
 const costFields = [...form.querySelectorAll<HTMLElement>(".cost-field")];
 const marginFields = [...form.querySelectorAll<HTMLElement>(".margin-field")];
@@ -181,6 +183,7 @@ function applyUrlValues(): void {
 
 async function copyResult(): Promise<void> {
   const url = valuesToUrl();
+  let copied = true;
   try {
     await navigator.clipboard.writeText(url);
   } catch {
@@ -190,11 +193,15 @@ async function copyResult(): Promise<void> {
     textArea.style.opacity = "0";
     document.body.append(textArea);
     textArea.select();
-    document.execCommand("copy");
+    copied = document.execCommand("copy");
     textArea.remove();
   }
+  if (!copied) return;
   shareButtonText.textContent = "Copied";
   toast.classList.add("is-visible");
+  const parameters: Record<string, string> = { tool: "break_even" };
+  if (sourceGuide) parameters.source_guide = sourceGuide;
+  trackAnalytics("break_even_copied", parameters);
   window.setTimeout(() => {
     shareButtonText.textContent = "Copy result";
     toast.classList.remove("is-visible");
@@ -233,5 +240,6 @@ document.querySelectorAll<HTMLDetailsElement>(".faq-list details").forEach((deta
 
 getElement<HTMLElement>("#year").textContent = String(new Date().getFullYear());
 initializePrivacyControls();
+bindCalculationCompleted(form, "break_even", sourceGuide);
 applyUrlValues();
 updateResults();

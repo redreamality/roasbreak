@@ -131,7 +131,10 @@ export function initializePrivacyControls(): void {
   });
 }
 
-export function trackAnalytics(eventName: string, parameters: Record<string, string> = {}): void {
-  if (readChoice() !== "accepted") return;
-  (window as AnalyticsWindow).gtag?.("event", eventName, parameters);
+export function trackAnalytics(eventName: string, parameters: Record<string, string> = {}): boolean {
+  if (readChoice() !== "accepted") return false;
+  const gtag = (window as AnalyticsWindow).gtag;
+  if (!gtag) return false;
+  gtag("event", eventName, parameters);
+  return true;
 }

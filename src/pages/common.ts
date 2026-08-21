@@ -16,6 +16,8 @@ export const wholeCurrency = new Intl.NumberFormat("en-US", {
 });
 
 const invalidLinkParameters = new Set<string>();
+const guideHandoffKey = "roasbreak-guide-handoff";
+const safeContentIdPattern = /^[a-z0-9-]+$/;
 
 export const formatRoas = (value: number): string =>
   Number.isFinite(value) ? `${value.toFixed(2)}x` : "Not feasible";
@@ -172,7 +174,8 @@ export function bindMode(root: HTMLElement, onChange: () => void): void {
   update();
 }
 
-export async function copyText(text: string, message = "Result copied"): Promise<void> {
+export async function copyText(text: string, message = "Result copied"): Promise<boolean> {
+  let copied = true;
   try {
     await navigator.clipboard.writeText(text);
   } catch {
@@ -182,14 +185,16 @@ export async function copyText(text: string, message = "Result copied"): Promise
     area.style.opacity = "0";
     document.body.append(area);
     area.select();
-    document.execCommand("copy");
+    copied = document.execCommand("copy");
     area.remove();
   }
+  if (!copied) return false;
   const toast = document.querySelector<HTMLElement>("#toast");
-  if (!toast) return;
+  if (!toast) return true;
   toast.textContent = message;
   toast.classList.add("is-visible");
   window.setTimeout(() => toast.classList.remove("is-visible"), 1800);
+  return true;
 }
 
 export function showInvalidParamNotice(root: HTMLElement): void {
@@ -239,6 +244,39 @@ function initializePageSemantics(): void {
   if (toast) toast.setAttribute("role", "status");
 }
 
-export function track(eventName: string, parameters: Record<string, string> = {}): void {
-  trackAnalytics(eventName, parameters);
+export function track(eventName: string, parameters: Record<string, string> = {}): boolean {
+  return trackAnalytics(eventName, parameters);
+}
+
+export function rememberGuideHandoff(guideId: string, targetUrl: string): void {
+  if (!safeContentIdPattern.test(guideId)) return;
+  try {
+    const targetPath = new URL(targetUrl, window.location.origin).pathname;
+    window.sessionStorage.setItem(guideHandoffKey, JSON.stringify({ guideId, targetPath }));
+  } catch {
+    // Attribution is optional and must never block navigation.
+  }
+}
+
+export function consumeGuideHandoff(targetPath = window.location.pathname): string | undefined {
+  try {
+    const raw = window.sessionStorage.getItem(guideHandoffKey);
+    window.sessionStorage.removeItem(guideHandoffKey);
+    if (!raw) return undefined;
+    const handoff = JSON.parse(raw) as { guideId?: unknown; targetPath?: unknown };
+    if (typeof handoff.guideId !== "string" || !safeContentIdPattern.test(handoff.guideId)) return undefined;
+    return handoff.targetPath === targetPath ? handoff.guideId : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+export function bindCalculationCompleted(root: HTMLElement, tool: string, sourceGuide?: string): void {
+  let tracked = false;
+  root.addEventListener("change", (event) => {
+    if (tracked || !event.isTrusted || !(event.target instanceof HTMLInputElement)) return;
+    const parameters: Record<string, string> = { tool };
+    if (sourceGuide) parameters.source_guide = sourceGuide;
+    tracked = track("calculation_completed", parameters);
+  });
 }

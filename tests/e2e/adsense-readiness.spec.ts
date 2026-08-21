@@ -70,6 +70,20 @@ test("persists rejection and lets visitors reopen privacy settings", async ({ pa
   await expect(page.locator(".privacy-banner")).toBeVisible();
 });
 
+test("does not persist guide attribution or send behavior events after analytics rejection", async ({ page }) => {
+  await page.goto("/guides/ecommerce-variable-cost-checklist/");
+  await page.getByRole("button", { name: "Reject optional analytics" }).click();
+  await page.locator(".guide-action").click();
+  await page.locator('[name="currentRoas"]').fill("3.1");
+  await page.locator('[name="currentRoas"]').press("Tab");
+  await page.locator("#share-button").click();
+
+  expect(await page.evaluate(() => ({
+    handoff: window.sessionStorage.getItem("roasbreak-guide-handoff"),
+    dataLayer: (window as Window & { dataLayer?: unknown[] }).dataLayer,
+  }))).toEqual({ handoff: null, dataLayer: [] });
+});
+
 test("removes optional analytics after consent is revoked", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Accept analytics" }).click();
