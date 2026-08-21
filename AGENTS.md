@@ -107,3 +107,4 @@
 - 并行任务正在补内容契约字段时，`pnpm release:check` 可能正确拦截尚未收敛的部分资产。先根据报告核对失败是否仅来自协作者仍在编辑的文件，等待其提交后基于最终 `HEAD` 重跑；不要提交中间态的失败 baseline，也不要为让门禁变绿而降低规则。
 - Scenario Planner 与其他决策工具共用 `src/pages/tools.ts`，仓库没有 `src/pages/scenario-planner.ts`。读取页面逻辑前先用 `rg -n 'scenarioState|data-page="scenarios"' src` 定位实现，不要按 URL 名猜测独立脚本路径。
 - 新页加入静态 `data-schema="breadcrumb"` 后，必须确认 `src/pages/common.ts` 会在节点已存在时跳过动态注入；并行迁移中应等共享逻辑提交后再跑 E2E，否则页面会短暂出现两个 BreadcrumbList 并触发 strict-mode 失败。
+- 运行定向 Playwright 桌面用例前先读取 `playwright.config.ts` 的实际 project 名；本项目桌面项目是 `chromium`，不是设备类别的泛称 `desktop`。使用 `--project=chromium`，不要凭视口类型猜项目名。
