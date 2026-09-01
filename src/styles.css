@@ -1093,7 +1093,7 @@ footer {
     font-size: 0.7rem;
   }
 
-  .site-header nav a:nth-child(3) {
+  .site-header nav a[href="/methodology/"] {
     display: none;
   }
 

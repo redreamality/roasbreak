@@ -160,6 +160,10 @@
   gap: 16px;
 }
 
+.form-grid.guide-converter-fields {
+  margin-top: 24px;
+}
+
 .goal-block {
   margin-top: 22px;
   padding-top: 22px;
@@ -185,6 +189,10 @@
   font-size: clamp(4rem, 8vw, 6.2rem);
   font-weight: 500;
   line-height: 1;
+}
+
+.hero-result > .guide-converter-formula {
+  font-size: clamp(2.8rem, 6vw, 5rem);
 }
 
 .hero-result p {
@@ -1005,7 +1013,7 @@ button.lever-row:focus-visible {
     font-size: 0.68rem;
   }
 
-  .inner-nav a:nth-child(3) {
+  .inner-nav a[href="/methodology/"] {
     display: none;
   }
 

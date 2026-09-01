@@ -88,3 +88,14 @@ test("fits the calculator on a mobile viewport", async ({ page }, testInfo) => {
   await expect(page.getByTestId("break-even-roas")).toBeVisible();
   await expect(page.getByTestId("max-cpa")).toBeVisible();
 });
+
+test("keeps mobile primary navigation focused on tools and guides", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile", "Mobile-only navigation assertion");
+
+  for (const url of ["/", "/target-roas-calculator/"]) {
+    await page.goto(url);
+    await expect(page.locator('nav a[href="/tools/"]')).toBeVisible();
+    await expect(page.locator('nav a[href="/guides/"]')).toBeVisible();
+    await expect(page.locator('nav a[href="/methodology/"]')).toBeHidden();
+  }
+});

@@ -185,10 +185,21 @@ describe("manual content review release gate", () => {
     expect(checks[0].failures).toContain(`alpha: manual review contentSha256 ${oldHash} does not match current HTML ${changedHash}`);
   });
 
-  it("hashes the exact HTML bytes", () => {
-    expect(contentSha256(Buffer.from("<article>Stable</article>\n", "utf8"))).not.toBe(
-      contentSha256(Buffer.from("<article>Stable</article>\r\n", "utf8")),
-    );
+  it("canonicalizes text line endings without hiding real content changes", () => {
+    const lf = Buffer.from("<article>Stable</article>\n", "utf8");
+    const crlf = Buffer.from("<article>Stable</article>\r\n", "utf8");
+    const cr = Buffer.from("<article>Stable</article>\r", "utf8");
+
+    expect(contentSha256(lf)).toBe(contentSha256(crlf));
+    expect(contentSha256(lf)).toBe(contentSha256(cr));
+
+    const oldHash = contentSha256("<article>Original content</article>\n");
+    const changedHash = contentSha256("<article>Changed content</article>\n");
+    const review = assetReview("alpha", "2026-08-20", oldHash);
+    const checks = validateManualReviews([{ ...assets[0], contentSha256: changedHash }], { assets: [review] });
+
+    expect(checks.every((check: { status: string }) => check.status === "failed")).toBe(true);
+    expect(checks[0].failures).toContain(`alpha: manual review contentSha256 ${oldHash} does not match current HTML ${changedHash}`);
   });
 
   it("blocks a missing check and an explicit failed result", () => {

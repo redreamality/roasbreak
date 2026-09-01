@@ -124,8 +124,16 @@ function normalizeHref(value) {
   return value?.replaceAll("&amp;", "&");
 }
 
+function canonicalizeTextArtifact(content) {
+  if (typeof content !== "string" && !Buffer.isBuffer(content)) {
+    throw new TypeError("contentSha256 accepts UTF-8 text strings or Buffers only");
+  }
+  const text = typeof content === "string" ? content : content.toString("utf8");
+  return text.replace(/\r\n?/g, "\n");
+}
+
 export function contentSha256(content) {
-  return createHash("sha256").update(content).digest("hex");
+  return createHash("sha256").update(canonicalizeTextArtifact(content), "utf8").digest("hex");
 }
 
 export function createReleaseContract(assets, sourceDocuments) {

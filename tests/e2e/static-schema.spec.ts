@@ -57,6 +57,29 @@ test.describe("static content breadcrumb schema", () => {
       expect(schema.itemListElement.map(({ item }) => item)).toEqual(expectedUrls);
     });
   }
+
+  for (const directory of [
+    { url: "/guides/", name: "Guides", canonical: "https://roasbreak.com/guides/" },
+    { url: "/tools/", name: "Tools", canonical: "https://roasbreak.com/tools/" },
+  ]) {
+    test(`${directory.name} directory exposes its static breadcrumb without JavaScript`, async ({ page }) => {
+      await page.goto(directory.url);
+
+      const schemaNodes = page.locator(schemaSelector);
+      await expect(schemaNodes).toHaveCount(1);
+      const schema = JSON.parse(await schemaNodes.textContent() ?? "") as BreadcrumbSchema;
+      const visibleNames = (await page.locator(".breadcrumb > *").allTextContents()).map((name) => name.trim());
+      const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
+
+      expect(canonical).toBe(directory.canonical);
+      expect(schema.itemListElement.map(({ name }) => name)).toEqual(visibleNames);
+      expect(schema.itemListElement.map(({ position }) => position)).toEqual([1, 2]);
+      expect(schema.itemListElement.map(({ item }) => item)).toEqual([
+        "https://roasbreak.com/",
+        directory.canonical,
+      ]);
+    });
+  }
 });
 
 test("runtime breadcrumb schema is a fallback and never a duplicate", async ({ page }) => {
