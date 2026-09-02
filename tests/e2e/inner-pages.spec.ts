@@ -12,6 +12,7 @@ const guidePaths = [
   "/guides/google-ads-target-roas-profit/",
   "/guides/meta-ads-roas-and-attribution/",
   "/guides/amazon-break-even-acos/",
+  "/guides/scale-spend-profit-guardrails/",
   "/guides/discount-vs-bundle-profit/",
   "/guides/free-shipping-profit-threshold/",
   "/guides/returns-and-discounts/",
@@ -22,6 +23,8 @@ const guidePaths = [
   "/guides/refunds-and-conversion-adjustments/",
   "/guides/conversion-delay-and-data-maturity/",
   "/guides/tiktok-shop-roas-and-attribution/",
+  "/guides/monthly-ad-budget-contribution-scenarios/",
+  "/guides/payment-marketplace-fee-impact/",
   "/guides/attributed-roas-vs-mer/",
 ];
 
@@ -423,7 +426,7 @@ test("lists every published tool and guide", async ({ page }) => {
   await expect(page.locator(".directory-item")).toHaveCount(6);
   await page.goto("/guides/");
   await expect(page.locator(".topic-group")).toHaveCount(5);
-  await expect(page.locator(".topic-guide")).toHaveCount(23);
+  await expect(page.locator(".topic-guide")).toHaveCount(26);
   await expect(page.getByRole("link", { name: /Ecommerce Profit Formulas/ })).toHaveAttribute("href", "/guides/ecommerce-profit-formulas/");
   await expect(page.getByRole("link", { name: /Ecommerce Variable-cost Checklist/ })).toHaveAttribute("href", "/guides/ecommerce-variable-cost-checklist/");
   await expect(page.getByRole("link", { name: /POAS vs ROAS/ })).toHaveAttribute("href", "/guides/poas-vs-roas/");
@@ -436,6 +439,9 @@ test("lists every published tool and guide", async ({ page }) => {
   await expect(page.getByRole("link", { name: /Free Shipping Profit Threshold/ })).toHaveAttribute("href", "/guides/free-shipping-profit-threshold/");
   await expect(page.getByRole("link", { name: /Discount vs Bundle Profit/ })).toHaveAttribute("href", "/guides/discount-vs-bundle-profit/");
   await expect(page.getByRole("link", { name: /Contribution LTV vs Revenue LTV/ })).toHaveAttribute("href", "/guides/contribution-ltv-vs-revenue-ltv/");
+  await expect(page.getByRole("link", { name: /Scale Spend with Profit Guardrails/ })).toHaveAttribute("href", "/guides/scale-spend-profit-guardrails/");
+  await expect(page.getByRole("link", { name: /Monthly Ad Budget and Contribution-Profit Scenarios/ })).toHaveAttribute("href", "/guides/monthly-ad-budget-contribution-scenarios/");
+  await expect(page.getByRole("link", { name: /Payment and Marketplace Fee Impact on ROAS/ })).toHaveAttribute("href", "/guides/payment-marketplace-fee-impact/");
 });
 
 test("navigates the guide library by operating topic", async ({ page }) => {
@@ -470,9 +476,12 @@ test("publishes a transparent and independently reproducible methodology example
 
 test("publishes visible review details, primary sources, and Article schema for every guide", async ({ page }) => {
   for (const path of guidePaths) {
-    const isNewGuide = ["/guides/ecommerce-profit-formulas/", "/guides/ecommerce-variable-cost-checklist/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/", "/guides/meta-ads-roas-and-attribution/", "/guides/tiktok-shop-roas-and-attribution/", "/guides/conversion-delay-and-data-maturity/", "/guides/refunds-and-conversion-adjustments/", "/guides/product-vs-channel-profitability-scenario/"].includes(path);
+    const isAugust21Guide = ["/guides/ecommerce-profit-formulas/", "/guides/ecommerce-variable-cost-checklist/", "/guides/poas-vs-roas/", "/guides/returns-and-discounts/", "/guides/new-customer-roas-vs-blended-roas/", "/guides/free-shipping-profit-threshold/", "/guides/discount-vs-bundle-profit/", "/guides/contribution-ltv-vs-revenue-ltv/", "/guides/meta-ads-roas-and-attribution/", "/guides/tiktok-shop-roas-and-attribution/", "/guides/conversion-delay-and-data-maturity/", "/guides/refunds-and-conversion-adjustments/", "/guides/product-vs-channel-profitability-scenario/"].includes(path);
+    const isSeptemberGuide = ["/guides/scale-spend-profit-guardrails/", "/guides/monthly-ad-budget-contribution-scenarios/", "/guides/payment-marketplace-fee-impact/"].includes(path);
+    const reviewedDate = isSeptemberGuide ? "September 2, 2026" : isAugust21Guide ? "August 21, 2026" : "August 20, 2026";
+    const modifiedDate = isSeptemberGuide ? "2026-09-02" : isAugust21Guide ? "2026-08-21" : "2026-08-20";
     await page.goto(path);
-    await expect(page.locator("[data-editorial-meta]")).toContainText(isNewGuide ? "Reviewed August 21, 2026" : "Reviewed August 20, 2026");
+    await expect(page.locator("[data-editorial-meta]")).toContainText(`Reviewed ${reviewedDate}`);
     await expect(page.locator("[data-content-scope]")).toContainText("Scope: ");
     if (path === "/guides/ecommerce-profit-formulas/") {
       await expect(page).toHaveTitle("Ecommerce Profit Formulas: ROAS, CPA, POAS, MER & Payback");
@@ -554,12 +563,33 @@ test("publishes visible review details, primary sources, and Article schema for 
       await expect(page.getByText("The highest ROAS can produce the least contribution profit.", { exact: true })).toBeVisible();
       await expect(page.locator(".source-list a")).toHaveCount(12);
     }
+    if (path === "/guides/scale-spend-profit-guardrails/") {
+      await expect(page).toHaveTitle("Scale Spend with Profit Guardrails | ROAS Break");
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /proposed ecommerce ad-spend increase/);
+      await expect(page.getByText("A positive blended result is not evidence that the next dollar should be spent.", { exact: true })).toBeVisible();
+      await expect(page.locator(".guide-action")).toHaveAttribute("href", "/target-roas-calculator/");
+      await expect(page.locator(".source-list a")).toHaveCount(2);
+    }
+    if (path === "/guides/monthly-ad-budget-contribution-scenarios/") {
+      await expect(page).toHaveTitle("Monthly Ad Budget and Contribution-Profit Scenarios | ROAS Break");
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /monthly ecommerce ad-budget scenarios/);
+      await expect(page.getByText("A monthly budget is only comparable when the unit economics and reporting basis match.", { exact: true })).toBeVisible();
+      await expect(page.locator(".guide-action")).toHaveAttribute("href", "/scenario-planner/");
+      await expect(page.locator(".source-list a")).toHaveCount(3);
+    }
+    if (path === "/guides/payment-marketplace-fee-impact/") {
+      await expect(page).toHaveTitle("Payment and Marketplace Fee Impact on ROAS | ROAS Break");
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /payment and marketplace fees change ecommerce contribution/);
+      await expect(page.getByText("Every order-driven fee lowers the acquisition cost that contribution can support.", { exact: true })).toBeVisible();
+      await expect(page.locator(".guide-action")).toHaveAttribute("href", "/?mode=costs");
+      await expect(page.locator(".source-list a")).toHaveCount(2);
+    }
     await expect(page.locator(".source-list a").first()).toHaveAttribute("href", /^https:\/\//);
     await expect(page.locator(".guide-action")).toHaveCount(1);
     await expect(page.locator('script[data-schema="breadcrumb"]')).toHaveCount(1);
     const articleSchema = await page.locator('script[type="application/ld+json"]').first().textContent();
     expect(articleSchema, path).toContain('"@type":"Article"');
-    expect(articleSchema, path).toContain(`"dateModified":"${isNewGuide ? "2026-08-21" : "2026-08-20"}"`);
+    expect(articleSchema, path).toContain(`"dateModified":"${modifiedDate}"`);
   }
 });
 

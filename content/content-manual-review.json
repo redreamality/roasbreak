@@ -3,9 +3,9 @@
   "scope": {
     "startedAtCommit": "1031047e9eb75ef58b59c8e57cffbc7e52a5d2b5",
     "reviewedThroughCommit": "4cfca1a48a8e2a2bddf320b63ecb5099037c6440",
-    "reviewedAt": "2026-08-21",
+    "reviewedAt": "2026-09-02",
     "reviewer": "Codex independent release review",
-    "assetCount": 23,
+    "assetCount": 26,
     "excludedAfterStart": []
   },
   "assets": [
@@ -774,6 +774,108 @@
             "The two-row aggregation recomputes to modeled AOV=(12000+28000)/(200+300)=80.00, contribution margin=(3000+13000)/(12000+28000)=40.00%, and attributed ROAS=(12000+28000)/(4000+6000)=4.00x; the unweighted row averages are 76.67, 35.71%, and 3.83x.",
             "At equal $10,000 spend, the 5.00x/$50/20% scenario produces $50,000 revenue, 1,000 normalized orders, and $0 after-ad contribution; the 4.00x/$80/40% scenario produces $40,000, 500 orders, and $6,000; the 3.00x/$100/55% scenario produces $30,000, 300 orders, and $6,500.",
             "The 2.80x sensitivity case recomputes to $28,000 revenue, 280 normalized orders, and 28000*55%-10000=$5,400, so the unchanged $6,000 Balanced mix becomes the winner by $600."
+          ]
+        }
+      }
+    },
+    {
+      "id": "scale-spend-profit-guardrails",
+      "reviewedOn": "2026-09-02",
+      "contentSha256": "c0725ab312c487cc6d36729d54b2367b822783e5f1cee36b87bde9e1e4b48e28",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-09-02",
+          "evidence": [
+            "The direct answer, five-guardrail table, marginal-versus-blended example, and review sequence all evaluate a proposed spend increment without issuing a scale instruction.",
+            "Capacity, maturity, payback, and attribution boundaries keep the page distinct from a ROAS benchmark or budget-recommendation page."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-09-02",
+          "evidence": [
+            "Amazon Ads ROAS terminology and Shopify profit-report context are identified as official sources, while the marginal comparison, guardrail set, and fictional USD values are explicitly presented as ROAS Break modeling choices.",
+            "The boundary states that attribution is reporting credit rather than incrementality and that the model cannot recommend a budget or guarantee higher-spend delivery."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-09-02",
+          "evidence": [
+            "The $100 order with $40 contribution recomputes to a 2.50x break-even ROAS and a 3.33x retained-profit target when $10 is reserved per order.",
+            "Current-period revenue is 10000*4=40000 and after-ad contribution is 40000*40%-10000=6000; the proposed increment is 5000*2.6=13000 and 13000*40%-5000=200; combined ROAS is 53000/15000=3.53x after rounding."
+          ]
+        }
+      }
+    },
+    {
+      "id": "monthly-ad-budget-contribution-scenarios",
+      "reviewedOn": "2026-09-02",
+      "contentSha256": "e6f739714692466c442d68f20e232aa892ffaaff65d0396d5f0834c2acc26772",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-09-02",
+          "evidence": [
+            "The page declares a single monthly scenario contract, derives revenue, normalized orders, implied CPA, and contribution profit, then separates total, marginal, and operational evidence.",
+            "Its direct answer and boundary repeatedly prevent the scenario planner from being presented as a forecast, optimal budget, or causal result."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-09-02",
+          "evidence": [
+            "Amazon Ads ROAS terminology and Shopify sales/profit reporting context are linked as official sources, while scenario equations, normalized-order convention, and fictional inputs are labeled as ROAS Break modeling choices.",
+            "The page says its entered ROAS and margin are sensitivity inputs rather than predictions and explicitly excludes auction response, seasonality, and attribution incrementality."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-09-02",
+          "evidence": [
+            "Current budget recomputes to 10000*4=40000 revenue, 400 normalized orders, 25 CPA, and 40000*40%-10000=6000 contribution profit.",
+            "Higher budget recomputes to 15000*3.5=52500 revenue, 525 normalized orders, 28.57 CPA, and 52500*40%-15000=6000; downside efficiency recomputes to 15000*2.8=42000 revenue, 420 normalized orders, 35.71 CPA, and 1800 contribution profit."
+          ]
+        }
+      }
+    },
+    {
+      "id": "payment-marketplace-fee-impact",
+      "reviewedOn": "2026-09-02",
+      "contentSha256": "8b626f919b7783b405b05b6ca8d2a9aea585d62b1577fa5d29b3f1b30285fc43",
+      "checks": {
+        "semantic-intent-alignment": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-09-02",
+          "evidence": [
+            "The direct answer, fee-mapping table, transparent three-case comparison, and boundary checks map fee evidence into one contribution-cost boundary and show its impact on allowable acquisition cost.",
+            "The page distinguishes percentage, fixed, tiered, refund-related, and subscription costs, directly matching the declared payment and marketplace fee intent."
+          ]
+        },
+        "facts-vs-recommendations": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-09-02",
+          "evidence": [
+            "Stripe balance-transaction fields and Shopify profit-report context are linked as official sources; the input mapping, fictional 3% and 12% cases, and double-counting controls are expressly ROAS Break model choices.",
+            "The page directs readers to their own contract and settlement evidence, labels fee examples as non-provider pricing, and declines to determine contractual pricing or recommend a payment route."
+          ]
+        },
+        "worked-example-recalculation": {
+          "result": "passed",
+          "reviewer": "Codex independent release review",
+          "reviewedAt": "2026-09-02",
+          "evidence": [
+            "With $100 revenue, $40 product cost, $8 fulfillment, $4 other cost, and $5 return loss, pre-fee contribution is 43; fee cases of 0, 3, and 12 leave 43, 40, and 31 respectively.",
+            "Break-even ROAS values recompute as 100/43=2.33x, 100/40=2.50x, and 100/31=3.23x. At 3.50x, ad cost is 100/3.5=28.57, leaving 14.43, 11.43, and 2.43 after ads."
           ]
         }
       }

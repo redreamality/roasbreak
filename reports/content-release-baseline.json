@@ -1,14 +1,14 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-01T15:35:26.791Z",
+  "generatedAt": "2026-09-02T03:24:09.268Z",
   "repository": {
-    "commit": "73a62e4b3dff6cdcd48f44af2c6479e3ff0bb254",
+    "commit": "27159a73446ee25128b207740d13f7dd07dd6be7",
     "branch": "main",
     "workingTreeClean": false
   },
   "contract": {
     "version": 1,
-    "sha256": "315fd2fa338a888ffc65d5da6806d8f9ccf45a29534c33100a94b54b1ff7579f"
+    "sha256": "8ae66516f6ed5980d9f7c934424d7e54e4e9fa1893781c2aa2f65ec5c882fbbf"
   },
   "assets": [
     {
@@ -232,6 +232,36 @@
       "contentSha256": "b1ea45a376cb180bcc3bd8a35779fe584fbb54e2fe6f110c52d20402189752d1"
     },
     {
+      "id": "scale-spend-profit-guardrails",
+      "type": "guide",
+      "url": "/guides/scale-spend-profit-guardrails/",
+      "file": "guides/scale-spend-profit-guardrails/index.html",
+      "primaryIntent": "Evaluate a proposed spend increase using marginal contribution, economic thresholds, capacity, maturity, and payback guardrails without issuing a budget recommendation",
+      "primaryTool": "/target-roas-calculator/",
+      "reviewedOn": "2026-09-02",
+      "contentSha256": "c0725ab312c487cc6d36729d54b2367b822783e5f1cee36b87bde9e1e4b48e28"
+    },
+    {
+      "id": "monthly-ad-budget-contribution-scenarios",
+      "type": "guide",
+      "url": "/guides/monthly-ad-budget-contribution-scenarios/",
+      "file": "guides/monthly-ad-budget-contribution-scenarios/index.html",
+      "primaryIntent": "Compare declared monthly ad-budget cases by modeled contribution profit after ads without presenting scenarios as forecasts or recommendations",
+      "primaryTool": "/scenario-planner/",
+      "reviewedOn": "2026-09-02",
+      "contentSha256": "e6f739714692466c442d68f20e232aa892ffaaff65d0396d5f0834c2acc26772"
+    },
+    {
+      "id": "payment-marketplace-fee-impact",
+      "type": "guide",
+      "url": "/guides/payment-marketplace-fee-impact/",
+      "file": "guides/payment-marketplace-fee-impact/index.html",
+      "primaryIntent": "Map payment and marketplace fee evidence into one contribution-cost boundary and show its effect on allowable CPA and break-even ROAS",
+      "primaryTool": "/?mode=costs",
+      "reviewedOn": "2026-09-02",
+      "contentSha256": "8b626f919b7783b405b05b6ca8d2a9aea585d62b1577fa5d29b3f1b30285fc43"
+    },
+    {
       "id": "attributed-mer",
       "type": "guide",
       "url": "/guides/attributed-roas-vs-mer/",
@@ -249,7 +279,7 @@
       "status": "passed",
       "evidence": {
         "command": "node scripts/check-content.mjs",
-        "output": "Content checks passed for 23 published assets."
+        "output": "Content checks passed for 26 published assets."
       },
       "failures": []
     },
@@ -258,7 +288,7 @@
       "label": "Every published inventory asset has a readable source file",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 23
+        "inspectedAssets": 26
       },
       "failures": []
     },
@@ -267,8 +297,8 @@
       "label": "Published assets have one non-empty, unique primary intent",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 23,
-        "uniqueIntents": 23
+        "inspectedAssets": 26,
+        "uniqueIntents": 26
       },
       "failures": []
     },
@@ -277,8 +307,8 @@
       "label": "Sources have URL, owner, region, verification date, and verified status",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 23,
-        "inspectedSources": 69
+        "inspectedAssets": 26,
+        "inspectedSources": 76
       },
       "failures": []
     },
@@ -287,7 +317,7 @@
       "label": "Every governed source is linked from the visible page body",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 23
+        "inspectedAssets": 26
       },
       "failures": []
     },
@@ -296,7 +326,7 @@
       "label": "Canonical URLs and sitemap entries match the inventory exactly",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 23,
+        "inspectedAssets": 26,
         "sitemap": "public/sitemap.xml"
       },
       "failures": []
@@ -306,7 +336,7 @@
       "label": "Every asset exposes one visible content scope in editorial metadata",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 23
+        "inspectedAssets": 26
       },
       "failures": []
     },
@@ -315,7 +345,7 @@
       "label": "Every guide has exactly one primary CTA matching primaryTool",
       "status": "passed",
       "evidence": {
-        "inspectedGuides": 22
+        "inspectedGuides": 25
       },
       "failures": []
     },
@@ -324,8 +354,8 @@
       "label": "Guides have Article JSON-LD and every asset has BreadcrumbList plus visible breadcrumb",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 23,
-        "inspectedGuides": 22,
+        "inspectedAssets": 26,
+        "inspectedGuides": 25,
         "evidenceType": "static-source"
       },
       "failures": []
@@ -335,7 +365,7 @@
       "label": "Published assets exceed the minimum body depth and contain no placeholder language",
       "status": "passed",
       "evidence": {
-        "inspectedAssets": 23,
+        "inspectedAssets": 26,
         "minimumArticleWords": 350,
         "articleWordCounts": {
           "methodology": 938,
@@ -360,6 +390,9 @@
           "refunds-conversion-adjustments": 1146,
           "conversion-delay-data-maturity": 1087,
           "tiktok-shop-roas-attribution": 1008,
+          "scale-spend-profit-guardrails": 689,
+          "monthly-ad-budget-contribution-scenarios": 702,
+          "payment-marketplace-fee-impact": 763,
           "attributed-mer": 444
         }
       },
@@ -372,7 +405,7 @@
       "evidence": {
         "command": "pnpm exec playwright test tests/e2e/inner-pages.spec.ts --project=chromium --grep <canonical/schema/breadcrumb/sitemap test>",
         "evidenceType": "runtime-e2e",
-        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:833:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (6.1s)\n\n  1 passed (9.2s)"
+        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:863:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (6.6s)\n\n  1 passed (8.6s)"
       },
       "failures": []
     }
@@ -405,12 +438,15 @@
         "refunds-conversion-adjustments",
         "conversion-delay-data-maturity",
         "tiktok-shop-roas-attribution",
+        "scale-spend-profit-guardrails",
+        "monthly-ad-budget-contribution-scenarios",
+        "payment-marketplace-fee-impact",
         "attributed-mer"
       ],
       "reviewInstruction": "Compare the primaryIntent with the title, direct answer, sections, and conclusion; record evidence for every asset.",
       "evidence": {
         "source": "content/content-manual-review.json",
-        "reviewedAssets": 23
+        "reviewedAssets": 26
       },
       "failures": []
     },
@@ -441,12 +477,15 @@
         "refunds-conversion-adjustments",
         "conversion-delay-data-maturity",
         "tiktok-shop-roas-attribution",
+        "scale-spend-profit-guardrails",
+        "monthly-ad-budget-contribution-scenarios",
+        "payment-marketplace-fee-impact",
         "attributed-mer"
       ],
       "reviewInstruction": "Identify externally sourced claims and editorial recommendations; confirm each is labeled and sourced appropriately.",
       "evidence": {
         "source": "content/content-manual-review.json",
-        "reviewedAssets": 23
+        "reviewedAssets": 26
       },
       "failures": []
     },
@@ -477,19 +516,22 @@
         "refunds-conversion-adjustments",
         "conversion-delay-data-maturity",
         "tiktok-shop-roas-attribution",
+        "scale-spend-profit-guardrails",
+        "monthly-ad-budget-contribution-scenarios",
+        "payment-marketplace-fee-impact",
         "attributed-mer"
       ],
       "reviewInstruction": "Recalculate every example from displayed inputs and formulas, including units and rounding; record the reviewer and result per asset.",
       "evidence": {
         "source": "content/content-manual-review.json",
-        "reviewedAssets": 23
+        "reviewedAssets": 26
       },
       "failures": []
     }
   ],
   "summary": {
-    "assetCount": 23,
-    "guideCount": 22,
+    "assetCount": 26,
+    "guideCount": 25,
     "automatedPassed": 11,
     "automatedFailed": 0,
     "manualPassed": 3,

@@ -811,6 +811,100 @@
       ]
     },
     {
+      "id": "scale-spend-profit-guardrails",
+      "type": "guide",
+      "url": "/guides/scale-spend-profit-guardrails/",
+      "file": "guides/scale-spend-profit-guardrails/index.html",
+      "cluster": "Paid Media Metrics",
+      "primaryIntent": "Evaluate a proposed spend increase using marginal contribution, economic thresholds, capacity, maturity, and payback guardrails without issuing a budget recommendation",
+      "primaryTool": "/target-roas-calculator/",
+      "publishedOn": "2026-09-02",
+      "reviewedOn": "2026-09-02",
+      "reviewDue": "2026-12-01",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas",
+          "owner": "Amazon Ads",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
+      "id": "monthly-ad-budget-contribution-scenarios",
+      "type": "guide",
+      "url": "/guides/monthly-ad-budget-contribution-scenarios/",
+      "file": "guides/monthly-ad-budget-contribution-scenarios/index.html",
+      "cluster": "Planning & Measurement",
+      "primaryIntent": "Compare declared monthly ad-budget cases by modeled contribution profit after ads without presenting scenarios as forecasts or recommendations",
+      "primaryTool": "/scenario-planner/",
+      "publishedOn": "2026-09-02",
+      "reviewedOn": "2026-09-02",
+      "reviewDue": "2026-12-01",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://advertising.amazon.com/library/guides/return-on-ad-spend-roas",
+          "owner": "Amazon Ads",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/sales-report",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
+      "id": "payment-marketplace-fee-impact",
+      "type": "guide",
+      "url": "/guides/payment-marketplace-fee-impact/",
+      "file": "guides/payment-marketplace-fee-impact/index.html",
+      "cluster": "Unit Economics",
+      "primaryIntent": "Map payment and marketplace fee evidence into one contribution-cost boundary and show its effect on allowable CPA and break-even ROAS",
+      "primaryTool": "/?mode=costs",
+      "publishedOn": "2026-09-02",
+      "reviewedOn": "2026-09-02",
+      "reviewDue": "2026-12-01",
+      "status": "published",
+      "sources": [
+        {
+          "url": "https://docs.stripe.com/api/balance_transactions/object",
+          "owner": "Stripe",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        },
+        {
+          "url": "https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports/report-types/default-reports/profit-reports",
+          "owner": "Shopify",
+          "region": "Global",
+          "verifiedOn": "2026-08-21",
+          "reviewStatus": "verified"
+        }
+      ]
+    },
+    {
       "id": "attributed-mer",
       "type": "guide",
       "url": "/guides/attributed-roas-vs-mer/",
