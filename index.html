@@ -46,31 +46,47 @@
           {
             "@type": "FAQPage",
             "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "What is break-even ROAS?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Break-even ROAS is the revenue-to-ad-spend ratio where contribution profit after variable costs exactly covers advertising cost."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "How do you calculate break-even ROAS?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Divide 1 by your contribution margin expressed as a decimal. A 40% contribution margin produces a 2.5x break-even ROAS."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Should returns and payment fees be included?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes. Include every variable cost that rises with an order, including product cost, fulfillment, payment fees, discounts, and an expected return allowance."
-                }
-              }
-            ]
+          {
+                    "@type": "Question",
+                    "name": "What is a good break-even ROAS?",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "Lower is generally more resilient because each revenue dollar leaves more room for ad spend. There is no universal target: a 1.5x floor may be healthy for a high-margin brand, while a 4x floor may be unavoidable in a thin-margin category."
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "What is the difference between break-even ROAS and target ROAS?",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "Break-even ROAS is the no-profit, no-loss floor. Target ROAS should sit above that floor to fund overhead, payroll, reinvestment, and the profit you expect the business to keep."
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "Does break-even ROAS include fixed overhead?",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "This calculator focuses on variable contribution economics. To build a target ROAS that covers fixed overhead, add your desired overhead allocation and profit per order to the contribution you need to retain."
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "Can I use this for lead generation?",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "Yes, if you translate expected customer value into revenue per acquired customer and include the variable costs of delivery. For a pure lead metric, maximum CPA is usually the more direct output."
+                    }
+          },
+          {
+                    "@type": "Question",
+                    "name": "Why does Meta or Google Ads ROAS differ from my profit?",
+                    "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "Ad platforms compare attributed revenue with ad spend. They do not subtract product cost, fulfillment, payment fees, returns, or discounts, so reported ROAS can look healthy while contribution profit is negative."
+                    }
+          }
+]
           }
         ]
       }
@@ -100,6 +116,154 @@
         <p class="intro-copy">
           Find the ad return your unit economics must clear, then follow the exact revenue, cost, and platform workflow behind the threshold.
         </p>
+      </section>
+
+      <section class="calculator-shell" id="calculator" aria-label="Break-even ROAS calculator">
+        <form class="inputs-panel" id="calculator-form">
+          <div class="panel-heading">
+            <div>
+              <p class="step-label">01 / Inputs</p>
+              <h2>Your unit economics</h2>
+            </div>
+            <button class="icon-button" id="reset-button" type="button" title="Reset calculator" aria-label="Reset calculator">
+              <i data-lucide="rotate-ccw" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <fieldset class="mode-switcher">
+            <legend class="sr-only">Input method</legend>
+            <label>
+              <input type="radio" name="mode" value="margin" checked />
+              <span>Quick margin</span>
+            </label>
+            <label>
+              <input type="radio" name="mode" value="costs" />
+              <span>Cost breakdown</span>
+            </label>
+          </fieldset>
+
+          <div class="input-grid">
+            <label class="field">
+              <span>Average order value</span>
+              <span class="input-wrap prefix">
+                <span aria-hidden="true">$</span>
+                <input id="order-value" name="orderValue" type="number" min="0" step="1" value="80" inputmode="decimal" />
+              </span>
+            </label>
+
+            <label class="field margin-field">
+              <span>Gross margin</span>
+              <span class="input-wrap suffix">
+                <input id="gross-margin" name="grossMarginPct" type="number" min="0" max="100" step="1" value="65" inputmode="decimal" />
+                <span aria-hidden="true">%</span>
+              </span>
+            </label>
+
+            <label class="field cost-field" hidden>
+              <span>Product cost</span>
+              <span class="input-wrap prefix">
+                <span aria-hidden="true">$</span>
+                <input id="product-cost" name="productCost" type="number" min="0" step="1" value="28" inputmode="decimal" />
+              </span>
+            </label>
+
+            <label class="field cost-field" hidden>
+              <span>Fulfillment + shipping</span>
+              <span class="input-wrap prefix">
+                <span aria-hidden="true">$</span>
+                <input id="fulfillment-cost" name="fulfillmentCost" type="number" min="0" step="1" value="6" inputmode="decimal" />
+              </span>
+            </label>
+
+            <label class="field cost-field" hidden>
+              <span>Other variable cost</span>
+              <span class="input-wrap prefix">
+                <span aria-hidden="true">$</span>
+                <input id="other-cost" name="otherCost" type="number" min="0" step="1" value="3" inputmode="decimal" />
+              </span>
+            </label>
+
+            <label class="field">
+              <span>Payment + platform fees</span>
+              <span class="input-wrap suffix">
+                <input id="fee-pct" name="feePct" type="number" min="0" max="100" step="0.1" value="3" inputmode="decimal" />
+                <span aria-hidden="true">%</span>
+              </span>
+            </label>
+
+            <label class="field">
+              <span>Returns + discounts allowance</span>
+              <span class="input-wrap suffix">
+                <input id="return-pct" name="returnPct" type="number" min="0" max="100" step="0.5" value="5" inputmode="decimal" />
+                <span aria-hidden="true">%</span>
+              </span>
+            </label>
+
+            <label class="field field-current">
+              <span>Current ROAS</span>
+              <span class="input-wrap suffix">
+                <input id="current-roas" name="currentRoas" type="number" min="0.01" step="0.1" value="2.5" inputmode="decimal" />
+                <span aria-hidden="true">x</span>
+              </span>
+            </label>
+          </div>
+        </form>
+
+        <div class="results-panel">
+          <div class="panel-heading results-heading">
+            <div>
+              <p class="step-label">02 / Threshold</p>
+              <p class="status-pill" id="status-pill" data-status="above">
+                <span aria-hidden="true"></span>
+                <strong id="status-text" role="status" aria-live="polite" aria-atomic="true">Above break-even</strong>
+              </p>
+            </div>
+            <button class="share-button" id="share-button" type="button">
+              <i data-lucide="link" aria-hidden="true"></i>
+              <span>Copy result</span>
+            </button>
+          </div>
+
+          <div class="primary-result">
+            <span>Break-even ROAS</span>
+            <strong id="break-even-roas" data-testid="break-even-roas">1.75x</strong>
+            <p id="result-summary">Every $1 in ad spend must generate at least $1.75 in revenue.</p>
+          </div>
+
+          <div class="roas-scale" aria-label="Current ROAS compared with break-even ROAS" role="group">
+            <div class="scale-track">
+              <span class="break-marker" id="break-marker"><i></i><b>Break-even</b></span>
+              <span class="current-marker" id="current-marker"><i></i><b>Current</b></span>
+            </div>
+            <div class="scale-labels"><span>0x</span><span id="scale-max">4x</span></div><span id="scale-value" class="scale-value" aria-live="polite"></span>
+          </div>
+
+          <dl class="metric-grid">
+            <div>
+              <dt>Maximum CPA</dt>
+              <dd id="max-cpa" data-testid="max-cpa">$45.60</dd>
+            </div>
+            <div>
+              <dt>Contribution margin</dt>
+              <dd id="contribution-margin">57.0%</dd>
+            </div>
+            <div>
+              <dt>Profit / order now</dt>
+              <dd id="profit-per-order">$13.60</dd>
+            </div>
+            <div>
+              <dt>Profit / $1k ad spend</dt>
+              <dd id="profit-per-thousand">$425</dd>
+            </div>
+          </dl>
+
+          <p class="result-note" id="result-note">
+            Your current ROAS is <strong>42.5% above</strong> the break-even line.
+          </p>
+          <a class="home-next-action" id="target-roas-link" href="/target-roas-calculator/">
+            Set a profit target <span aria-hidden="true">→</span>
+          </a>
+        </div>
       </section>
 
       <section class="definition-band" id="formula" aria-labelledby="formula-title">
@@ -210,155 +374,9 @@
           </details>
         </div>
       </section>
-      <section class="calculator-shell" id="calculator" aria-label="Break-even ROAS calculator">
-        <form class="inputs-panel" id="calculator-form">
-          <div class="panel-heading">
-            <div>
-              <p class="step-label">01 / Inputs</p>
-              <h2>Your unit economics</h2>
-            </div>
-            <button class="icon-button" id="reset-button" type="button" title="Reset calculator" aria-label="Reset calculator">
-              <i data-lucide="rotate-ccw" aria-hidden="true"></i>
-            </button>
-          </div>
 
-          <fieldset class="mode-switcher">
-            <legend class="sr-only">Input method</legend>
-            <label>
-              <input type="radio" name="mode" value="margin" checked />
-              <span>Quick margin</span>
-            </label>
-            <label>
-              <input type="radio" name="mode" value="costs" />
-              <span>Cost breakdown</span>
-            </label>
-          </fieldset>
 
-          <div class="input-grid">
-            <label class="field">
-              <span>Average order value</span>
-              <span class="input-wrap prefix">
-                <span aria-hidden="true">$</span>
-                <input id="order-value" name="orderValue" type="number" min="0" step="1" value="80" inputmode="decimal" />
-              </span>
-            </label>
-
-            <label class="field margin-field">
-              <span>Gross margin</span>
-              <span class="input-wrap suffix">
-                <input id="gross-margin" name="grossMarginPct" type="number" min="0" max="100" step="1" value="65" inputmode="decimal" />
-                <span aria-hidden="true">%</span>
-              </span>
-            </label>
-
-            <label class="field cost-field" hidden>
-              <span>Product cost</span>
-              <span class="input-wrap prefix">
-                <span aria-hidden="true">$</span>
-                <input id="product-cost" name="productCost" type="number" min="0" step="1" value="28" inputmode="decimal" />
-              </span>
-            </label>
-
-            <label class="field cost-field" hidden>
-              <span>Fulfillment + shipping</span>
-              <span class="input-wrap prefix">
-                <span aria-hidden="true">$</span>
-                <input id="fulfillment-cost" name="fulfillmentCost" type="number" min="0" step="1" value="6" inputmode="decimal" />
-              </span>
-            </label>
-
-            <label class="field cost-field" hidden>
-              <span>Other variable cost</span>
-              <span class="input-wrap prefix">
-                <span aria-hidden="true">$</span>
-                <input id="other-cost" name="otherCost" type="number" min="0" step="1" value="3" inputmode="decimal" />
-              </span>
-            </label>
-
-            <label class="field">
-              <span>Payment + platform fees</span>
-              <span class="input-wrap suffix">
-                <input id="fee-pct" name="feePct" type="number" min="0" max="100" step="0.1" value="3" inputmode="decimal" />
-                <span aria-hidden="true">%</span>
-              </span>
-            </label>
-
-            <label class="field">
-              <span>Returns + discounts allowance</span>
-              <span class="input-wrap suffix">
-                <input id="return-pct" name="returnPct" type="number" min="0" max="100" step="0.5" value="5" inputmode="decimal" />
-                <span aria-hidden="true">%</span>
-              </span>
-            </label>
-
-            <label class="field field-current">
-              <span>Current ROAS</span>
-              <span class="input-wrap suffix">
-                <input id="current-roas" name="currentRoas" type="number" min="0.01" step="0.1" value="2.5" inputmode="decimal" />
-                <span aria-hidden="true">x</span>
-              </span>
-            </label>
-          </div>
-        </form>
-
-        <div class="results-panel" aria-live="polite">
-          <div class="panel-heading results-heading">
-            <div>
-              <p class="step-label">02 / Threshold</p>
-              <p class="status-pill" id="status-pill" data-status="above">
-                <span aria-hidden="true"></span>
-                <strong id="status-text">Above break-even</strong>
-              </p>
-            </div>
-            <button class="share-button" id="share-button" type="button">
-              <i data-lucide="link" aria-hidden="true"></i>
-              <span>Copy result</span>
-            </button>
-          </div>
-
-          <div class="primary-result">
-            <span>Break-even ROAS</span>
-            <strong id="break-even-roas" data-testid="break-even-roas">1.75x</strong>
-            <p id="result-summary">Every $1 in ad spend must generate at least $1.75 in revenue.</p>
-          </div>
-
-          <div class="roas-scale" aria-label="Current ROAS compared with break-even ROAS">
-            <div class="scale-track">
-              <span class="break-marker" id="break-marker"><i></i><b>Break-even</b></span>
-              <span class="current-marker" id="current-marker"><i></i><b>Current</b></span>
-            </div>
-            <div class="scale-labels"><span>0x</span><span id="scale-max">4x</span></div>
-          </div>
-
-          <dl class="metric-grid">
-            <div>
-              <dt>Maximum CPA</dt>
-              <dd id="max-cpa" data-testid="max-cpa">$45.60</dd>
-            </div>
-            <div>
-              <dt>Contribution margin</dt>
-              <dd id="contribution-margin">57.0%</dd>
-            </div>
-            <div>
-              <dt>Profit / order now</dt>
-              <dd id="profit-per-order">$13.60</dd>
-            </div>
-            <div>
-              <dt>Profit / $1k ad spend</dt>
-              <dd id="profit-per-thousand">$425</dd>
-            </div>
-          </dl>
-
-          <p class="result-note" id="result-note">
-            Your current ROAS is <strong>42.5% above</strong> the break-even line.
-          </p>
-          <a class="home-next-action" id="target-roas-link" href="/target-roas-calculator/">
-            Set a profit target <span aria-hidden="true">→</span>
-          </a>
-        </div>
-      </section>
     </main>
-
     <footer>
       <a class="brand footer-brand" href="/">
         <span class="brand-mark">R</span>

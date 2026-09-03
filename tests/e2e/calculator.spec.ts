@@ -89,6 +89,41 @@ test("fits the calculator on a mobile viewport", async ({ page }, testInfo) => {
   await expect(page.getByTestId("max-cpa")).toBeVisible();
 });
 
+test("exposes scoped result announcements and scale values", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".results-panel")).not.toHaveAttribute("aria-live");
+  await expect(page.locator(".primary-result")).not.toHaveAttribute("aria-live");
+  await expect(page.locator("#status-text")).toHaveAttribute("role", "status");
+  await expect(page.locator("#status-text")).toHaveAttribute("aria-live", "polite");
+  await expect(page.locator("#scale-value")).toContainText("Current ROAS 2.50x");
+  await expect(page.locator("#scale-value")).toContainText("break-even 1.75x");
+});
+
+test("matches the five visible FAQs in FAQPage schema", async ({ page }) => {
+  await page.goto("/");
+  const visible = await page.locator(".faq-list summary").allTextContents();
+  const schema = await page.locator('script[type="application/ld+json"]').first().textContent();
+  const parsed = JSON.parse(schema ?? "{}");
+  const faq = parsed["@graph"].find((node: { [key: string]: unknown }) => node["@type"] === "FAQPage");
+  expect(faq.mainEntity.map((item: { name: string }) => item.name)).toEqual(visible);
+  const answers = await page.locator(".faq-list details p").allTextContents();
+  expect(faq.mainEntity.map((item: { acceptedAnswer: { text: string } }) => item.acceptedAnswer.text)).toEqual(
+    answers.map((answer) => answer.trim()),
+  );
+});
+
+test("keeps key calculator controls at least 44px on mobile", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile", "Mobile-only touch target assertion");
+  await page.goto("/");
+  const sizes = await page.evaluate(() => ["#reset-button", "#share-button", ".site-header nav a"].flatMap((selector) =>
+    Array.from(document.querySelectorAll<HTMLElement>(selector)).filter((node) => getComputedStyle(node).display !== "none").map((node) => {
+      const rect = node.getBoundingClientRect();
+      return { width: rect.width, height: rect.height };
+    }),
+  ));
+  expect(sizes.every(({ width, height }) => width >= 44 && height >= 44)).toBe(true);
+});
+
 test("keeps mobile primary navigation focused on tools and guides", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "mobile", "Mobile-only navigation assertion");
 

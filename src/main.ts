@@ -17,7 +17,6 @@ const getElement = <T extends HTMLElement>(selector: string): T => {
 };
 
 const calculator = getElement<HTMLElement>("#calculator");
-getElement<HTMLElement>(".tool-intro").insertAdjacentElement("afterend", calculator);
 
 createIcons({ icons: { Link, RotateCcw } });
 
@@ -101,6 +100,10 @@ function updateScale(breakEvenRoas: number, currentRoas: number): void {
   currentMarker.style.left = `${currentPosition}%`;
   currentMarker.classList.toggle("markers-close", Math.abs(currentPosition - breakPosition) < 13);
   getElement<HTMLElement>("#scale-max").textContent = `${scaleMax}x`;
+  const scaleValue = getElement<HTMLElement>("#scale-value");
+  scaleValue.textContent = Number.isFinite(breakEvenRoas)
+    ? `Current ROAS ${currentRoas.toFixed(2)}x; break-even ${breakEvenRoas.toFixed(2)}x; scale maximum ${scaleMax}x.`
+    : `Current ROAS ${currentRoas.toFixed(2)}x; no viable break-even ROAS.`;
 }
 
 function updateResults(): void {

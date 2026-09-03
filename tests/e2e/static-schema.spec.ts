@@ -61,6 +61,16 @@ test.describe("static content breadcrumb schema", () => {
   for (const directory of [
     { url: "/guides/", name: "Guides", canonical: "https://roasbreak.com/guides/" },
     { url: "/tools/", name: "Tools", canonical: "https://roasbreak.com/tools/" },
+    { url: "/target-roas-calculator/", name: "Target ROAS Calculator", canonical: "https://roasbreak.com/target-roas-calculator/" },
+    { url: "/profit-lever-calculator/", name: "Profit Lever Calculator", canonical: "https://roasbreak.com/profit-lever-calculator/" },
+    { url: "/promotion-profit-calculator/", name: "Promotion Profit Calculator", canonical: "https://roasbreak.com/promotion-profit-calculator/" },
+    { url: "/cac-payback-calculator/", name: "CAC Payback Calculator", canonical: "https://roasbreak.com/cac-payback-calculator/" },
+    { url: "/scenario-planner/", name: "Scenario Planner", canonical: "https://roasbreak.com/scenario-planner/" },
+    { url: "/about/", name: "About", canonical: "https://roasbreak.com/about/" },
+    { url: "/contact/", name: "Contact", canonical: "https://roasbreak.com/contact/" },
+    { url: "/privacy/", name: "Privacy Policy", canonical: "https://roasbreak.com/privacy/" },
+    { url: "/terms/", name: "Terms of Use", canonical: "https://roasbreak.com/terms/" },
+    { url: "/methodology/", name: "Methodology", canonical: "https://roasbreak.com/methodology/" },
   ]) {
     test(`${directory.name} directory exposes its static breadcrumb without JavaScript`, async ({ page }) => {
       await page.goto(directory.url);

@@ -133,6 +133,19 @@ describe("committed content release baseline", () => {
   });
 });
 
+describe("production deployment workflow", () => {
+  it("runs the HTTP production smoke gate after Cloudflare Pages deploy", () => {
+    const workflow = readFileSync(new URL("../.github/workflows/deploy.yml", import.meta.url), "utf8");
+    const deployIndex = workflow.indexOf("name: Deploy to Cloudflare Pages");
+    const smokeIndex = workflow.indexOf("name: Production smoke");
+
+    expect(deployIndex).toBeGreaterThanOrEqual(0);
+    expect(smokeIndex).toBeGreaterThan(deployIndex);
+    expect(workflow).toContain("run: pnpm production:smoke -- --output /tmp/roasbreak-production-smoke.json");
+    expect(workflow).not.toContain("production:smoke:browser");
+  });
+});
+
 describe("manual content review release gate", () => {
   it("validates the committed start-of-task review scope", () => {
     const inventory = JSON.parse(readFileSync(new URL("../content/content-inventory.json", import.meta.url), "utf8"));

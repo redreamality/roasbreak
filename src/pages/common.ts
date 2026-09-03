@@ -241,6 +241,12 @@ export function setYearAndIcons(): void {
 }
 
 function initializePageSemantics(): void {
+  const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
+  document.querySelectorAll<HTMLAnchorElement>(".inner-nav a[href]").forEach((link) => {
+    if (link.hasAttribute("aria-current")) return;
+    const linkPath = new URL(link.href, window.location.origin).pathname.replace(/\/+$/, "") || "/";
+    if (linkPath === currentPath) link.setAttribute("aria-current", "page");
+  });
   const breadcrumb = document.querySelector<HTMLElement>(".breadcrumb");
   if (breadcrumb) {
     breadcrumb.setAttribute("aria-label", "Breadcrumb");

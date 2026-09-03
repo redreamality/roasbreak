@@ -38,3 +38,5 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=roasbreak --branch=main
+      - name: Production smoke
+        run: pnpm production:smoke -- --output /tmp/roasbreak-production-smoke.json

@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/generate-og.mjs",
-    "build": "tsc --noEmit && vite build",
+    "prebuild": "node scripts/generate-og.mjs && node scripts/generate-sitemap.mjs",
+    "build": "tsc --noEmit && vite build && node scripts/check-dist.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:content": "node scripts/check-content.mjs",

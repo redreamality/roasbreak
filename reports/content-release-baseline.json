@@ -1,14 +1,14 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-02T03:24:09.268Z",
+  "generatedAt": "2026-09-03T13:52:59.310Z",
   "repository": {
-    "commit": "27159a73446ee25128b207740d13f7dd07dd6be7",
+    "commit": "ebc5b94318a0b1728a266b94a2149c686a87a340",
     "branch": "main",
     "workingTreeClean": false
   },
   "contract": {
     "version": 1,
-    "sha256": "8ae66516f6ed5980d9f7c934424d7e54e4e9fa1893781c2aa2f65ec5c882fbbf"
+    "sha256": "04ceb615f7a30149eb6cab60fb8a6ef37f34bdc6741fd55011a58c157b45372a"
   },
   "assets": [
     {
@@ -405,7 +405,7 @@
       "evidence": {
         "command": "pnpm exec playwright test tests/e2e/inner-pages.spec.ts --project=chromium --grep <canonical/schema/breadcrumb/sitemap test>",
         "evidenceType": "runtime-e2e",
-        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:863:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (6.6s)\n\n  1 passed (8.6s)"
+        "output": "Running 1 test using 1 worker\n\n  ok 1 [chromium] › tests\\e2e\\inner-pages.spec.ts:863:1 › publishes matching canonical, schema, breadcrumb, and sitemap URLs (11.1s)\n\n  1 passed (15.0s)"
       },
       "failures": []
     }
