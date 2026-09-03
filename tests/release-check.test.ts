@@ -141,6 +141,7 @@ describe("production deployment workflow", () => {
 
     expect(deployIndex).toBeGreaterThanOrEqual(0);
     expect(smokeIndex).toBeGreaterThan(deployIndex);
+    expect(workflow).toContain("run: git restore -- package.json pnpm-lock.yaml public/og-image.png");
     expect(workflow).toContain("run: pnpm production:smoke --output /tmp/roasbreak-production-smoke.json");
     expect(workflow).not.toContain("production:smoke:browser");
   });
